@@ -1,0 +1,87 @@
+<div
+  class="container-fluid mt-5"
+  style="background-color: lightblue; width: 400px; border-radius: 10px;"
+>
+  <h3 class="text-center">my data</h3>
+  <p class="font-weight-bold">email:{{ getEmail() }}</p>
+  <p class="font-weight-bold">password:{{ getPassword() }}</p>
+  <p *ngIf="passwordHasBeenChanged">
+    your password has been successfuly changed
+    <button class="btn btn-success" (click)="goToHome()">go to home</button>
+  </p>
+  <button class="btn btn-info btn-sm" (click)="change()">
+    change password
+  </button>
+
+  <div *ngIf="changePassword" class="container mt-5">
+    <form [formGroup]="changePasswordForm">
+      <input
+        type="password"
+        formControlName="newPassword"
+        placeholder="insert new password "
+        class="form-control"
+        [class.is-invalid]="
+          changePasswordForm.get('newPassword').invalid &&
+          changePasswordForm.get('newPassword').touched
+        "
+      />
+      <br />
+      <small
+        class="text-danger"
+        *ngIf="
+          changePasswordForm.get('newPassword').errors?.required &&
+          changePasswordForm.get('newPassword').touched
+        "
+      >
+        this.field is required
+      </small>
+      <small
+        class="text-danger"
+        *ngIf="
+          changePasswordForm.get('newPassword').errors?.minlength &&
+          changePasswordForm.get('newPassword').touched
+        "
+      >
+        password should be longer than 6 characters</small
+      >
+
+      <input
+        type="password"
+        formControlName="confirmNewPassword"
+        class="form-control"
+        placeholder="confirm new password"
+        [class.is-invalid]="
+          changePasswordForm.get('confirmNewPassword').invalid &&
+          changePasswordForm.get('confirmNewPassword').touched
+        "
+      />
+      <small
+        class="text-danger"
+        *ngIf="
+          changePasswordForm.get('confirmNewPassword').errors?.required &&
+          changePasswordForm.get('confirmNewPassword').touched
+        "
+      >
+        this.field is required
+      </small>
+      <small
+        class="text-danger"
+        *ngIf="
+          changePasswordForm.get('confirmNewPassword').errors
+            ?.changePasswordError &&
+          changePasswordForm.get('confirmNewPassword').touched
+        "
+      >
+        not identical to the new password
+      </small>
+    </form>
+
+    <button
+      [disabled]="!changePasswordForm.valid"
+      class="btn btn-success mt-2"
+      (click)="confirm()"
+    >
+      confirm
+    </button>
+  </div>
+</div>

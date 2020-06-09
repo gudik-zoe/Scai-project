@@ -1,0 +1,125 @@
+<nav
+  class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
+  style="height: 72px;"
+>
+  <h3 style="color: white;">home page</h3>
+
+  <h4>
+    <a
+      routerLinkActive="active-class"
+      style="cursor: pointer; color: white; margin-left: 30px;"
+      routerLink="/account-settings"
+      >account settings</a
+    >
+  </h4>
+
+  <h4>
+    <button
+      type="button"
+      style="float: right;"
+      class="btn btn-danger ml-5"
+      (click)="logOut()"
+    >
+      log Out
+    </button>
+  </h4>
+</nav>
+<br />
+<div class="container-fluid mt-5" style="background-color: lightcyan;">
+  <div class="row">
+    <div id="first-div" class="col-md-2" style="background-color: lightblue;">
+      <li>user's name</li>
+      <li><i class="fa fa-camera"></i>test</li>
+      <li><i class="fa fa-cutlery"></i>test</li>
+      <li><i class="fa fa-camera"></i>test</li>
+      <li><i class="fa fa-cutlery"></i>test</li>
+      <li><i class="fa fa-camera"></i>test</li>
+      <li><i class="fa fa-cutlery"></i>test</li>
+      <li><i class="fa fa-camera"></i>test</li>
+      <li><i class="fa fa-cutlery"></i>test</li>
+      <li><i class="fa fa-camera"></i>test</li>
+      <li><i class="fa fa-cutlery"></i>test</li>
+      <li><i class="fa fa-camera"></i>test</li>
+      <li><i class="fa fa-cutlery"></i>test</li>
+    </div>
+
+    <div class="col-md-7 mt-3">
+      <h1 style="color: blueviolet;">News Feed</h1>
+      <hr />
+      <div *ngFor="let post of posts" class="text-center">
+        <img src="{{ post.image }}" width="500" height="300px" />
+        <br />
+        <div class="row">
+          <div class="col-md-4" style="margin-left: 70px;">
+            <span *ngIf="post.likes > 1" class="font-weight-bold"
+              >likes: {{ post.likes }}</span
+            >
+            <span *ngIf="post.likes === 1" class="font-weight-bold"
+              >like: {{ post.likes }}</span
+            >
+          </div>
+          <div class="col-md-4">
+            <span class="font-weight-bold" *ngIf="post.comments.length > 1"
+              >{{ post.comments.length
+              }}<a style="cursor: pointer;" (click)="showComments(post.id)"
+                >comments</a
+              ></span
+            >
+            <span class="font-weight-bold" *ngIf="post.comments.length <= 1"
+              >{{ post.comments.length
+              }}<a style="cursor: pointer;" (click)="showComments(post.id)"
+                >comment</a
+              ></span
+            >
+          </div>
+          <hr />
+        </div>
+        <hr />
+        <span>
+          <button class="btn btn-primary btn-sm" (click)="like(post.id)">
+            <span
+              ><i
+                *ngIf="likeBtn"
+                class="fa fa-thumbs-down"
+                aria-hidden="true"
+              ></i
+              ><i
+                *ngIf="!likeBtn"
+                class="fa fa-thumbs-up"
+                aria-hidden="true"
+              ></i></span
+            >{{ likeBtn ? "unlike" : "like" }}
+          </button>
+          |
+
+          <button class="btn btn-primary btn-sm">
+            <span><i class="fa fa-share-alt" aria-hidden="true"></i></span>share
+          </button>
+          <input #data style="width: 300px;" placeholder="comment here" />
+
+          <button
+            class="btn btn-primary btn-sm"
+            (click)="comment(post.id, data.value)"
+          >
+            <span><i class="fa fa-comments" aria-hidden="true"></i></span
+            >comment
+          </button>
+          <p *ngIf="post.showComments">
+            <li *ngFor="let i of post.comments">{{ i }}</li>
+          </p>
+          <hr />
+        </span>
+      </div>
+      <br />
+    </div>
+    <div id="last-div" class="col-md-3" style="background-color: lightblue;">
+      <h3>friends</h3>
+      <p>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod
+        dignissimos quasi error dolores rerum, sed inventore harum suscipit
+        nihil saepe! Autem unde deleniti consequatur esse nisi. Neque, at.
+        Ducimus, minus.
+      </p>
+    </div>
+  </div>
+</div>
