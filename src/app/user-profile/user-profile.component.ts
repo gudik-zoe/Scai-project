@@ -20,11 +20,15 @@ export class UserProfileComponent implements OnInit {
   edit() {
     this.route.navigate(['/account-settings']);
   }
-
+  getName() {
+    return JSON.parse(localStorage.getItem('key')).name;
+  }
   getStudy() {
     return JSON.parse(localStorage.getItem('key')).study;
   }
-
+  toDescription(id) {
+    this.route.navigate(['description', id]);
+  }
   getWentTo() {
     return JSON.parse(localStorage.getItem('key')).wentTo;
   }

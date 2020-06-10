@@ -53,7 +53,7 @@
         style="background-color: lightblue; border-radius: 10px;"
       >
         <div
-          class="mt-2"
+          class="mt-2 ml-3"
           style="width: 400px; background-color: white; border-radius: 10px;"
         >
           <span
@@ -87,14 +87,28 @@
 
         <div
           class="container-fluid"
-          style="background-color: white; border-radius: 10px;"
+          style="background-color: white; border-radius: 10px; width: 400px;"
         >
           <h3 class="font-weight-bold">posts</h3>
           <hr />
-          <div *ngFor="let post of sharedPosts">
-            <img src="{{ post.image }}" width="300px" height="200ox" />
+          <div *ngFor="let post of sharedPosts" class="container">
+            <p class="font-weight-bold">{{ getName() }} has shared</p>
+            <img src="{{ post.image }}" width="300px" height="200px" />
+            <span class="font-weight-bold ml-2">{{ post.likes }}likes</span>
+            <span class="font-weight-bold ml-4"
+              >{{ post.comments.length }}comments</span
+            >
+            <span class="font-weight-bold ml-5"
+              ><a
+                style="color: blue; cursor: pointer;"
+                (click)="toDescription(post.id)"
+                >description
+              </a></span
+            >
+            <hr />
           </div>
         </div>
+        <br />
       </div>
     </div>
   </div>
