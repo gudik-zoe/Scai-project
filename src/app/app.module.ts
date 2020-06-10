@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
     LogInComponent,
     AccountSettingsComponent,
     HomePageComponent,
+    UserProfileComponent,
   ],
   imports: [ReactiveFormsModule, FormsModule, BrowserModule, AppRoutingModule],
   providers: [],

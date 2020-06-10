@@ -51,6 +51,7 @@
             >
               this field is required
             </small>
+            <small class="text-danger" *ngIf="error">invalid username or password <button class="btn btn-danger btn-sm" (click)="ok()">ok</button></small>
           </div>
           <button
             [disabled]="!signInForm.valid"

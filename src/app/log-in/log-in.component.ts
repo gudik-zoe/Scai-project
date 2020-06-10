@@ -14,6 +14,7 @@ export class LogInComponent implements OnInit {
   user;
   changePassword = false;
   dataSaved = false;
+  error = false
 
   signUpfunc() {
     //  this.user = this.signUpForm.get('name').value
@@ -23,6 +24,13 @@ export class LogInComponent implements OnInit {
 
   changePasswordfunc() {
     localStorage.setItem('key', JSON.stringify(this.signUpForm.value));
+  }
+  getEmail(){
+   if (JSON.parse(localStorage.getItem('key')).email == null){
+     console.log('hey')
+   }else {
+     return JSON.parse(localStorage.getItem('key')).email
+   }
   }
 
   signIn() {
@@ -36,8 +44,13 @@ export class LogInComponent implements OnInit {
       this.changePassword = true;
       this.route.navigate(['/home-page']);
     } else {
+      this.error = true
       console.log('not registered');
     }
+  }
+
+  ok(){
+    this.error = false
   }
 
   switch() {
