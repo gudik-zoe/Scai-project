@@ -13,12 +13,12 @@ export class HomePageComponent implements OnInit {
   constructor(private service: PostsService, private route: Router) {}
   likeBtn = false;
 
-  getUserName(){
-    return JSON.parse(localStorage.getItem('key')).name
+  getUserName() {
+    return JSON.parse(localStorage.getItem('key')).name;
   }
-goToDescription(id){
-  this.route.navigate(['/description' , id])
-}
+  goToDescription(id) {
+    this.route.navigate(['/description', id]);
+  }
   logOut() {
     localStorage.removeItem('key');
     this.route.navigate(['/auth']);
@@ -39,6 +39,9 @@ goToDescription(id){
 
   comment(id, data) {
     this.service.comment(id, data);
+  }
+  share(id) {
+    this.service.share(id);
   }
 
   ngOnInit() {

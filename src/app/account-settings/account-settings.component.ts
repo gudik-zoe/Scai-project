@@ -31,7 +31,7 @@ export class AccountSettingsComponent implements OnInit {
     return JSON.parse(localStorage.getItem('key')).confirmPassword;
   }
   change() {
-    this.changePassword = true;
+    this.changePassword = !this.changePassword;
   }
   goToHome() {
     this.route.navigate(['/home-page']);

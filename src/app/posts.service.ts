@@ -23,13 +23,15 @@ export class PostsService {
     this.posts[id].showComments = !this.posts[id].showComments;
   }
 
-  share() {
-    window.alert('u have shared that post');
+  getPosts() {
+    return this.posts;
   }
 
-  getPosts(){
-    return this.posts
+  share(id) {
+    this.sharedPosts.push(this.posts[id]);
   }
+
+  sharedPosts = [];
 
   posts = [
     {
@@ -51,7 +53,8 @@ export class PostsService {
       id: 1,
     },
     {
-      image:'https://estnn.com/wp-content/uploads/2020/01/league-of-legends-header-x.jpg',
+      image:
+        'https://estnn.com/wp-content/uploads/2020/01/league-of-legends-header-x.jpg',
       description: 'such a nice game join now',
       likes: 30,
       comments: [],

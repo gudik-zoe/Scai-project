@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { PostsService } from '../posts.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -7,7 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-profile.component.css'],
 })
 export class UserProfileComponent implements OnInit {
-  constructor(private route: Router) {}
+  constructor(private route: Router, private service: PostsService) {}
+  sharedPosts = [];
   getFullName() {
     return (
       JSON.parse(localStorage.getItem('key')).name +
@@ -33,5 +35,7 @@ export class UserProfileComponent implements OnInit {
   getFrom() {
     return JSON.parse(localStorage.getItem('key')).from;
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.sharedPosts = this.service.sharedPosts;
+  }
 }

@@ -2,7 +2,7 @@
   class="container-fluid mt-5"
   style="background-color: lightblue; width: 400px; border-radius: 10px;"
 >
-  <h3>my data</h3>
+  <h3>Personal Data</h3>
   <hr />
   <span class="font-weight-bold">name: {{ getName() }}</span>
   <span class="font-weight-bold ml-5">lastName: {{ getLastName() }}</span>
@@ -14,10 +14,13 @@
   </p>
   <button class="btn btn-success mt-3" (click)="change()">
     complete / change my data
+    <i *ngIf="!changePassword" class="fa fa-arrow-down" aria-hidden="true"></i>
+    <i *ngIf="changePassword" class="fa fa-arrow-up" aria-hidden="true"></i>
   </button>
 
   <div *ngIf="changePassword" class="container mt-5">
     <form [formGroup]="changePasswordForm">
+      <label>email</label>
       <input
         type="email"
         formControlName="email"
@@ -46,7 +49,8 @@
       >
         invalid email
       </small>
-
+      <br />
+      <label>password</label>
       <input
         type="password"
         formControlName="newPassword"
@@ -57,7 +61,7 @@
           changePasswordForm.get('newPassword').touched
         "
       />
-      <br />
+
       <small
         class="text-danger"
         *ngIf="
@@ -76,7 +80,7 @@
       >
         password should be longer than 6 characters</small
       >
-
+      <label>confirm password</label>
       <input
         type="password"
         formControlName="confirmNewPassword"
