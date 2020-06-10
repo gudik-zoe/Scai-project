@@ -1,8 +1,26 @@
 <div class="container-fluid" *ngFor="let post of posts">
 
-    <div class="container" *ngIf="id === post.id">
-        <img src={{post.image}} style="width: 300px; height: 300px;" />
-        <p>description{{post.description}}</p>
-    </div>
+    <div class="container mt-4" *ngIf="id === post.id">
+        <img src={{post.image}} style="width: 500px; height: 300px;" />
+       
+        
+           
+              <p *ngIf="post.likes > 1" class="font-weight-bold"
+                >likes: {{ post.likes }}</p
+              >
+              <p *ngIf="post.likes === 1" class="font-weight-bold"
+                >like: {{ post.likes }}</p
+              >
+            
+            <span *ngIf="post.comments.length <= 1" class="font-weight-bold">{{post.comments.length}}comment: <li *ngFor="let i of post.comments">{{i}}</li></span>
+            <span *ngIf="post.comments.length > 1" class="font-weight-bold">{{post.comments.length}}comments: <li *ngFor="let i of post.comments">{{i}}</li></span>
+            <br>
+            <span class="font-weight-bold">description: <p>{{post.description}}</p></span>
+             
+              
+         </div>
+         <br>
     
+        
+   
 </div>
