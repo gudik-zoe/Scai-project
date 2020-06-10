@@ -9,6 +9,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { DescriptionComponent } from './description/description.component';
+import { AuthenticationGuard } from './authentication.guard';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { DescriptionComponent } from './description/description.component';
     DescriptionComponent,
   ],
   imports: [ReactiveFormsModule, FormsModule, BrowserModule, AppRoutingModule],
-  providers: [],
+  providers: [AuthenticationGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Custome } from './validator';
 import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-log-in',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./log-in.component.css'],
 })
 export class LogInComponent implements OnInit {
-  constructor(private fb: FormBuilder, private route: Router) {}
+  constructor(private fb: FormBuilder, private route: Router , private service:AuthService) {}
   signUp = true;
   user;
   changePassword = false;
@@ -31,6 +32,10 @@ export class LogInComponent implements OnInit {
    }else {
      return JSON.parse(localStorage.getItem('key')).email
    }
+  }
+
+  hey(){
+    this.service.loggedIn()
   }
 
   signIn() {
