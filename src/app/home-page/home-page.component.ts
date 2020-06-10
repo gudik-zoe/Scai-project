@@ -13,6 +13,12 @@ export class HomePageComponent implements OnInit {
   constructor(private service: PostsService, private route: Router) {}
   likeBtn = false;
 
+  getUserName(){
+    return JSON.parse(localStorage.getItem('key')).name
+  }
+goToDescription(id){
+  this.route.navigate(['/description' , id])
+}
   logOut() {
     localStorage.removeItem('key');
     this.route.navigate(['/auth']);
