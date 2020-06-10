@@ -15,11 +15,20 @@ export class AccountSettingsComponent implements OnInit {
   newUser;
   passwordHasBeenChanged = false;
 
+  getName() {
+    return JSON.parse(localStorage.getItem('key')).name;
+  }
+  getLastName() {
+    return JSON.parse(localStorage.getItem('key')).lastName;
+  }
   getEmail() {
     return JSON.parse(localStorage.getItem('key')).email;
   }
   getPassword() {
     return JSON.parse(localStorage.getItem('key')).password;
+  }
+  getConfirmPassword() {
+    return JSON.parse(localStorage.getItem('key')).confirmPassword;
   }
   change() {
     this.changePassword = true;
@@ -35,6 +44,10 @@ export class AccountSettingsComponent implements OnInit {
       password: this.changePasswordForm.get('newPassword').value,
       confirmPassword: this.changePasswordForm.get('confirmNewPassword').value,
       gender: JSON.parse(localStorage.getItem('key')).gender,
+      study: this.changePasswordForm.get('study').value,
+      wentTo: this.changePasswordForm.get('wentTo').value,
+      livesIn: this.changePasswordForm.get('livesIn').value,
+      from: this.changePasswordForm.get('from').value,
     };
     localStorage.setItem('key', JSON.stringify(this.newUser));
     this.passwordHasBeenChanged = true;
@@ -43,8 +56,16 @@ export class AccountSettingsComponent implements OnInit {
   ngOnInit() {
     this.changePasswordForm = this.fb.group(
       {
-        newPassword: ['', [Validators.required, Validators.minLength(6)]],
-        confirmNewPassword: ['', Validators.required],
+        email: [this.getEmail(), [Validators.required, Validators.email]],
+        newPassword: [
+          this.getPassword(),
+          [Validators.required, Validators.minLength(6)],
+        ],
+        confirmNewPassword: [this.getConfirmPassword(), Validators.required],
+        study: [''],
+        wentTo: [''],
+        livesIn: [''],
+        from: [''],
       },
       { validator: [Custome.changePassword] }
     );

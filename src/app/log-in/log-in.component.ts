@@ -10,12 +10,16 @@ import { AuthService } from './auth.service';
   styleUrls: ['./log-in.component.css'],
 })
 export class LogInComponent implements OnInit {
-  constructor(private fb: FormBuilder, private route: Router , private service:AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    private route: Router,
+    private service: AuthService
+  ) {}
   signUp = true;
   user;
   changePassword = false;
   dataSaved = false;
-  error = false
+  error = false;
 
   signUpfunc() {
     //  this.user = this.signUpForm.get('name').value
@@ -26,16 +30,16 @@ export class LogInComponent implements OnInit {
   changePasswordfunc() {
     localStorage.setItem('key', JSON.stringify(this.signUpForm.value));
   }
-  getEmail(){
-   if (JSON.parse(localStorage.getItem('key')).email == null){
-     console.log('hey')
-   }else {
-     return JSON.parse(localStorage.getItem('key')).email
-   }
+  getEmail() {
+    if (JSON.parse(localStorage.getItem('key')).email == null) {
+      console.log('hey');
+    } else {
+      return JSON.parse(localStorage.getItem('key')).email;
+    }
   }
 
-  hey(){
-    this.service.loggedIn()
+  hey() {
+    this.service.loggedIn();
   }
 
   signIn() {
@@ -49,13 +53,13 @@ export class LogInComponent implements OnInit {
       this.changePassword = true;
       this.route.navigate(['/home-page']);
     } else {
-      this.error = true
+      this.error = true;
       console.log('not registered');
     }
   }
 
-  ok(){
-    this.error = false
+  ok() {
+    this.error = false;
   }
 
   switch() {
@@ -76,6 +80,10 @@ export class LogInComponent implements OnInit {
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', Validators.required],
         gender: ['', Validators.required],
+        study: [''],
+        wentTo: [''],
+        livesIn: [''],
+        from: [''],
       },
       { validator: [Custome.PasswordConfirmation] }
     );

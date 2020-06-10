@@ -2,19 +2,51 @@
   class="container-fluid mt-5"
   style="background-color: lightblue; width: 400px; border-radius: 10px;"
 >
-  <h3 class="text-center">my data</h3>
-  <p class="font-weight-bold">email:{{ getEmail() }}</p>
-  <p class="font-weight-bold">password:{{ getPassword() }}</p>
+  <h3>my data</h3>
+  <hr />
+  <span class="font-weight-bold">name: {{ getName() }}</span>
+  <span class="font-weight-bold ml-5">lastName: {{ getLastName() }}</span>
   <p *ngIf="passwordHasBeenChanged">
-    your password has been successfuly changed
-    <button class="btn btn-success" (click)="goToHome()">go to home</button>
+    your data has been successfuly changed and saved
+    <button class="btn btn-success" (click)="goToHome()">
+      go to home
+    </button>
   </p>
-  <button class="btn btn-info btn-sm" (click)="change()">
-    change password
+  <button class="btn btn-success mt-3" (click)="change()">
+    complete / change my data
   </button>
 
   <div *ngIf="changePassword" class="container mt-5">
     <form [formGroup]="changePasswordForm">
+      <input
+        type="email"
+        formControlName="email"
+        placeholder="insert new email "
+        class="form-control"
+        [class.is-invalid]="
+          changePasswordForm.get('email').invalid &&
+          changePasswordForm.get('email').touched
+        "
+      />
+      <small
+        class="text-danger"
+        *ngIf="
+          changePasswordForm.get('email').errors?.required &&
+          changePasswordForm.get('email').touched
+        "
+      >
+        this.field is required
+      </small>
+      <small
+        class="text-danger"
+        *ngIf="
+          changePasswordForm.get('email').errors?.email &&
+          changePasswordForm.get('email').touched
+        "
+      >
+        invalid email
+      </small>
+
       <input
         type="password"
         formControlName="newPassword"
@@ -74,6 +106,34 @@
       >
         not identical to the new password
       </small>
+      <label>studied at</label>
+      <input
+        type="text"
+        formControlName="study"
+        placeholder="Ex: University of Riot"
+        class="form-control"
+      />
+      <label>went to</label>
+      <input
+        type="text"
+        formControlName="wentTo"
+        placeholder="Ex: High School of Riot"
+        class="form-control"
+      />
+      <label>lives in</label>
+      <input
+        type="text"
+        formControlName="livesIn"
+        placeholder="Ex: Turin, Italy"
+        class="form-control"
+      />
+      <label>from</label>
+      <input
+        type="text"
+        formControlName="from"
+        placeholder="Ex: Syria"
+        class="form-control"
+      />
     </form>
 
     <button
