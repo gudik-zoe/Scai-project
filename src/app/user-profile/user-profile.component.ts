@@ -8,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class UserProfileComponent implements OnInit {
 
   constructor() { }
-
+getFullName(){
+  return JSON.parse(localStorage.getItem('key')).name +' ' + JSON.parse(localStorage.getItem('key')).lastName 
+}
   ngOnInit(): void {
   }
 
