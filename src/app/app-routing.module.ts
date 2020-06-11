@@ -6,6 +6,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { DescriptionComponent } from './description/description.component';
 import { AuthenticationGuard } from './authentication.guard';
+import { AddFriendsComponent } from './add-friends/add-friends.component';
 
 const routes: Routes = [
   { path: '', component: LogInComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'description/:id', component: DescriptionComponent },
   {path:'user-profile' , component:UserProfileComponent},
   { path: 'account-settings', component: AccountSettingsComponent },
+  {path: 'add-friends' , component:AddFriendsComponent}
 ];
 
 @NgModule({

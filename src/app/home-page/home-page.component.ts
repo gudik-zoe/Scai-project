@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class HomePageComponent implements OnInit {
   posts = [];
   data;
-  constructor(private service: PostsService, private route: Router) {}
+  constructor(private postService: PostsService, private route: Router) {}
   likeBtn = false;
 
   getUserName() {
@@ -22,26 +22,32 @@ export class HomePageComponent implements OnInit {
   
   like(id) {
     if (this.likeBtn == false) {
-      this.service.like(id);
+      this.postService.like(id);
       this.likeBtn = true;
     } else {
-      this.service.disLike(id);
+      this.postService.disLike(id);
       this.likeBtn = false;
     }
   }
 
+  userFriends = []
+
   showComments(id) {
-    this.service.showComment(id);
+    this.postService.showComment(id);
   }
 
   comment(id, data) {
-    this.service.comment(id, data);
+    this.postService.comment(id, data);
   }
   share(id) {
-    this.service.share(id);
+    this.postService.share(id);
+  }
+  addFriends(){
+    this.route.navigate(['/add-friends'])
   }
 
   ngOnInit() {
-    this.posts = this.service.posts;
+    this.posts = this.postService.posts;
+    this.userFriends = this.postService.userFriends
   }
 }

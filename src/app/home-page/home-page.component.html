@@ -132,12 +132,21 @@
     </div>
     <div id="last-div" class="col-md-3" style="background-color: lightblue;">
       <h3>friends</h3>
-      <p>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod
-        dignissimos quasi error dolores rerum, sed inventore harum suscipit
-        nihil saepe! Autem unde deleniti consequatur esse nisi. Neque, at.
-        Ducimus, minus.
-      </p>
+      <hr>
+      <div *ngIf="userFriends.length > 0">
+      <div *ngFor="let i of userFriends">
+       <span> <img src="{{i.image}}" width="50px" style="border-radius: 50%;" height="50px" />
+        <span class="font-weight-bold">{{i.fullName}}</span>
+        <span *ngIf="i.online" style="color: green; margin-left: 10px;"><i class="fa fa-circle" aria-hidden="true"></i>
+        </span>
+          <span *ngIf="!i.online" style="color: red; margin-left: 10px;"><i class="fa fa-circle" aria-hidden="true"></i>
+        </span>
+      </span>
+      <hr>
     </div>
+  </div>
+   
+    <p *ngIf="userFriends.length === 0">you have no friends yet..go ahead and </p>
+    <button type="button"  style="margin-left: 120px;" class="btn btn-success" (click)="addFriends()">add friends</button>
   </div>
 </div>

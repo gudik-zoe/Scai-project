@@ -10,6 +10,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { DescriptionComponent } from './description/description.component';
 import { AuthenticationGuard } from './authentication.guard';
+import { AddFriendsComponent } from './add-friends/add-friends.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { AuthenticationGuard } from './authentication.guard';
     HomePageComponent,
     UserProfileComponent,
     DescriptionComponent,
+    AddFriendsComponent,
   ],
   imports: [ReactiveFormsModule, FormsModule, BrowserModule, AppRoutingModule],
   providers: [AuthenticationGuard],
