@@ -73,6 +73,10 @@ export class LogInComponent implements OnInit {
   change() {
     this.changePassword = true;
   }
+
+  lazy(){
+    this.route.navigate(['/lazy'])
+  }
   signUpForm: FormGroup;
   signInForm: FormGroup;
   ngOnInit() {
