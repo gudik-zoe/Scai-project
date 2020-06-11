@@ -58,41 +58,40 @@
       <div *ngFor="let post of posts" class="text-center">
         <img src="{{ post.image }}" width="500" height="300px" />
         <br />
-        <div class="row">
-          <div class="col-md-4" style="margin-left: 70px;">
-            <span *ngIf="post.likes > 1" class="font-weight-bold"
+      
+            <span  *ngIf="post.likes > 1" class="font-weight-bold"
               >likes: {{ post.likes }}</span
             >
             <span *ngIf="post.likes === 1" class="font-weight-bold"
               >like: {{ post.likes }}</span
             >
-          </div>
-          <div class="col-md-4">
-            <span class="font-weight-bold" *ngIf="post.comments.length > 1"
+          
+            <span class="font-weight-bold" style="margin-left: 140px;" *ngIf="post.comments.length > 1"
               >{{ post.comments.length
               }}<a style="cursor: pointer;" (click)="showComments(post.id)"
                 >comments</a
               ></span
             >
-            <span class="font-weight-bold" *ngIf="post.comments.length <= 1"
+            <span class="font-weight-bold" style="margin-left: 140px;" *ngIf="post.comments.length <= 1"
               >{{ post.comments.length
               }}<a style="cursor: pointer;" (click)="showComments(post.id)"
                 >comment</a
               ></span
             >
-            <a
+            <span
               (click)="goToDescription(post.id)"
               style="
                 cursor: pointer;
                 color: blue;
-                margin-left: 140px;
                 font-weight: bold;
+                margin-left: 130px;
               "
-              >description</a
+              
+              >description</span
             >
-          </div>
+          
           <hr />
-        </div>
+        
         <hr />
         <span>
           <button class="btn btn-primary btn-sm" (click)="like(post.id)">
