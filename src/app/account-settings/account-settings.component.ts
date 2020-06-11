@@ -34,7 +34,7 @@ export class AccountSettingsComponent implements OnInit {
     this.changePassword = !this.changePassword;
   }
   goToHome() {
-    this.route.navigate(['/home-page']);
+    this.route.navigate(['/user-profile']);
   }
   confirm() {
     this.newUser = {
