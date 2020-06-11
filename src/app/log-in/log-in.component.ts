@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Custome } from './validator';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
+import { PostsService } from '../posts.service';
 
 @Component({
   selector: 'app-log-in',
@@ -13,13 +14,15 @@ export class LogInComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: Router,
-    private service: AuthService
+    private service: AuthService,
+    private postService:PostsService
   ) {}
   signUp = true;
   user;
   changePassword = false;
   dataSaved = false;
   error = false;
+  logged = []
 
   signUpfunc() {
     //  this.user = this.signUpForm.get('name').value
@@ -51,6 +54,7 @@ export class LogInComponent implements OnInit {
     ) {
       console.log('registered');
       this.changePassword = true;
+      this.logged.push('In')
       this.route.navigate(['/home-page']);
     } else {
       this.error = true;
@@ -72,6 +76,7 @@ export class LogInComponent implements OnInit {
   signUpForm: FormGroup;
   signInForm: FormGroup;
   ngOnInit() {
+    this.logged = this.postService.signedIn
     this.signUpForm = this.fb.group(
       {
         name: ['', Validators.required],

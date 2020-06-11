@@ -39,6 +39,9 @@ export class UserProfileComponent implements OnInit {
   getFrom() {
     return JSON.parse(localStorage.getItem('key')).from;
   }
+  toHome(){
+    this.route.navigate(['/home-page'])
+  }
   ngOnInit() {
     this.sharedPosts = this.service.sharedPosts;
   }

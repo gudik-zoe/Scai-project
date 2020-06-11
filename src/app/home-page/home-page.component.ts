@@ -19,10 +19,7 @@ export class HomePageComponent implements OnInit {
   goToDescription(id) {
     this.route.navigate(['/description', id]);
   }
-  logOut() {
-    localStorage.removeItem('key');
-    this.route.navigate(['/auth']);
-  }
+  
   like(id) {
     if (this.likeBtn == false) {
       this.service.like(id);
