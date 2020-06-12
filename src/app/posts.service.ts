@@ -47,7 +47,11 @@ export class PostsService {
     this.userFriends.push(this.friends[id])
     this.friends[id].pressed = true
   }
- 
+ remove(id){
+    this.userFriends = this.userFriends.filter(item => item.id !== id)
+
+   this.friends[id].pressed = false
+ }
 
  friends = [
   {

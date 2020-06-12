@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'account-settings', loadChildren: () => import('./account-settings/account-settings.module').then(m => m.AccountSettingsModule) },
   
   { path: 'add-friends', loadChildren: () => import('./add-friends/add-friends.module').then(m => m.AddFriendsModule) },
+  {path:'my-friends' , loadChildren:()=>import('./my-friends/my-friends.module').then(m=>m.MyFriendsModule)}
   
 ];
 

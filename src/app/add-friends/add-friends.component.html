@@ -1,11 +1,12 @@
 <br>
 <br>
 <br>
+
 <div class="container-fluid">
        <div class="row">
            <div class="col-md-3" *ngFor="let friend of friends">
            
-            <img src={{friend.image}} width="100" height="100" />
+            <img src={{friend.image}} width="100" height="100" style="border-radius: 50%;" />
             <p>{{friend.fullName}}</p>
             <button [disabled]="friend.pressed" class="btn btn-primary mb-3" type="button" (click)="add(friend.id)" >add friend</button>
         </div>

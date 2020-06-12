@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {Routes , RouterModule} from '@angular/router';
-import { AddFriendsComponent } from './add-friends.component';
+import { MyFriendsComponent } from './my-friends.component';
 
-const routes:Routes = [
-  {path:'' , component:AddFriendsComponent}
+
+const routes: Routes = [
+  {path:'' , component:MyFriendsComponent}
 ]
 
 @NgModule({
-  declarations: [AddFriendsComponent],
+  declarations: [MyFriendsComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes)
   ]
 })
-export class AddFriendsModule { }
+export class MyFriendsModule { }

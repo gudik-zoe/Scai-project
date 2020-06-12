@@ -1,0 +1,9 @@
+<br>
+<br>
+<div class="container-fluid mt-5">
+    <div *ngFor="let friend of myFriends">
+        <li><span><img src="{{friend.image}}" width="50px"
+            style="border-radius: 50%;" /> <span class="font-weight-bold"> {{friend.fullName}} </span>  <button class="btn btn-danger btn-sm"
+        (click)="remove(friend.id)">unfriend</button></span></li>
+    </div>
+</div>

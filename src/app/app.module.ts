@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 // import { UserProfileComponent } from './user-profile/user-profile.component';
 import { DescriptionComponent } from './description/description.component';
 import { AuthenticationGuard } from './authentication.guard';
+// import { MyFriendsComponent } from './my-friends/my-friends.component';
 // import { AddFriendsComponent } from './add-friends/add-friends.component';
 
 
@@ -21,6 +22,7 @@ import { AuthenticationGuard } from './authentication.guard';
     //  HomePageComponent,
     // UserProfileComponent,
     DescriptionComponent,
+    // MyFriendsComponent,
     // AddFriendsComponent,
   
   ],
