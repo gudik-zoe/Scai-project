@@ -14,11 +14,8 @@ export class AddFriendsComponent implements OnInit {
   friends = []
 
   add(id){
-    this.postService.add(id)
+    this.postService.addFriend(id)
   }
-
-  
-
   ngOnInit() {
     this.friends = this.postService.friends
 

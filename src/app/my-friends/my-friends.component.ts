@@ -14,7 +14,7 @@ export class MyFriendsComponent implements OnInit {
   constructor(private postService:PostsService , private route:Router) { }
 
   remove(id){
-    this.postService.remove(id)
+    this.postService.unFriend(id)
     this.myFriends = this.myFriends.filter(item => item.id !== id)
   }
   goToFriends(){

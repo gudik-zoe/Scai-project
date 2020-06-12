@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Custome } from '../log-in/validator';
 import { Router } from '@angular/router';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-account-settings',
@@ -10,40 +11,32 @@ import { Router } from '@angular/router';
 })
 export class AccountSettingsComponent implements OnInit {
   changePasswordForm: FormGroup;
-  constructor(private fb: FormBuilder, private route: Router) {}
+  constructor(private fb: FormBuilder, private route: Router , private storageService:StorageService) {}
   changePassword = false;
   newUser;
   passwordHasBeenChanged = false;
 
-  getName() {
-    return JSON.parse(localStorage.getItem('key')).name;
-  }
-  getLastName() {
-    return JSON.parse(localStorage.getItem('key')).lastName;
-  }
-  getEmail() {
-    return JSON.parse(localStorage.getItem('key')).email;
-  }
-  getPassword() {
-    return JSON.parse(localStorage.getItem('key')).password;
-  }
-  getConfirmPassword() {
-    return JSON.parse(localStorage.getItem('key')).confirmPassword;
-  }
   change() {
     this.changePassword = !this.changePassword;
   }
   goToHome() {
     this.route.navigate(['/user-profile']);
   }
+
+  getLastName(){
+    return this.storageService.getLastName()
+  }
+  getName(){
+    return this.storageService.getName()
+  }
   confirm() {
     this.newUser = {
-      name: JSON.parse(localStorage.getItem('key')).name,
-      lastName: JSON.parse(localStorage.getItem('key')).lastName,
-      email: JSON.parse(localStorage.getItem('key')).email,
+      name: this.storageService.getName(),
+      lastName: this.storageService.getLastName(),
+      email: this.changePasswordForm.get('email').value,
       password: this.changePasswordForm.get('newPassword').value,
       confirmPassword: this.changePasswordForm.get('confirmNewPassword').value,
-      gender: JSON.parse(localStorage.getItem('key')).gender,
+      gender:this.storageService.getGender(),
       study: this.changePasswordForm.get('study').value,
       wentTo: this.changePasswordForm.get('wentTo').value,
       livesIn: this.changePasswordForm.get('livesIn').value,
@@ -56,12 +49,12 @@ export class AccountSettingsComponent implements OnInit {
   ngOnInit() {
     this.changePasswordForm = this.fb.group(
       {
-        email: [this.getEmail(), [Validators.required, Validators.email]],
+        email: [this.storageService.getEmail(), [Validators.required, Validators.email]],
         newPassword: [
-          this.getPassword(),
+          this.storageService.getPassword(),
           [Validators.required, Validators.minLength(6)],
         ],
-        confirmNewPassword: [this.getConfirmPassword(), Validators.required],
+        confirmNewPassword: [this.storageService.getConfirmPassword(), Validators.required],
         study: [''],
         wentTo: [''],
         livesIn: [''],

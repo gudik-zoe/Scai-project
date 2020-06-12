@@ -13,7 +13,7 @@ id
   constructor(private service:PostsService , private aroute:ActivatedRoute) { }
 
   ngOnInit() {
-    this.posts = this.service.getPosts()
+    this.posts = this.service.posts
     this.id =  parseInt(this.aroute.snapshot.paramMap.get('id'))
 
   }
