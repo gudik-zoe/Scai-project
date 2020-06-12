@@ -13,9 +13,12 @@ export class AppComponent implements OnInit  {
   title = 'scai-project';
   loggedIn= []
  
-  logOut() {
-    localStorage.removeItem('key');
+  
+
+  logOut(){
+    this.postService.logOut()
     this.route.navigate(['/auth']);
+    console.log(this.loggedIn)
   }
   
   ngOnInit() {

@@ -22,7 +22,7 @@ export class LogInComponent implements OnInit {
   changePassword = false;
   dataSaved = false;
   error = false;
-  logged = []
+  // logged = []
 
   signUpfunc() {
     //  this.user = this.signUpForm.get('name').value
@@ -54,7 +54,7 @@ export class LogInComponent implements OnInit {
     ) {
       console.log('registered');
       this.changePassword = true;
-      this.logged.push('In')
+      this.postService.signedIn.push('in')
       this.route.navigate(['/home-page']);
     } else {
       this.error = true;
@@ -74,13 +74,10 @@ export class LogInComponent implements OnInit {
     this.changePassword = true;
   }
 
-  lazy(){
-    this.route.navigate(['/lazy'])
-  }
+ 
   signUpForm: FormGroup;
   signInForm: FormGroup;
   ngOnInit() {
-    this.logged = this.postService.signedIn
     this.signUpForm = this.fb.group(
       {
         name: ['', Validators.required],

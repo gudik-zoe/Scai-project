@@ -31,6 +31,12 @@ export class PostsService {
     this.sharedPosts.push(this.posts[id]);
   }
 
+  logOut() {
+    localStorage.removeItem('key');
+    console.log(this.signedIn)
+    this.signedIn.pop()
+  }
+
   sharedPosts = [];
 
   signedIn = []
