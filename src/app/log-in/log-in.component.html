@@ -1,5 +1,5 @@
 
-<div class="container-fluid" style="background-color: lightblue;">
+<div id="main" class="container" style="background-color: lightblue; width: 1500px;">
   <div class="row">
     <div *ngIf="!signUp" class="col-md-4">
       <div class="container-fluid mt-5">
@@ -89,6 +89,7 @@
             <div class="col-md-4">
               <input
                 class="form-control"
+                style="width: 122px;"
                 placeholder="Last name"
                 formControlName="lastName"
                 [class.is-invalid]="
