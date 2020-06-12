@@ -17,48 +17,27 @@ export class LogInComponent implements OnInit {
     private service: AuthService,
     private postService:PostsService
   ) {}
-  signUp = true;
-  user;
-  changePassword = false;
+  signUp = true;  
   dataSaved = false;
   error = false;
-  // logged = []
+  logged = []
 
-  signUpfunc() {
-    //  this.user = this.signUpForm.get('name').value
-    localStorage.setItem('key', JSON.stringify(this.signUpForm.value));
+  signUpfunc(data) {
+    this.service.signUp(data)
     this.dataSaved = true;
   }
 
-  changePasswordfunc() {
-    localStorage.setItem('key', JSON.stringify(this.signUpForm.value));
-  }
-  getEmail() {
-    if (JSON.parse(localStorage.getItem('key')).email == null) {
-      console.log('hey');
-    } else {
-      return JSON.parse(localStorage.getItem('key')).email;
-    }
+  changePasswordfunc(data) {
+    this.service.changePasswordfunc(data)
   }
 
-  hey() {
-    this.service.loggedIn();
-  }
-
-  signIn() {
-    let email = this.signInForm.get('email').value;
-    let password = this.signInForm.get('password').value;
-    if (
-      email === JSON.parse(localStorage.getItem('key')).email &&
-      password === JSON.parse(localStorage.getItem('key')).password
-    ) {
-      console.log('registered');
-      this.changePassword = true;
+  signIn(email,password) {
+      if (this.service.signIn(email,password)){
       this.postService.signedIn.push('in')
+      this.error = false
       this.route.navigate(['/home-page']);
     } else {
-      this.error = true;
-      console.log('not registered');
+      this.error = true
     }
   }
 
@@ -69,11 +48,6 @@ export class LogInComponent implements OnInit {
   switch() {
     this.signUp = !this.signUp;
   }
-
-  change() {
-    this.changePassword = true;
-  }
-
  
   signUpForm: FormGroup;
   signInForm: FormGroup;

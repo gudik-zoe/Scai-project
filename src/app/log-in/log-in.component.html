@@ -57,7 +57,7 @@
           <button
             [disabled]="!signInForm.valid"
             class="btn btn-primary"
-            (click)="signIn()"
+            (click)="signIn(signInForm.get('email').value,signInForm.get('password').value)"
           >
             Log In</button
           ><span>
@@ -214,7 +214,7 @@
             <button
               [disabled]="!signUpForm.valid"
               class="btn btn-success"
-              (click)="signUpfunc()"
+              (click)="signUpfunc(signUpForm.value)"
             >
               Sign Up
             </button>
