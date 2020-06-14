@@ -12,6 +12,7 @@ export class HomePageComponent implements OnInit {
   data;
   constructor(private postService: PostsService, private route: Router) {}
   likeBtn = false;
+  input
 
   getUserName() {
     return JSON.parse(localStorage.getItem('key')).name;
@@ -19,15 +20,12 @@ export class HomePageComponent implements OnInit {
   goToDescription(id) {
     this.route.navigate(['/description', id]);
   }
+  post(data){
+    this.postService.post(data)
+  }
   
   like(id) {
-    if (this.likeBtn == false) {
-      this.postService.like(id);
-      this.likeBtn = true;
-    } else {
-      this.postService.disLike(id);
-      this.likeBtn = false;
-    }
+   this.postService.like(id)
   }
 
   userFriends = []

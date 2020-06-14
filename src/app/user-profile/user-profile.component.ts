@@ -45,6 +45,8 @@ export class UserProfileComponent implements OnInit {
   goToFriends(){
     this.route.navigate(['my-friends'])
   }
+
+  
   ngOnInit() {
     this.sharedPosts = this.service.sharedPosts;
   }

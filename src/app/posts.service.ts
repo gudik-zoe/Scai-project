@@ -8,8 +8,15 @@ export class PostsService {
   signedIn = []
   userFriends = []
   constructor() {}
+
   like(id) {
-    this.posts[id].likes = this.posts[id].likes + 1;
+    if(this.posts[id].likePressed){
+      this.posts[id].likes = this.posts[id].likes - 1
+      this.posts[id].likePressed = false
+    }else{
+      this.posts[id].likes  =  this.posts[id].likes + 1
+      this.posts[id].likePressed = true
+    }
   }
   disLike(id) {
     this.posts[id].likes = this.posts[id].likes - 1;
@@ -42,6 +49,23 @@ export class PostsService {
  unFriend(id){
     this.userFriends = this.userFriends.filter(item => item.id !== id)
    this.friends[id].pressed = false
+ }
+
+ getFullName(){
+   return JSON.parse(localStorage.getItem('key')).name + JSON.parse(localStorage.getItem('key')).lastName
+ }
+ post(data){
+   this.posts.push({
+     sharedBy: this.getFullName(),
+     text:data ,
+    image:'',
+  description: '',
+  likes: 0,
+  likePressed : false,
+  comments: [],
+  showComments: false,
+  id: 4,})
+   data = ''
  }
 
  friends = [
@@ -77,10 +101,13 @@ export class PostsService {
 
   posts = [
     {
+      sharedBy:'',
+      text:'',
       image:
         'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg',
       description: 'such a nice photo',
       likes: 20,
+      likePressed : false,
       comments: ['first comment'],
       showComments: false,
       id: 0,
@@ -90,6 +117,7 @@ export class PostsService {
         'https://th.tvblog.it/V6HnVTZkLCDQ7iSQDveMVZFbWW4=/fit-in/655xorig/https%3A%2F%2Fmedia.tvblog.it%2F5%2F518%2Ffriends.jpg',
       description: '',
       likes: 1,
+      likePressed : false,
       showComments: false,
       comments: ['first comment', 'second comment'],
       id: 1,
@@ -99,6 +127,7 @@ export class PostsService {
         'https://estnn.com/wp-content/uploads/2020/01/league-of-legends-header-x.jpg',
       description: 'such a nice game join now',
       likes: 30,
+      likePressed : false,
       comments: [],
       showComments: false,
       id: 2,

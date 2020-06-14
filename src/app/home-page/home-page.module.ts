@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {Routes , RouterModule} from '@angular/router';
 import { HomePageComponent } from './home-page.component';
+import { FormsModule } from '@angular/forms';
+
 
 const routes:Routes = [
   {path: '' , component:HomePageComponent}
@@ -11,7 +13,8 @@ const routes:Routes = [
   declarations: [HomePageComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    FormsModule
 
   ]
 })

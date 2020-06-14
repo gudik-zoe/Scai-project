@@ -36,7 +36,7 @@
 <br />
 <div class="container-fluid mt-5" style="background-color: lightcyan;">
   <div class="row">
-    <div id="first-div" class="col-md-2" style="background-color: lightblue;">
+    <div id="first-div" class="col-md-3" style="background-color: lightblue;">
       <h4>welcome {{ getUserName() }}</h4>
       <li><i class="fa fa-camera"></i>test</li>
       <li><i class="fa fa-cutlery"></i>test</li>
@@ -52,14 +52,55 @@
       <li><i class="fa fa-cutlery"></i>test</li>
     </div>
 
-    <div class="col-md-7 mt-3">
-      <h1 style="color: blueviolet;">News Feed</h1>
+    <div class="col-md-5">
+     
+      <!-- <h1 style="color: blueviolet;">News Feed</h1> -->
+      <div class="container mt-2" style="width: 500px; background-color: lightblue; margin-left: 50px;
+       border-radius: 10px;">
+
+     
+        <span
+        ><img
+          src="https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"
+          width="50px"
+          style="border-radius: 50%;"
+        />
+        <input
+          class="ml-2"
+          [(ngModel)]="input"
+          placeholder="what's in your mind, {{getUserName()}}? "
+          style="
+            width: 300px;
+            border-radius: 10px;
+            background-color: lightcyan;
+            border-style: none;
+          "
+        />
+      </span>
+      <button [disabled]="input == '' || input == ' '" class="btn btn-primary btn-block" (click)="post(input)" *ngIf="input !== undefined" >post</button>
       <hr />
+      <span style="color: red;" class="font-weight-bold ml-4">
+        <i class="fa fa-video-camera" aria-hidden="true"></i> live
+        video</span
+      ><span style="color: green;" class="font-weight-bold ml-5">
+        <i class="fa fa-picture-o" aria-hidden="true"></i> photos</span
+      ><span style="color: blue;" class="font-weight-bold ml-5">
+        <i class="fa fa-calendar" aria-hidden="true"></i> events</span
+      >
+  
+  </div>
+  <br>
+  <hr>
+  <h2 style="color: blue;" class="font-weight-bold">News Feed</h2>
+  <hr>
       <div *ngFor="let post of posts" class="text-center">
-        <img src="{{ post.image }}" width="500" height="300px" />
+        <h3 *ngIf="post.sharedBy">{{post.sharedBy}} shared : </h3>
+        <h3  *ngIf="post.text">{{post.text}}</h3>
+        
+        <img *ngIf="post.image !== ''" src="{{ post.image }}" width="500" height="300px" />
         <br />
       
-            <span  *ngIf="post.likes > 1" class="font-weight-bold"
+            <span  *ngIf="post.likes === 0 || post.likes > 1 " class="font-weight-bold"
               >likes: {{ post.likes }}</span
             >
             <span *ngIf="post.likes === 1" class="font-weight-bold"
@@ -94,16 +135,16 @@
           <button class="btn btn-primary btn-sm" (click)="like(post.id)">
             <span
               ><i
-                *ngIf="likeBtn"
+                *ngIf="post.likePressed == true"
                 class="fa fa-thumbs-down"
                 aria-hidden="true"
               ></i
               ><i
-                *ngIf="!likeBtn"
+                *ngIf="post.likePressed == false"
                 class="fa fa-thumbs-up"
                 aria-hidden="true"
               ></i></span
-            >{{ likeBtn ? "unlike" : "like" }}
+            >{{ post.likePressed ? 'unlike' : 'like' }}
           </button>
           |
 
@@ -127,7 +168,7 @@
       </div>
       <br />
     </div>
-    <div id="last-div" class="col-md-3" style="background-color: lightblue;">
+    <div id="last-div" class="col-md-4" style="background-color: lightblue;">
       <h3>friends</h3>
       <hr>
       <div *ngIf="userFriends.length > 0">
