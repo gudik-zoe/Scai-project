@@ -77,7 +77,7 @@
           "
         />
       </span>
-      <button [disabled]="input == '' || input == ' '" class="btn btn-primary btn-block" (click)="post(input)" *ngIf="input !== undefined" >post</button>
+      <button [disabled]="input == null || input == ' '" class="btn btn-primary btn-block" (click)="post(input)" *ngIf="input !== undefined" >post</button>
       <hr />
       <span style="color: red;" class="font-weight-bold ml-4">
         <i class="fa fa-video-camera" aria-hidden="true"></i> live
@@ -155,7 +155,7 @@
 
           <button
             class="btn btn-primary btn-sm"
-            (click)="comment(post.id, data.value)"
+            (click)="comment(post.id, data)"
           >
             <span><i class="fa fa-comments" aria-hidden="true"></i></span
             >comment

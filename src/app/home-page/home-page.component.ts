@@ -13,6 +13,7 @@ export class HomePageComponent implements OnInit {
   constructor(private postService: PostsService, private route: Router) {}
   likeBtn = false;
   input
+  commentInput
 
   getUserName() {
     return JSON.parse(localStorage.getItem('key')).name;
@@ -22,6 +23,7 @@ export class HomePageComponent implements OnInit {
   }
   post(data){
     this.postService.post(data)
+    this.input = undefined
   }
   
   like(id) {
@@ -35,7 +37,8 @@ export class HomePageComponent implements OnInit {
   }
 
   comment(id, data) {
-    this.postService.comment(id, data);
+    this.postService.comment(id, data.value);
+    data.value = ''
   }
   share(id) {
     this.postService.share(id);
