@@ -59,13 +59,12 @@ export class PostsService {
      sharedBy: this.getFullName(),
      text:data ,
     image:'',
-  description: '',
-  likes: 0,
-  likePressed : false,
-  comments: [],
-  showComments: false,
-  id: 4,})
-   data = ''
+    description: '',
+    likes: 0,
+    likePressed : false,
+    comments: [],
+    showComments: false,
+    id: this.posts.length})
  }
 
  friends = [
@@ -100,6 +99,7 @@ export class PostsService {
  ]
 
   posts = [
+    
     {
       sharedBy:'',
       text:'',
@@ -123,6 +123,7 @@ export class PostsService {
       id: 1,
     },
     {
+    
       image:
         'https://estnn.com/wp-content/uploads/2020/01/league-of-legends-header-x.jpg',
       description: 'such a nice game join now',
