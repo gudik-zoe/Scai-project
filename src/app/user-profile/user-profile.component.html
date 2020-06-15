@@ -7,7 +7,7 @@
       width="150px"
       style="border-radius: 50%;"
     />
-    <p class="font-weight-bold">{{ getFullName() }}</p>
+    <p class="font-weight-bold">{{ name() + ' ' + lastName() }}</p>
   </div>
   <span  class="new" routerLink="/home-page" >Home page</span>
   <span  class="new" routerLink="/my-friends" >My Friends</span>
@@ -31,19 +31,19 @@
         <hr />
         <li>
           <i class="fa fa-graduation-cap" aria-hidden="true"></i> studied at
-          <span class="font-weight-bold">{{ getStudy() }}</span>
+          <span class="font-weight-bold">{{ study() }}</span>
         </li>
         <li>
           <i class="fa fa-university" aria-hidden="true"></i> went to
-          <span class="font-weight-bold"> {{ getWentTo() }}</span>
+          <span class="font-weight-bold"> {{ wentTo() }}</span>
         </li>
         <li>
           <i class="fa fa-home" aria-hidden="true"></i> lives in
-          <span class="font-weight-bold"> {{ getLivesIn() }}</span>
+          <span class="font-weight-bold"> {{ livesIn() }}</span>
         </li>
         <li>
           <i class="fa fa-map-marker" aria-hidden="true"></i> from
-          <span class="font-weight-bold"> {{ getFrom() }}</span>
+          <span class="font-weight-bold"> {{ from() }}</span>
         </li>
         <br />
         <button
@@ -70,7 +70,7 @@
             />
             <input
               class="ml-2"
-              placeholder="what's in your mind {{getName()}}?"
+              placeholder="what's in your mind {{name()}}?"
               style="
                 width: 300px;
                 border-radius: 10px;
@@ -98,7 +98,7 @@
           <h3 class="font-weight-bold">posts</h3>
           <hr />
           <div *ngFor="let post of sharedPosts" class="container">
-            <p class="font-weight-bold">{{ getName() }} has shared</p>
+            <p class="font-weight-bold">{{ name() }} has shared</p>
             <img src="{{ post.image }}" width="300px" height="200px" />
             <span class="font-weight-bold ml-2">{{ post.likes }}likes</span>
             <span class="font-weight-bold ml-4"

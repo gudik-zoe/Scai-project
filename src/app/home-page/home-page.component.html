@@ -1,43 +1,8 @@
-<!-- <nav
-  class="navbar navbar-expand-md navbar-dark fixed-top bg-primary"
-  style="height: 72px;"
->
-  <h3 style="color: white;">
-    <i class="fa fa-home" aria-hidden="true"></i>home page
-  </h3>
-
-  <h4>
-    <a
-      routerLinkActive="active-class"
-      style="cursor: pointer; color: white; margin-left: 30px;"
-      routerLink="/account-settings"
-      >account settings <i class="fa fa-cog" aria-hidden="true"></i
-    ></a>
-  </h4>
-  <h4>
-    <a
-      routerLinkActive="active-class"
-      style="cursor: pointer; color: white; margin-left: 30px;"
-      routerLink="/user-profile"
-      >profile <i class="fa fa-user" aria-hidden="true"></i
-    ></a>
-  </h4>
-  <h4>
-    <button
-      type="button"
-      style="float: right;"
-      class="btn btn-danger ml-5"
-      (click)="logOut()"
-    >
-      log Out
-    </button>
-  </h4>
-</nav> -->
 <br />
 <div class="container-fluid mt-5" style="background-color: lightcyan;">
   <div class="row">
     <div id="first-div" class="col-md-3" style="background-color: lightblue;">
-      <h4>welcome {{ getUserName() }}</h4>
+      <h4>welcome {{  getUserName() }}</h4>
       <li><i class="fa fa-camera"></i>test</li>
       <li><i class="fa fa-cutlery"></i>test</li>
       <li><i class="fa fa-camera"></i>test</li>
@@ -68,7 +33,7 @@
         <input
           class="ml-2"
           [(ngModel)]="input"
-          placeholder="what's in your mind, {{getUserName()}}? "
+          placeholder="what's in your mind, {{ getUserName()}}? "
           style="
             width: 300px;
             border-radius: 10px;

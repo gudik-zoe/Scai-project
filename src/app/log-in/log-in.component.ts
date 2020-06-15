@@ -14,7 +14,7 @@ export class LogInComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: Router,
-    private service: AuthService,
+    private auth: AuthService,
     private postService:PostsService
   ) {}
   signUp = true;  
@@ -23,23 +23,25 @@ export class LogInComponent implements OnInit {
   logged = []
 
   signUpfunc(data) {
-    this.service.signUp(data)
+    this.auth.signUp(data)
     this.dataSaved = true;
   }
 
-  changePasswordfunc(data) {
-    this.service.changePasswordfunc(data)
-  }
+  // changePasswordfunc(data) {
+  //   this.auth.changePasswordfunc(data)
+  // }
 
-  signIn(email,password) {
-      if (this.service.signIn(email,password)){
-      this.postService.signedIn.push('in')
-      this.error = false
-      this.route.navigate(['/home-page']);
-    } else {
-      this.error = true
-    }
-  }
+   signIn(email,password) {
+     
+     if(this.auth.signIn(email,password)){
+     this.route.navigate(['/home-page'])
+       this.error = false
+     }else {
+       this.error = true
+       
+     }
+  
+   }
 
   ok() {
     this.error = false;

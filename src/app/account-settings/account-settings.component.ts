@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Custome } from '../log-in/validator';
 import { Router } from '@angular/router';
 import { StorageService } from '../storage.service';
+import { AuthService } from '../log-in/auth.service';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-account-settings',
@@ -11,7 +13,10 @@ import { StorageService } from '../storage.service';
 })
 export class AccountSettingsComponent implements OnInit {
   changePasswordForm: FormGroup;
-  constructor(private fb: FormBuilder, private route: Router , private storageService:StorageService) {}
+  constructor(private fb: FormBuilder,
+     private route: Router ,
+      private storageService:StorageService , 
+      private auth : AuthService) {}
   changePassword = false;
   newUser;
   passwordHasBeenChanged = false;
@@ -42,9 +47,12 @@ export class AccountSettingsComponent implements OnInit {
       livesIn: this.changePasswordForm.get('livesIn').value,
       from: this.changePasswordForm.get('from').value,
     };
-    localStorage.setItem('key', JSON.stringify(this.newUser));
-    this.passwordHasBeenChanged = true;
-    this.changePassword = false;
+   
+    this.auth.localStorageArray[this.auth.currentUser[0]] = this.newUser
+    localStorage.setItem('user' , JSON.stringify(this.auth.localStorageArray))
+   
+     this.passwordHasBeenChanged = true;
+     this.changePassword = false;
   }
   ngOnInit() {
     this.changePasswordForm = this.fb.group(

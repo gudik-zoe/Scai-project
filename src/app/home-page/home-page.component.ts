@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PostsService } from '../posts.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../log-in/auth.service';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-home-page',
@@ -10,13 +12,16 @@ import { Router } from '@angular/router';
 export class HomePageComponent implements OnInit {
   posts = [];
   data;
-  constructor(private postService: PostsService, private route: Router) {}
+  constructor(private postService: PostsService,
+     private route: Router ,
+      private auth:AuthService ,
+       private storageService: StorageService) {}
   likeBtn = false;
   input
   commentInput
 
   getUserName() {
-    return JSON.parse(localStorage.getItem('key')).name;
+    return this.storageService.getName()
   }
   goToDescription(id) {
     this.route.navigate(['/description', id]);

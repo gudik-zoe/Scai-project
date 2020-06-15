@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostsService } from '../posts.service';
+import { StorageService } from '../storage.service';
+import { AuthService } from '../log-in/auth.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -8,36 +10,40 @@ import { PostsService } from '../posts.service';
   styleUrls: ['./user-profile.component.css'],
 })
 export class UserProfileComponent implements OnInit {
-  constructor(private route: Router, private service: PostsService) {}
+  constructor(private route: Router,
+     private service: PostsService ,
+      private storageService: StorageService , 
+      private auth:AuthService) {}
   sharedPosts = [];
-  getFullName() {
-    return (
-      JSON.parse(localStorage.getItem('key')).name +
-      ' ' +
-      JSON.parse(localStorage.getItem('key')).lastName
-    );
-  }
+ 
   edit() {
     this.route.navigate(['/account-settings']);
   }
-  getName() {
-    return JSON.parse(localStorage.getItem('key')).name;
-  }
-  getStudy() {
-    return JSON.parse(localStorage.getItem('key')).study;
-  }
+
   toDescription(id) {
     this.route.navigate(['description', id]);
   }
-  getWentTo() {
-    return JSON.parse(localStorage.getItem('key')).wentTo;
+  // fullName() {
+  //   return  (this.storageService.getName() + '' + this.storageService.getLastName())
+  //   }
+  name() {
+    return this.storageService.getName()
+  }
+  lastName(){
+    return this.storageService.getLastName()
+  }
+  study() {
+    return  this.storageService.getStudy()
+   }
+  wentTo() {
+   return  this.storageService.getWentTo()
   }
 
-  getLivesIn() {
-    return JSON.parse(localStorage.getItem('key')).livesIn;
+  livesIn() {
+    return    this.storageService.getLivesIn()
   }
-  getFrom() {
-    return JSON.parse(localStorage.getItem('key')).from;
+  from() {
+    return this.storageService.getFrom()
   }
   toHome(){
     this.route.navigate(['/home-page'])

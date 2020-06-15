@@ -1,41 +1,43 @@
 import { Injectable } from '@angular/core';
+import { AuthService } from './log-in/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
 
-  constructor() { }
+  constructor(private auth : AuthService) { }
 
   getName(){
-    return JSON.parse(localStorage.getItem('key')).name; 
+  return  this.auth.localStorageArray[this.auth.currentUser[0]].name
+ 
   }
   getLastName(){
-    return JSON.parse(localStorage.getItem('key')).lastName; 
+    return this.auth.localStorageArray[this.auth.currentUser[0]].lastName 
   }
   getEmail(){
-    return JSON.parse(localStorage.getItem('key')).email; 
+    return this.auth.localStorageArray[this.auth.currentUser[0]].email; 
   }
   getPassword(){
-    return JSON.parse(localStorage.getItem('key')).password; 
+    return this.auth.localStorageArray[this.auth.currentUser[0]].password 
   }
   getConfirmPassword(){
-    return JSON.parse(localStorage.getItem('key')).confirmPassword; 
+    return this.auth.localStorageArray[this.auth.currentUser[0]].confirmPassword 
   }
   getGender(){
-    return JSON.parse(localStorage.getItem('key')).gender; 
+    return this.auth.localStorageArray[this.auth.currentUser[0]].gender
   }
   getStudy(){
-    return JSON.parse(localStorage.getItem('key')).study; 
+    return this.auth.localStorageArray[this.auth.currentUser[0]].study 
   }
   getWentTo(){
-    return JSON.parse(localStorage.getItem('key')).wentTo; 
+    return this.auth.localStorageArray[this.auth.currentUser[0]].wentTo
   }
   getFrom(){
-    return JSON.parse(localStorage.getItem('key')).from; 
+    return this.auth.localStorageArray[this.auth.currentUser[0]].from
   }
   getLivesIn(){
-    return JSON.parse(localStorage.getItem('key')).livesIn; 
+    return  this.auth.localStorageArray[this.auth.currentUser[0]].livesIn
   }
   
   
