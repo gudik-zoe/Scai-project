@@ -35,6 +35,10 @@ export class HomePageComponent implements OnInit {
    this.postService.like(id)
   }
 
+  // scroll(){
+    
+  // }
+
   userFriends = []
 
   showComments(id) {

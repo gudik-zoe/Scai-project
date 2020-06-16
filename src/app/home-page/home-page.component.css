@@ -1,11 +1,31 @@
 #first-div{
-    border-right: 1px solid black ;
+    /* border-right: 1px solid black ; */
+    margin-top: 5px;
+   
+}
+#second-div{
+    margin-top: 5px;
+        height: 800px; 
+        overflow-y: scroll; 
 }
 
 #last-div{
     border-left: 1px solid black;
+    margin-top: 5px;
+   
 }
+/* :-webkit-scrollbar {
+    display: none;
+} */
+
+li{
+    margin-top: 20px;
+    
+}
+
 
 .spane{
     display: inline;
 }
+
+
