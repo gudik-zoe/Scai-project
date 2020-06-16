@@ -9,38 +9,39 @@ export class StorageService {
   constructor(private auth : AuthService) {  }
 
   getName(){
-  return  this.auth.localStorageArray[this.auth.currentUser[0]].name
+    
+  return  this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].name
  
   }
   getLastName(){
-    return this.auth.localStorageArray[this.auth.currentUser[0]].lastName 
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].lastName 
   }
   getEmail(){
-    return this.auth.localStorageArray[this.auth.currentUser[0]].email; 
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].email; 
   }
   getPassword(){
-    return this.auth.localStorageArray[this.auth.currentUser[0]].password 
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].password 
   }
   getConfirmPassword(){
-    return this.auth.localStorageArray[this.auth.currentUser[0]].confirmPassword 
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].confirmPassword 
   }
   getGender(){
-    return this.auth.localStorageArray[this.auth.currentUser[0]].gender
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].gender
   }
   getStudy(){
-    return this.auth.localStorageArray[this.auth.currentUser[0]].study 
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].study 
   }
   getWentTo(){
-    return this.auth.localStorageArray[this.auth.currentUser[0]].wentTo
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].wentTo
   }
   getFrom(){
-    return this.auth.localStorageArray[this.auth.currentUser[0]].from
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].from
   }
   getLivesIn(){
-    return  this.auth.localStorageArray[this.auth.currentUser[0]].livesIn
+    return  this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].livesIn
   }
   getUserPosts(){
-    return this.auth.localStorageArray[this.auth.currentUser[0]].posts
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].posts
   }
   
 }

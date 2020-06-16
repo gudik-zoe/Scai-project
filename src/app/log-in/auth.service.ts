@@ -28,19 +28,20 @@ export class AuthService {
     signIn(email,password){
       this.requestedUserIndex = this.localStorageArray.findIndex(item => item.email === email && item.password === password )
       if(this.requestedUserIndex !== -1){
+        localStorage.setItem('key' , String(this.requestedUserIndex))
           this.signedIn.next(true)
-          this.currentUser.push(this.requestedUserIndex)
+          // this.currentUser.push(this.requestedUserIndex)
           return true 
       }
       else {
           return false 
             }
 }
-logOut() {
- this.currentUser = []
- this.signedIn.next(false)
+// logOut() {
+// //  this.currentUser = []
+//  this.signedIn.next(false)
 
-}
+// }
     
 
   constructor() {}

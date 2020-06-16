@@ -29,6 +29,7 @@ export class LogInComponent implements OnInit {
 
    signIn(email,password) {
      if(this.auth.signIn(email,password)){
+      
      this.route.navigate(['/home-page'])
        this.error = false
      }else {
