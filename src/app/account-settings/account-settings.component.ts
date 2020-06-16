@@ -49,7 +49,7 @@ export class AccountSettingsComponent implements OnInit {
       posts:this.storageService.getUserPosts()
     };
    
-    this.auth.localStorageArray[this.auth.currentUser[0]] = this.newUser
+    this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))] = this.newUser
     localStorage.setItem('user' , JSON.stringify(this.auth.localStorageArray))
    
      this.passwordHasBeenChanged = true;
