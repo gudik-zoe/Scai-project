@@ -59,7 +59,8 @@
   <h2 style="color: blue;" class="font-weight-bold">News Feed</h2>
   <hr>
       <div *ngFor="let post of posts" class="text-center">
-        <small style="margin-right: 270px;" *ngIf="post.sharedBy"> <img
+        <small style="margin-right: 270px;" *ngIf="post.sharedBy">
+           <img
           src="https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"
           width="50px"
           style="border-radius: 50%;"
@@ -116,7 +117,6 @@
               ></i></span
             >{{ post.likePressed ? 'unlike' : 'like' }}
           </button>
-          |
 
           <button class="btn btn-primary btn-sm" (click)="share(post.id)">
             <span><i class="fa fa-share-alt" aria-hidden="true"></i></span>share

@@ -42,7 +42,9 @@ export class LogInComponent implements OnInit {
 
   switch() {
     this.signUp = !this.signUp;
-  }
+  } 
+
+
  
   signUpForm: FormGroup;
   signInForm: FormGroup;

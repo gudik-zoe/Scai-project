@@ -1,5 +1,6 @@
 import { Injectable, ɵisListLikeIterable } from '@angular/core';
 import { AuthService } from './log-in/auth.service';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ export class PostsService {
   sharedPosts = [];
   signedIn = []
   userFriends = []
-  constructor(private auth:AuthService) {}
+  constructor(private auth:AuthService , private storage:StorageService) {}
 
   like(id) {
     if(this.posts[id].likePressed){
@@ -49,20 +50,24 @@ export class PostsService {
    this.friends[id].pressed = false
  }
 
- getFullName(){
-  return   this.auth.currentUser[0].name  + this.auth.currentUser[0].lastName
+ getName(){
+  return this.storage.getName() 
  }
+ getLastName(){
+return  this.storage.getLastName()
+ }
+
  post(data){
    this.posts.push({
-     sharedBy: this.getFullName(),
+     sharedBy: this.getName() + ' ' + this.getLastName() ,
      text:data ,
-    image:'',
-    description: '',
-    likes: 0,
-    likePressed : false,
-    comments: [],
-    showComments: false,
-    id: this.posts.length})
+      image:'',
+     description: '',
+     likes: 0,
+      likePressed : false,
+     comments: [],
+      showComments: false,
+      id: this.posts.length})
  }
 
  friends = [
