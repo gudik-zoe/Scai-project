@@ -46,6 +46,7 @@ export class AccountSettingsComponent implements OnInit {
       wentTo: this.changePasswordForm.get('wentTo').value,
       livesIn: this.changePasswordForm.get('livesIn').value,
       from: this.changePasswordForm.get('from').value,
+      posts:this.storageService.getUserPosts()
     };
    
     this.auth.localStorageArray[this.auth.currentUser[0]] = this.newUser

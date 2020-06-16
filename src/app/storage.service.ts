@@ -6,7 +6,7 @@ import { AuthService } from './log-in/auth.service';
 })
 export class StorageService {
 
-  constructor(private auth : AuthService) { }
+  constructor(private auth : AuthService) {  }
 
   getName(){
   return  this.auth.localStorageArray[this.auth.currentUser[0]].name
@@ -39,6 +39,12 @@ export class StorageService {
   getLivesIn(){
     return  this.auth.localStorageArray[this.auth.currentUser[0]].livesIn
   }
-  
+  getUserPosts(){
+    // const userPosts = []
+    // userPosts.push(this.auth.localStorageArray[this.auth.currentUser[0]].posts)
+    // return userPosts
+    return this.auth.localStorageArray[this.auth.currentUser[0]].posts
+    
+  }
   
 }

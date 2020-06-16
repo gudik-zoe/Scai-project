@@ -23,9 +23,7 @@ export class UserProfileComponent implements OnInit {
   toDescription(id) {
     this.route.navigate(['description', id]);
   }
-  // fullName() {
-  //   return  (this.storageService.getName() + '' + this.storageService.getLastName())
-  //   }
+ 
   name() {
     return this.storageService.getName()
   }
@@ -51,6 +49,10 @@ export class UserProfileComponent implements OnInit {
   goToFriends(){
     this.route.navigate(['my-friends'])
   }
+
+  getPersonalPosts(){
+  return  this.storageService.getUserPosts()
+    }
 
   
   ngOnInit() {

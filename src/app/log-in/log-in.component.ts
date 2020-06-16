@@ -27,20 +27,13 @@ export class LogInComponent implements OnInit {
     this.dataSaved = true;
   }
 
-  // changePasswordfunc(data) {
-  //   this.auth.changePasswordfunc(data)
-  // }
-
    signIn(email,password) {
-     
      if(this.auth.signIn(email,password)){
      this.route.navigate(['/home-page'])
        this.error = false
      }else {
        this.error = true
-       
      }
-  
    }
 
   ok() {
@@ -66,6 +59,26 @@ export class LogInComponent implements OnInit {
         wentTo: [''],
         livesIn: [''],
         from: [''],
+        posts:[
+                [
+                  
+                   {
+                      sharedBy:'',
+                      text:'',
+                      image:
+                      'https://www.playblog.it/wp-content/uploads/2020/02/Come-creare-GIF-animate-da-qualsiasi-pc-Windows-960x640.jpg',
+                       description: 'how to ...',
+                       likes: 0,
+                       likePressed : false,
+                       comments: [],
+                       showComments: false,
+                       id: 0 
+                    }
+                  
+                  
+                ] 
+    
+    ]
       },
       { validator: [Custome.PasswordConfirmation] }
     );
