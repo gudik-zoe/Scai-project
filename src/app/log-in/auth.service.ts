@@ -22,8 +22,8 @@ export class AuthService {
       }else {
      this.localStorageArray.push(data)
       localStorage.setItem('user' , JSON.stringify(this.localStorageArray))
-        }
-       
+      }
+      console.log(this.localStorageArray)
     }
   
     signIn(email,password){
@@ -37,6 +37,7 @@ export class AuthService {
       else {
           return false 
             }
+         
 }
 // logOut() {
 // //  this.currentUser = []
