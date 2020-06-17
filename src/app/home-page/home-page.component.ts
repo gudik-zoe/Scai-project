@@ -18,7 +18,8 @@ export class HomePageComponent implements OnInit {
        private storageService: StorageService) {}
   likeBtn = false;
   input
-  commentInput
+  
+  
 
   getUserName() {
     return this.storageService.getName()
@@ -35,19 +36,15 @@ export class HomePageComponent implements OnInit {
    this.postService.like(id)
   }
 
-  // scroll(){
-    
-  // }
-
   userFriends = []
 
   showComments(id) {
     this.postService.showComment(id);
   }
 
-  comment(id, data) {
-    this.postService.comment(id, data.value);
-    data.value = ''
+  comment(id, comment) {
+    this.postService.comment(id, comment.value);
+    comment.value = ''
   }
   share(id) {
     this.postService.share(id);

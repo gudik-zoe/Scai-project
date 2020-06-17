@@ -13,7 +13,7 @@ export class AuthService {
   requestedUserIndex
   currentUser = []
     loggedIn(){
-        return !!localStorage.getItem('user')
+        return !!localStorage.getItem('key')
     }
     signUp(data){ 
       this.users.push(data)
