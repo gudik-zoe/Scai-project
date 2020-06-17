@@ -21,10 +21,21 @@ export class LogInComponent implements OnInit {
   dataSaved = false;
   error = false;
   logged = []
+  emailExist = false
 
   signUpfunc(data) {
+    if (!this.auth.check(data.email)){
     this.auth.signUp(data)
     this.dataSaved = true;
+    }
+    else {
+      this.emailExist = true
+    }
+  }
+
+  signUpAgain(){
+    this.emailExist = false
+    this.signUpForm.reset()
   }
 
    signIn(email,password) {

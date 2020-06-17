@@ -19,6 +19,7 @@
             </span>
             <hr>
             <p class="font-weight-bold">comments:</p>
+            <div *ngIf="post.comments.length > 0">
             <ul *ngFor="let i of post.comments">
                 <li> 
                  <img src="{{i.image}}" width="35px" style="border-radius: 50%;" />
@@ -28,7 +29,8 @@
                    </span>
                 </li>
               </ul>
-
+            </div>
+            <div *ngIf="post.comments.length === 0">no comments yet</div>
 
           
 

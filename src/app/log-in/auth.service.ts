@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 export class AuthService {
 
   users = []
+  error = false
   //  signedIn :  Subject <boolean> = new Subject()
   localStorageArray = JSON.parse(localStorage.getItem('user'))
   requestedUserIndex
@@ -16,6 +17,7 @@ export class AuthService {
         return !!localStorage.getItem('key')
     }
     signUp(data){ 
+  
       this.users.push(data)
       if (JSON.parse(localStorage.getItem('user')) === null){
          localStorage.setItem('user', JSON.stringify(this.users));
@@ -23,7 +25,13 @@ export class AuthService {
      this.localStorageArray.push(data)
       localStorage.setItem('user' , JSON.stringify(this.localStorageArray))
       }
-      console.log(this.localStorageArray)
+    
+  }
+
+    check(email){
+      if (this.localStorageArray !== null){
+     return this.localStorageArray.some(item => item.email === email)
+      }
     }
   
     signIn(email,password){

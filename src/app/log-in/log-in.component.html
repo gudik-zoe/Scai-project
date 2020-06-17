@@ -1,5 +1,6 @@
 
 <div id="main" class="container" style="background-color: lightblue; width: 1500px;">
+ 
   <div class="row">
     <div *ngIf="!signUp" class="col-md-4">
       <div class="container-fluid mt-5">
@@ -223,6 +224,7 @@
             <button class="btn btn-info btn-sm" (click)="switch()">
               sign in
             </button>
+            <small *ngIf="emailExist">this user already exist <button class="btn btn-danger" (click)="signUpAgain()" >ok</button></small>
           </span>
           <span *ngIf="dataSaved"
             >your data have been registered click here to
