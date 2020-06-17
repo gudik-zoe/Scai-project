@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { StorageService } from '../storage.service';
 import { AuthService } from '../log-in/auth.service';
 import { JsonPipe } from '@angular/common';
+import { ConstantPool } from '@angular/compiler';
 
 @Component({
   selector: 'app-account-settings',
@@ -20,6 +21,7 @@ export class AccountSettingsComponent implements OnInit {
   changePassword = false;
   newUser;
   passwordHasBeenChanged = false;
+  image= null
 
   change() {
     this.changePassword = !this.changePassword;
@@ -34,8 +36,13 @@ export class AccountSettingsComponent implements OnInit {
   getName(){
     return this.storageService.getName()
   }
+  newImage(event){ 
+      this.image = event.target.files[0].name
+      console.log(this.image)
+  }
   confirm() {
     this.newUser = {
+       image:this.image,
       name: this.storageService.getName(),
       lastName: this.storageService.getLastName(),
       email: this.changePasswordForm.get('email').value,
@@ -48,13 +55,14 @@ export class AccountSettingsComponent implements OnInit {
       from: this.changePasswordForm.get('from').value,
       posts:this.storageService.getUserPosts()
     };
-   
+    
     this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))] = this.newUser
     localStorage.setItem('user' , JSON.stringify(this.auth.localStorageArray))
    
      this.passwordHasBeenChanged = true;
      this.changePassword = false;
   }
+  
   ngOnInit() {
     this.changePasswordForm = this.fb.group(
       {
@@ -68,6 +76,7 @@ export class AccountSettingsComponent implements OnInit {
         wentTo: [''],
         livesIn: [''],
         from: [''],
+        image:['']
       },
       { validator: [Custome.changePassword] }
     );

@@ -13,6 +13,26 @@ export class StorageService {
   return  this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].name
  
   }
+  noImage(){
+    if (this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].image !== ''){
+      return true
+    }else {
+      return false
+    }
+  }
+
+
+   getImage(){
+     if (this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].image === '' &&
+      this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].gender === 'male' ){
+      return 'https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png'
+     }else if ( this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].image === '' && this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].gender === 'female'){
+       return 'https://image.freepik.com/vettori-gratuito/avatar-ragazza-sorridente_102172-32.jpg'
+     }
+     else{
+       return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].image
+     }
+  }
   getLastName(){
     return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))].lastName 
   }

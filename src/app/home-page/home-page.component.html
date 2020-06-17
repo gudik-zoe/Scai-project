@@ -2,11 +2,17 @@
 <div id="container" class="container-fluid mt-5" style="background-color: lightcyan;">
   <div class="row">
     <div id="first-div" class="col-md-3" style="background-color: whitesmoke;">
-      <h4> <img
-        src="https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"
+       <h4> <img *ngIf="checkImage()"
+        src="../../assets/{{image ()}}"
         width="50px"
         style="border-radius: 50%;"
-      /> welcome {{  getUserName() }}</h4>
+      />
+      <img *ngIf="!checkImage()"
+        src="{{image()}}"
+        width="50px"
+        style="border-radius: 50%;"
+      />
+      welcome {{  getUserName() }}</h4>
       <hr>
       <li><img
         src="https://apps.shopifycdn.com/listing_images/f83699e125ac913c98279b8d5b392fcd/icon/20d75d229020ddb617d735fd130b357d.png"
@@ -56,11 +62,16 @@
 
      
         <span
-        ><img
-          src="https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"
-          width="50px"
-          style="border-radius: 50%;"
-        />
+        ><img *ngIf="checkImage()"
+        src="../../assets/{{image ()}}"
+        width="50px"
+        style="border-radius: 50%;"
+      />
+      <img *ngIf="!checkImage()"
+        src="{{image()}}"
+        width="50px"
+        style="border-radius: 50%;"
+      />
         <input
           class="ml-2"
           [(ngModel)]="input"
@@ -184,11 +195,16 @@
         </span>
         <hr>
         <span style="margin-right: 145px;"
-        ><img
-          src="https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"
-          width="50px"
-          style="border-radius: 50%;"
-        />
+        ><img *ngIf="checkImage()"
+        src="../../assets/{{image ()}}"
+        width="50px"
+        style="border-radius: 50%;"
+      />
+      <img *ngIf="!checkImage()"
+        src="{{image()}}"
+        width="50px"
+        style="border-radius: 50%;"
+      />
         <input
           class="ml-2"
           #commentData

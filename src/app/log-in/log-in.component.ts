@@ -29,7 +29,6 @@ export class LogInComponent implements OnInit {
 
    signIn(email,password) {
      if(this.auth.signIn(email,password)){
-      
      this.route.navigate(['/home-page'])
        this.error = false
      }else {
@@ -45,13 +44,16 @@ export class LogInComponent implements OnInit {
     this.signUp = !this.signUp;
   } 
 
+ 
+
 
  
   signUpForm: FormGroup;
   signInForm: FormGroup;
   ngOnInit() {
     this.signUpForm = this.fb.group(
-      {
+      { 
+        image:[''],
         name: ['', Validators.required],
         lastName: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
@@ -90,4 +92,5 @@ export class LogInComponent implements OnInit {
       password: ['', Validators.required],
     });
   }
+ 
 }

@@ -31,6 +31,12 @@ export class HomePageComponent implements OnInit {
     this.postService.post(data)
     this.input = undefined
   }
+  image(){
+    return this.storageService.getImage()
+  }
+  checkImage(){
+    return this.storageService.noImage()
+  }
   
   like(id) {
    this.postService.like(id)

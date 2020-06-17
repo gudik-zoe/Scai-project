@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
 export class AuthService {
 
   users = []
-  signedIn :  Subject <boolean> = new Subject()
+  //  signedIn :  Subject <boolean> = new Subject()
   localStorageArray = JSON.parse(localStorage.getItem('user'))
   requestedUserIndex
   currentUser = []
@@ -23,14 +23,15 @@ export class AuthService {
      this.localStorageArray.push(data)
       localStorage.setItem('user' , JSON.stringify(this.localStorageArray))
         }
+       
     }
   
     signIn(email,password){
       this.requestedUserIndex = this.localStorageArray.findIndex(item => item.email === email && item.password === password )
       if(this.requestedUserIndex !== -1){
         localStorage.setItem('key' , String(this.requestedUserIndex))
-          this.signedIn.next(true)
-          // this.currentUser.push(this.requestedUserIndex)
+          //  this.signedIn.next(true)
+          //  this.currentUser.push(this.requestedUserIndex)
           return true 
       }
       else {

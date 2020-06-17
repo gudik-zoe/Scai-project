@@ -15,6 +15,12 @@ export class UserProfileComponent implements OnInit {
       private storageService: StorageService , 
       private auth:AuthService) {}
   sharedPosts = [];
+  image(){
+    return this.storageService.getImage()
+  }
+  checkImage(){
+    return this.storageService.noImage()
+  }
  
   edit() {
     this.route.navigate(['/account-settings']);

@@ -2,11 +2,16 @@
   <br />
   <br />
   <div class="text-center mt-5">
-    <img
-      src="https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"
-      width="150px"
-      style="border-radius: 50%;"
-    />
+    <img *ngIf="checkImage()"
+    src="../../assets/{{image ()}}"
+    width="150px"
+    style="border-radius: 50%;"
+  />
+  <img *ngIf="!checkImage()"
+    src="{{image()}}"
+    width="150px"
+    style="border-radius: 50%;"
+  />
     <p class="font-weight-bold">{{ name() + ' ' + lastName() }}</p>
   </div>
   <span  class="new" routerLink="/home-page" >Home page</span>
@@ -63,11 +68,16 @@
           style="width: 400px; background-color: white; border-radius: 10px;"
         >
           <span
-            ><img
-              src="https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"
-              width="50px"
-              style="border-radius: 50%;"
-            />
+            ><img *ngIf="checkImage()"
+            src="../../assets/{{image ()}}"
+            width="50px"
+            style="border-radius: 50%;"
+          />
+          <img *ngIf="!checkImage()"
+            src="{{image()}}"
+            width="50px"
+            style="border-radius: 50%;"
+          />
             <input
               class="ml-2"
               placeholder="what's in your mind {{name()}}?"
