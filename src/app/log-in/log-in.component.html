@@ -1,6 +1,8 @@
-
-<div id="main" class="container" style="background-color: lightblue; width: 1500px;">
- 
+<div
+  id="main"
+  class="container mt-5"
+  style="background-color: lightblue; width: 1500px;"
+>
   <div class="row">
     <div *ngIf="!signUp" class="col-md-4">
       <div class="container-fluid mt-5">
@@ -53,12 +55,22 @@
             >
               this field is required
             </small>
-            <small class="text-danger" *ngIf="error">invalid username or password <button class="btn btn-danger btn-sm" (click)="ok()">ok</button></small>
+            <small class="text-danger" *ngIf="error"
+              >invalid username or password
+              <button class="btn btn-danger btn-sm" (click)="ok()">
+                ok
+              </button></small
+            >
           </div>
           <button
             [disabled]="!signInForm.valid"
             class="btn btn-primary"
-            (click)="signIn(signInForm.get('email').value,signInForm.get('password').value)"
+            (click)="
+              signIn(
+                signInForm.get('email').value,
+                signInForm.get('password').value
+              )
+            "
           >
             Log In</button
           ><span>
@@ -224,7 +236,12 @@
             <button class="btn btn-info btn-sm" (click)="switch()">
               sign in
             </button>
-            <small *ngIf="emailExist">this user already exist <button class="btn btn-danger" (click)="signUpAgain()" >ok</button></small>
+            <small *ngIf="emailExist"
+              >this user already exist
+              <button class="btn btn-danger" (click)="signUpAgain()">
+                ok
+              </button></small
+            >
           </span>
           <span *ngIf="dataSaved"
             >your data have been registered click here to
@@ -235,14 +252,15 @@
             >
               Sign In
             </button>
-
           </span>
         </form>
       </div>
     </div>
-    <div class="col-md-4 ml-5 mt-4">
-      <h3>welcome to our project</h3>
-      <p>
+    <div style="width: 600px;" class="col-md-4 ml-5 mt-5">
+      <h3 style="font-size: xx-large; font-weight: bolder;">
+        welcome to our project
+      </h3>
+      <p style="font-size: xx-large; width: 650px;">
         sign in to enjoy our service..don't have an account yet go ahead and
         sign up
       </p>

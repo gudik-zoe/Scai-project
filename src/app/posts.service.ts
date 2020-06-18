@@ -57,11 +57,13 @@ export class PostsService {
 return  this.storage.getLastName()
  }
 
- post(data){
+
+ post(data , foto){
+
    this.posts.push({
      sharedBy: this.getName() + ' ' + this.getLastName() ,
      text:data ,
-      image:'',
+      image:foto,
      description: '',
      likes: 0,
       likePressed : false,
@@ -119,6 +121,7 @@ return  this.storage.getLastName()
       id: 0,
     },
     {
+      sharedBy:'',
       image:
         'https://th.tvblog.it/V6HnVTZkLCDQ7iSQDveMVZFbWW4=/fit-in/655xorig/https%3A%2F%2Fmedia.tvblog.it%2F5%2F518%2Ffriends.jpg',
       description: '',
@@ -129,7 +132,7 @@ return  this.storage.getLastName()
       id: 1,
     },
     {
-    
+      sharedBy:'',
       image:
         'https://estnn.com/wp-content/uploads/2020/01/league-of-legends-header-x.jpg',
       description: 'such a nice game join now',

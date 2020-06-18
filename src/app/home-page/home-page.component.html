@@ -82,9 +82,19 @@
             background-color: lightgray;
             border-style: none;
           "
+          
         />
+        
       </span>
-      <button [disabled]="input[0] === ' '" class="btn btn-primary btn-block" (click)="post(input)" *ngIf="input !== undefined && input !== ''" >post</button>
+      <input (change)="uploadImage($event)"
+       *ngIf="input !== undefined && input !== ''"
+        type="file" 
+        style="width:100px" 
+        class="custome-file-input ml-5">
+      
+      <button [disabled]="input[0] === ' '" class="btn btn-primary ml-5" style="width:300px" (click)="post(input)" *ngIf="input !== undefined && input !== ''" >post</button>
+      
+      
       <hr />
       <span style="color: red;" class="font-weight-bold ml-4">
         <i class="fa fa-video-camera" aria-hidden="true"></i> live
@@ -106,14 +116,15 @@
           style="border-radius: 50%;"
         />{{post.sharedBy}} shared : </small>
         
-        <p  style="margin-right: 140px;"  *ngIf="post.text">{{post.text}}</p>
+        <p  style="margin-right: 260px;"  *ngIf="post.text">{{post.text}}</p>
         
-        <img *ngIf="post.image !== ''" src="{{ post.image }}" width="500" height="300px" />
+        <img *ngIf="post.sharedBy === ''" src="{{ post.image }}" width="500" height="300px" />
+        <!-- <img *ngIf="post.sharedBy !== ''" src="../../assets/{{post.image}}" width="500" height="300px"/> -->
         <br />
       
             <span  *ngIf="post.likes === 0 || post.likes > 1 && post.likePressed == false "
               ><i
-              *ngIf="post.likePressed == false"
+              
               class="fa fa-thumbs-up"
               aria-hidden="true"
               style="color: blue;"
@@ -121,7 +132,6 @@
             >
             <span *ngIf="post.likes === 1" class="font-weight-bold"
               ><i
-              *ngIf="post.likePressed == false"
               class="fa fa-thumbs-up"
               aria-hidden="true"
               style="color: blue;"
@@ -134,6 +144,13 @@
             style="color: blue;"
           ></i> <small> you and {{ post.likes - 1  }} others </small></span
           >
+          <!-- <span *ngIf="post.likes > 0 && post.likePressed"
+            > <i
+            class="fa fa-thumbs-up"
+            aria-hidden="true"
+            style="color: blue;"
+          ></i> <small> {{post.likes}} </small></span
+          > -->
           
             <span class="font-weight-bold" style="margin-left: 140px;" *ngIf="post.comments.length > 1"
               >{{ post.comments.length

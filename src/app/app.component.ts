@@ -1,4 +1,4 @@
-import { Component, OnInit , OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PostsService } from './posts.service';
 import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
@@ -8,43 +8,33 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit , OnDestroy  {
-  constructor(private postService:PostsService , private route:Router , private auth:AuthService) {}
+export class AppComponent implements OnInit, OnDestroy {
+  constructor(
+    private postService: PostsService,
+    private route: Router,
+    private auth: AuthService
+  ) {}
   title = 'scai-project';
-  loggedInSubscription:Subscription
+  loggedInSubscription: Subscription;
 
-  loggedIn
-  userIn (){
-    if(JSON.parse(localStorage.getItem('key')) !== null){
-      return true
-    }else{
-      return false
+  loggedIn;
+  userIn() {
+    if (JSON.parse(localStorage.getItem('key')) !== null) {
+      return true;
+    } else {
+      return false;
     }
-  } 
+  }
 
- 
-  
-
-  logOut(){
-    // this.auth.logOut()
+  logOut() {
     this.route.navigate(['/auth']);
-    localStorage.removeItem('key')
+    localStorage.removeItem('key');
   }
-  
-  ngOnInit() {
-    // console.log(JSON.parse(localStorage.getItem('key')))
-    //  this.loggedInSubscription =  this.auth.signedIn.subscribe( data => this.loggedIn = data)
-    //  this.loggedIn = this.auth.signedIn
 
-  }
+  ngOnInit() {}
   ngOnDestroy() {
-    this.loggedInSubscription.unsubscribe()
-
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
-    
+    this.loggedInSubscription.unsubscribe();
   }
-
 }
