@@ -61,7 +61,6 @@
     </div>
 
     <div id="second-div" class="col-md-5" style="background-color: whitesmoke;">
-      <!-- <h1 style="color: blueviolet;">News Feed</h1> -->
       <div
         class="container mt-2"
         style="
@@ -86,21 +85,46 @@
           />
         </span>
 
+        <input
+          class="custome-file-input ml-5"
+          style="width: 220px;"
+          *ngIf="input !== undefined && input !== ''"
+          (change)="uploadImage($event)"
+          id="file"
+          type="file"
+        />
         <i
+          style="color: blue;"
           *ngIf="input !== undefined && input !== ''"
           class="fa fa-upload ml-5"
           aria-hidden="true"
         >
-          <input
-            (change)="uploadImage($event)"
-            type="file"
-            id="file"
-            class="custome-file-input"
-          />
         </i>
+        <div
+          style="border: solid; width: 400px;"
+          *ngIf="!posted && input !== undefined && input !== ''"
+          class="container"
+        >
+          post preview
+          <br />
+          <img src="{{ image() }}" width="30px" style="border-radius: 50%;" />
+          {{ getUserName() }}
+
+          shared :
+
+          <p>{{ input }}</p>
+          <img
+            *ngIf="foto && !posted"
+            src="{{ foto }}"
+            width="300px"
+            height="150px"
+            style="margin-bottom: 2px;"
+          />
+        </div>
+
         <button
           [disabled]="input[0] === ' '"
-          class="btn btn-primary ml-5"
+          class="btn btn-primary ml-5 mt-2"
           style="width: 300px;"
           (click)="post(input)"
           *ngIf="input !== undefined && input !== ''"
@@ -127,11 +151,10 @@
         style="background: white; border-radius: 10px;"
       >
         <small style="margin-right: 270px;" *ngIf="post.sharedBy">
-          <img
-            src="https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"
-            width="50px"
-            style="border-radius: 50%;"
-          />{{ post.sharedBy }} shared :
+          <img src="{{ image() }}" width="50px" style="border-radius: 50%;" />{{
+            post.sharedBy
+          }}
+          shared :
         </small>
 
         <p style="margin-right: 260px;" *ngIf="post.text">{{ post.text }}</p>

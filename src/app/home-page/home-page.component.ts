@@ -21,6 +21,8 @@ export class HomePageComponent implements OnInit {
   likeBtn = false;
   input;
   foto;
+  preview;
+  posted = false;
 
   getUserName() {
     return this.storageService.getName();
@@ -31,6 +33,7 @@ export class HomePageComponent implements OnInit {
   post(data) {
     this.postService.post(data, this.foto);
     this.input = undefined;
+    this.posted = true;
   }
   image() {
     return this.storageService.getImage();
@@ -42,9 +45,9 @@ export class HomePageComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = (event) => {
         this.foto = event.target.result;
+        this.preview = this.foto;
       };
     }
-    this.foto = event.target.files[0].name;
   }
 
   like(id) {
