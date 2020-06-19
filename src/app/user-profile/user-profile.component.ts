@@ -10,18 +10,17 @@ import { AuthService } from '../log-in/auth.service';
   styleUrls: ['./user-profile.component.css'],
 })
 export class UserProfileComponent implements OnInit {
-  constructor(private route: Router,
-     private service: PostsService ,
-      private storageService: StorageService , 
-      private auth:AuthService) {}
+  constructor(
+    private route: Router,
+    private service: PostsService,
+    private storageService: StorageService,
+    private auth: AuthService
+  ) {}
   sharedPosts = [];
-  image(){
-    return this.storageService.getImage()
+  image() {
+    return this.storageService.getImage();
   }
-  checkImage(){
-    return this.storageService.noImage()
-  }
- 
+
   edit() {
     this.route.navigate(['/account-settings']);
   }
@@ -29,38 +28,37 @@ export class UserProfileComponent implements OnInit {
   toDescription(id) {
     this.route.navigate(['description', id]);
   }
- 
+
   name() {
-    return this.storageService.getName()
+    return this.storageService.getName();
   }
-  lastName(){
-    return this.storageService.getLastName()
+  lastName() {
+    return this.storageService.getLastName();
   }
   study() {
-    return  this.storageService.getStudy()
-   }
+    return this.storageService.getStudy();
+  }
   wentTo() {
-   return  this.storageService.getWentTo()
+    return this.storageService.getWentTo();
   }
 
   livesIn() {
-    return    this.storageService.getLivesIn()
+    return this.storageService.getLivesIn();
   }
   from() {
-    return this.storageService.getFrom()
+    return this.storageService.getFrom();
   }
-  toHome(){
-    this.route.navigate(['/home-page'])
+  toHome() {
+    this.route.navigate(['/home-page']);
   }
-  goToFriends(){
-    this.route.navigate(['my-friends'])
+  goToFriends() {
+    this.route.navigate(['my-friends']);
   }
 
-  getPersonalPosts(){
-  return  this.storageService.getUserPosts()
-    }
+  getPersonalPosts() {
+    return this.storageService.getUserPosts();
+  }
 
-  
   ngOnInit() {
     this.sharedPosts = this.service.sharedPosts;
   }

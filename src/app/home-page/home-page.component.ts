@@ -35,12 +35,16 @@ export class HomePageComponent implements OnInit {
   image() {
     return this.storageService.getImage();
   }
+
   uploadImage(event) {
-    console.log(event);
+    if (event.target.files) {
+      let reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (event) => {
+        this.foto = event.target.result;
+      };
+    }
     this.foto = event.target.files[0].name;
-  }
-  checkImage() {
-    return this.storageService.noImage();
   }
 
   like(id) {
