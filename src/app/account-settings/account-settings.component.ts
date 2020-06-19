@@ -23,7 +23,7 @@ export class AccountSettingsComponent implements OnInit {
   changePassword = false;
   newUser;
   passwordHasBeenChanged = false;
-  image = null;
+  image;
 
   change() {
     this.changePassword = !this.changePassword;
@@ -46,7 +46,6 @@ export class AccountSettingsComponent implements OnInit {
         this.image = event.target.result;
       };
     }
-    this.image = event.target.files[0].name;
   }
   confirm() {
     this.newUser = {
@@ -67,6 +66,7 @@ export class AccountSettingsComponent implements OnInit {
     this.auth.localStorageArray[
       JSON.parse(localStorage.getItem('key'))
     ] = this.newUser;
+
     localStorage.setItem('user', JSON.stringify(this.auth.localStorageArray));
 
     this.passwordHasBeenChanged = true;
@@ -88,11 +88,11 @@ export class AccountSettingsComponent implements OnInit {
           this.storageService.getConfirmPassword(),
           Validators.required,
         ],
-        study: [''],
-        wentTo: [''],
-        livesIn: [''],
-        from: [''],
-        image: [''],
+        study: [this.storageService.getStudy()],
+        wentTo: [this.storageService.getWentTo()],
+        livesIn: [this.storageService.getLivesIn()],
+        from: [this.storageService.getFrom()],
+        image: [this.storageService.getImage()],
       },
       { validator: [Custome.changePassword] }
     );

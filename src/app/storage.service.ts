@@ -6,57 +6,72 @@ import { AuthService } from './log-in/auth.service';
 })
 export class StorageService {
   constructor(private auth: AuthService) {}
-  currentUser = this.auth.localStorageArray[
-    JSON.parse(localStorage.getItem('key'))
-  ];
+
   getName() {
-    return this.currentUser.name;
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
+      .name;
   }
 
   getImage() {
     if (
-      this.currentUser.image === null &&
-      this.currentUser.gender == 'female'
+      !this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
+        .image &&
+      this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
+        .gender === 'female'
     ) {
       return 'https://image.freepik.com/vettori-gratuito/avatar-ragazza-sorridente_102172-32.jpg';
     } else if (
-      this.currentUser.image === null &&
-      this.currentUser.gender == 'male'
+      !this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
+        .image &&
+      this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
+        .gender === 'male'
     ) {
       return 'https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png';
     } else {
-      return this.currentUser.image;
+      return this.auth.localStorageArray[
+        JSON.parse(localStorage.getItem('key'))
+      ].image;
     }
   }
 
   getLastName() {
-    return this.currentUser.lastName;
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
+      .lastName;
   }
   getEmail() {
-    return this.currentUser.email;
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
+      .email;
   }
   getPassword() {
-    return this.currentUser.password;
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
+      .password;
   }
   getConfirmPassword() {
-    return this.currentUser.confirmPassword;
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
+      .confirmPassword;
   }
   getGender() {
-    return this.currentUser.gender;
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
+      .gender;
   }
   getStudy() {
-    return this.currentUser.study;
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
+      .study;
   }
   getWentTo() {
-    return this.currentUser.wentTo;
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
+      .wentTo;
   }
   getFrom() {
-    return this.currentUser.from;
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
+      .from;
   }
   getLivesIn() {
-    return this.currentUser.livesIn;
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
+      .livesIn;
   }
   getUserPosts() {
-    return this.currentUser.posts;
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
+      .posts;
   }
 }
