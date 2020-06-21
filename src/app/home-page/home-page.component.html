@@ -276,20 +276,79 @@
           />
         </span>
 
-        <div
-          class="container-fluid"
-          *ngIf="post.showComments"
-          style="width: 500px;"
-        >
+        <div class="container-fluid" *ngIf="post.showComments">
           <div
             *ngFor="let i of post.comments"
-            style="margin-right: 270px; margin-top: 10px;"
+            style="background-color: whitesmoke;"
           >
-            <img src="{{ i.image }}" width="35px" style="border-radius: 50%;" />
-            <span style="background-color: lightblue; border-radius: 10px;">
-              <span class="font-weight-bold"> {{ i.name }} </span> :
-              <span> {{ i.comment }}</span>
+            <span
+              ><img
+                src="{{ i.image }}"
+                width="35px"
+                style="border-radius: 50%; margin-top: 10px;"
+              />
+
+              {{ i.name }} :
+
+              <span *ngIf="!i.editMode">{{ i.comment }}</span>
+              <span *ngIf="i.editMode"
+                ><input #editedComment value="{{ i.comment }}" /><button
+                  class="btn btn-primary btn-sm"
+                  (click)="edit(post.id, i.commentId, editedComment)"
+                >
+                  edit
+                </button></span
+              >
+              <span class="ml-3">
+                <i
+                  class="fa fa-thumbs-up mr-5"
+                  aria-hidden="true"
+                  style="color: blue; cursor: pointer;"
+                  >{{ i.likes }}</i
+                >
+              </span>
             </span>
+
+            <span style="float: right; margin-top: 25px;">
+              <small>
+                <i
+                  *ngIf="i.likePressed"
+                  (click)="commentLike(post.id, i.commentId)"
+                  class="fa fa-thumbs-down mr-2"
+                  aria-hidden="true"
+                  style="color: blue; cursor: pointer;"
+                ></i>
+              </small>
+              <small>
+                <i
+                  *ngIf="!i.likePressed"
+                  (click)="commentLike(post.id, i.commentId)"
+                  class="fa fa-thumbs-up mr-2"
+                  aria-hidden="true"
+                  style="color: blue; cursor: pointer;"
+                ></i>
+              </small>
+
+              <small>
+                <i
+                  *ngIf="i.remove"
+                  style="cursor: pointer; color: black;"
+                  (click)="edit(post.id, i.commentId, editedComment)"
+                  class="fa fa-pencil-square-o mr-2"
+                  aria-hidden="true"
+                ></i>
+              </small>
+              <small>
+                <i
+                  *ngIf="i.remove"
+                  (click)="removeComment(post.id, i.commentId)"
+                  style="cursor: pointer; color: red;"
+                  class="fa fa-times mr-2"
+                  aria-hidden="true"
+                ></i
+              ></small>
+            </span>
+            <hr />
           </div>
         </div>
         <hr />

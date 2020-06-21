@@ -23,6 +23,7 @@ export class HomePageComponent implements OnInit {
   foto;
   preview;
   posted = false;
+  editedComment;
 
   getUserName() {
     return this.storageService.getName();
@@ -59,10 +60,24 @@ export class HomePageComponent implements OnInit {
   showComments(id) {
     this.postService.showComment(id);
   }
+  commentLike(postId, commentId) {
+    if (this.postService.posts[postId].comments[commentId].likePressed) {
+      this.postService.commentDisLike(postId, commentId);
+    } else {
+      this.postService.commentLike(postId, commentId);
+    }
+  }
+
+  edit(postId, commentId, editedComment) {
+    this.postService.edit(postId, commentId, editedComment);
+  }
 
   comment(id, comment) {
     this.postService.comment(id, comment.value);
     comment.value = '';
+  }
+  removeComment(postId, commentId) {
+    this.postService.removeComment(postId, commentId);
   }
   share(id) {
     this.postService.share(id);
