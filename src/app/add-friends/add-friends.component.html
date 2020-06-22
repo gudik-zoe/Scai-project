@@ -5,7 +5,7 @@
 <div class="container-fluid">
   <!-- <input #data class="form-control" width="300px" /> -->
   <div class="row" *ngFor="let friend of users">
-    <div class="col-md-3" *ngIf="currentUser !== users.indexOf(friend)">
+    <div *ngIf="id === users.indexOf(friend)" class="col-md-3">
       <img
         src="{{ friend.image }}"
         width="100"
@@ -13,15 +13,19 @@
         style="border-radius: 50%;"
       />
       <p class="ml-4">{{ friend.name + " " + friend.lastName }}</p>
-      <button
-        [disabled]="friend.pressed"
-        class="btn btn-primary mb-3"
-        type="button"
-        (click)="sendTo(users.indexOf(friend), data)"
+      <span>
+        <input [(ngModel)]="inputData" width="100px" />
+      </span>
+      <span
+        ><button
+          [disabled]="inputData == '' || inputData == null"
+          class="btn btn-primary btn-sm mb-3 mt-2"
+          type="button"
+          (click)="sendTo(users.indexOf(friend), inputData)"
+        >
+          send
+        </button></span
       >
-        send message
-      </button>
-      <input #data />
     </div>
   </div>
 </div>

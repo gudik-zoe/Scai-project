@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PostsService } from '../posts.service';
 import { StorageService } from '../storage.service';
 import { AuthService } from '../log-in/auth.service';
-import { MyFriendsComponent } from '../my-friends/my-friends.component';
-import { Router } from '@angular/router';
+
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-friends',
@@ -15,8 +15,11 @@ export class AddFriendsComponent implements OnInit {
     private postService: PostsService,
     private storageService: StorageService,
     private auth: AuthService,
+    private aroute: ActivatedRoute,
     private route: Router
   ) {}
+  id;
+  inputData;
   messageTo;
   sentMessage;
   users = JSON.parse(localStorage.getItem('user'));
@@ -28,9 +31,15 @@ export class AddFriendsComponent implements OnInit {
 
     newMessage.push({
       image: this.auth.localStorageArray[this.currentUser].image,
-      message: data.value,
+      message: data,
     });
 
+    let userMessage = this.auth.localStorageArray[this.currentUser].messages;
+    userMessage.push({
+      image: this.auth.localStorageArray[this.currentUser].image,
+      message: data,
+      to: this.auth.localStorageArray[id].image,
+    });
     this.messageTo = {
       image: this.auth.localStorageArray[id].image,
       name: this.auth.localStorageArray[id].name,
@@ -60,15 +69,17 @@ export class AddFriendsComponent implements OnInit {
       wentTo: this.auth.localStorageArray[this.currentUser].wentTo,
       livesIn: this.auth.localStorageArray[this.currentUser].livesIn,
       from: this.auth.localStorageArray[this.currentUser].from,
-      messages: newMessage,
+      messages: userMessage,
       posts: this.auth.localStorageArray[this.currentUser].posts,
     };
 
     this.auth.localStorageArray[id] = this.messageTo;
     this.auth.localStorageArray[this.currentUser] = this.sentMessage;
     localStorage.setItem('user', JSON.stringify(this.auth.localStorageArray));
-    data.value = null;
+    this.inputData = null;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.id = parseInt(this.aroute.snapshot.paramMap.get('id'));
+  }
 }

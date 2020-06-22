@@ -62,6 +62,7 @@ export class AccountSettingsComponent implements OnInit {
       from: this.changePasswordForm.get('from').value,
       friends: this.storageService.getFriends(),
       posts: this.storageService.getUserPosts(),
+      messages: this.storageService.getMessages(),
     };
 
     this.auth.localStorageArray[

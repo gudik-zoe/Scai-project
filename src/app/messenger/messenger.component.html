@@ -4,18 +4,41 @@
 <br />
 <br />
 
-<div class="conatiner-fluid" style="border: solid; width: 500px;">
-  <h3>my messages</h3>
-  <hr />
-  <div *ngFor="let m of messages.messages">
-    <span
-      ><img
-        src="{{ m.image }}"
+<div class="conatiner-fluid ml-3" style="border: solid; width: 400px;">
+  <h3
+    style="
+      background-color: blue;
+      color: white;
+      border-bottom: 1px solid black;
+    "
+  >
+    my messages
+  </h3>
+
+  <div *ngFor="let m of messages">
+    <img
+      src="{{ m.image }}"
+      width="30px"
+      height="30px"
+      style="border-radius: 50%;"
+    />
+    <span *ngIf="m.to"
+      >to
+      <img
+        src="{{ m.to }}"
         width="30px"
         height="30px"
         style="border-radius: 50%;"
-      />: <span>{{ m.message }} </span></span
-    >
+      />
+    </span>
+    <span>
+      {{ m.message }}
+      <button *ngIf="!m.to" class="btn btn-info btn-sm" (click)="navigate()">
+        reply
+      </button>
+    </span>
+
+    <hr />
   </div>
 </div>
 

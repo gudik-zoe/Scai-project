@@ -11,6 +11,9 @@ import { StorageService } from '../storage.service';
 })
 export class HomePageComponent implements OnInit {
   posts = [];
+  userFriends = JSON.parse(localStorage.getItem('user'));
+  currentUserId = JSON.parse(localStorage.getItem('key'));
+
   data;
   constructor(
     private postService: PostsService,
@@ -55,8 +58,6 @@ export class HomePageComponent implements OnInit {
     this.postService.like(id);
   }
 
-  userFriends = [];
-
   showComments(id) {
     this.postService.showComment(id);
   }
@@ -82,8 +83,8 @@ export class HomePageComponent implements OnInit {
   share(id) {
     this.postService.share(id);
   }
-  addFriends() {
-    this.route.navigate(['/add-friends']);
+  navigate(id) {
+    this.route.navigate(['/add-friends', id]);
   }
 
   ngOnInit() {

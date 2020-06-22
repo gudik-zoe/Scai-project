@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../log-in/auth.service';
 import { StorageService } from '../storage.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-messenger',
@@ -12,15 +12,18 @@ export class MessengerComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private storageService: StorageService,
-    private aroute: ActivatedRoute
+    private aroute: ActivatedRoute,
+    private route: Router
   ) {}
 
   currentUser = JSON.parse(localStorage.getItem('key'));
   // messages = this.auth.localStorageArray[
   //   JSON.parse(localStorage.getItem('key'))
   // ].messages;
-  messages = this.auth.localStorageArray[this.currentUser];
-
+  messages = this.auth.localStorageArray[this.currentUser].messages;
+  navigate() {
+    this.route.navigate(['/add-friends']);
+  }
   // image() {
   //   return this.storageService.getImage();
   // }

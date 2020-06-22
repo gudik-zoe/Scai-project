@@ -62,4 +62,8 @@ export class StorageService {
     return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
       .posts;
   }
+  getMessages() {
+    return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
+      .messages;
+  }
 }
