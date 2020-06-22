@@ -32,6 +32,7 @@ export class AddFriendsComponent implements OnInit {
     newMessage.push({
       image: this.auth.localStorageArray[this.currentUser].image,
       message: data,
+      id: this.currentUser,
     });
 
     let userMessage = this.auth.localStorageArray[this.currentUser].messages;

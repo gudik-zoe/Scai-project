@@ -33,7 +33,11 @@
     </span>
     <span>
       {{ m.message }}
-      <button *ngIf="!m.to" class="btn btn-info btn-sm" (click)="navigate()">
+      <button
+        *ngIf="!m.to"
+        class="btn btn-info btn-sm"
+        (click)="navigate(m.id)"
+      >
         reply
       </button>
     </span>

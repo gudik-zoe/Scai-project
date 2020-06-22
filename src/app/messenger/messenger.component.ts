@@ -15,14 +15,14 @@ export class MessengerComponent implements OnInit {
     private aroute: ActivatedRoute,
     private route: Router
   ) {}
-
+  users = this.auth.localStorageArray;
   currentUser = JSON.parse(localStorage.getItem('key'));
   // messages = this.auth.localStorageArray[
   //   JSON.parse(localStorage.getItem('key'))
   // ].messages;
   messages = this.auth.localStorageArray[this.currentUser].messages;
-  navigate() {
-    this.route.navigate(['/add-friends']);
+  navigate(id) {
+    this.route.navigate(['/add-friends', id]);
   }
   // image() {
   //   return this.storageService.getImage();
