@@ -60,6 +60,7 @@ export class AccountSettingsComponent implements OnInit {
       wentTo: this.changePasswordForm.get('wentTo').value,
       livesIn: this.changePasswordForm.get('livesIn').value,
       from: this.changePasswordForm.get('from').value,
+      friends: this.storageService.getFriends(),
       posts: this.storageService.getUserPosts(),
     };
 

@@ -70,6 +70,7 @@ export class LogInComponent implements OnInit {
         wentTo: [''],
         livesIn: [''],
         from: [''],
+        messages: [[]],
         posts: [
           [
             {

@@ -88,6 +88,5 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit() {
     this.posts = this.postService.posts;
-    this.userFriends = this.postService.userFriends;
   }
 }

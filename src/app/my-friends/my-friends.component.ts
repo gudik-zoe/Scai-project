@@ -5,23 +5,18 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-my-friends',
   templateUrl: './my-friends.component.html',
-  styleUrls: ['./my-friends.component.css']
+  styleUrls: ['./my-friends.component.css'],
 })
 export class MyFriendsComponent implements OnInit {
+  myFriends = [];
 
-  myFriends=[]
+  constructor(private postService: PostsService, private route: Router) {}
 
-  constructor(private postService:PostsService , private route:Router) { }
-
-  remove(id){
-    this.postService.unFriend(id)
-    this.myFriends = this.myFriends.filter(item => item.id !== id)
+  remove(id) {
+    console.log('remove');
   }
-  goToFriends(){
-    this.route.navigate(['/add-friends'])
+  goToFriends() {
+    this.route.navigate(['/add-friends']);
   }
-  ngOnInit() {
-    this.myFriends = this.postService.userFriends
-  }
-
+  ngOnInit() {}
 }

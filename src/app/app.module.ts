@@ -6,13 +6,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DescriptionComponent } from './description/description.component';
 import { AuthenticationGuard } from './authentication.guard';
-
+import { MessengerComponent } from './messenger/messenger.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DescriptionComponent,
-  ],
+  declarations: [AppComponent, DescriptionComponent, MessengerComponent],
   imports: [ReactiveFormsModule, FormsModule, BrowserModule, AppRoutingModule],
   providers: [AuthenticationGuard],
   bootstrap: [AppComponent],

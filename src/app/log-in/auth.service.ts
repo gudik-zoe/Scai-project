@@ -17,6 +17,13 @@ export class AuthService {
   }
   signUp(data) {
     this.localStorageArray.push(data);
+    if (data.gender === 'male') {
+      data.image =
+        'https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png';
+    } else {
+      data.image =
+        'https://image.freepik.com/vettori-gratuito/avatar-ragazza-sorridente_102172-32.jpg';
+    }
     localStorage.setItem('user', JSON.stringify(this.localStorageArray));
   }
 

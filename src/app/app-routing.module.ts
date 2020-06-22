@@ -8,14 +8,13 @@ import { DescriptionComponent } from './description/description.component';
 import { AuthenticationGuard } from './authentication.guard';
 import { AddFriendsComponent } from './add-friends/add-friends.component';
 import { LoggedUserGuard } from './logged-user.guard';
+import { MessengerComponent } from './messenger/messenger.component';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'auth',
     pathMatch: 'full',
-    // loadChildren: () =>
-    //   import('./log-in/log-in.module').then((m) => m.LogInModule),
   },
   {
     path: 'auth',
@@ -23,6 +22,7 @@ const routes: Routes = [
       import('./log-in/log-in.module').then((m) => m.LogInModule),
     canActivate: [LoggedUserGuard],
   },
+  // { path: 'messenger', component: MessengerComponent },
 
   {
     path: 'home-page',
@@ -31,6 +31,8 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard],
   },
   { path: 'description/:id', component: DescriptionComponent },
+  // { path: 'messenger/:id', component: MessengerComponent },
+  { path: 'messenger', component: MessengerComponent },
 
   {
     path: 'user-profile',
