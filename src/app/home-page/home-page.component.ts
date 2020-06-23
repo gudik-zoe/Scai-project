@@ -27,6 +27,9 @@ export class HomePageComponent implements OnInit {
   preview;
   posted = false;
   editedComment;
+  inputData;
+  id;
+  show = false;
 
   getUserName() {
     return this.storageService.getName();
@@ -83,8 +86,14 @@ export class HomePageComponent implements OnInit {
   share(id) {
     this.postService.share(id);
   }
-  navigate(id) {
-    this.route.navigate(['/add-friends', id]);
+  open(id) {
+    this.id = id;
+    this.show = !this.show;
+  }
+  send(id, inputData) {
+    console.log(id, inputData);
+    this.id = null;
+    this.inputData = null;
   }
 
   ngOnInit() {

@@ -375,9 +375,23 @@
               <span
                 ><button
                   class="btn btn-info btn-sm ml-2"
-                  (click)="navigate(userFriends.indexOf(i))"
+                  (click)="open(userFriends.indexOf(i))"
                 >
                   send a message
+                </button></span
+              >
+              <br />
+              <span *ngIf="id === userFriends.indexOf(i) && show"
+                ><input
+                  style="margin-left: 120px;"
+                  width="100px"
+                  [(ngModel)]="inputData"
+                /><button
+                  type="button"
+                  class="btn btn-primary btn-sm mb-1 ml-1"
+                  (click)="send(id, inputData)"
+                >
+                  send
                 </button></span
               >
               <hr />
@@ -389,14 +403,6 @@
       <p *ngIf="userFriends.length === 0">
         you have no friends yet
       </p>
-      <!-- <button
-        type="button"
-        style="margin-left: 120px;"
-        class="btn btn-success"
-        (click)="addFriends()"
-      >
-        add friends
-      </button> -->
     </div>
   </div>
 </div>
