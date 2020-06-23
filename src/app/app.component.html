@@ -3,9 +3,15 @@
   class="navbar navbar-expand-md navbar-dark fixed-top shadow-lg"
   style="height: 72px; border-radius: 10px; background-color: white;"
 >
+  <img
+    src="{{ image() }}"
+    width="70px"
+    height="70px"
+    style="border-radius: 50%;"
+  />
   <h4>
     <i
-      style="cursor: pointer; color: blue;"
+      style="cursor: pointer; color: blue; margin-left: 15px;"
       class="fa fa-home"
       aria-hidden="true"
     >
@@ -57,6 +63,7 @@
         >messenger
       </a>
     </i>
+    <span style="color: blue;"> ({{ getMessengerLength() }}) </span>
   </h4>
 
   <h4>

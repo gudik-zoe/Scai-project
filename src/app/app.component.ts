@@ -4,6 +4,7 @@ import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
 import { AuthService } from './log-in/auth.service';
 import { Subscription } from 'rxjs';
+import { StorageService } from './storage.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,8 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private postService: PostsService,
     private route: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private storageService: StorageService
   ) {}
   title = 'scai-project';
   loggedInSubscription: Subscription;
@@ -26,6 +28,13 @@ export class AppComponent implements OnInit, OnDestroy {
     } else {
       return false;
     }
+  }
+
+  getMessengerLength() {
+    return this.storageService.getMessages().length;
+  }
+  image() {
+    return this.storageService.getImage();
   }
 
   logOut() {
