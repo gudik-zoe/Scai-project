@@ -3,45 +3,103 @@
 <br />
 <br />
 <br />
-
-<div class="conatiner-fluid ml-3" style="border: solid; width: 400px;">
-  <h3
-    style="
-      background-color: blue;
-      color: white;
-      border-bottom: 1px solid black;
-    "
-  >
-    my messages
-  </h3>
-
-  <div *ngFor="let m of messages">
-    <img
-      src="{{ m.image }}"
-      width="30px"
-      height="30px"
-      style="border-radius: 50%;"
-    />
-    <span *ngIf="m.to"
-      >to
+<div class="row">
+  <div class="col-md-3 ml-5" style="border: solid; height: 400px;">
+    <div class="container">
+      <h3>My friends</h3>
+      <ul *ngFor="let user of users">
+        <li
+          style="cursor: pointer; background-color: linen;"
+          *ngIf="users.indexOf(user) !== currentUser"
+          (click)="open(users.indexOf(user))"
+        >
+          <span
+            ><img
+              src="{{ user.image }}"
+              width="40px"
+              height="40px"
+              style="border-radius: 50%;"
+            />
+            <span class="font-weight-bold">
+              {{ user.name + " " + user.lastName }}
+            </span>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div
+      class="container"
+      *ngIf="id === 0 || id > 0"
+      style="
+        background-color: linen;
+        width: 350px;
+        height: 150px;
+        border-radius: 8px;
+      "
+    >
       <img
-        src="{{ m.to }}"
+        src="{{ users[id].image }}"
+        width="80px"
+        height="80px"
+        style="border-radius: 50%; margin-left: 100px;"
+      />
+
+      <span
+        ><input
+          width="200px"
+          [(ngModel)]="inputData"
+          style="margin-left: 50px; margin-top: 15px;"
+        /><button
+          type="button"
+          class="btn btn-primary btn-sm mb-1 ml-1"
+          (click)="send(id, inputData)"
+        >
+          send
+        </button></span
+      >
+    </div>
+  </div>
+  <div class="col-md-3" style="border: solid; width: 400px;">
+    <h3
+      style="
+        background-color: blue;
+        color: white;
+        border-bottom: 1px solid black;
+      "
+    >
+      my messages
+    </h3>
+
+    <div *ngFor="let m of messages">
+      <img
+        src="{{ m.image }}"
         width="30px"
         height="30px"
         style="border-radius: 50%;"
       />
-    </span>
-    <span>
-      {{ m.message }}
-      <button
-        *ngIf="!m.to"
-        class="btn btn-info btn-sm"
-        (click)="navigate(m.id)"
-      >
-        reply
-      </button>
-    </span>
+      <span *ngIf="m.to"
+        >to
+        <img
+          src="{{ m.to }}"
+          width="30px"
+          height="30px"
+          style="border-radius: 50%;"
+        />
+      </span>
+      <span>
+        {{ m.message }}
+        <button
+          *ngIf="!m.to"
+          class="btn btn-info btn-sm"
+          (click)="navigate(m.id)"
+        >
+          reply
+        </button>
+      </span>
 
-    <hr />
+      <hr />
+    </div>
   </div>
 </div>
