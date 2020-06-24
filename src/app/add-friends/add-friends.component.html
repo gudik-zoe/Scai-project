@@ -3,7 +3,6 @@
 <br />
 
 <div class="container-fluid">
-  <!-- <input #data class="form-control" width="300px" /> -->
   <div class="row" *ngFor="let friend of users">
     <div *ngIf="id === users.indexOf(friend)" class="col-md-3">
       <img
@@ -29,4 +28,3 @@
     </div>
   </div>
 </div>
-<!-- (click)="sendMessage(users.indexOf(friend), data)" -->
