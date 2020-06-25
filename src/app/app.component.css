@@ -1,5 +1,7 @@
-.active-class{
-    text-decoration: underline;
+.active-class {
+  text-decoration: underline;
 }
 
-
+#messenger:hover {
+  text-decoration: underline;
+}

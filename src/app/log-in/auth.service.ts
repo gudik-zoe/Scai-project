@@ -11,7 +11,7 @@ export class AuthService {
   localStorageArray = JSON.parse(localStorage.getItem('user')) || [];
   requestedUserIndex;
   currentUser = [];
-
+  // current = JSON.parse(localStorage.getItem('key'));
   loggedIn() {
     return !!localStorage.getItem('key');
   }

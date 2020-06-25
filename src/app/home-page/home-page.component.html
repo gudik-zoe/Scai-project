@@ -383,7 +383,7 @@
               <br />
               <span *ngIf="id === userFriends.indexOf(i) && show"
                 ><input
-                  style="margin-left: 120px;"
+                  style="margin-left: 150px;"
                   width="100px"
                   [(ngModel)]="inputData"
                 /><button
@@ -393,6 +393,20 @@
                 >
                   send
                 </button></span
+              >
+              <br />
+              <small
+                style="margin-left: 130px;"
+                *ngIf="error && id === userFriends.indexOf(i)"
+                class="text-danger"
+                >enter a message
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm"
+                  (click)="ok()"
+                >
+                  ok
+                </button></small
               >
               <hr />
             </span>

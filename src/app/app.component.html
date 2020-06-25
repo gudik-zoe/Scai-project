@@ -57,13 +57,18 @@
   <h4 style="margin-left: 40px;">
     <i class="fa fa-facebook-messenger" aria-hidden="true" style="color: blue;">
       <a
+        id="messenger"
+        style="cursor: pointer;"
         class="font-weight-bold"
         routerLinkActive="active-class"
         routerLink="/messenger"
+        (click)="navigate()"
         >messenger
       </a>
     </i>
-    <span style="color: blue;"> ({{ getMessengerLength() }}) </span>
+    <span *ngIf="show" style="color: blue;">
+      ({{ getMessengerLength() }})
+    </span>
   </h4>
 
   <h4>

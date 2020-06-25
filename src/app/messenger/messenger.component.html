@@ -4,12 +4,22 @@
 <br />
 <br />
 <div class="row">
-  <div class="col-md-3 ml-5" style="border: solid; height: 400px;">
-    <div class="container">
+  <div
+    class="col-md-3 ml-5"
+    style="
+      border: solid;
+      height: 400px;
+      width: 200px;
+      border-radius: 10px;
+      background-color: cornsilk;
+    "
+  >
+    <div class="container-fluid">
       <h3>My friends</h3>
-      <ul *ngFor="let user of users">
-        <li
-          style="cursor: pointer; background-color: linen;"
+      <div *ngFor="let user of users">
+        <div
+          id="friend"
+          style="cursor: pointer; border-radius: 9px;"
           *ngIf="users.indexOf(user) !== currentUser"
           (click)="open(users.indexOf(user))"
         >
@@ -24,8 +34,9 @@
               {{ user.name + " " + user.lastName }}
             </span>
           </span>
-        </li>
-      </ul>
+        </div>
+        <hr />
+      </div>
     </div>
   </div>
   <div class="col-md-4">
@@ -35,7 +46,7 @@
       style="
         background-color: linen;
         width: 350px;
-        height: 150px;
+        height: 190px;
         border-radius: 8px;
       "
     >
@@ -45,6 +56,10 @@
         height="80px"
         style="border-radius: 50%; margin-left: 100px;"
       />
+      <br />
+      <span style="margin-left: 110px;" class="font-weight-bold">{{
+        users[id].name + " " + users[id].lastName
+      }}</span>
 
       <span
         ><input
@@ -59,47 +74,81 @@
           send
         </button></span
       >
+      <br />
+      <small class="text-danger ml-5" *ngIf="error"
+        >enter a message
+        <button type="button" class="btn btn-danger btn-sm" (click)="ok()">
+          ok
+        </button></small
+      >
     </div>
   </div>
-  <div class="col-md-3" style="border: solid; width: 400px;">
-    <h3
+  <div class="col-md-3">
+    <div
+      class="container-fluid"
       style="
-        background-color: blue;
-        color: white;
-        border-bottom: 1px solid black;
+        border: solid;
+        width: 400px;
+        border-radius: 8px;
+        background-color: cornsilk;
       "
     >
-      my messages
-    </h3>
-
-    <div *ngFor="let m of messages">
-      <img
-        src="{{ m.image }}"
-        width="30px"
-        height="30px"
-        style="border-radius: 50%;"
-      />
-      <span *ngIf="m.to"
-        >to
-        <img
-          src="{{ m.to }}"
-          width="30px"
-          height="30px"
-          style="border-radius: 50%;"
-        />
-      </span>
-      <span>
-        {{ m.message }}
-        <button
-          *ngIf="!m.to"
-          class="btn btn-info btn-sm"
-          (click)="navigate(m.id)"
-        >
-          reply
-        </button>
-      </span>
-
+      <h2 class="text-center">
+        inbox
+      </h2>
       <hr />
+
+      <div *ngFor="let m of messages">
+        <div
+          style="
+            background-color: burlywood;
+            border-radius: 9px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            width: 200px;
+          "
+          *ngIf="m.to >= 0"
+          class="font-weight-bold"
+        >
+          you to
+
+          <img
+            src="{{ users[m.to].image }}"
+            width="30px"
+            height="30px"
+            style="border-radius: 50%;"
+          />:
+          {{ m.message }}
+        </div>
+
+        <div
+          *ngIf="m.sender >= 0"
+          class="font-weight-bold"
+          style="
+            background-color: lightgray;
+            border-radius: 9px;
+            width: 200px;
+            margin-top: 5px;
+            margin-left: 160px;
+          "
+        >
+          from
+          <img
+            src="{{ users[m.sender].image }}"
+            width="30px"
+            height="30px"
+            style="border-radius: 50%;"
+          />:
+          {{ m.message }}
+          <i
+            *ngIf="m.sender >= 0"
+            style="color: coral; cursor: pointer;"
+            (click)="navigate(m.sender)"
+            class="fa fa-reply"
+            aria-hidden="true"
+          ></i>
+        </div>
+      </div>
     </div>
   </div>
 </div>

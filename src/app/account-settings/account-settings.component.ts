@@ -47,19 +47,29 @@ export class AccountSettingsComponent implements OnInit {
       };
     }
   }
+
   confirm() {
+    const {
+      email,
+      newPassword: password,
+      confirmNewPassword,
+      study,
+      wentTo,
+      livesIn,
+      from,
+    } = this.changePasswordForm.value;
     this.newUser = {
       image: this.image,
       name: this.storageService.getName(),
       lastName: this.storageService.getLastName(),
-      email: this.changePasswordForm.get('email').value,
-      password: this.changePasswordForm.get('newPassword').value,
-      confirmPassword: this.changePasswordForm.get('confirmNewPassword').value,
+      email,
+      password,
+      confirmPassword: password,
       gender: this.storageService.getGender(),
-      study: this.changePasswordForm.get('study').value,
-      wentTo: this.changePasswordForm.get('wentTo').value,
-      livesIn: this.changePasswordForm.get('livesIn').value,
-      from: this.changePasswordForm.get('from').value,
+      study,
+      wentTo,
+      livesIn,
+      from,
       friends: this.storageService.getFriends(),
       posts: this.storageService.getUserPosts(),
       messages: this.storageService.getMessages(),

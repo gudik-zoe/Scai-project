@@ -20,6 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
   title = 'scai-project';
   loggedInSubscription: Subscription;
+  show = true;
 
   loggedIn;
   userIn() {
@@ -29,7 +30,10 @@ export class AppComponent implements OnInit, OnDestroy {
       return false;
     }
   }
-
+  navigate() {
+    // this.route.navigate(['/messenger']);
+    this.show = false;
+  }
   getMessengerLength() {
     return this.storageService.getMessages().length;
   }
@@ -40,6 +44,7 @@ export class AppComponent implements OnInit, OnDestroy {
   logOut() {
     this.route.navigate(['/auth']);
     localStorage.removeItem('key');
+    this.show = true;
   }
 
   ngOnInit() {}
