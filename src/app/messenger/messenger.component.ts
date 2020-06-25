@@ -24,6 +24,7 @@ export class MessengerComponent implements OnInit {
   messageTo;
   sentMessage;
   error;
+  foto;
   messages = this.auth.localStorageArray[this.currentUser].messages;
   ok() {
     this.error = false;
@@ -34,7 +35,8 @@ export class MessengerComponent implements OnInit {
   open(id) {
     this.id = id;
   }
-  send(id, data) {
+  send(id, data, foto) {
+    foto = this.foto;
     if (
       this.inputData === '' ||
       this.inputData === ' ' ||
@@ -42,9 +44,18 @@ export class MessengerComponent implements OnInit {
     ) {
       this.error = true;
     } else {
-      this.chat.send(id, data);
+      this.chat.send(id, data, foto);
     }
     this.id = null;
+  }
+  uploadImage(event) {
+    if (event.target.files) {
+      let reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (event) => {
+        this.foto = event.target.result;
+      };
+    }
   }
 
   ngOnInit() {}

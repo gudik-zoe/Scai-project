@@ -55,17 +55,22 @@
   </h4>
 
   <h4 style="margin-left: 40px;">
-    <i class="fa fa-facebook-messenger" aria-hidden="true" style="color: blue;">
-      <a
-        id="messenger"
-        style="cursor: pointer;"
-        class="font-weight-bold"
-        routerLinkActive="active-class"
-        routerLink="/messenger"
-        (click)="navigate()"
-        >messenger
-      </a>
-    </i>
+    <img
+      src="https://apps.shopifycdn.com/listing_images/f83699e125ac913c98279b8d5b392fcd/icon/20d75d229020ddb617d735fd130b357d.png"
+      width="25px"
+      height="25px"
+      style="border-radius: 50%;"
+    />
+    <a
+      id="messenger"
+      style="cursor: pointer;"
+      class="font-weight-bold"
+      routerLinkActive="active-class"
+      routerLink="/messenger"
+      (click)="navigate()"
+      >messenger
+    </a>
+
     <span *ngIf="show" style="color: blue;">
       ({{ getMessengerLength() }})
     </span>

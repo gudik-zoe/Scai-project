@@ -14,19 +14,22 @@ export class ChatService {
   getCurrentUser() {
     return JSON.parse(localStorage.getItem('key'));
   }
-  send(id, data) {
+  send(id, data, foto) {
+    console.log(foto);
     this.currentUser = this.getCurrentUser();
     let newMessage = this.auth.localStorageArray[id].messages;
 
     newMessage.push({
       message: data,
       sender: this.currentUser,
+      foto,
     });
 
     let userMessage = this.auth.localStorageArray[this.currentUser].messages;
     userMessage.push({
       message: data,
       to: id,
+      foto,
     });
 
     this.messageTo = {
