@@ -45,6 +45,7 @@ export class MessengerComponent implements OnInit {
       this.error = true;
     } else {
       this.chat.send(id, data, foto);
+      this.inputData = null;
     }
     this.id = null;
   }

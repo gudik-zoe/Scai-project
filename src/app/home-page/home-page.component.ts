@@ -98,21 +98,21 @@ export class HomePageComponent implements OnInit {
     this.show = !this.show;
   }
 
-  // sendTo(id, data) {
-  //   if (
-  //     this.inputData === '' ||
-  //     this.inputData === ' ' ||
-  //     this.inputData == null
-  //   ) {
-  //     this.error = true;
-  //   } else {
-  //     this.chat.send(id, data);
-  //     this.id = null;
-  //     this.error = false;
-  //     this.inputData = null;
-  //     this.show = !this.show;
-  //   }
-  // }
+  sendTo(id, data) {
+    if (
+      this.inputData === '' ||
+      this.inputData === ' ' ||
+      this.inputData == null
+    ) {
+      this.error = true;
+    } else {
+      this.chat.sendTo(id, data);
+      this.id = null;
+      this.error = false;
+      this.inputData = null;
+      this.show = !this.show;
+    }
+  }
   ok() {
     this.error = false;
   }

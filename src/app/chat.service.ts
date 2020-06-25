@@ -46,4 +46,33 @@ export class ChatService {
     this.auth.localStorageArray[this.currentUser] = this.sentMessage;
     localStorage.setItem('user', JSON.stringify(this.auth.localStorageArray));
   }
+  sendTo(id, data) {
+    this.currentUser = this.getCurrentUser();
+    let newMessage = this.auth.localStorageArray[id].messages;
+
+    newMessage.push({
+      message: data,
+      sender: this.currentUser,
+    });
+
+    let userMessage = this.auth.localStorageArray[this.currentUser].messages;
+    userMessage.push({
+      message: data,
+      to: id,
+    });
+
+    this.messageTo = {
+      ...this.auth.localStorageArray[id],
+      messages: newMessage,
+    };
+
+    this.sentMessage = {
+      ...this.auth.localStorageArray[this.currentUser],
+      messages: userMessage,
+    };
+
+    this.auth.localStorageArray[id] = this.messageTo;
+    this.auth.localStorageArray[this.currentUser] = this.sentMessage;
+    localStorage.setItem('user', JSON.stringify(this.auth.localStorageArray));
+  }
 }
