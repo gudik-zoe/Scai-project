@@ -6,10 +6,8 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { DescriptionComponent } from './description/description.component';
 import { AuthenticationGuard } from './authentication.guard';
-import { AddFriendsComponent } from './add-friends/add-friends.component';
 import { LoggedUserGuard } from './logged-user.guard';
 import { MessengerComponent } from './messenger/messenger.component';
-import { AddFriendsModule } from './add-friends/add-friends.module';
 
 const routes: Routes = [
   {
@@ -32,11 +30,8 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard],
   },
   { path: 'description/:id', component: DescriptionComponent },
-  // { path: 'messenger/:id', component: MessengerComponent },
+
   { path: 'messenger', component: MessengerComponent },
-  // { path: 'add-friends/:id', component: AddFriendsModule },
-  { path: 'add-friends/:id', component: AddFriendsComponent },
-  // { path: 'add-friends', component: AddFriendsComponent },
 
   {
     path: 'user-profile',
