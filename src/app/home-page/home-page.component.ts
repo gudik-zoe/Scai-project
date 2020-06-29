@@ -24,6 +24,7 @@ export class HomePageComponent implements OnInit {
     private chat: ChatService
   ) {}
   likeBtn = false;
+  message = false;
   input;
   foto;
   preview;

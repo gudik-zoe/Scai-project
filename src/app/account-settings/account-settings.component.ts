@@ -4,8 +4,7 @@ import { Custome } from '../log-in/validator';
 import { Router } from '@angular/router';
 import { StorageService } from '../storage.service';
 import { AuthService } from '../log-in/auth.service';
-import { JsonPipe } from '@angular/common';
-import { ConstantPool } from '@angular/compiler';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-account-settings',
@@ -13,21 +12,23 @@ import { ConstantPool } from '@angular/compiler';
   styleUrls: ['./account-settings.component.css'],
 })
 export class AccountSettingsComponent implements OnInit {
-  changePasswordForm: FormGroup;
+  changeEssentialData: FormGroup;
+  changePersonalData: FormGroup;
   constructor(
     private fb: FormBuilder,
     private route: Router,
     private storageService: StorageService,
     private auth: AuthService
   ) {}
-  changePassword = false;
+
   newUser;
-  passwordHasBeenChanged = false;
+  newCover;
   image;
 
-  change() {
-    this.changePassword = !this.changePassword;
+  foto() {
+    return this.storageService.getImage();
   }
+
   goToHome() {
     this.route.navigate(['/user-profile']);
   }
@@ -47,21 +48,46 @@ export class AccountSettingsComponent implements OnInit {
       };
     }
   }
+  changeCoverPhoto(event) {
+    if (event.target.files) {
+      let reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (event) => {
+        this.newCover = event.target.result;
+      };
+    }
+  }
+  coverPhoto = this.storageService.getCoverPhoto();
+  getImage() {
+    if (this.image) {
+      return this.image;
+    } else {
+      return this.storageService.getImage();
+    }
+  }
+
+  getCover() {
+    if (this.newCover) {
+      return this.newCover;
+    } else {
+      return this.storageService.getCoverPhoto();
+    }
+  }
 
   confirm() {
+    this.storageService.message.next(true);
     const {
+      name,
+      lastName,
       email,
       newPassword: password,
       confirmNewPassword,
-      study,
-      wentTo,
-      livesIn,
-      from,
-    } = this.changePasswordForm.value;
+    } = this.changeEssentialData.value;
+    const { study, wentTo, livesIn, from } = this.changePersonalData.value;
     this.newUser = {
-      image: this.image,
-      name: this.storageService.getName(),
-      lastName: this.storageService.getLastName(),
+      image: this.getImage(),
+      name,
+      lastName,
       email,
       password,
       confirmPassword: password,
@@ -70,6 +96,7 @@ export class AccountSettingsComponent implements OnInit {
       wentTo,
       livesIn,
       from,
+      coverPhoto: this.getCover(),
       friends: this.storageService.getFriends(),
       posts: this.storageService.getUserPosts(),
       messages: this.storageService.getMessages(),
@@ -80,14 +107,17 @@ export class AccountSettingsComponent implements OnInit {
     ] = this.newUser;
 
     localStorage.setItem('user', JSON.stringify(this.auth.localStorageArray));
-
-    this.passwordHasBeenChanged = true;
-    this.changePassword = false;
+    this.route.navigate(['/home-page']);
+    setTimeout(() => {
+      this.storageService.message.next(false);
+    }, 4000);
   }
 
   ngOnInit() {
-    this.changePasswordForm = this.fb.group(
+    this.changeEssentialData = this.fb.group(
       {
+        name: [this.storageService.getName(), Validators.required],
+        lastName: [this.storageService.getLastName(), Validators.required],
         email: [
           this.storageService.getEmail(),
           [Validators.required, Validators.email],
@@ -100,13 +130,16 @@ export class AccountSettingsComponent implements OnInit {
           this.storageService.getConfirmPassword(),
           Validators.required,
         ],
-        study: [this.storageService.getStudy()],
-        wentTo: [this.storageService.getWentTo()],
-        livesIn: [this.storageService.getLivesIn()],
-        from: [this.storageService.getFrom()],
-        image: [this.storageService.getImage()],
       },
       { validator: [Custome.changePassword] }
     );
+
+    this.changePersonalData = this.fb.group({
+      study: [this.storageService.getStudy()],
+      wentTo: [this.storageService.getWentTo()],
+      livesIn: [this.storageService.getLivesIn()],
+      from: [this.storageService.getFrom()],
+      image: [this.storageService.getImage()],
+    });
   }
 }

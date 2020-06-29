@@ -11,7 +11,7 @@
         welcome {{ getUserName() }}
       </h4>
       <hr />
-      <li>
+      <li routerLink="/messenger">
         <img
           src="https://apps.shopifycdn.com/listing_images/f83699e125ac913c98279b8d5b392fcd/icon/20d75d229020ddb617d735fd130b357d.png"
           width="25px"
@@ -27,7 +27,7 @@
         />
         <span class="ml-2">Pages </span>
       </li>
-      <li>
+      <li routerLink="/event-com">
         <img
           src="https://image.shutterstock.com/image-vector/calendar-icon-vector-filled-flat-260nw-1007540575.jpg"
           width="25px"
@@ -370,8 +370,7 @@
             <span class="font-weight-bold">{{
               i.name + " " + i.lastName
             }}</span>
-            <span style="color: red; margin-left: 10px;"
-              ><i class="fa fa-circle" aria-hidden="true"></i>
+            <span style="color: red; margin-left: 10px;">
               <span
                 ><button
                   class="btn btn-info btn-sm ml-2"
@@ -413,10 +412,6 @@
           </span>
         </div>
       </div>
-
-      <p *ngIf="userFriends.length === 0">
-        you have no friends yet
-      </p>
     </div>
   </div>
 </div>

@@ -24,6 +24,9 @@ export class AuthService {
       data.image =
         'https://image.freepik.com/vettori-gratuito/avatar-ragazza-sorridente_102172-32.jpg';
     }
+    if (data.coverPhoto === null) {
+      data.coverPhoto = 'https://i.ytimg.com/vi/uNCr7NdOJgw/maxresdefault.jpg';
+    }
     localStorage.setItem('user', JSON.stringify(this.localStorageArray));
   }
 

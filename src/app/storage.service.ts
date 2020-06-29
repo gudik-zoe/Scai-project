@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './log-in/auth.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StorageService {
   constructor(private auth: AuthService) {}
+  message = new Subject<boolean>();
 
   getName() {
     return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
@@ -15,6 +17,12 @@ export class StorageService {
   getImage() {
     return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
       .image;
+  }
+  getCoverPhoto() {
+    return String(
+      this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
+        .coverPhoto
+    );
   }
 
   getFriends() {

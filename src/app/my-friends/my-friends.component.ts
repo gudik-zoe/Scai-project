@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PostsService } from '../posts.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../log-in/auth.service';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-my-friends',
@@ -8,9 +10,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./my-friends.component.css'],
 })
 export class MyFriendsComponent implements OnInit {
-  myFriends = [];
-
-  constructor(private postService: PostsService, private route: Router) {}
+  users = this.auth.localStorageArray;
+  currentUser = JSON.parse(localStorage.getItem('key'));
+  constructor(
+    private postService: PostsService,
+    private route: Router,
+    private auth: AuthService
+  ) {}
 
   remove(id) {
     console.log('remove');

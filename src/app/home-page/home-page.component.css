@@ -16,6 +16,11 @@
 li {
   margin-top: 20px;
 }
+li:hover {
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
+}
 
 .spane {
   display: inline;

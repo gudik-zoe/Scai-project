@@ -1,14 +1,13 @@
-#main{
-    background-image: url(https://i.ytimg.com/vi/uNCr7NdOJgw/maxresdefault.jpg);
-}
-.new{
-    color: blue;
-    margin-left: 20px;
-    font-weight: bold;
-}
-.new:hover{
-    cursor: pointer;
-    text-decoration: underline;
-    
-}
+/* #main { */
+/* background-image: url(https://i.ytimg.com/vi/uNCr7NdOJgw/maxresdefault.jpg); */
 
+.new {
+  color: blue;
+  margin-left: 20px;
+
+  font-weight: bold;
+}
+.new:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

@@ -8,6 +8,7 @@ import { DescriptionComponent } from './description/description.component';
 import { AuthenticationGuard } from './authentication.guard';
 import { LoggedUserGuard } from './logged-user.guard';
 import { MessengerComponent } from './messenger/messenger.component';
+import { EventComComponent } from './event-com/event-com.component';
 
 const routes: Routes = [
   {
@@ -21,7 +22,6 @@ const routes: Routes = [
       import('./log-in/log-in.module').then((m) => m.LogInModule),
     canActivate: [LoggedUserGuard],
   },
-  // { path: 'messenger', component: MessengerComponent },
 
   {
     path: 'home-page',
@@ -40,6 +40,7 @@ const routes: Routes = [
         (m) => m.UserProfileModule
       ),
   },
+  { path: 'event-com', component: EventComComponent },
 
   {
     path: 'account-settings',

@@ -5,3 +5,17 @@
 #messenger:hover {
   text-decoration: underline;
 }
+
+p {
+  animation-name: example;
+  animation-duration: 4s;
+}
+
+@keyframes example {
+  from {
+    opacity: 1.5;
+  }
+  to {
+    opacity: 0;
+  }
+}

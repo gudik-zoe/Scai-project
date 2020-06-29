@@ -80,15 +80,16 @@
     <button
       type="button"
       style="float: right;"
-      class="btn btn-danger ml-5"
+      class="btn btn-outline-danger ml-5"
       (click)="logOut()"
     >
       log Out
     </button>
   </h4>
+
+  <p *ngIf="message" style="font-size: large; color: black;" class="ml-5">
+    your data has been successfully updated
+  </p>
 </nav>
 
 <router-outlet></router-outlet>
-
-<!-- border-bottom: solid 2px blue;
-  box-shadow: inset 0 -1px 1px -1px red;" -->

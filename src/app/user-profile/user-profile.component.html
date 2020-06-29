@@ -1,130 +1,137 @@
+<br />
+<br />
 <div
-  id="main"
-  class="container mt-4"
-  style="height: 200px; border-radius: 10px;"
+  class="container-fluid mt-4"
+  style="width: 1000px; height: 150px;"
+  [ngStyle]="{ 'background-image': 'url(' + coverPhoto + ')' }"
 >
   <br />
   <br />
-  <div class="text-center mt-5">
+  <br />
+  <div class="text-center mt-2">
     <img src="{{ image() }}" width="150px" style="border-radius: 50%;" />
     <p class="font-weight-bold">{{ name() + " " + lastName() }}</p>
   </div>
+  <br />
+  <br />
+  <br />
+</div>
+<div class="container" style="margin-top: 100px;">
   <span class="new" routerLink="/home-page">Home page</span>
   <span class="new" routerLink="/my-friends">My Friends</span>
   <span class="new">Photos</span>
   <span class="new">About</span>
   <span class="new">More</span>
-  <hr />
+</div>
+<hr />
 
-  <div class="container-fluid">
-    <div class="row">
-      <div
-        class="col-md-4 ml-5"
-        style="
-          height: 230px;
-          width: 150px;
-          background-color: lightgray;
-          border-radius: 10px;
-        "
+<div class="container-fluid mt-5">
+  <div class="row ml-5">
+    <div
+      class="col-md-3"
+      style="
+        height: 230px;
+        background-color: lightgray;
+        border-radius: 10px;
+        margin-left: 300px;
+      "
+    >
+      <h3>intro</h3>
+      <hr />
+      <li>
+        <i class="fa fa-graduation-cap" aria-hidden="true"></i> studied at
+        <span class="font-weight-bold">{{ study() }}</span>
+      </li>
+      <li>
+        <i class="fa fa-university" aria-hidden="true"></i> went to
+        <span class="font-weight-bold"> {{ wentTo() }}</span>
+      </li>
+      <li>
+        <i class="fa fa-home" aria-hidden="true"></i> lives in
+        <span class="font-weight-bold"> {{ livesIn() }}</span>
+      </li>
+      <li>
+        <i class="fa fa-map-marker" aria-hidden="true"></i> from
+        <span class="font-weight-bold"> {{ from() }}</span>
+      </li>
+      <br />
+      <button
+        class="btn btn-primary"
+        style="width: 200px; margin-left: 60px;"
+        (click)="edit()"
       >
-        <h3>intro</h3>
+        edit
+      </button>
+    </div>
+    <div
+      class="col-md-4 ml-5"
+      style="background-color: lightblue; border-radius: 10px;"
+    >
+      <div
+        class="mt-2 ml-5"
+        style="width: 400px; background-color: white; border-radius: 10px;"
+      >
+        <span>
+          <img src="{{ image() }}" width="50px" style="border-radius: 50%;" />
+          <input
+            class="ml-2"
+            placeholder="what's in your mind {{ name() }}?"
+            style="
+              width: 300px;
+              border-radius: 10px;
+              background-color: lightcyan;
+              border-style: none;
+            "
+          />
+        </span>
         <hr />
-        <li>
-          <i class="fa fa-graduation-cap" aria-hidden="true"></i> studied at
-          <span class="font-weight-bold">{{ study() }}</span>
-        </li>
-        <li>
-          <i class="fa fa-university" aria-hidden="true"></i> went to
-          <span class="font-weight-bold"> {{ wentTo() }}</span>
-        </li>
-        <li>
-          <i class="fa fa-home" aria-hidden="true"></i> lives in
-          <span class="font-weight-bold"> {{ livesIn() }}</span>
-        </li>
-        <li>
-          <i class="fa fa-map-marker" aria-hidden="true"></i> from
-          <span class="font-weight-bold"> {{ from() }}</span>
-        </li>
-        <br />
-        <button
-          class="btn btn-primary"
-          style="width: 200px; margin-left: 60px;"
-          (click)="edit()"
+        <span style="color: red;" class="font-weight-bold ml-4">
+          <i class="fa fa-video-camera" aria-hidden="true"></i> live video</span
+        ><span style="color: green;" class="font-weight-bold ml-5">
+          <i class="fa fa-picture-o" aria-hidden="true"></i> photos</span
+        ><span style="color: blue;" class="font-weight-bold ml-5">
+          <i class="fa fa-calendar" aria-hidden="true"></i> events</span
         >
-          edit
-        </button>
       </div>
+      <br />
+
       <div
-        class="col-md-5 ml-5"
-        style="background-color: lightblue; border-radius: 10px;"
+        class="container-fluid"
+        style="background-color: white; border-radius: 10px; width: 400px;"
       >
-        <div
-          class="mt-2 ml-3"
-          style="width: 400px; background-color: white; border-radius: 10px;"
-        >
-          <span>
-            <img src="{{ image() }}" width="50px" style="border-radius: 50%;" />
-            <input
-              class="ml-2"
-              placeholder="what's in your mind {{ name() }}?"
-              style="
-                width: 300px;
-                border-radius: 10px;
-                background-color: lightcyan;
-                border-style: none;
-              "
-            />
-          </span>
-          <hr />
-          <span style="color: red;" class="font-weight-bold ml-4">
-            <i class="fa fa-video-camera" aria-hidden="true"></i> live
-            video</span
-          ><span style="color: green;" class="font-weight-bold ml-5">
-            <i class="fa fa-picture-o" aria-hidden="true"></i> photos</span
-          ><span style="color: blue;" class="font-weight-bold ml-5">
-            <i class="fa fa-calendar" aria-hidden="true"></i> events</span
+        <h3 class="font-weight-bold">posts</h3>
+        <hr />
+        <div *ngFor="let i of getPersonalPosts()" class="container">
+          <p class="font-weight-bold">{{ name() }} has shared</p>
+          <img src="{{ i.image }}" width="300px" height="200px" />
+          <span class="font-weight-bold ml-2">{{ i.likes }}likes</span>
+          <span class="font-weight-bold ml-4"
+            >{{ i.comments.length }}comments</span
           >
-        </div>
-        <br />
-
-        <div
-          class="container-fluid"
-          style="background-color: white; border-radius: 10px; width: 400px;"
-        >
-          <h3 class="font-weight-bold">posts</h3>
+          <span class="font-weight-bold ml-5"
+            ><a style="color: blue; cursor: pointer;">description </a></span
+          >
           <hr />
-          <div *ngFor="let i of getPersonalPosts()" class="container">
-            <p class="font-weight-bold">{{ name() }} has shared</p>
-            <img src="{{ i.image }}" width="300px" height="200px" />
-            <span class="font-weight-bold ml-2">{{ i.likes }}likes</span>
-            <span class="font-weight-bold ml-4"
-              >{{ i.comments.length }}comments</span
-            >
-            <span class="font-weight-bold ml-5"
-              ><a style="color: blue; cursor: pointer;">description </a></span
-            >
-            <hr />
-          </div>
-
-          <div *ngFor="let post of sharedPosts" class="container">
-            <p class="font-weight-bold">{{ name() }} has shared</p>
-            <img src="{{ post.image }}" width="300px" height="200px" />
-            <span class="font-weight-bold ml-2">{{ post.likes }}likes</span>
-            <span class="font-weight-bold ml-4"
-              >{{ post.comments.length }}comments</span
-            >
-            <span class="font-weight-bold ml-5"
-              ><a
-                style="color: blue; cursor: pointer;"
-                (click)="toDescription(post.id)"
-                >description
-              </a></span
-            >
-            <hr />
-          </div>
         </div>
-        <br />
+
+        <div *ngFor="let post of sharedPosts" class="container">
+          <p class="font-weight-bold">{{ name() }} has shared</p>
+          <img src="{{ post.image }}" width="300px" height="200px" />
+          <span class="font-weight-bold ml-2">{{ post.likes }}likes</span>
+          <span class="font-weight-bold ml-4"
+            >{{ post.comments.length }}comments</span
+          >
+          <span class="font-weight-bold ml-5"
+            ><a
+              style="color: blue; cursor: pointer;"
+              (click)="toDescription(post.id)"
+              >description
+            </a></span
+          >
+          <hr />
+        </div>
       </div>
+      <br />
     </div>
   </div>
 </div>

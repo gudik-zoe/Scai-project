@@ -1,141 +1,239 @@
-<br>
-<br>
+<br />
+<br />
+<div class="row mt-5 ml-5">
+  <div
+    class="cold-md-6 ml-5"
+    style="
+      background-color: whitesmoke;
 
-<div
-  class="container-fluid mt-5"
-  style="background-color: lightblue; width: 400px; border-radius: 10px;"
->
-  <h3>Personal Data</h3>
-  <hr />
-  <span class="font-weight-bold">name: {{ getName() }}</span>
-  <span class="font-weight-bold ml-5">lastName: {{ getLastName() }}</span>
-  <p *ngIf="passwordHasBeenChanged">
-    your data has been successfuly changed and saved
-    <button class="btn btn-success" (click)="goToHome()">
-      go to profile
-    </button>
-  </p>
-  <button class="btn btn-success mt-3" (click)="change()">
-    complete / change my data
-    <i *ngIf="!changePassword" class="fa fa-arrow-down" aria-hidden="true"></i>
-    <i *ngIf="changePassword" class="fa fa-arrow-up" aria-hidden="true"></i>
-  </button>
+      height: 670px;
+      border-radius: 9px;
+    "
+  >
+    <div class="container-fluid">
+      <div
+        class="container"
+        style="width: 550px; height: 140px; border-radius: 10px;"
+        [ngStyle]="{ 'background-image': 'url(' + coverPhoto + ')' }"
+      >
+        <input
+          type="file"
+          (change)="changeCoverPhoto($event)"
+          name="cover"
+          id="cover"
+          class="inputfile"
+        />
+        <label
+          style="
+            cursor: pointer;
+            border: thin;
+            background-color: whitesmoke;
+            border: 8px;
+          "
+          for="cover"
+        >
+          change cover Photo
+          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        </label>
 
-  <div *ngIf="changePassword" class="container mt-5">
-    <form [formGroup]="changePasswordForm">
-      <label>email</label>
-      <input
-        type="email"
-        formControlName="email"
-        placeholder="insert new email "
-        class="form-control"
-        [class.is-invalid]="
-          changePasswordForm.get('email').invalid &&
-          changePasswordForm.get('email').touched
-        "
-      />
-      <small
-        class="text-danger"
-        *ngIf="
-          changePasswordForm.get('email').errors?.required &&
-          changePasswordForm.get('email').touched
-        "
-      >
-        this.field is required
-      </small>
-      <small
-        class="text-danger"
-        *ngIf="
-          changePasswordForm.get('email').errors?.email &&
-          changePasswordForm.get('email').touched
-        "
-      >
-        invalid email
-      </small>
+        <br />
+        <br />
+        <div class="text-center">
+          <img
+            class="mt-5"
+            src="{{ foto() }}"
+            width="120px"
+            height="120px"
+            style="border-radius: 50%;"
+          />
+        </div>
+      </div>
       <br />
-      <span>change image <input class="form-control"  type="file" (change)="newImage($event)" ></span>
-      <label>password</label>
       <input
-        type="password"
-        formControlName="newPassword"
-        placeholder="insert new password "
-        class="form-control"
-        [class.is-invalid]="
-          changePasswordForm.get('newPassword').invalid &&
-          changePasswordForm.get('newPassword').touched
-        "
+        type="file"
+        (change)="newImage($event)"
+        name="file"
+        id="file"
+        class="inputfile"
       />
+      <label style="margin-left: 200px; cursor: pointer;" for="file">
+        <img
+          src="https://cdn.pixabay.com/photo/2017/02/07/02/16/cloud-2044823_960_720.png"
+          width="30px"
+          height="30px"
+          class="mt-4"
+          style="border-radius: 50%; margin-left: 20px;"
+        />
+      </label>
+      <form [formGroup]="changeEssentialData">
+        <div class="row">
+          <div class="col-md-4 mt-5 ml-5">
+            <label>Name</label>
+            <input
+              type="text"
+              formControlName="name"
+              class="form-control"
+              [class.is-invalid]="
+                changeEssentialData.get('name').errors?.required &&
+                changeEssentialData.get('name').touched
+              "
+            />
+            <small
+              class="text-danger"
+              *ngIf="
+                changeEssentialData.get('name').errors?.required &&
+                changeEssentialData.get('name').touched
+              "
+            >
+              this.field is required
+            </small>
+          </div>
+          <div class="col-md-4 mt-5 ml-5">
+            <label>last Name</label>
+            <input
+              type="text"
+              formControlName="lastName"
+              class="form-control"
+              [class.is-invalid]="
+                changeEssentialData.get('lastName').errors?.required &&
+                changeEssentialData.get('lastName').touched
+              "
+            />
+            <small
+              class="text-danger"
+              *ngIf="
+                changeEssentialData.get('lastName').errors?.required &&
+                changeEssentialData.get('lastName').touched
+              "
+            >
+              this.field is required
+            </small>
+          </div>
+        </div>
+        <br />
+        <label>email</label>
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="insert new email "
+          class="form-control"
+          [class.is-invalid]="
+            changeEssentialData.get('email').invalid &&
+            changeEssentialData.get('email').touched
+          "
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            changeEssentialData.get('email').errors?.required &&
+            changeEssentialData.get('email').touched
+          "
+        >
+          this.field is required
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="
+            changeEssentialData.get('email').errors?.email &&
+            changeEssentialData.get('email').touched
+          "
+        >
+          invalid email
+        </small>
+        <br />
+        <label>password</label>
+        <input
+          type="password"
+          formControlName="newPassword"
+          placeholder="insert new password "
+          class="form-control"
+          [class.is-invalid]="
+            changeEssentialData.get('newPassword').invalid &&
+            changeEssentialData.get('newPassword').touched
+          "
+        />
 
-      <small
-        class="text-danger"
-        *ngIf="
-          changePasswordForm.get('newPassword').errors?.required &&
-          changePasswordForm.get('newPassword').touched
-        "
-      >
-        this.field is required
-      </small>
-      <small
-        class="text-danger"
-        *ngIf="
-          changePasswordForm.get('newPassword').errors?.minlength &&
-          changePasswordForm.get('newPassword').touched
-        "
-      >
-        password should be longer than 6 characters</small
-      >
-      <label>confirm password</label>
-      <input
-        type="password"
-        formControlName="confirmNewPassword"
-        class="form-control"
-        placeholder="confirm new password"
-        [class.is-invalid]="
-          changePasswordForm.get('confirmNewPassword').invalid &&
-          changePasswordForm.get('confirmNewPassword').touched
-        "
-      />
-      <small
-        class="text-danger"
-        *ngIf="
-          changePasswordForm.get('confirmNewPassword').errors?.required &&
-          changePasswordForm.get('confirmNewPassword').touched
-        "
-      >
-        this.field is required
-      </small>
-      <small
-        class="text-danger"
-        *ngIf="
-          changePasswordForm.get('confirmNewPassword').errors
-            ?.changePasswordError &&
-          changePasswordForm.get('confirmNewPassword').touched
-        "
-      >
-        not identical to the new password
-      </small>
-      <label>studied at</label>
+        <small
+          class="text-danger"
+          *ngIf="
+            changeEssentialData.get('newPassword').errors?.required &&
+            changeEssentialData.get('newPassword').touched
+          "
+        >
+          this.field is required
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="
+            changeEssentialData.get('newPassword').errors?.minlength &&
+            changeEssentialData.get('newPassword').touched
+          "
+        >
+          password should be longer than 6 characters</small
+        >
+        <br />
+        <label>confirm password</label>
+        <input
+          type="password"
+          formControlName="confirmNewPassword"
+          class="form-control"
+          placeholder="confirm new password"
+          [class.is-invalid]="
+            changeEssentialData.get('confirmNewPassword').invalid &&
+            changeEssentialData.get('confirmNewPassword').touched
+          "
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            changeEssentialData.get('confirmNewPassword').errors?.required &&
+            changeEssentialData.get('confirmNewPassword').touched
+          "
+        >
+          this.field is required
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="
+            changeEssentialData.get('confirmNewPassword').errors
+              ?.changePasswordError &&
+            changeEssentialData.get('confirmNewPassword').touched
+          "
+        >
+          not identical to the new password
+        </small>
+      </form>
+    </div>
+  </div>
+  <div
+    class="col-md-3 ml-5"
+    style="background-color: whitesmoke; height: 400px;"
+  >
+    <form [formGroup]="changePersonalData">
+      <label
+        >studied at <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+      </label>
       <input
         type="text"
         formControlName="study"
         placeholder="Ex: University of Riot"
         class="form-control"
       />
-      <label>went to</label>
+      <label>went to <i class="fa fa-university" aria-hidden="true"></i></label>
       <input
         type="text"
         formControlName="wentTo"
         placeholder="Ex: High School of Riot"
         class="form-control"
       />
-      <label>lives in</label>
+      <label>lives in <i class="fa fa-home" aria-hidden="true"></i></label>
       <input
         type="text"
         formControlName="livesIn"
         placeholder="Ex: Turin, Italy"
         class="form-control"
       />
-      <label>from</label>
+      <label>from <i class="fa fa-map-marker" aria-hidden="true"></i></label>
       <input
         type="text"
         formControlName="from"
@@ -143,18 +241,13 @@
         class="form-control"
       />
     </form>
-
+    <br />
     <button
-      [disabled]="!changePasswordForm.valid"
-      class="btn btn-success mt-2"
+      [disabled]="!changeEssentialData.valid"
+      class="btn btn-primary btn-block"
       (click)="confirm()"
     >
       confirm
     </button>
   </div>
- 
 </div>
-<!-- <img src="/assets/download.jpg" width="500px" /> -->
-
-
-

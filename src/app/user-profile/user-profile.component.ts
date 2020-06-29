@@ -17,6 +17,11 @@ export class UserProfileComponent implements OnInit {
     private auth: AuthService
   ) {}
   sharedPosts = [];
+  coverPhoto = this.storageService.getCoverPhoto();
+
+  coverPhotofunc() {
+    console.log(this.coverPhoto);
+  }
   image() {
     return this.storageService.getImage();
   }
@@ -26,7 +31,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   toDescription(id) {
-    this.route.navigate(['description', id]);
+    return this.route.navigate(['description', id]);
   }
 
   name() {

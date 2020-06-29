@@ -75,14 +75,6 @@ export class PostsService {
     this.sharedPosts.push(this.posts[id]);
   }
 
-  addFriend(id) {
-    console.log('hey');
-  }
-  // unFriend(id) {
-  //   this.userFriends = this.userFriends.filter((item) => item.id !== id);
-  //   this.friends[id].pressed = false;
-  // }
-
   getName() {
     return this.storage.getName();
   }
@@ -103,41 +95,6 @@ export class PostsService {
       id: this.posts.length,
     });
   }
-
-  // friends = [
-  //   {
-  //     fullName: 'Bruce wayne',
-  //     image:
-  //       'https://image.freepik.com/vettori-gratuito/avatar-guy-mascot-design_35422-117.jpg',
-  //     id: 0,
-  //     online: true,
-  //     pressed: false,
-  //   },
-  //   {
-  //     fullName: 'steve rogers',
-  //     image:
-  //       'https://image.shutterstock.com/image-vector/man-character-face-avatar-glasses-260nw-562077406.jpg',
-  //     id: 1,
-  //     online: false,
-  //     pressed: false,
-  //   },
-  //   {
-  //     fullName: 'milaia',
-  //     id: 2,
-  //     online: true,
-  //     pressed: false,
-  //     image:
-  //       'https://c8.alamy.com/compit/k4affg/icona-utente-avatar-maschio-in-business-suit-imprenditore-icona-piatta-uomo-in-business-suit-avatar-di-imprenditore-flat-internet-icona-in-forma-arrotondata-web-k4affg.jpg',
-  //   },
-  //   {
-  //     fullName: 'spiky',
-  //     id: 3,
-  //     online: false,
-  //     pressed: false,
-  //     image:
-  //       'https://png.pngtree.com/png-vector/20190704/ourlarge/pngtree-boy-user-avatar-vector-icon-free-png-image_1538406.jpg',
-  //   },
-  // ];
 
   posts = [
     {

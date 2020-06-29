@@ -21,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'scai-project';
   loggedInSubscription: Subscription;
   show = true;
-
+  message = false;
   loggedIn;
   userIn() {
     if (JSON.parse(localStorage.getItem('key')) !== null) {
@@ -31,7 +31,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
   navigate() {
-    // this.route.navigate(['/messenger']);
     this.show = false;
   }
   getMessengerLength() {
@@ -47,7 +46,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this.show = true;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.storageService.message.subscribe((data) => {
+      this.message = data;
+    });
+  }
   ngOnDestroy() {
     this.loggedInSubscription.unsubscribe();
   }

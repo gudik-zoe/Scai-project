@@ -1,0 +1,16 @@
+#event-pic {
+  width: 100%;
+  height: 200px;
+  background-color: whitesmoke;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+body {
+  background-color: whitesmoke;
+}
+
+#event:hover {
+  background-color: whitesmoke;
+  cursor: pointer;
+}

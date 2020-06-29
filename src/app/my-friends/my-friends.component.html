@@ -1,16 +1,32 @@
-<br>
-<br>
-<div *ngIf="myFriends.length > 0" class="container-fluid mt-5 ml-3">
-    <h2>My Friends ({{myFriends.length}}) </h2>
-    <div *ngFor="let friend of myFriends" style="background-color: lightblue; width: 300px; margin-bottom: 2px;">
-        <li><span><img src="{{friend.image}}" width="50px"
-            style="border-radius: 50%;" /> <span class="font-weight-bold"> {{friend.fullName}} </span>  <button class="btn btn-danger btn-sm"
-        (click)="remove(friend.id)">unfriend</button></span>
-        </li>
-     </div>
-    
+<br />
+<br />
+<div *ngIf="users.length > 0" class="container-fluid mt-5 ml-3">
+  <h2>My Friends</h2>
+  <div
+    *ngFor="let user of users"
+    style="
+      background-color: lightblue;
+      width: 300px;
+      margin-bottom: 2px;
+      border-radius: 9px;
+    "
+  >
+    <p *ngIf="users.indexOf(user) !== currentUser">
+      <img src="{{ user.image }}" width="50px" style="border-radius: 50%;" />
+      <span class="font-weight-bold">
+        {{ user.name + " " + user.lastName }}
+      </span>
+      <button class="btn btn-info" routerLink="/messenger">
+        send a message
+      </button>
+    </p>
+  </div>
 </div>
-<div *ngIf="myFriends.length === 0" class="container mt-5" style="background-color: lightblue; border-radius: 10px; width: 300px;" >
-<p> you didn't add any friend yet go ahead and </p>
- <button class="btn btn-success" (click)="goToFriends()">Add friends</button> 
+<div
+  *ngIf="users.length === 0"
+  class="container mt-5"
+  style="background-color: lightblue; border-radius: 10px; width: 300px;"
+>
+  <p>you didn't add any friend yet go ahead and</p>
+  <button class="btn btn-success" (click)="goToFriends()">Add friends</button>
 </div>

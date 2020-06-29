@@ -52,6 +52,7 @@ export class LogInComponent implements OnInit {
 
   switch() {
     this.signUp = !this.signUp;
+    this.dataSaved = false;
   }
 
   signUpForm: FormGroup;
@@ -60,6 +61,7 @@ export class LogInComponent implements OnInit {
     this.signUpForm = this.fb.group(
       {
         image: [null],
+        coverPhoto: [null],
         name: ['', Validators.required],
         lastName: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
