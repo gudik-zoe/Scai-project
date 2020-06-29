@@ -6,11 +6,13 @@
   background-size: cover;
 }
 
-body {
-  background-color: whitesmoke;
+#event:hover {
+  background-color: white;
+  cursor: pointer;
 }
 
-#event:hover {
-  background-color: whitesmoke;
-  cursor: pointer;
+#event {
+  background-color: lightgrey;
+  border-radius: 9px;
+  height: fit-content;
 }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { PostsService } from '../posts.service';
 import { StorageService } from '../storage.service';
 import { AuthService } from '../log-in/auth.service';
+import { EventsService } from '../events.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -14,9 +15,11 @@ export class UserProfileComponent implements OnInit {
     private route: Router,
     private service: PostsService,
     private storageService: StorageService,
-    private auth: AuthService
+    private auth: AuthService,
+    private eventService: EventsService
   ) {}
   sharedPosts = [];
+  userEvents = [];
   coverPhoto = this.storageService.getCoverPhoto();
 
   coverPhotofunc() {
@@ -66,5 +69,6 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
     this.sharedPosts = this.service.sharedPosts;
+    this.userEvents = this.eventService.userStatus;
   }
 }

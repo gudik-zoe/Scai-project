@@ -10,6 +10,18 @@ export class EventComComponent implements OnInit {
   events = [];
   constructor(private eventsService: EventsService) {}
 
+  going(id) {
+    this.eventsService.going(id);
+  }
+
+  interested(id) {
+    this.eventsService.interested(id);
+  }
+
+  notInterested(id) {
+    this.eventsService.notInterested(id);
+  }
+
   ngOnInit() {
     this.events = this.eventsService.events;
   }
