@@ -38,15 +38,14 @@ export class MessengerComponent implements OnInit {
   ok() {
     this.error = false;
   }
-  navigate(id) {
+  navigate(id: number) {
     this.id = id;
   }
-  open(id) {
+  open(id: number) {
     this.id = id;
   }
 
   audioUpload(event) {
-    console.log(event);
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
     reader.onload = (event: any) => {
@@ -76,7 +75,7 @@ export class MessengerComponent implements OnInit {
     this.audio.pause();
   }
 
-  send(id, data, foto, audio) {
+  send(id: number, data: string, foto: ImageBitmap, audio: AudioBuffer) {
     foto = this.foto;
     audio = this.audioFile;
     if (

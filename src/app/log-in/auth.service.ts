@@ -30,13 +30,13 @@ export class AuthService {
     localStorage.setItem('user', JSON.stringify(this.localStorageArray));
   }
 
-  check(email) {
+  check(email: string) {
     if (this.localStorageArray !== null) {
       return this.localStorageArray.some((item) => item.email === email);
     }
   }
 
-  signIn(email, password) {
+  signIn(email: string, password: any) {
     this.requestedUserIndex = this.localStorageArray.findIndex(
       (item) => item.email === email && item.password === password
     );
@@ -48,11 +48,6 @@ export class AuthService {
       return false;
     }
   }
-  // logOut() {
-  // //  this.currentUser = []
-  //  this.signedIn.next(false)
-
-  // }
 
   constructor() {}
 }

@@ -22,9 +22,6 @@ export class UserProfileComponent implements OnInit {
   userEvents = [];
   coverPhoto = this.storageService.getCoverPhoto();
 
-  coverPhotofunc() {
-    console.log(this.coverPhoto);
-  }
   image() {
     return this.storageService.getImage();
   }
@@ -33,7 +30,7 @@ export class UserProfileComponent implements OnInit {
     this.route.navigate(['/account-settings']);
   }
 
-  toDescription(id) {
+  toDescription(id: number) {
     return this.route.navigate(['description', id]);
   }
 

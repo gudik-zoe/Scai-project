@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../log-in/auth.service';
 import { StorageService } from '../storage.service';
 import { ChatService } from '../chat.service';
+import { PagesService } from '../pages.service';
 
 @Component({
   selector: 'app-home-page',
@@ -21,7 +22,8 @@ export class HomePageComponent implements OnInit {
     private route: Router,
     private auth: AuthService,
     private storageService: StorageService,
-    private chat: ChatService
+    private chat: ChatService,
+    private pagesService: PagesService
   ) {}
   likeBtn = false;
   message = false;
@@ -42,10 +44,10 @@ export class HomePageComponent implements OnInit {
   getUserName() {
     return this.storageService.getName();
   }
-  goToDescription(id) {
+  goToDescription(id: number) {
     this.route.navigate(['/description', id]);
   }
-  post(data) {
+  post(data: string) {
     this.postService.post(data, this.foto);
     this.input = undefined;
     this.posted = true;
@@ -65,14 +67,14 @@ export class HomePageComponent implements OnInit {
     }
   }
 
-  like(id) {
+  like(id: number) {
     this.postService.like(id);
   }
 
-  showComments(id) {
+  showComments(id: number) {
     this.postService.showComment(id);
   }
-  commentLike(postId, commentId) {
+  commentLike(postId: number, commentId: number) {
     if (this.postService.posts[postId].comments[commentId].likePressed) {
       this.postService.commentDisLike(postId, commentId);
     } else {
@@ -80,26 +82,26 @@ export class HomePageComponent implements OnInit {
     }
   }
 
-  edit(postId, commentId, editedComment) {
+  edit(postId: number, commentId: number, editedComment: string): void {
     this.postService.edit(postId, commentId, editedComment);
   }
 
-  comment(id, comment) {
-    this.postService.comment(id, comment.value);
-    comment.value = '';
+  comment(id: number, comment: string): void {
+    this.postService.comment(id, comment);
+    comment = '';
   }
-  removeComment(postId, commentId) {
+  removeComment(postId: number, commentId: number) {
     this.postService.removeComment(postId, commentId);
   }
-  share(id) {
+  share(id: number) {
     this.postService.share(id);
   }
-  open(id) {
+  open(id: number) {
     this.id = id;
     this.show = !this.show;
   }
 
-  sendTo(id, data) {
+  sendTo(id: number, data: string) {
     if (
       this.inputData === '' ||
       this.inputData === ' ' ||

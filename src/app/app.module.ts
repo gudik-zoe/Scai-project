@@ -8,6 +8,7 @@ import { DescriptionComponent } from './description/description.component';
 import { AuthenticationGuard } from './authentication.guard';
 import { MessengerComponent } from './messenger/messenger.component';
 import { EventComComponent } from './event-com/event-com.component';
+import { PagesCoComponent } from './pages-co/pages-co.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { EventComComponent } from './event-com/event-com.component';
     DescriptionComponent,
     MessengerComponent,
     EventComComponent,
+    PagesCoComponent,
   ],
   imports: [ReactiveFormsModule, FormsModule, BrowserModule, AppRoutingModule],
   providers: [AuthenticationGuard],

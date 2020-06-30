@@ -15,6 +15,7 @@
 
 li {
   margin-top: 20px;
+  outline: none;
 }
 li:hover {
   text-decoration: underline;
@@ -22,9 +23,10 @@ li:hover {
   cursor: pointer;
 }
 
-.spane {
-  display: inline;
-}
 small:hover {
   text-decoration: underline;
+}
+
+span {
+  outline: none;
 }

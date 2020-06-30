@@ -23,7 +23,7 @@ export class LogInComponent implements OnInit {
   logged = [];
   emailExist = false;
 
-  signUpfunc(data) {
+  signUpfunc(data: any) {
     if (!this.auth.check(data.email)) {
       this.auth.signUp(data);
       this.dataSaved = true;
@@ -37,7 +37,7 @@ export class LogInComponent implements OnInit {
     this.signUpForm.reset();
   }
 
-  signIn(email, password) {
+  signIn(email: string, password: any) {
     if (this.auth.signIn(email, password)) {
       this.route.navigate(['/home-page']);
       this.error = false;

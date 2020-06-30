@@ -14,7 +14,7 @@ export class ChatService {
   getCurrentUser() {
     return JSON.parse(localStorage.getItem('key'));
   }
-  send(id, data, foto, audio) {
+  send(id: number, data: string, foto: ImageBitmap, audio: AudioBuffer) {
     this.currentUser = this.getCurrentUser();
     let newMessage = this.auth.localStorageArray[id].messages;
 
@@ -47,7 +47,7 @@ export class ChatService {
     this.auth.localStorageArray[this.currentUser] = this.sentMessage;
     localStorage.setItem('user', JSON.stringify(this.auth.localStorageArray));
   }
-  sendTo(id, data) {
+  sendTo(id: number, data: string) {
     this.currentUser = this.getCurrentUser();
     let newMessage = this.auth.localStorageArray[id].messages;
 

@@ -1,0 +1,42 @@
+<div
+  style="
+    background-color: whitesmoke;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  "
+>
+  <div class="row mt-5 ml-5">
+    <div class="col-md-3 mt-5 ml-5" *ngFor="let page of pages">
+      <div class="container-fluid" style="background-color: white;">
+        <div
+          id="page-pic"
+          [ngStyle]="{ 'background-image': 'url(' + page.image + ')' }"
+        ></div>
+
+        <p class="font-weight-bold">{{ page.name }}</p>
+        <small
+          >{{ page.likes }}peole liked this
+          <button
+            *ngIf="!page.liked"
+            class="btn btn-light ml-5"
+            type="button"
+            (click)="like(pages.indexOf(page), page.post.text)"
+          >
+            <i class="fa fa-thumbs-up" aria-hidden="true"></i>like
+          </button>
+          <button
+            *ngIf="page.liked"
+            class="btn btn-primary ml-5"
+            type="button"
+            (click)="like(pages.indexOf(page), page.post.text)"
+          >
+            <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+            unlike
+          </button>
+        </small>
+        <br />
+      </div>
+    </div>
+  </div>
+</div>

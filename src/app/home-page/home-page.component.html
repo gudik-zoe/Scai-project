@@ -25,7 +25,7 @@
           width="25px"
           style="border-radius: 50%;"
         />
-        <span class="ml-2">Pages </span>
+        <span routerLink="/pages-co" class="ml-2">Pages </span>
       </li>
       <li routerLink="/event-com">
         <img
@@ -102,7 +102,7 @@
         </i>
         <div
           style="border: solid; width: 400px;"
-          *ngIf="!posted && input !== undefined && input !== ''"
+          *ngIf="input !== undefined && input !== ''"
           class="container"
         >
           post preview
@@ -150,14 +150,33 @@
         class="text-center"
         style="background: white; border-radius: 10px;"
       >
-        <small style="margin-right: 270px;" *ngIf="post.sharedBy">
-          <img src="{{ image() }}" width="50px" style="border-radius: 50%;" />{{
-            post.sharedBy
-          }}
-          shared :
-        </small>
+        <span style="float: left;" *ngIf="post.sharedBy">
+          <img
+            src="{{ image() }}"
+            width="50px"
+            style="border-radius: 50%;"
+          /><span class="font-weight-bold">{{ post.sharedBy }} shared:</span>
+          <br />
+          <p class="ml-5" style="font-size: large;">
+            {{ post.text }}
+          </p>
+        </span>
 
-        <p style="margin-right: 260px;" *ngIf="post.text">{{ post.text }}</p>
+        <p style="float: left;" *ngIf="post.sharedByPhoto">
+          <img
+            class="mt-4"
+            src="{{ post.sharedByPhoto }}"
+            width="50px"
+            height="50px"
+            style="border-radius: 50%;"
+          />
+          <span *ngIf="post.name" class="font-weight-bold"
+            >{{ post.name }} shared :</span
+          >
+
+          <br />
+          <span style="font-size: large;"> {{ post.text }}</span>
+        </p>
 
         <img
           *ngIf="post.image"
@@ -167,8 +186,10 @@
         />
 
         <br />
+        <br />
 
         <span
+          class="mt-5"
           *ngIf="
             post.likes === 0 || (post.likes > 1 && post.likePressed == false)
           "
@@ -246,7 +267,7 @@
 
           <button
             class="btn btn-primary btn-md col-md-3 ml-2"
-            (click)="comment(post.id, commentData)"
+            (click)="comment(post.id, commentData.value)"
           >
             <i class="fa fa-comments" aria-hidden="true"></i>
             comment

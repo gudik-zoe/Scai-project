@@ -9,6 +9,7 @@ import { AuthenticationGuard } from './authentication.guard';
 import { LoggedUserGuard } from './logged-user.guard';
 import { MessengerComponent } from './messenger/messenger.component';
 import { EventComComponent } from './event-com/event-com.component';
+import { PagesCoComponent } from './pages-co/pages-co.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,7 @@ const routes: Routes = [
       ),
   },
   { path: 'event-com', component: EventComComponent },
+  { path: 'pages-co', component: PagesCoComponent },
 
   {
     path: 'account-settings',

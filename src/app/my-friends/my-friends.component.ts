@@ -18,9 +18,6 @@ export class MyFriendsComponent implements OnInit {
     private auth: AuthService
   ) {}
 
-  remove(id) {
-    console.log('remove');
-  }
   goToFriends() {
     this.route.navigate(['/add-friends']);
   }

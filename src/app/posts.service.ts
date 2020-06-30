@@ -23,25 +23,25 @@ export class PostsService {
   disLike(id) {
     this.posts[id].likes = this.posts[id].likes - 1;
   }
-  commentLike(postId, commentId) {
+  commentLike(postId: number, commentId: number) {
     this.posts[postId].comments[commentId].likes =
       this.posts[postId].comments[commentId].likes + 1;
     this.posts[postId].comments[commentId].likePressed = true;
   }
 
-  commentDisLike(postId, commentId) {
+  commentDisLike(postId: number, commentId: number) {
     this.posts[postId].comments[commentId].likes =
       this.posts[postId].comments[commentId].likes - 1;
     this.posts[postId].comments[commentId].likePressed = false;
   }
 
-  removeComment(postId, commentId) {
+  removeComment(postId: number, commentId: number) {
     this.posts[postId].comments = this.posts[postId].comments.filter(
       (item) => item.commentId !== commentId
     );
   }
 
-  comment(id, data) {
+  comment(id: number, data: string) {
     if (data === null || data === '') {
       return false;
     } else {
@@ -58,11 +58,11 @@ export class PostsService {
     }
   }
 
-  showComment(id) {
+  showComment(id: number) {
     this.posts[id].showComments = !this.posts[id].showComments;
   }
 
-  edit(postId, commentId, editedComment) {
+  edit(postId: number, commentId: number, editedComment: any) {
     if (this.posts[postId].comments[commentId].editMode) {
       this.posts[postId].comments[commentId].comment = editedComment.value;
       this.posts[postId].comments[commentId].editMode = false;
@@ -71,7 +71,7 @@ export class PostsService {
     }
   }
 
-  share(id) {
+  share(id: number) {
     this.sharedPosts.push(this.posts[id]);
   }
 
@@ -82,7 +82,7 @@ export class PostsService {
     return this.storage.getLastName();
   }
 
-  post(data, foto) {
+  post(data: string, foto: string) {
     this.posts.push({
       sharedBy: this.getName() + ' ' + this.getLastName(),
       text: data,

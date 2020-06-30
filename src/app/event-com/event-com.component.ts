@@ -10,15 +10,15 @@ export class EventComComponent implements OnInit {
   events = [];
   constructor(private eventsService: EventsService) {}
 
-  going(id) {
+  going(id: number) {
     this.eventsService.going(id);
   }
 
-  interested(id) {
+  interested(id: number) {
     this.eventsService.interested(id);
   }
 
-  notInterested(id) {
+  notInterested(id: number) {
     this.eventsService.notInterested(id);
   }
 
