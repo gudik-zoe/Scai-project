@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { PostsService } from '../posts.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'app-description',
   templateUrl: './description.component.html',
   styleUrls: ['./description.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class DescriptionComponent implements OnInit {
   posts = [];

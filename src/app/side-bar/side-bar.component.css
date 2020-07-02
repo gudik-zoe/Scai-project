@@ -15,3 +15,7 @@ small:hover {
 span {
   outline: none;
 }
+
+body {
+  background-color: whitesmoke;
+}

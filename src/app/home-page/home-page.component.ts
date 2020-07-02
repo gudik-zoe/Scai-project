@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { PostsService } from '../posts.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../log-in/auth.service';
@@ -10,13 +10,12 @@ import { PagesService } from '../pages.service';
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class HomePageComponent implements OnInit {
   posts = [];
   userFriends = JSON.parse(localStorage.getItem('user'));
   currentUserId = JSON.parse(localStorage.getItem('key'));
-
-  data;
   constructor(
     private postService: PostsService,
     private route: Router,
@@ -25,56 +24,54 @@ export class HomePageComponent implements OnInit {
     private chat: ChatService,
     private pagesService: PagesService
   ) {}
-  likeBtn = false;
-  message = false;
-  input;
-  foto;
-  preview;
-  posted = false;
-  editedComment;
-  inputData;
-  id;
-  show = false;
-  users = JSON.parse(localStorage.getItem('user'));
-  currentUser = JSON.parse(localStorage.getItem('key'));
-  messageTo;
-  sentMessage;
-  error = false;
+  likeBtn: boolean = false;
+  // message = false;
+  input: string;
+  foto: any;
+  // imagePreview;
+  posted: boolean = false;
+  editedComment: string;
+  commentData: string;
+  inputData: string;
+  id: number;
+  show: boolean = false;
+  users: any[] = JSON.parse(localStorage.getItem('user'));
+  currentUser: number = JSON.parse(localStorage.getItem('key'));
+  error: boolean = false;
 
-  getUserName() {
+  getUserName(): string {
     return this.storageService.getName();
   }
-  goToDescription(id: number) {
+  goToDescription(id: number): void {
     this.route.navigate(['/description', id]);
   }
-  post(data: string) {
+  post(data: string): void {
     this.postService.post(data, this.foto);
     this.input = undefined;
     this.posted = true;
   }
-  image() {
+  image(): string {
     return this.storageService.getImage();
   }
 
-  uploadImage(event) {
+  uploadImage(event): void {
     if (event.target.files) {
       let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = (event) => {
         this.foto = event.target.result;
-        this.preview = this.foto;
       };
     }
   }
 
-  like(id: number) {
+  like(id: number): void {
     this.postService.like(id);
   }
 
-  showComments(id: number) {
+  showComments(id: number): void {
     this.postService.showComment(id);
   }
-  commentLike(postId: number, commentId: number) {
+  commentLike(postId: number, commentId: number): void {
     if (this.postService.posts[postId].comments[commentId].likePressed) {
       this.postService.commentDisLike(postId, commentId);
     } else {
@@ -88,38 +85,38 @@ export class HomePageComponent implements OnInit {
 
   comment(id: number, comment: string): void {
     this.postService.comment(id, comment);
-    comment = '';
+    this.commentData = null;
   }
-  removeComment(postId: number, commentId: number) {
+  removeComment(postId: number, commentId: number): void {
     this.postService.removeComment(postId, commentId);
   }
-  share(id: number) {
+  share(id: number): void {
     this.postService.share(id);
   }
-  open(id: number) {
-    this.id = id;
-    this.show = !this.show;
-  }
+  // open(id: number): void {
+  //   this.id = id;
+  //   this.show = !this.show;
+  // }
 
-  sendTo(id: number, data: string) {
-    if (
-      this.inputData === '' ||
-      this.inputData === ' ' ||
-      this.inputData == null
-    ) {
-      this.error = true;
-    } else {
-      this.chat.sendTo(id, data);
-      this.id = null;
-      this.error = false;
-      this.inputData = null;
-      this.show = !this.show;
-    }
-  }
-  ok() {
-    this.error = false;
-  }
-  ngOnInit() {
+  // sendTo(id: number, data: string): void {
+  //   if (
+  //     this.inputData === '' ||
+  //     this.inputData === ' ' ||
+  //     this.inputData == null
+  //   ) {
+  //     this.error = true;
+  //   } else {
+  //     this.chat.sendTo(id, data);
+  //     this.id = null;
+  //     this.error = false;
+  //     this.inputData = null;
+  //     this.show = !this.show;
+  //   }
+  // // }
+  // ok(): void {
+  //   this.error = false;
+  // }
+  ngOnInit(): void {
     this.posts = this.postService.posts;
   }
 }

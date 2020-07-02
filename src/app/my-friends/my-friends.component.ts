@@ -13,7 +13,7 @@ export class MyFriendsComponent implements OnInit {
   users: any[] = this.auth.localStorageArray;
   currentUser: number = JSON.parse(localStorage.getItem('key'));
   error: boolean = false;
-  id: number;
+  id: number = null;
   show: boolean = false;
   constructor(
     private postService: PostsService,
@@ -24,6 +24,7 @@ export class MyFriendsComponent implements OnInit {
   userFriends = JSON.parse(localStorage.getItem('user'));
   currentUserId = JSON.parse(localStorage.getItem('key'));
   inputData;
+  messageSent: boolean = false;
   goToFriends() {
     this.route.navigate(['/add-friends']);
   }
@@ -42,11 +43,15 @@ export class MyFriendsComponent implements OnInit {
     ) {
       this.error = true;
     } else {
-      this.chat.sendTo(id, data);
-      this.id = null;
       this.error = false;
+      this.messageSent = true;
+      this.chat.sendTo(id, data);
       this.inputData = null;
-      this.show = !this.show;
+
+      setTimeout(() => {
+        this.id = null;
+        this.messageSent = false;
+      }, 1000);
     }
   }
   ngOnInit() {}

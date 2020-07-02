@@ -36,7 +36,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./event-com/event-com.module').then((m) => m.EventComModule),
   },
-  { path: 'description/:id', component: DescriptionComponent },
+  // { path: 'description/:id', component: DescriptionComponent },
 
   {
     path: 'messenger',

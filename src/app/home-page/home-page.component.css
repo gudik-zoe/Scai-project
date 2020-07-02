@@ -30,3 +30,7 @@ small:hover {
 span {
   outline: none;
 }
+
+body {
+  background-color: white;
+}

@@ -1,268 +1,249 @@
-<div
-  style="
-    background-color: whitesmoke;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-  "
->
-  <div class="row mt-5">
-    <div
-      class="col-md-3 ml-5"
-      style="
-        height: 400px;
-        width: 200px;
-        border-radius: 10px;
-        background-color: lightgrey;
-      "
-    >
-      <div class="container-fluid">
-        <h3>My friends</h3>
-        <hr />
-        <div *ngFor="let user of users">
-          <div
-            id="friend"
-            style="cursor: pointer; border-radius: 9px;"
-            *ngIf="users.indexOf(user) !== currentUser"
-            (click)="open(users.indexOf(user))"
-          >
-            <span
-              ><img
-                src="{{ user.image }}"
-                width="40px"
-                height="40px"
-                style="border-radius: 50%;"
-              />
-              <span class="font-weight-bold">
-                {{ user.name + " " + user.lastName }}
-              </span>
-              <i
-                style="color: white;"
-                class="fa fa-circle"
-                aria-hidden="true"
-              ></i>
+<div class="row mt-5">
+  <div
+    class="col-md-3 ml-5"
+    style="
+      height: 400px;
+      width: 200px;
+      border-radius: 10px;
+      background-color: lightgrey;
+    "
+  >
+    <div class="container-fluid">
+      <h3>My friends</h3>
+      <hr />
+      <div *ngFor="let user of users">
+        <div
+          id="friend"
+          style="cursor: pointer; border-radius: 9px;"
+          *ngIf="users.indexOf(user) !== currentUser"
+          (click)="open(users.indexOf(user))"
+        >
+          <span
+            ><img
+              src="{{ user.image }}"
+              width="40px"
+              height="40px"
+              style="border-radius: 50%;"
+            />
+            <span class="font-weight-bold">
+              {{ user.name + " " + user.lastName }}
             </span>
-            <hr />
-          </div>
+            <i
+              style="color: white;"
+              class="fa fa-circle"
+              aria-hidden="true"
+            ></i>
+          </span>
+          <hr />
         </div>
       </div>
     </div>
-    <div class="col-md-4">
-      <div
-        class="container"
-        *ngIf="id === 0 || id > 0"
-        style="
-          background-color: white;
-          width: 350px;
-          height: 250px;
-          border-radius: 10px;
-          border: solid;
-        "
-      >
-        <img
-          src="{{ users[id].image }}"
-          width="80px"
-          height="80px"
-          style="border-radius: 50%; margin-left: 100px;"
+  </div>
+  <div class="col-md-4">
+    <div
+      class="container"
+      *ngIf="id === 0 || id > 0"
+      style="
+        background-color: white;
+        width: 350px;
+        height: 250px;
+        border-radius: 10px;
+        border: solid;
+      "
+    >
+      <img
+        src="{{ users[id].image }}"
+        width="80px"
+        height="80px"
+        style="border-radius: 50%; margin-left: 100px;"
+      />
+
+      <br />
+      <span style="margin-left: 110px;" class="font-weight-bold">{{
+        users[id].name + " " + users[id].lastName
+      }}</span>
+      <br />
+
+      <span>
+        <input
+          type="file"
+          (change)="uploadImage($event)"
+          name="file"
+          id="file"
+          class="inputfile"
+        />
+        <label style="margin-left: 5px; cursor: pointer;" for="file">
+          <i
+            style="font-size: x-large; color: blue;"
+            class="fa fa-file-image-o"
+            aria-hidden="true"
+          ></i>
+        </label>
+
+        <input
+          type="file"
+          (change)="audioUpload($event)"
+          name="audio"
+          id="audio"
+          class="inputfile2"
+        />
+        <label style="margin-left: 5px; cursor: pointer;" for="audio">
+          <i
+            class="fa fa-file-audio-o"
+            style="font-size: x-large; color: blue;"
+            aria-hidden="true"
+          ></i>
+        </label>
+        <input
+          type="text"
+          width="200px"
+          [(ngModel)]="inputData"
+          style="margin-top: 15px; margin-left: 5px;"
         />
 
-        <br />
-        <span style="margin-left: 110px;" class="font-weight-bold">{{
-          users[id].name + " " + users[id].lastName
-        }}</span>
-        <br />
-
-        <span>
-          <input
-            type="file"
-            (change)="uploadImage($event)"
-            name="file"
-            id="file"
-            class="inputfile"
-          />
-          <label style="margin-left: 5px; cursor: pointer;" for="file">
-            <i
-              style="font-size: x-large; color: blue;"
-              class="fa fa-file-image-o"
-              aria-hidden="true"
-            ></i>
-          </label>
-
-          <input
-            type="file"
-            (change)="audioUpload($event)"
-            name="audio"
-            id="audio"
-            class="inputfile2"
-          />
-          <label style="margin-left: 5px; cursor: pointer;" for="audio">
-            <i
-              class="fa fa-file-audio-o"
-              style="font-size: x-large; color: blue;"
-              aria-hidden="true"
-            ></i>
-          </label>
-          <input
-            type="text"
-            width="200px"
-            [(ngModel)]="inputData"
-            style="margin-top: 15px; margin-left: 5px;"
-          />
-
-          <button
-            type="button"
-            class="btn btn-primary btn-sm mb-1 ml-2"
-            (click)="send(id, inputData, foto, audio)"
-          >
-            send
-          </button></span
+        <button
+          type="button"
+          class="btn btn-primary btn-sm mb-1 ml-2"
+          (click)="send(id, inputData, foto, audio)"
         >
-        <br />
-        <img *ngIf="foto" src="{{ foto }}" width="50px" height="50px" />
-        <span
-          ><button
-            *ngIf="audioFile"
-            type="button"
-            (click)="playProva()"
-            class="btn btn-success btn-sm"
-          >
-            <i class="fa fa-play" aria-hidden="true"></i> audio file
-          </button>
-          <button
-            *ngIf="playing"
-            class="btn btn-danger btn-sm"
-            (click)="stopProva()"
-          >
-            <i class="fa fa-stop" aria-hidden="true"></i>
-          </button>
-        </span>
-        <small class="text-danger ml-5" *ngIf="error"
-          >enter a message
-          <button type="button" class="btn btn-danger btn-sm" (click)="ok()">
-            ok
-          </button></small
-        >
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div
-        class="container-fluid"
-        style="width: 400px; border-radius: 8px; background-color: lightgrey;"
+          send
+        </button></span
       >
-        <h2 class="text-center">
-          inbox
-        </h2>
-        <hr />
+      <br />
+      <img *ngIf="foto" src="{{ foto }}" width="50px" height="50px" />
+      <span
+        ><button
+          *ngIf="audioFile"
+          type="button"
+          (click)="playProva()"
+          class="btn btn-success btn-sm"
+        >
+          <i class="fa fa-play" aria-hidden="true"></i> audio file
+        </button>
+        <button
+          *ngIf="playing"
+          class="btn btn-danger btn-sm"
+          (click)="stopProva()"
+        >
+          <i class="fa fa-stop" aria-hidden="true"></i>
+        </button>
+      </span>
+      <small class="text-danger ml-5" *ngIf="error"
+        >enter a message
+        <button type="button" class="btn btn-danger btn-sm" (click)="ok()">
+          ok
+        </button></small
+      >
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div
+      class="container-fluid"
+      style="width: 400px; border-radius: 8px; background-color: lightgrey;"
+    >
+      <h2 class="text-center">
+        inbox
+      </h2>
+      <hr />
 
-        <div *ngFor="let m of messages">
-          <div
-            style="
-              background-color: white;
-              border-radius: 9px;
-              margin-top: 5px;
-              margin-bottom: 5px;
-              width: 200px;
-            "
-            *ngIf="m.to >= 0"
-            class="font-weight-bold"
-          >
-            you to
+      <div *ngFor="let m of messages">
+        <div
+          style="
+            background-color: white;
+            border-radius: 9px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            width: 200px;
+          "
+          *ngIf="m.to >= 0"
+          class="font-weight-bold"
+        >
+          you to
 
-            <img
-              src="{{ users[m.to].image }}"
-              width="30px"
-              height="30px"
-              style="border-radius: 50%;"
-            />:
-            <p>{{ m.message }}</p>
+          <img
+            src="{{ users[m.to].image }}"
+            width="30px"
+            height="30px"
+            style="border-radius: 50%;"
+          />:
+          <p>{{ m.message }}</p>
 
-            <p>
-              <span>
-                <button
-                  *ngIf="m.audio"
-                  class="btn btn-success btn-sm"
-                  (click)="play(m.audio)"
-                >
-                  <i class="fa fa-play" aria-hidden="true"></i>
-                  audio file
-                </button>
-                <span *ngIf="m.audio">audio file </span>
-                <button
-                  *ngIf="m.audio"
-                  class="btn btn-danger btn-sm"
-                  (click)="stop(m.audio)"
-                >
-                  <i class="fa fa-stop" aria-hidden="true"></i>
-                </button>
-              </span>
-            </p>
-            <p>
-              <img
-                *ngIf="m.foto"
-                src="{{ m.foto }}"
-                width="70px"
-                height="70px"
-              />
-            </p>
-          </div>
+          <p>
+            <span>
+              <button
+                *ngIf="m.audio"
+                class="btn btn-success btn-sm"
+                (click)="play(m.audio)"
+              >
+                <i class="fa fa-play" aria-hidden="true"></i>
+                audio file
+              </button>
+              <span *ngIf="m.audio">audio file </span>
+              <button
+                *ngIf="m.audio"
+                class="btn btn-danger btn-sm"
+                (click)="stop(m.audio)"
+              >
+                <i class="fa fa-stop" aria-hidden="true"></i>
+              </button>
+            </span>
+          </p>
+          <p>
+            <img *ngIf="m.foto" src="{{ m.foto }}" width="70px" height="70px" />
+          </p>
+        </div>
 
-          <div
+        <div
+          *ngIf="m.sender >= 0"
+          class="font-weight-bold"
+          style="
+            background-color: lightgreen;
+            border-radius: 9px;
+            width: 200px;
+            margin-top: 5px;
+            margin-left: 160px;
+          "
+        >
+          from
+          <img
+            src="{{ users[m.sender].image }}"
+            width="30px"
+            height="30px"
+            style="border-radius: 50%;"
+          />:
+          <p>{{ m.message }}</p>
+
+          <p>
+            <span style="border: thick;">
+              <button
+                *ngIf="m.audio"
+                class="btn btn-success btn-sm"
+                (click)="play(m.audio)"
+              >
+                <i class="fa fa-play" aria-hidden="true"></i>
+              </button>
+              <span *ngIf="m.audio">audio file </span>
+              <button
+                *ngIf="m.audio"
+                class="btn btn-danger btn-sm"
+                (click)="stop(m.audio)"
+              >
+                <i class="fa fa-stop" aria-hidden="true"></i>
+              </button>
+            </span>
+          </p>
+
+          <p>
+            <img *ngIf="m.foto" src="{{ m.foto }}" width="70px" height="70px" />
+          </p>
+
+          <i
             *ngIf="m.sender >= 0"
-            class="font-weight-bold"
-            style="
-              background-color: lightgreen;
-              border-radius: 9px;
-              width: 200px;
-              margin-top: 5px;
-              margin-left: 160px;
-            "
-          >
-            from
-            <img
-              src="{{ users[m.sender].image }}"
-              width="30px"
-              height="30px"
-              style="border-radius: 50%;"
-            />:
-            <p>{{ m.message }}</p>
-
-            <p>
-              <span style="border: thick;">
-                <button
-                  *ngIf="m.audio"
-                  class="btn btn-success btn-sm"
-                  (click)="play(m.audio)"
-                >
-                  <i class="fa fa-play" aria-hidden="true"></i>
-                </button>
-                <span *ngIf="m.audio">audio file </span>
-                <button
-                  *ngIf="m.audio"
-                  class="btn btn-danger btn-sm"
-                  (click)="stop(m.audio)"
-                >
-                  <i class="fa fa-stop" aria-hidden="true"></i>
-                </button>
-              </span>
-            </p>
-
-            <p>
-              <img
-                *ngIf="m.foto"
-                src="{{ m.foto }}"
-                width="70px"
-                height="70px"
-              />
-            </p>
-
-            <i
-              *ngIf="m.sender >= 0"
-              style="color: coral; cursor: pointer;"
-              (click)="navigate(m.sender)"
-              class="fa fa-reply"
-              aria-hidden="true"
-            ></i>
-          </div>
+            style="color: coral; cursor: pointer;"
+            (click)="navigate(m.sender)"
+            class="fa fa-reply"
+            aria-hidden="true"
+          ></i>
         </div>
       </div>
     </div>

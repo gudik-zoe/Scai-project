@@ -1,0 +1,15 @@
+#sent {
+  animation-name: example;
+  animation-duration: 1s;
+  color: black;
+  font-size: large;
+}
+
+@keyframes example {
+  from {
+    opacity: 1.5;
+  }
+  to {
+    opacity: 0;
+  }
+}

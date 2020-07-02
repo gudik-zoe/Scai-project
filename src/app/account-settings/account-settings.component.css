@@ -7,6 +7,6 @@
   z-index: -1;
 }
 
-/* #main {
-  background-image: image-set(coverPhoto);
-} */
+body {
+  background-color: whitesmoke;
+}

@@ -17,8 +17,8 @@
             (click)="open(userFriends.indexOf(i))"
           >
             send a quick message
-          </button></span
-        >
+          </button>
+        </span>
         <br />
         <span *ngIf="id === userFriends.indexOf(i) && show"
           ><input
@@ -31,7 +31,14 @@
             (click)="sendTo(id, inputData)"
           >
             send
-          </button></span
+          </button>
+          <span
+            id="sent"
+            *ngIf="messageSent && id === userFriends.indexOf(i)"
+            class="ml-5"
+          >
+            Sent
+          </span></span
         >
         <br />
         <small
@@ -48,36 +55,3 @@
     </span>
   </div>
 </div>
-
-<!-- <br />
-<br />
-<div *ngIf="users.length > 0" class="container-fluid mt-5 ml-3">
-  <h2>My Friends</h2>
-  <div
-    *ngFor="let user of users"
-    style="
-      background-color: lightblue;
-      width: 300px;
-      margin-bottom: 2px;
-      border-radius: 9px;
-    "
-  >
-    <p *ngIf="users.indexOf(user) !== currentUser">
-      <img src="{{ user.image }}" width="50px" style="border-radius: 50%;" />
-      <span class="font-weight-bold">
-        {{ user.name + " " + user.lastName }}
-      </span>
-      <button class="btn btn-info" routerLink="/messenger">
-        send a message
-      </button>
-    </p>
-  </div>
-</div>
-<div
-  *ngIf="users.length === 0"
-  class="container mt-5"
-  style="background-color: lightblue; border-radius: 10px; width: 300px;"
->
-  <p>you didn't add any friend yet go ahead and</p>
-  <button class="btn btn-success" (click)="goToFriends()">Add friends</button>
-</div> -->

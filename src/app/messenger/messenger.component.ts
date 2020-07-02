@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthService } from '../log-in/auth.service';
 import { StorageService } from '../storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { ChatService } from '../chat.service';
   selector: 'app-messenger',
   templateUrl: './messenger.component.html',
   styleUrls: ['./messenger.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class MessengerComponent implements OnInit {
   constructor(

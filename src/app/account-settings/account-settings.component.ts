@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Custome } from '../log-in/validator';
 import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
   selector: 'app-account-settings',
   templateUrl: './account-settings.component.html',
   styleUrls: ['./account-settings.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AccountSettingsComponent implements OnInit {
   changeEssentialData: FormGroup;

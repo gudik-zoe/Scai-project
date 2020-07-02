@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostsService } from '../posts.service';
 import { StorageService } from '../storage.service';
@@ -9,6 +9,7 @@ import { EventsService } from '../events.service';
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class UserProfileComponent implements OnInit {
   constructor(

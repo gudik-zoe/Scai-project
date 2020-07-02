@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { StorageService } from '../storage.service';
 import { Router } from '@angular/router';
 
@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
   selector: 'app-side-bar',
   templateUrl: './side-bar.component.html',
   styleUrls: ['./side-bar.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SideBarComponent implements OnInit {
   constructor(private storageService: StorageService, private route: Router) {}

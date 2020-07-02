@@ -23,3 +23,7 @@ li {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+body {
+  background-color: whitesmoke;
+}

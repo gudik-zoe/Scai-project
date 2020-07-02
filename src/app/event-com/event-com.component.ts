@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { EventsService } from '../events.service';
 
 @Component({
   selector: 'app-event-com',
   templateUrl: './event-com.component.html',
   styleUrls: ['./event-com.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class EventComComponent implements OnInit {
   events = [];
