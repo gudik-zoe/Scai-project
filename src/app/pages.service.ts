@@ -122,5 +122,37 @@ export class PagesService {
         showComments: false,
       },
     },
+    {
+      image: 'https://live.staticflickr.com/2878/33038321363_c60aabd9e9_b.jpg',
+      likes: 300,
+      name: 'Tomb Raider: UnderWorld',
+      liked: false,
+      post: {
+        name: 'Tomb Raider , UnderWorld',
+        sharedBy: null,
+        text: 'Explore the new  Tomb Raider ',
+        sharedByPhoto:
+          'https://live.staticflickr.com/2878/33038321363_c60aabd9e9_b.jpg',
+        image:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRvc3Vr5FDZy4jKr52_rtP6ZdYM5g0bKEtqyw&usqp=CAU',
+        description: '',
+        likes: 100,
+        likePressed: false,
+        comments: [
+          {
+            commentId: 2,
+            likePressed: false,
+            editMode: false,
+            name: 'Romanov',
+            remove: false,
+            likes: 0,
+            comment: 'woow',
+            image:
+              'https://image.shutterstock.com/image-vector/portrait-woman-head-girl-avatar-260nw-1287117751.jpg',
+          },
+        ],
+        showComments: false,
+      },
+    },
   ];
 }

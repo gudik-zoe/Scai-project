@@ -1,4 +1,55 @@
-<br />
+<h3>friends</h3>
+<hr />
+<div *ngIf="userFriends.length > 0">
+  <div *ngFor="let i of userFriends">
+    <span *ngIf="i !== userFriends[currentUserId]">
+      <img
+        src="{{ i.image }}"
+        width="50px"
+        style="border-radius: 50%;"
+        height="50px"
+      />
+      <span class="font-weight-bold">{{ i.name + " " + i.lastName }}</span>
+      <span style="color: red; margin-left: 10px;">
+        <span
+          ><button
+            class="btn btn-info btn-sm ml-2"
+            (click)="open(userFriends.indexOf(i))"
+          >
+            send a quick message
+          </button></span
+        >
+        <br />
+        <span *ngIf="id === userFriends.indexOf(i) && show"
+          ><input
+            style="margin-left: 150px;"
+            width="100px"
+            [(ngModel)]="inputData"
+          /><button
+            type="button"
+            class="btn btn-primary btn-sm mb-1 ml-1"
+            (click)="sendTo(id, inputData)"
+          >
+            send
+          </button></span
+        >
+        <br />
+        <small
+          style="margin-left: 130px;"
+          *ngIf="error && id === userFriends.indexOf(i)"
+          class="text-danger"
+          >enter a message
+          <button type="button" class="btn btn-danger btn-sm" (click)="ok()">
+            ok
+          </button></small
+        >
+        <hr />
+      </span>
+    </span>
+  </div>
+</div>
+
+<!-- <br />
 <br />
 <div *ngIf="users.length > 0" class="container-fluid mt-5 ml-3">
   <h2>My Friends</h2>
@@ -29,4 +80,4 @@
 >
   <p>you didn't add any friend yet go ahead and</p>
   <button class="btn btn-success" (click)="goToFriends()">Add friends</button>
-</div>
+</div> -->

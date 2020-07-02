@@ -5,17 +5,15 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-description',
   templateUrl: './description.component.html',
-  styleUrls: ['./description.component.css']
+  styleUrls: ['./description.component.css'],
 })
 export class DescriptionComponent implements OnInit {
-posts = []
-id
-  constructor(private service:PostsService , private aroute:ActivatedRoute) { }
+  posts = [];
+  id;
+  constructor(private service: PostsService, private aroute: ActivatedRoute) {}
 
   ngOnInit() {
-    this.posts = this.service.posts
-    this.id =  parseInt(this.aroute.snapshot.paramMap.get('id'))
-
+    this.posts = this.service.posts;
+    this.id = parseInt(this.aroute.snapshot.paramMap.get('id'));
   }
-
 }

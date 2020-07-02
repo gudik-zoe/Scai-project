@@ -10,6 +10,7 @@ import { LoggedUserGuard } from './logged-user.guard';
 import { MessengerComponent } from './messenger/messenger.component';
 import { EventComComponent } from './event-com/event-com.component';
 import { PagesCoComponent } from './pages-co/pages-co.component';
+import { SideBarComponent } from './side-bar/side-bar.component';
 
 const routes: Routes = [
   {
@@ -30,9 +31,18 @@ const routes: Routes = [
       import('./home-page/home-page.module').then((m) => m.HomePageModule),
     canActivate: [AuthenticationGuard],
   },
+  {
+    path: 'event-com',
+    loadChildren: () =>
+      import('./event-com/event-com.module').then((m) => m.EventComModule),
+  },
   { path: 'description/:id', component: DescriptionComponent },
 
-  { path: 'messenger', component: MessengerComponent },
+  {
+    path: 'messenger',
+    loadChildren: () =>
+      import('./messenger/messenger.module').then((m) => m.MessengerModule),
+  },
 
   {
     path: 'user-profile',
@@ -41,8 +51,16 @@ const routes: Routes = [
         (m) => m.UserProfileModule
       ),
   },
-  { path: 'event-com', component: EventComComponent },
-  { path: 'pages-co', component: PagesCoComponent },
+  {
+    path: 'event-com',
+    loadChildren: () =>
+      import('./event-com/event-com.module').then((m) => m.EventComModule),
+  },
+  {
+    path: 'pages-co',
+    loadChildren: () =>
+      import('./pages-co/pages-co.module').then((m) => m.PagesCoModule),
+  },
 
   {
     path: 'account-settings',
@@ -50,19 +68,6 @@ const routes: Routes = [
       import('./account-settings/account-settings.module').then(
         (m) => m.AccountSettingsModule
       ),
-  },
-
-  // {
-  //   path: 'add-friends',
-  //   loadChildren: () =>
-  //     import('./add-friends/add-friends.module').then(
-  //       (m) => m.AddFriendsModule
-  //     ),
-  // },
-  {
-    path: 'my-friends',
-    loadChildren: () =>
-      import('./my-friends/my-friends.module').then((m) => m.MyFriendsModule),
   },
 ];
 

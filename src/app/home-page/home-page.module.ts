@@ -1,21 +1,21 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {Routes , RouterModule} from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { HomePageComponent } from './home-page.component';
 import { FormsModule } from '@angular/forms';
+import { MyFriendsModule } from '../my-friends/my-friends.module';
+import { SideBarModule } from '../side-bar/side-bar.module';
 
-
-const routes:Routes = [
-  {path: '' , component:HomePageComponent}
-]
+const routes: Routes = [{ path: '', component: HomePageComponent }];
 
 @NgModule({
   declarations: [HomePageComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    FormsModule
-
-  ]
+    FormsModule,
+    SideBarModule,
+    MyFriendsModule,
+  ],
 })
-export class HomePageModule { }
+export class HomePageModule {}

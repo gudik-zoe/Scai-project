@@ -1,12 +1,14 @@
-<br />
 <div
   id="container"
-  class="container-fluid mt-5"
+  class="container-fluid"
   style="background-color: lightcyan;"
 >
   <div class="row">
     <div id="first-div" class="col-md-3" style="background-color: whitesmoke;">
-      <h4>
+      <app-side-bar></app-side-bar>
+    </div>
+
+    <!-- <h4>
         <img src="{{ image() }}" width="50px" style="border-radius: 50%;" />
         welcome {{ getUserName() }}
       </h4>
@@ -57,8 +59,8 @@
         class="btn btn-info btn-block"
       >
         See More
-      </button>
-    </div>
+      </button> -->
+    <!-- </div> -->
 
     <div id="second-div" class="col-md-5" style="background-color: whitesmoke;">
       <div
@@ -377,7 +379,8 @@
       <br />
     </div>
     <div id="last-div" class="col-md-4" style="background-color: whitesmoke;">
-      <h3>friends</h3>
+      <app-my-friends></app-my-friends>
+      <!-- <h3>friends</h3>
       <hr />
       <div *ngIf="userFriends.length > 0">
         <div *ngFor="let i of userFriends">
@@ -432,7 +435,7 @@
             </span>
           </span>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

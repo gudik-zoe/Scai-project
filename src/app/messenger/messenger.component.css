@@ -1,7 +1,7 @@
 #friend:hover {
   width: 300px;
   color: blue;
-  background-color: lightgray;
+  background-color: white;
 }
 
 .inputfile {
@@ -21,16 +21,3 @@
   position: absolute;
   z-index: -1;
 }
-
-/* .inputfile + label {
-  font-size: 1.25em;
-  font-weight: 700;
-  color: white;
-  background-color: black;
-  display: inline-block;
-} */
-
-/* .inputfile:focus + label,
-.inputfile + label:hover {
-  background-color: red;
-} */

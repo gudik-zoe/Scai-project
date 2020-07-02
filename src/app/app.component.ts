@@ -33,6 +33,9 @@ export class AppComponent implements OnInit, OnDestroy {
   navigate() {
     this.show = false;
   }
+  getUserName() {
+    return this.storageService.getName();
+  }
   getMessengerLength() {
     return this.storageService.getMessages().length;
   }
