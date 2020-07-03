@@ -4,7 +4,11 @@
   style="background-color: lightcyan;"
 >
   <div class="row">
-    <div id="first-div" class="col-md-3" style="background-color: whitesmoke;">
+    <div
+      id="first-div"
+      class="col-md-3 mt-2"
+      style="background-color: whitesmoke;"
+    >
       <app-side-bar></app-side-bar>
     </div>
 
@@ -21,6 +25,7 @@
         <span>
           <img src="{{ image() }}" width="50px" style="border-radius: 50%;" />
           <input
+            (click)="openDiv()"
             class="ml-2"
             [(ngModel)]="input"
             placeholder="what's in your mind, {{ getUserName() }}? "
@@ -32,53 +37,7 @@
             "
           />
         </span>
-
-        <input
-          class="custome-file-input ml-5"
-          style="width: 220px;"
-          *ngIf="input !== undefined && input !== ''"
-          (change)="uploadImage($event)"
-          id="file"
-          type="file"
-        />
-        <i
-          style="color: blue;"
-          *ngIf="input !== undefined && input !== ''"
-          class="fa fa-upload ml-5"
-          aria-hidden="true"
-        >
-        </i>
-        <div
-          style="border: solid; width: 400px;"
-          *ngIf="input !== undefined && input !== ''"
-          class="container"
-        >
-          post preview
-          <br />
-          <img src="{{ image() }}" width="30px" style="border-radius: 50%;" />
-          {{ getUserName() }}
-
-          shared :
-
-          <p>{{ input }}</p>
-          <img
-            *ngIf="foto && !posted"
-            src="{{ foto }}"
-            width="300px"
-            height="150px"
-            style="margin-bottom: 2px;"
-          />
-        </div>
-
-        <button
-          [disabled]="input[0] === ' '"
-          class="btn btn-primary ml-5 mt-2"
-          style="width: 300px;"
-          (click)="post(input)"
-          *ngIf="input !== undefined && input !== ''"
-        >
-          post
-        </button>
+        <app-alert *ngIf="alertComponent"></app-alert>
 
         <hr />
         <span style="color: red;" class="font-weight-bold ml-4">
@@ -105,9 +64,6 @@
             style="border-radius: 50%;"
           /><span class="font-weight-bold">{{ post.sharedBy }} shared:</span>
           <br />
-          <p class="ml-5" style="font-size: large;">
-            {{ post.text }}
-          </p>
         </span>
 
         <p style="float: left;" *ngIf="post.sharedByPhoto">
@@ -121,9 +77,10 @@
           <span *ngIf="post.name" class="font-weight-bold"
             >{{ post.name }} shared :</span
           >
-
-          <br />
-          <span style="font-size: large;"> {{ post.text }}</span>
+        </p>
+        <br />
+        <p style="font-size: large; margin-top: 20px; float: left;">
+          {{ post.text }}
         </p>
 
         <img
@@ -132,89 +89,100 @@
           width="500"
           height="300px"
         />
-
         <br />
-        <br />
+        <div style="margin-top: 50px;">
+          <span
+            *ngIf="
+              post.likes === 0 || (post.likes > 1 && post.likePressed == false)
+            "
+            ><i
+              class="fa fa-thumbs-up"
+              aria-hidden="true"
+              style="color: blue;"
+            ></i>
+            {{ post.likes }}</span
+          >
+          <span *ngIf="post.likes === 1" class="font-weight-bold"
+            ><i
+              class="fa fa-thumbs-up"
+              aria-hidden="true"
+              style="color: blue;"
+            ></i
+            ><small> {{ post.likes }} </small></span
+          >
+          <span *ngIf="post.likes > 1 && post.likePressed">
+            <i
+              class="fa fa-thumbs-up"
+              aria-hidden="true"
+              style="color: blue;"
+            ></i>
+            <small> you and {{ post.likes - 1 }} others </small></span
+          >
 
-        <span
-          class="mt-5"
-          *ngIf="
-            post.likes === 0 || (post.likes > 1 && post.likePressed == false)
-          "
-          ><i
-            class="fa fa-thumbs-up"
-            aria-hidden="true"
-            style="color: blue;"
-          ></i>
-          {{ post.likes }}</span
-        >
-        <span *ngIf="post.likes === 1" class="font-weight-bold"
-          ><i
-            class="fa fa-thumbs-up"
-            aria-hidden="true"
-            style="color: blue;"
-          ></i
-          ><small> {{ post.likes }} </small></span
-        >
-        <span *ngIf="post.likes > 1 && post.likePressed">
-          <i
-            class="fa fa-thumbs-up"
-            aria-hidden="true"
-            style="color: blue;"
-          ></i>
-          <small> you and {{ post.likes - 1 }} others </small></span
-        >
-
-        <span
-          class="font-weight-bold"
-          style="margin-left: 140px;"
-          *ngIf="post.comments.length > 1"
-          >{{ post.comments.length
-          }}<a style="cursor: pointer;" (click)="showComments(post.id)"
-            >comments</a
-          ></span
-        >
-        <span
-          class="font-weight-bold"
-          style="margin-left: 140px;"
-          *ngIf="post.comments.length <= 1"
-          >{{ post.comments.length
-          }}<a style="cursor: pointer;" (click)="showComments(post.id)"
-            >comment</a
-          ></span
-        >
-        <span
-          *ngIf="post.description !== ''"
-          (click)="goToDescription(post.id)"
-          style="
-            cursor: pointer;
-            color: blue;
-            font-weight: bold;
-            margin-left: 130px;
-          "
-          >description</span
-        >
+          <span
+            class="font-weight-bold"
+            style="margin-left: 140px;"
+            *ngIf="post.comments.length > 1"
+            >{{ post.comments.length
+            }}<a style="cursor: pointer;" (click)="showComments(post.id)"
+              >comments</a
+            ></span
+          >
+          <span
+            class="font-weight-bold"
+            style="margin-left: 140px;"
+            *ngIf="post.comments.length <= 1"
+            >{{ post.comments.length
+            }}<a style="cursor: pointer;" (click)="showComments(post.id)"
+              >comment</a
+            ></span
+          >
+          <span
+            *ngIf="post.description !== ''"
+            (click)="goToDescription(post.id)"
+            style="
+              cursor: pointer;
+              color: blue;
+              font-weight: bold;
+              margin-left: 130px;
+            "
+            >description</span
+          >
+        </div>
         <hr />
-        <span class="row" style="margin-left: 80px;">
+        <div class="row" style="margin-left: 80px;">
           <button
-            class="btn btn-primary btn-md col-md-3 ml-2"
+            *ngIf="!post.likePressed"
+            class="btn btn-light btn-md col-md-3 ml-2"
             (click)="like(post.id)"
           >
             <i
-              *ngIf="post.likePressed == true"
-              class="fa fa-thumbs-down"
-              aria-hidden="true"
-            ></i
-            ><i
-              *ngIf="post.likePressed == false"
+              *ngIf="!post.likePressed"
               class="fa fa-thumbs-up"
               aria-hidden="true"
-            ></i
+            ></i>
+            {{ post.likePressed ? "unlike" : "like" }}
+          </button>
+          <button
+            *ngIf="post.likePressed"
+            class="btn btn-primary btn-md col-md-3 ml-2"
+            (click)="like(post.id)"
+          >
+            <i class="fa fa-thumbs-down" aria-hidden="true"></i
             >{{ post.likePressed ? "unlike" : "like" }}
           </button>
 
           <button
+            *ngIf="post.commented"
             class="btn btn-primary btn-md col-md-3 ml-2"
+            (click)="comment(post.id, commentData)"
+          >
+            <i class="fa fa-comments" aria-hidden="true"></i>
+            comment
+          </button>
+          <button
+            *ngIf="!post.commented"
+            class="btn btn-light btn-md col-md-3 ml-2"
             (click)="comment(post.id, commentData)"
           >
             <i class="fa fa-comments" aria-hidden="true"></i>
@@ -222,17 +190,27 @@
           </button>
 
           <button
+            *ngIf="!post.shared"
+            class="btn btn-light btn-md col-md-3 ml-2"
+            (click)="share(post.id)"
+          >
+            <i class="fa fa-share-alt" aria-hidden="true"></i>
+            share
+          </button>
+          <button
+            *ngIf="post.shared"
             class="btn btn-primary btn-md col-md-3 ml-2"
             (click)="share(post.id)"
           >
             <i class="fa fa-share-alt" aria-hidden="true"></i>
             share
           </button>
-        </span>
+        </div>
         <hr />
         <span style="margin-right: 145px;">
           <img src="{{ image() }}" width="50px" style="border-radius: 50%;" />
           <input
+            (keydown.enter)="comment(post.id, commentData)"
             class="ml-2"
             [(ngModel)]="commentData"
             placeholder="write a comment"

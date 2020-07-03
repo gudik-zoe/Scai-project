@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationGuard } from './authentication.guard';
+// import { AlertComponent } from './alert/alert.component';
 // import { DescriptionComponent } from './description/description.component';
 // import { MessengerComponent } from './messenger/messenger.component';
 // import { EventComComponent } from './event-com/event-com.component';
@@ -19,6 +20,7 @@ import { AuthenticationGuard } from './authentication.guard';
 @NgModule({
   declarations: [
     AppComponent,
+    // AlertComponent,
     // DescriptionComponent,
     // MessengerComponent,
     // EventComComponent,

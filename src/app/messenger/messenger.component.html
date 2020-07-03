@@ -95,6 +95,7 @@
           ></i>
         </label>
         <input
+          (keydown.enter)="send(id, inputData, foto, audio)"
           type="text"
           width="200px"
           [(ngModel)]="inputData"

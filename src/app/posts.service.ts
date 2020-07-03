@@ -2,11 +2,13 @@ import { Injectable, ɵisListLikeIterable } from '@angular/core';
 import { AuthService } from './log-in/auth.service';
 import { StorageService } from './storage.service';
 import { CommentStmt } from '@angular/compiler';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostsService {
+  close = new Subject<boolean>();
   sharedPosts = [];
   signedIn = [];
   constructor(private auth: AuthService, private storage: StorageService) {}
@@ -20,19 +22,17 @@ export class PostsService {
       this.posts[id].likePressed = true;
     }
   }
-  disLike(id) {
-    this.posts[id].likes = this.posts[id].likes - 1;
-  }
-  commentLike(postId: number, commentId: number) {
-    this.posts[postId].comments[commentId].likes =
-      this.posts[postId].comments[commentId].likes + 1;
-    this.posts[postId].comments[commentId].likePressed = true;
-  }
 
-  commentDisLike(postId: number, commentId: number) {
-    this.posts[postId].comments[commentId].likes =
-      this.posts[postId].comments[commentId].likes - 1;
-    this.posts[postId].comments[commentId].likePressed = false;
+  commentLike(postId: number, commentId: number) {
+    if (this.posts[postId].comments[commentId].likePressed) {
+      this.posts[postId].comments[commentId].likes =
+        this.posts[postId].comments[commentId].likes - 1;
+      this.posts[postId].comments[commentId].likePressed = false;
+    } else {
+      this.posts[postId].comments[commentId].likes =
+        this.posts[postId].comments[commentId].likes + 1;
+      this.posts[postId].comments[commentId].likePressed = true;
+    }
   }
 
   removeComment(postId: number, commentId: number) {
@@ -55,6 +55,7 @@ export class PostsService {
         commentId: this.posts[id].comments.length,
         remove: true,
       });
+      this.posts[id].commented = true;
     }
   }
 
@@ -73,6 +74,7 @@ export class PostsService {
 
   share(id: number) {
     this.sharedPosts.push(this.posts[id]);
+    this.posts[id].shared = true;
   }
 
   getName() {
@@ -86,10 +88,12 @@ export class PostsService {
     this.posts.push({
       sharedBy: this.getName() + ' ' + this.getLastName(),
       text: data,
+      shared: false,
       image: foto,
       description: '',
       likes: 0,
       likePressed: false,
+      commented: false,
       comments: [],
       showComments: false,
       id: this.posts.length,
@@ -105,6 +109,8 @@ export class PostsService {
       description:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Et qui voluptatum sunt placeat provident. Laborum tempore quam corrupti assumenda odio maxime modi, quod a voluptatum veritatis! Corrupti dolores nam consequuntur.',
       likes: 20,
+      shared: false,
+      commented: false,
       likePressed: false,
       comments: [
         {
@@ -150,6 +156,8 @@ export class PostsService {
         'https://th.tvblog.it/V6HnVTZkLCDQ7iSQDveMVZFbWW4=/fit-in/655xorig/https%3A%2F%2Fmedia.tvblog.it%2F5%2F518%2Ffriends.jpg',
       description: '',
       likes: 1,
+      shared: false,
+      commented: false,
       likePressed: false,
       showComments: false,
       comments: [
@@ -172,7 +180,9 @@ export class PostsService {
       image:
         'https://estnn.com/wp-content/uploads/2020/01/league-of-legends-header-x.jpg',
       description: 'such a nice game join now',
+      shared: false,
       likes: 30,
+      commented: false,
       likePressed: false,
       comments: [],
       showComments: false,

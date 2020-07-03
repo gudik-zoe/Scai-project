@@ -5,6 +5,7 @@ import { HomePageComponent } from './home-page.component';
 import { FormsModule } from '@angular/forms';
 import { MyFriendsModule } from '../my-friends/my-friends.module';
 import { SideBarModule } from '../side-bar/side-bar.module';
+import { AlertModule } from '../alert/alert.module';
 
 const routes: Routes = [{ path: '', component: HomePageComponent }];
 
@@ -16,6 +17,7 @@ const routes: Routes = [{ path: '', component: HomePageComponent }];
     FormsModule,
     SideBarModule,
     MyFriendsModule,
+    AlertModule,
   ],
 })
 export class HomePageModule {}

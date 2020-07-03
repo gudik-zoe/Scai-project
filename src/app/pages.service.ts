@@ -15,7 +15,6 @@ export class PagesService {
       });
       this.pages[id].liked = true;
     } else {
-      console.log(text);
       this.postService.posts = this.postService.posts.filter(
         (item) => item.text !== text
       );
@@ -32,6 +31,8 @@ export class PagesService {
       post: {
         name: 'Tomb Raider , UnderWorld',
         sharedBy: null,
+        commented: false,
+        shared: false,
         text: 'Explore the new  Tomb Raider ',
         sharedByPhoto:
           'https://live.staticflickr.com/2878/33038321363_c60aabd9e9_b.jpg',
@@ -64,6 +65,8 @@ export class PagesService {
       name: 'Social Media: Kringo',
       post: {
         sharedBy: null,
+        commented: false,
+        shared: false,
         name: 'Social Media , Kringo',
         sharedByPhoto:
           'https://moosend.com/wp-content/uploads/2019/07/landing-pages-hero-inside.png',
@@ -96,6 +99,8 @@ export class PagesService {
       liked: false,
       name: 'Funny memes',
       post: {
+        shared: false,
+        commented: false,
         sharedByPhoto:
           'https://i.pinimg.com/236x/cf/31/5e/cf315e1d26989b15cf5a30b970be1574--watch-chopped-food-networktrisha.jpg',
         sharedBy: null,
@@ -109,38 +114,6 @@ export class PagesService {
         comments: [
           {
             commentId: 0,
-            likePressed: false,
-            editMode: false,
-            name: 'Romanov',
-            remove: false,
-            likes: 0,
-            comment: 'woow',
-            image:
-              'https://image.shutterstock.com/image-vector/portrait-woman-head-girl-avatar-260nw-1287117751.jpg',
-          },
-        ],
-        showComments: false,
-      },
-    },
-    {
-      image: 'https://live.staticflickr.com/2878/33038321363_c60aabd9e9_b.jpg',
-      likes: 300,
-      name: 'Tomb Raider: UnderWorld',
-      liked: false,
-      post: {
-        name: 'Tomb Raider , UnderWorld',
-        sharedBy: null,
-        text: 'Explore the new  Tomb Raider ',
-        sharedByPhoto:
-          'https://live.staticflickr.com/2878/33038321363_c60aabd9e9_b.jpg',
-        image:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRvc3Vr5FDZy4jKr52_rtP6ZdYM5g0bKEtqyw&usqp=CAU',
-        description: '',
-        likes: 100,
-        likePressed: false,
-        comments: [
-          {
-            commentId: 2,
             likePressed: false,
             editMode: false,
             name: 'Romanov',

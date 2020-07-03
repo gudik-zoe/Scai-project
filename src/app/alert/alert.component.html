@@ -1,0 +1,66 @@
+<div class="backdrop"></div>
+
+<div class="alert-box">
+  <span>
+    <i
+      (click)="close()"
+      style="color: red; float: right; cursor: pointer;"
+      class="fa fa-times"
+      aria-hidden="true"
+    ></i>
+    <h4 class="text-center">create post</h4>
+  </span>
+  <hr />
+  <div class="alert-box-action">
+    <span class="font-weight-bold">
+      <img
+        src="{{ image() }}"
+        width="60px"
+        height="60px"
+        style="border-radius: 50%;"
+      />
+      {{ fullname() }}
+      <div class="md-form">
+        <textarea
+          placeholder="what's in your mind {{ user() }}"
+          [(ngModel)]="inputData"
+          class="md-textarea form-control"
+          rows="3"
+        ></textarea>
+        <input
+          type="file"
+          (change)="uploadImage($event)"
+          name="file"
+          id="file"
+          class="inputfile"
+        />
+        <label style="float: right; cursor: pointer;" for="file">
+          <img
+            src="https://png.pngtree.com/png-vector/20191129/ourmid/pngtree-image-upload-icon-photo-upload-icon-png-image_2047546.jpg"
+            width="25px"
+            height="25px"
+            class="mt-4"
+            style="border-radius: 50%; margin-left: 20px; color: blue;"
+          />
+        </label>
+        <img
+          *ngIf="foto"
+          src="{{ foto }}"
+          width="500"
+          height="300px"
+          class="mt-5"
+        />
+      </div>
+    </span>
+
+    <br />
+    <button
+      [disabled]="!inputData || inputData == ' '"
+      type="button"
+      (click)="post(inputData)"
+      class="btn btn-primary btn-block"
+    >
+      Post
+    </button>
+  </div>
+</div>
