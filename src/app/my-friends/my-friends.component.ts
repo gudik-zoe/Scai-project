@@ -25,17 +25,15 @@ export class MyFriendsComponent implements OnInit {
   currentUserId = JSON.parse(localStorage.getItem('key'));
   inputData;
   messageSent: boolean = false;
-  goToFriends() {
-    this.route.navigate(['/add-friends']);
-  }
-  ok() {
+
+  ok(): void {
     this.error = false;
   }
-  open(id: number) {
+  open(id: number): void {
     this.id = id;
     this.show = !this.show;
   }
-  sendTo(id: number, data: string) {
+  sendTo(id: number, data: string): void {
     if (
       this.inputData === '' ||
       this.inputData === ' ' ||

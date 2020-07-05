@@ -13,7 +13,7 @@ export class PostsService {
   signedIn = [];
   constructor(private auth: AuthService, private storage: StorageService) {}
 
-  like(id) {
+  like(id): void {
     if (this.posts[id].likePressed) {
       this.posts[id].likes = this.posts[id].likes - 1;
       this.posts[id].likePressed = false;
@@ -23,7 +23,7 @@ export class PostsService {
     }
   }
 
-  commentLike(postId: number, commentId: number) {
+  commentLike(postId: number, commentId: number): void {
     if (this.posts[postId].comments[commentId].likePressed) {
       this.posts[postId].comments[commentId].likes =
         this.posts[postId].comments[commentId].likes - 1;
@@ -35,7 +35,7 @@ export class PostsService {
     }
   }
 
-  removeComment(postId: number, commentId: number) {
+  removeComment(postId: number, commentId: number): void {
     this.posts[postId].comments = this.posts[postId].comments.filter(
       (item) => item.commentId !== commentId
     );
@@ -59,11 +59,11 @@ export class PostsService {
     }
   }
 
-  showComment(id: number) {
+  showComment(id: number): void {
     this.posts[id].showComments = !this.posts[id].showComments;
   }
 
-  edit(postId: number, commentId: number, editedComment: any) {
+  edit(postId: number, commentId: number, editedComment: any): void {
     if (this.posts[postId].comments[commentId].editMode) {
       this.posts[postId].comments[commentId].comment = editedComment.value;
       this.posts[postId].comments[commentId].editMode = false;
@@ -72,7 +72,7 @@ export class PostsService {
     }
   }
 
-  share(id: number) {
+  share(id: number): void {
     this.sharedPosts.push(this.posts[id]);
     this.posts[id].shared = true;
   }
@@ -84,7 +84,7 @@ export class PostsService {
     return this.storage.getLastName();
   }
 
-  post(data: string, foto: string) {
+  post(data: string, foto: string): void {
     this.posts.push({
       sharedBy: this.getName() + ' ' + this.getLastName(),
       text: data,
@@ -99,13 +99,12 @@ export class PostsService {
       id: this.posts.length,
     });
   }
-
   posts = [
     {
       sharedBy: '',
       text: '',
       image:
-        'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg',
+        'https://avante.biz/wp-content/uploads/High-Res-Wallpaper/High-Res-Wallpaper-001.jpg',
       description:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Et qui voluptatum sunt placeat provident. Laborum tempore quam corrupti assumenda odio maxime modi, quod a voluptatum veritatis! Corrupti dolores nam consequuntur.',
       likes: 20,
@@ -153,7 +152,7 @@ export class PostsService {
     {
       sharedBy: '',
       image:
-        'https://th.tvblog.it/V6HnVTZkLCDQ7iSQDveMVZFbWW4=/fit-in/655xorig/https%3A%2F%2Fmedia.tvblog.it%2F5%2F518%2Ffriends.jpg',
+        'https://previews.123rf.com/images/puhhha/puhhha1712/puhhha171200385/91511132-business-people-at-meeting-sharing-ideas-working-in-office-business-team-sitting-at-conference-table.jpg',
       description: '',
       likes: 1,
       shared: false,
@@ -178,7 +177,7 @@ export class PostsService {
     {
       sharedBy: '',
       image:
-        'https://estnn.com/wp-content/uploads/2020/01/league-of-legends-header-x.jpg',
+        'https://www.wallpapers13.com/wp-content/uploads/2015/11/League-Of-Legends-Champion-Annie-the-Dark-Child-and-Riven-the-exile-4k-ultra-HD-wallpapers-for-high-resolution-computer-and-laptop.jpeg',
       description: 'such a nice game join now',
       shared: false,
       likes: 30,

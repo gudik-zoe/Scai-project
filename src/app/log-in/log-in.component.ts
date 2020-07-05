@@ -17,13 +17,13 @@ export class LogInComponent implements OnInit {
     private auth: AuthService,
     private postService: PostsService
   ) {}
-  signUp = true;
-  dataSaved = false;
-  error = false;
+  signUp: boolean = true;
+  dataSaved: boolean = false;
+  error: boolean = false;
   logged = [];
-  emailExist = false;
+  emailExist: boolean = false;
 
-  signUpfunc(data: any) {
+  signUpfunc(data: any): void {
     if (!this.auth.check(data.email)) {
       this.auth.signUp(data);
       this.dataSaved = true;
@@ -32,12 +32,12 @@ export class LogInComponent implements OnInit {
     }
   }
 
-  signUpAgain() {
+  signUpAgain(): void {
     this.emailExist = false;
     this.signUpForm.reset();
   }
 
-  signIn(email: string, password: any) {
+  signIn(email: string, password: any): void {
     if (this.auth.signIn(email, password)) {
       this.route.navigate(['/home-page']);
       this.error = false;
@@ -46,18 +46,18 @@ export class LogInComponent implements OnInit {
     }
   }
 
-  ok() {
+  ok(): void {
     this.error = false;
   }
 
-  switch() {
+  switch(): void {
     this.signUp = !this.signUp;
     this.dataSaved = false;
   }
 
   signUpForm: FormGroup;
   signInForm: FormGroup;
-  ngOnInit() {
+  ngOnInit(): void {
     this.signUpForm = this.fb.group(
       {
         image: [null],

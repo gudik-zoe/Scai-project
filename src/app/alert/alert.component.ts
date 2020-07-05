@@ -13,19 +13,19 @@ export class AlertComponent implements OnInit {
     private postsService: PostsService
   ) {}
   foto;
-  image() {
+  image(): string {
     return this.storageService.getImage();
   }
-  user() {
+  user(): string {
     return this.storageService.getName();
   }
-  fullname() {
+  fullname(): string {
     return (
       this.storageService.getName() + ' ' + this.storageService.getLastName()
     );
   }
 
-  close() {
+  close(): void {
     this.postsService.close.next(false);
   }
   uploadImage(event): void {

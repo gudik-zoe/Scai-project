@@ -19,10 +19,6 @@ export class MessengerComponent implements OnInit {
     private chat: ChatService
   ) {}
 
-  // audio = new Audio('../../assets/Registrazione.m4a');
-  // play() {
-  //   this.audio.play();
-  // }
   users = this.auth.localStorageArray;
   currentUser = JSON.parse(localStorage.getItem('key'));
   id = null;

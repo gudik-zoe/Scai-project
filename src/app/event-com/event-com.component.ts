@@ -5,7 +5,7 @@ import { EventsService } from '../events.service';
   selector: 'app-event-com',
   templateUrl: './event-com.component.html',
   styleUrls: ['./event-com.component.css'],
-  encapsulation: ViewEncapsulation.None,
+  // encapsulation: ViewEncapsulation.None,
 })
 export class EventComComponent implements OnInit {
   events = [];

@@ -29,7 +29,7 @@
               {{ user.name + " " + user.lastName }}
             </span>
             <i
-              style="color: white;"
+              style="color: green;"
               class="fa fa-circle"
               aria-hidden="true"
             ></i>
@@ -195,7 +195,7 @@
         </div>
 
         <div
-          *ngIf="m.sender >= 0"
+          *ngIf="m.sender > 0 || m.sender === 0"
           class="font-weight-bold"
           style="
             background-color: lightgreen;
@@ -239,7 +239,7 @@
           </p>
 
           <i
-            *ngIf="m.sender >= 0"
+            *ngIf="m.sender > 0 || m.sender === 0"
             style="color: coral; cursor: pointer;"
             (click)="navigate(m.sender)"
             class="fa fa-reply"

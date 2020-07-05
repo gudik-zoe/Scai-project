@@ -6,11 +6,11 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'app-description',
   templateUrl: './description.component.html',
   styleUrls: ['./description.component.css'],
-  encapsulation: ViewEncapsulation.None,
+  // encapsulation: ViewEncapsulation.None,
 })
 export class DescriptionComponent implements OnInit {
-  posts = [];
-  id;
+  posts: any[] = [];
+  id: number;
   constructor(private service: PostsService, private aroute: ActivatedRoute) {}
 
   ngOnInit() {

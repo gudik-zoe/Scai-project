@@ -12,13 +12,13 @@ export class PagesCoComponent implements OnInit {
     private pagesService: PagesService,
     private postsService: PostsService
   ) {}
-  pages = [];
-  posts = [];
+  pages: any[] = [];
+  posts: any[] = [];
   ngOnInit() {
     this.pages = this.pagesService.pages;
     this.posts = this.postsService.posts;
   }
-  like(id: number, text: string) {
+  like(id: number, text: string): void {
     this.pagesService.like(id, text);
   }
 }

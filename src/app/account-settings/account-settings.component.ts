@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
   selector: 'app-account-settings',
   templateUrl: './account-settings.component.html',
   styleUrls: ['./account-settings.component.css'],
-  encapsulation: ViewEncapsulation.None,
+  // encapsulation: ViewEncapsulation.None,
 })
 export class AccountSettingsComponent implements OnInit {
   changeEssentialData: FormGroup;

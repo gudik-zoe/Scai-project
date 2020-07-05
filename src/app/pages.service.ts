@@ -7,7 +7,7 @@ import { PostsService } from './posts.service';
 export class PagesService {
   constructor(private postService: PostsService) {}
 
-  like(id: number, text: string) {
+  like(id: number, text: string): void {
     if (!this.pages[id].liked) {
       this.postService.posts.push({
         ...this.pages[id].post,

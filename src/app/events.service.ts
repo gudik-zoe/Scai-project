@@ -10,7 +10,7 @@ export class EventsService {
 
   userStatus = [];
 
-  going(id: number) {
+  going(id: number): void {
     if (this.events[id].going[0].clicked) {
       this.events[id].going[0].number = this.events[id].going[0].number - 1;
       this.events[id].going[0].clicked = false;
@@ -31,7 +31,7 @@ export class EventsService {
     }
   }
 
-  interested(id: number) {
+  interested(id: number): void {
     if (this.events[id].interested[0].clicked) {
       this.events[id].interested[0].number =
         this.events[id].interested[0].number - 1;
@@ -54,7 +54,7 @@ export class EventsService {
     }
   }
 
-  notInterested(id: number) {
+  notInterested(id: number): void {
     if (this.events[id].notInterested[0].clicked) {
       this.events[id].notInterested[0].number =
         this.events[id].notInterested[0].number - 1;

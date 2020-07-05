@@ -9,7 +9,6 @@ import { EventsService } from '../events.service';
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class UserProfileComponent implements OnInit {
   constructor(
@@ -27,12 +26,12 @@ export class UserProfileComponent implements OnInit {
     return this.storageService.getImage();
   }
 
-  edit() {
+  edit(): void {
     this.route.navigate(['/account-settings']);
   }
 
-  toDescription(id: number) {
-    return this.route.navigate(['description', id]);
+  toDescription(id: number): void {
+    this.route.navigate(['description', id]);
   }
 
   name() {
@@ -53,12 +52,6 @@ export class UserProfileComponent implements OnInit {
   }
   from() {
     return this.storageService.getFrom();
-  }
-  toHome() {
-    this.route.navigate(['/home-page']);
-  }
-  goToFriends() {
-    this.route.navigate(['my-friends']);
   }
 
   getPersonalPosts() {

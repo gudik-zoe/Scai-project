@@ -9,16 +9,16 @@ export class StorageService {
   constructor(private auth: AuthService) {}
   message = new Subject<boolean>();
 
-  getName() {
+  getName(): string {
     return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
       .name;
   }
 
-  getImage() {
+  getImage(): string {
     return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
-      .image;
+      ?.image;
   }
-  getCoverPhoto() {
+  getCoverPhoto(): string {
     return String(
       this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
         .coverPhoto
@@ -30,7 +30,7 @@ export class StorageService {
       .friends;
   }
 
-  getLastName() {
+  getLastName(): String {
     return this.auth.localStorageArray[JSON.parse(localStorage.getItem('key'))]
       .lastName;
   }

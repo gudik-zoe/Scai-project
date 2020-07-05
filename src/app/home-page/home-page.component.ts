@@ -10,12 +10,11 @@ import { PagesService } from '../pages.service';
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class HomePageComponent implements OnInit {
-  posts = [];
-  userFriends = JSON.parse(localStorage.getItem('user'));
-  currentUserId = JSON.parse(localStorage.getItem('key'));
+  posts: any[] = [];
+  userFriends: any[] = JSON.parse(localStorage.getItem('user'));
+  currentUserId: number = JSON.parse(localStorage.getItem('key'));
   constructor(
     private postService: PostsService,
     private route: Router,
@@ -25,10 +24,8 @@ export class HomePageComponent implements OnInit {
     private pagesService: PagesService
   ) {}
   likeBtn: boolean = false;
-  // message = false;
   input: string;
   foto: any;
-  // imagePreview;
   posted: boolean = false;
   editedComment: string;
   commentData: string = null;
@@ -49,7 +46,7 @@ export class HomePageComponent implements OnInit {
   image(): string {
     return this.storageService.getImage();
   }
-  openDiv() {
+  openDiv(): void {
     this.alertComponent = true;
   }
 

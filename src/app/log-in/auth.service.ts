@@ -5,17 +5,17 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  users = [];
-  error = false;
+  users: any[] = [];
+  error: boolean = false;
 
-  localStorageArray = JSON.parse(localStorage.getItem('user')) || [];
-  requestedUserIndex;
-  currentUser = [];
-  // current = JSON.parse(localStorage.getItem('key'));
-  loggedIn() {
+  localStorageArray: any[] = JSON.parse(localStorage.getItem('user')) || [];
+  requestedUserIndex: number;
+  currentUser: any[] = [];
+
+  loggedIn(): boolean {
     return !!localStorage.getItem('key');
   }
-  signUp(data) {
+  signUp(data): void {
     this.localStorageArray.push(data);
     if (data.gender === 'male') {
       data.image =
@@ -30,13 +30,13 @@ export class AuthService {
     localStorage.setItem('user', JSON.stringify(this.localStorageArray));
   }
 
-  check(email: string) {
+  check(email: string): boolean {
     if (this.localStorageArray !== null) {
       return this.localStorageArray.some((item) => item.email === email);
     }
   }
 
-  signIn(email: string, password: any) {
+  signIn(email: string, password: any): boolean {
     this.requestedUserIndex = this.localStorageArray.findIndex(
       (item) => item.email === email && item.password === password
     );
