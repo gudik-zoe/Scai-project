@@ -1,7 +1,7 @@
 <div
   id="main"
   class="container mt-5"
-  style="background-color: lightblue; width: 1500px;"
+  style="background-color: lightblue; width: 1500px"
 >
   <div class="row">
     <div *ngIf="!signUp" class="col-md-4">
@@ -10,7 +10,7 @@
           <div class="form-group">
             <input
               type="email"
-              style="width: 240px;"
+              style="width: 240px"
               placeholder="Email"
               class="form-control"
               formControlName="email"
@@ -41,7 +41,7 @@
           <div class="form-group">
             <input
               type="password"
-              style="width: 240px;"
+              style="width: 240px"
               placeholder="Password"
               class="form-control"
               formControlName="password"
@@ -90,19 +90,19 @@
             <div class="col-md-4">
               <input
                 class="form-control"
-                formControlName="name"
+                formControlName="firstName"
                 [class.is-invalid]="
-                  signUpForm.get('name').invalid &&
-                  signUpForm.get('name').touched
+                  signUpForm.get('firstName').invalid &&
+                  signUpForm.get('firstName').touched
                 "
-                placeholder="Name "
+                placeholder="first name "
               />
             </div>
 
             <div class="col-md-4">
               <input
                 class="form-control"
-                style="width: 122px;"
+                style="width: 122px"
                 placeholder="Last name"
                 formControlName="lastName"
                 [class.is-invalid]="
@@ -123,8 +123,8 @@
           <small
             class="text-danger"
             *ngIf="
-              signUpForm.get('name').errors?.required &&
-              signUpForm.get('name').touched
+              signUpForm.get('firstName').errors?.required &&
+              signUpForm.get('firstName').touched
             "
             >this field is required
           </small>
@@ -134,7 +134,7 @@
               class="form-control"
               type="email"
               placeholder="Email"
-              style="width: 240px;"
+              style="width: 240px"
               formControlName="email"
               [class.is-invalid]="
                 signUpForm.get('email').invalid &&
@@ -164,7 +164,7 @@
               class="form-control"
               type="password"
               placeholder="Password"
-              style="width: 240px;"
+              style="width: 240px"
               formControlName="password"
             />
           </div>
@@ -190,7 +190,7 @@
               class="form-control"
               type="password"
               placeholder="Confirm password"
-              style="width: 240px;"
+              style="width: 240px"
               formControlName="confirmPassword"
             />
           </div>
@@ -256,11 +256,11 @@
         </form>
       </div>
     </div>
-    <div style="width: 600px;" class="col-md-4 ml-5 mt-5">
-      <h3 style="font-size: xx-large; font-weight: bolder;">
+    <div style="width: 600px" class="col-md-4 ml-5 mt-5">
+      <h3 style="font-size: xx-large; font-weight: bolder">
         welcome to our project
       </h3>
-      <p style="font-size: xx-large; width: 650px;">
+      <p style="font-size: xx-large; width: 650px">
         sign in to enjoy our service..don't have an account yet go ahead and
         sign up
       </p>

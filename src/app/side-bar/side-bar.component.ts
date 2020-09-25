@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { StorageService } from '../storage.service';
+
 import { Router } from '@angular/router';
+import { AccountService } from '../services/account.service';
+
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -8,13 +11,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./side-bar.component.css'],
 })
 export class SideBarComponent implements OnInit {
-  constructor(private storageService: StorageService, private route: Router) {}
-  image() {
-    return this.storageService.getImage();
-  }
+  userData;
+  constructor(
+    private storageService: StorageService,
+    private route: Router,
+    private accountService: AccountService
+  ) {}
+  // image() {
+  //   return this.storageService.getImage();
+  // }
 
   getUserName() {
-    return this.storageService.getName();
+    return this.userData.firstName;
   }
-  ngOnInit(): void {}
+  ngOnInit() {
+    this.accountService.getData().subscribe((data) => {
+      this.userData = data;
+      this.accountService.userData = data;
+    });
+  }
 }

@@ -11,7 +11,7 @@ export class Custome {
     }
   }
   static changePassword(control: AbstractControl) {
-    let password = control.get('newPassword').value;
+    let password = control.get('password').value;
     let confirmPassword = control.get('confirmNewPassword').value;
     if (password !== confirmPassword) {
       control

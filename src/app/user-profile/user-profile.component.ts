@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { PostsService } from '../posts.service';
-import { StorageService } from '../storage.service';
-import { AuthService } from '../log-in/auth.service';
-import { EventsService } from '../events.service';
+import { AccountService } from '../services/account.service';
+import { AuthService } from '../services/auth.service';
+import { EventsService } from '../services/events.service';
+import { PostsService } from '../services/posts.service';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -12,6 +13,7 @@ import { EventsService } from '../events.service';
 })
 export class UserProfileComponent implements OnInit {
   constructor(
+    private accountService: AccountService,
     private route: Router,
     private service: PostsService,
     private storageService: StorageService,
@@ -20,11 +22,12 @@ export class UserProfileComponent implements OnInit {
   ) {}
   sharedPosts = [];
   userEvents = [];
-  coverPhoto = this.storageService.getCoverPhoto();
+  userData;
+  coverPhoto = 'https://www.w3schools.com/howto/img_avatar.png ';
 
-  image() {
-    return this.storageService.getImage();
-  }
+  // image() {
+  //   return this.storageService.getImage();
+  // }
 
   edit(): void {
     this.route.navigate(['/account-settings']);
@@ -35,30 +38,36 @@ export class UserProfileComponent implements OnInit {
   }
 
   name() {
-    return this.storageService.getName();
+    return this.userData.firstName;
   }
   lastName() {
-    return this.storageService.getLastName();
+    return this.userData.lastName;
   }
   study() {
-    return this.storageService.getStudy();
+    return this.userData.study;
   }
   wentTo() {
-    return this.storageService.getWentTo();
+    return this.userData.wentTo;
   }
 
   livesIn() {
-    return this.storageService.getLivesIn();
+    return this.userData.livesIn;
   }
   from() {
-    return this.storageService.getFrom();
+    return this.userData.city;
   }
 
   getPersonalPosts() {
     return this.storageService.getUserPosts();
   }
 
+  getUserName() {
+    this.accountService.userData.firstName;
+  }
   ngOnInit() {
+    // this.backEnd.getData().subscribe((data) => {
+    //   this.userData = data;
+    // });
     this.sharedPosts = this.service.sharedPosts;
     this.userEvents = this.eventService.userStatus;
   }

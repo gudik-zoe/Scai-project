@@ -5,6 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationGuard } from './authentication.guard';
+import {
+  HttpClient,
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { MyInterceptor } from './my-interceptor';
+
 // import { AlertComponent } from './alert/alert.component';
 // import { DescriptionComponent } from './description/description.component';
 // import { MessengerComponent } from './messenger/messenger.component';
@@ -29,8 +37,21 @@ import { AuthenticationGuard } from './authentication.guard';
     // SideBarComponent,
     // MyFriendsComponent,
   ],
-  imports: [ReactiveFormsModule, FormsModule, BrowserModule, AppRoutingModule],
-  providers: [AuthenticationGuard],
+  imports: [
+    ReactiveFormsModule,
+    FormsModule,
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+  ],
+  providers: [
+    AuthenticationGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MyInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

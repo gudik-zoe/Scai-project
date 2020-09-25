@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { StorageService } from '../storage.service';
-import { PostsService } from '../posts.service';
+import { PostsService } from '../services/posts.service';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-alert',
@@ -16,7 +16,7 @@ export class AlertComponent implements OnInit {
   image(): string {
     return this.storageService.getImage();
   }
-  user(): string {
+  user() {
     return this.storageService.getName();
   }
   fullname(): string {

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { PostsService } from '../posts.service';
+
 import { Router } from '@angular/router';
-import { AuthService } from '../log-in/auth.service';
-import { ChatService } from '../chat.service';
+import { AccountService } from '../services/account.service';
+import { AuthService } from '../services/auth.service';
+import { ChatService } from '../services/chat.service';
+import { PostsService } from '../services/posts.service';
 
 @Component({
   selector: 'app-my-friends',
@@ -19,10 +21,11 @@ export class MyFriendsComponent implements OnInit {
     private postService: PostsService,
     private route: Router,
     private auth: AuthService,
-    private chat: ChatService
+    private chat: ChatService,
+    private accountService: AccountService
   ) {}
-  userFriends = JSON.parse(localStorage.getItem('user'));
-  currentUserId = JSON.parse(localStorage.getItem('key'));
+  userFriends = 3;
+  currentUserId = this.accountService.getId();
   inputData;
   messageSent: boolean = false;
 

@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Custome } from './validator';
 import { Router } from '@angular/router';
-import { AuthService } from './auth.service';
-import { PostsService } from '../posts.service';
+import { AuthService } from '../services/auth.service';
+import { PostsService } from '../services/posts.service';
+import { AccountService } from '../services/account.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-log-in',
@@ -15,21 +17,24 @@ export class LogInComponent implements OnInit {
     private fb: FormBuilder,
     private route: Router,
     private auth: AuthService,
-    private postService: PostsService
+    private postService: PostsService,
+    private accountService: AccountService,
+    private http: HttpClient
   ) {}
   signUp: boolean = true;
   dataSaved: boolean = false;
   error: boolean = false;
   logged = [];
   emailExist: boolean = false;
+  theAccountObject;
+  userProfilePhoto;
 
   signUpfunc(data: any): void {
-    if (!this.auth.check(data.email)) {
-      this.auth.signUp(data);
-      this.dataSaved = true;
-    } else {
-      this.emailExist = true;
-    }
+    this.auth.signUp(data).subscribe((data) => {
+      console.log('u ha been registered');
+      console.log(data);
+      this.signUp = false;
+    });
   }
 
   signUpAgain(): void {
@@ -37,13 +42,23 @@ export class LogInComponent implements OnInit {
     this.signUpForm.reset();
   }
 
-  signIn(email: string, password: any): void {
-    if (this.auth.signIn(email, password)) {
-      this.route.navigate(['/home-page']);
-      this.error = false;
-    } else {
-      this.error = true;
-    }
+  signIn(email: string, password: any) {
+    // if (this.auth.signIn(email, password)) {
+
+    //   this.error = false;
+    // } else {
+    //   this.error = true;
+    // }
+    this.auth.signIn(email, password).subscribe(
+      (data) => {
+        console.log(data.headers);
+        localStorage.setItem('token', data.headers.get('Authorization'));
+        this.route.navigate(['/home-page']);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   ok(): void {
@@ -60,35 +75,14 @@ export class LogInComponent implements OnInit {
   ngOnInit(): void {
     this.signUpForm = this.fb.group(
       {
-        image: [null],
-        coverPhoto: [null],
-        name: ['', Validators.required],
+        image: [''],
+        coverPhoto: [''],
+        firstName: ['', Validators.required],
         lastName: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', Validators.required],
         gender: ['', Validators.required],
-        study: [''],
-        wentTo: [''],
-        livesIn: [''],
-        from: [''],
-        messages: [[]],
-        posts: [
-          [
-            {
-              sharedBy: '',
-              text: '',
-              image:
-                'https://www.playblog.it/wp-content/uploads/2020/02/Come-creare-GIF-animate-da-qualsiasi-pc-Windows-960x640.jpg',
-              description: 'how to ...',
-              likes: 0,
-              likePressed: false,
-              comments: [],
-              showComments: false,
-              id: 0,
-            },
-          ],
-        ],
       },
       { validator: [Custome.PasswordConfirmation] }
     );
@@ -96,5 +90,18 @@ export class LogInComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
+    // this.accountService.getData().subscribe((data) => {
+    //   this.theAccountObject = data;
+    //   this.http
+    //     .get(
+    //       'http://localhost:8080/files/' + this.theAccountObject.profilePhoto,
+    //       {
+    //         responseType: 'blob',
+    //       }
+    //     )
+    //     .subscribe((data) => {
+    //       this.accountService.userData.profilePhoto = data;
+    //     });
+    // });
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PagesService } from '../pages.service';
-import { PostsService } from '../posts.service';
+import { PagesService } from '../services/pages.service';
+import { PostsService } from '../services/posts.service';
 
 @Component({
   selector: 'app-pages-co',

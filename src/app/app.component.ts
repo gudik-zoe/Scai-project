@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PostsService } from './posts.service';
+
 import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
-import { AuthService } from './log-in/auth.service';
+
 import { Subscription } from 'rxjs';
-import { StorageService } from './storage.service';
+import { AccountService } from './services/account.service';
+import { AuthService } from './services/auth.service';
+import { PostsService } from './services/posts.service';
+import { StorageService } from './services/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +16,7 @@ import { StorageService } from './storage.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   constructor(
+    private accountService: AccountService,
     private postService: PostsService,
     private route: Router,
     private auth: AuthService,
@@ -23,8 +27,9 @@ export class AppComponent implements OnInit, OnDestroy {
   show = true;
   message = false;
   loggedIn;
+  userData;
   userIn() {
-    if (JSON.parse(localStorage.getItem('key')) !== null) {
+    if (localStorage.getItem('token') !== null) {
       return true;
     } else {
       return false;
@@ -34,22 +39,38 @@ export class AppComponent implements OnInit, OnDestroy {
     this.show = false;
   }
   getUserName() {
-    return this.storageService.getName();
+    return this.userData.firstName;
   }
   getMessengerLength() {
-    return this.storageService.getMessages().length;
+    return this.storageService.getMessages();
   }
   image() {
-    return this.storageService.getImage();
+    return this.accountService.userData?.profilePhoto;
+  }
+
+  deactivate() {
+    this.accountService.deleteAccount().subscribe(
+      (data) => {
+        localStorage.removeItem('token');
+        this.route.navigate(['/auth']);
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   logOut() {
     this.route.navigate(['/auth']);
-    localStorage.removeItem('key');
+    localStorage.removeItem('token');
     this.show = true;
   }
 
   ngOnInit() {
+    // this.backEnd.getData().subscribe((data) => {
+    //   this.userData = data;
+    // });
     this.storageService.message.subscribe((data) => {
       this.message = data;
     });

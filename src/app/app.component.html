@@ -1,17 +1,12 @@
 <nav
   *ngIf="userIn()"
   class="navbar navbar-expand-md navbar-dark sticky-top shadow-lg"
-  style="height: 72px; border-radius: 10px; background-color: white;"
+  style="height: 72px; border-radius: 10px; background-color: white"
 >
-  <img
-    src="{{ image() }}"
-    width="70px"
-    height="70px"
-    style="border-radius: 50%;"
-  />
+  <img src="" width="70px" height="70px" style="border-radius: 50%" />
   <h4>
     <i
-      style="cursor: pointer; color: blue; margin-left: 15px;"
+      style="cursor: pointer; color: blue; margin-left: 15px"
       class="fa fa-home"
       aria-hidden="true"
     >
@@ -24,9 +19,9 @@
     </i>
   </h4>
 
-  <h4 style="margin-left: 30px;">
+  <h4 style="margin-left: 30px">
     <i
-      style="cursor: pointer; color: blue;"
+      style="cursor: pointer; color: blue"
       class="fa fa-cog"
       aria-hidden="true"
     >
@@ -39,9 +34,9 @@
     </i>
   </h4>
 
-  <h4 style="margin-left: 35px;">
+  <h4 style="margin-left: 35px">
     <i
-      style="cursor: pointer; color: blue;"
+      style="cursor: pointer; color: blue"
       class="fa fa-user"
       aria-hidden="true"
     >
@@ -54,7 +49,7 @@
     </i>
   </h4>
 
-  <h4 style="margin-left: 40px;">
+  <!-- <h4 style="margin-left: 40px;">
     <img
       src="https://apps.shopifycdn.com/listing_images/f83699e125ac913c98279b8d5b392fcd/icon/20d75d229020ddb617d735fd130b357d.png"
       width="25px"
@@ -74,12 +69,12 @@
     <span *ngIf="show" style="color: blue;">
       ({{ getMessengerLength() }})
     </span>
-  </h4>
+  </h4> -->
 
   <h4>
     <button
       type="button"
-      style="float: right;"
+      style="float: right"
       class="btn btn-outline-danger ml-5"
       (click)="logOut()"
     >
@@ -87,7 +82,12 @@
     </button>
   </h4>
 
-  <p *ngIf="message" style="font-size: large; color: black;" class="ml-5">
+  <h4>
+    <button class="btn btn-danger-sm ml-4" (click)="deactivate()">
+      deactivate my account
+    </button>
+  </h4>
+  <p *ngIf="message" style="font-size: large; color: black" class="ml-5">
     your data has been successfully updated
   </p>
 </nav>

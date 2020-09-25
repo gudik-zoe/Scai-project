@@ -2,9 +2,13 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Custome } from '../log-in/validator';
 import { Router } from '@angular/router';
-import { StorageService } from '../storage.service';
-import { AuthService } from '../log-in/auth.service';
+
 import { Subject } from 'rxjs';
+import { AccountService } from '../services/account.service';
+import { AuthService } from '../services/auth.service';
+import { StorageService } from '../services/storage.service';
+import { HttpClient } from '@angular/common/http';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-account-settings',
@@ -14,40 +18,66 @@ import { Subject } from 'rxjs';
 })
 export class AccountSettingsComponent implements OnInit {
   changeEssentialData: FormGroup;
-  changePersonalData: FormGroup;
+
+  // changePersonalData: FormGroup;
   constructor(
+    private http: HttpClient,
+    private _sanitizer: DomSanitizer,
     private fb: FormBuilder,
     private route: Router,
     private storageService: StorageService,
-    private auth: AuthService
+    private auth: AuthService,
+    private accountService: AccountService
   ) {}
 
   newUser;
   newCover;
-  image;
+  myImage;
+  userData;
+  name;
+  lastName;
+  password;
 
-  foto() {
-    return this.storageService.getImage();
+  image() {
+    return this.userData?.profilePhoto;
   }
 
   goToHome() {
     this.route.navigate(['/user-profile']);
   }
 
-  getLastName() {
-    return this.storageService.getLastName();
-  }
-  getName() {
-    return this.storageService.getName();
-  }
   newImage(event) {
-    if (event.target.files) {
-      let reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (event) => {
-        this.image = event.target.result;
-      };
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.myImage = file;
+      const formData = new FormData();
+      formData.append('file', this.myImage);
+      this.http
+        .post('http://localhost:8080/upload', formData)
+        .subscribe((data) => {
+          console.log(data);
+        });
+      this.http
+        .put(
+          'http://localhost:8080/api/accounts/' +
+            this.accountService.getId() +
+            '/' +
+            this.myImage.name,
+          {}
+        )
+        .subscribe((data) => {
+          console.log(data);
+        });
     }
+
+    // if (event.target.files) {
+    //   let reader = new FileReader();
+    //   reader.readAsDataURL(event.target.files[0]);
+    //   reader.onload = (event) => {
+    //     this.myImage = event.target.result;
+
+    //   };
+    // }
   }
   changeCoverPhoto(event) {
     if (event.target.files) {
@@ -74,73 +104,69 @@ export class AccountSettingsComponent implements OnInit {
       return this.storageService.getCoverPhoto();
     }
   }
-
-  confirm() {
-    this.storageService.message.next(true);
-    const {
-      name,
-      lastName,
-      email,
-      newPassword: password,
-      confirmNewPassword,
-    } = this.changeEssentialData.value;
-    const { study, wentTo, livesIn, from } = this.changePersonalData.value;
-    this.newUser = {
-      image: this.getImage(),
-      name,
-      lastName,
-      email,
-      password,
-      confirmPassword: password,
-      gender: this.storageService.getGender(),
-      study,
-      wentTo,
-      livesIn,
-      from,
-      coverPhoto: this.getCover(),
-      friends: this.storageService.getFriends(),
-      posts: this.storageService.getUserPosts(),
-      messages: this.storageService.getMessages(),
-    };
-
-    this.auth.localStorageArray[
-      JSON.parse(localStorage.getItem('key'))
-    ] = this.newUser;
-
-    localStorage.setItem('user', JSON.stringify(this.auth.localStorageArray));
-    this.route.navigate(['/home-page']);
-    setTimeout(() => {
-      this.storageService.message.next(false);
-    }, 4000);
+  getFirstName() {
+    return this.userData.firstName;
   }
+
+  getLastName() {
+    return this.userData.lastName;
+  }
+  confirm() {
+    this.changeEssentialData.value.profilePhoto = this.myImage;
+
+    // console.log(this.changeEssentialData.value);
+    this.accountService
+      .updateAccount(this.changeEssentialData.value)
+      .subscribe((data) => {
+        console.log(data);
+      });
+  }
+
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener(
+      'load',
+      () => {
+        this.imageToShow = this._sanitizer.bypassSecurityTrustResourceUrl(
+          reader.result.toString()
+        );
+      },
+      false
+    );
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
+
+  imageToShow;
 
   ngOnInit() {
     this.changeEssentialData = this.fb.group(
       {
-        name: [this.storageService.getName(), Validators.required],
-        lastName: [this.storageService.getLastName(), Validators.required],
-        email: [
-          this.storageService.getEmail(),
-          [Validators.required, Validators.email],
-        ],
-        newPassword: [
-          this.storageService.getPassword(),
-          [Validators.required, Validators.minLength(6)],
-        ],
-        confirmNewPassword: [
-          this.storageService.getConfirmPassword(),
-          Validators.required,
-        ],
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmNewPassword: ['', Validators.required],
+        study: [''],
+        wentTo: [''],
+        livesIn: [''],
+        from: [''],
+        image: [''],
       },
       { validator: [Custome.changePassword] }
     );
-
-    this.changePersonalData = this.fb.group({
-      study: [this.storageService.getStudy()],
-      wentTo: [this.storageService.getWentTo()],
-      livesIn: [this.storageService.getLivesIn()],
-      from: [this.storageService.getFrom()],
-      image: [this.storageService.getImage()],
+    this.accountService.getData().subscribe((data) => {
+      this.userData = data;
+      this.http
+        .get('http://localhost:8080/files/' + this.userData.profilePhoto, {
+          responseType: 'blob',
+        })
+        .subscribe((data) => {
+          this.createImageFromBlob(data);
+          console.log(this.userData.profilePhoto);
+        });
     });
   }
 }

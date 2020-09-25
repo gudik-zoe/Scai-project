@@ -22,14 +22,14 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () =>
       import('./log-in/log-in.module').then((m) => m.LogInModule),
-    canActivate: [LoggedUserGuard],
+    // canActivate: [LoggedUserGuard],
   },
 
   {
     path: 'home-page',
     loadChildren: () =>
       import('./home-page/home-page.module').then((m) => m.HomePageModule),
-    canActivate: [AuthenticationGuard],
+    // canActivate: [AuthenticationGuard],
   },
   {
     path: 'event-com',

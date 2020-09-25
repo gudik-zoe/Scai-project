@@ -1,8 +1,11 @@
 import { Injectable, ɵisListLikeIterable } from '@angular/core';
-import { AuthService } from './log-in/auth.service';
-import { StorageService } from './storage.service';
+
 import { CommentStmt } from '@angular/compiler';
 import { Subject } from 'rxjs';
+import { AuthService } from './auth.service';
+import { StorageService } from './storage.service';
+import { HttpClient } from '@angular/common/http';
+import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +14,12 @@ export class PostsService {
   close = new Subject<boolean>();
   sharedPosts = [];
   signedIn = [];
-  constructor(private auth: AuthService, private storage: StorageService) {}
+  constructor(
+    private accountService: AccountService,
+    private auth: AuthService,
+    private storage: StorageService,
+    private http: HttpClient
+  ) {}
 
   like(id): void {
     if (this.posts[id].likePressed) {
@@ -21,6 +29,51 @@ export class PostsService {
       this.posts[id].likes = this.posts[id].likes + 1;
       this.posts[id].likePressed = true;
     }
+  }
+
+  getPosts() {
+    return this.http.get('http://localhost:8080/posts');
+  }
+
+  getPostsByAccountId() {
+    return this.http.get(
+      'http://localhost:8080/posts/accountId/' + this.accountService.getId()
+    );
+  }
+
+  getPostLikes(postId) {
+    return this.http.get(
+      'http://localhost:8080/postLikes/likesNumber/' + postId
+    );
+  }
+
+  getPostLikers(postId) {
+    return this.http.get('http://localhost:8080/postLikes/likers/' + postId);
+  }
+
+  likePost(postId) {
+    return this.http.post(
+      'http://localhost:8080/postLikes/' +
+        this.accountService.getId() +
+        '/' +
+        postId,
+      {}
+    );
+  }
+
+  addPost() {
+    return this.http.post(
+      'http://localhost:8080/posts/' + this.accountService.getId(),
+      {
+        text: 'my post from vsc',
+        image: 'this is the image',
+        description: "no description it's just a prova",
+      }
+    );
+  }
+
+  deletePost(postId) {
+    return this.http.delete('http://localhost:8080/posts/' + postId);
   }
 
   commentLike(postId: number, commentId: number): void {
@@ -42,21 +95,21 @@ export class PostsService {
   }
 
   comment(id: number, data: string) {
-    if (data === null || data === '') {
-      return false;
-    } else {
-      this.posts[id].comments.push({
-        name: this.storage.getName(),
-        image: this.storage.getImage(),
-        comment: data,
-        likePressed: false,
-        editMode: false,
-        likes: 0,
-        commentId: this.posts[id].comments.length,
-        remove: true,
-      });
-      this.posts[id].commented = true;
-    }
+    // if (data === null || data === '') {
+    //   return false;
+    // } else {
+    //   this.posts[id].comments.push({
+    //     name: this.storage.getName(),
+    //     image: this.storage.getImage(),
+    //     comment: data,
+    //     likePressed: false,
+    //     editMode: false,
+    //     likes: 0,
+    //     commentId: this.posts[id].comments.length,
+    //     remove: true,
+    //   });
+    //   this.posts[id].commented = true;
+    // }
   }
 
   showComment(id: number): void {

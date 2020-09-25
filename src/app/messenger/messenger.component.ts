@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AuthService } from '../log-in/auth.service';
-import { StorageService } from '../storage.service';
+
 import { ActivatedRoute, Router } from '@angular/router';
-import { ChatService } from '../chat.service';
+import { AuthService } from '../services/auth.service';
+import { ChatService } from '../services/chat.service';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-messenger',
