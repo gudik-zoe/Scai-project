@@ -1,30 +1,15 @@
-<nav
-  *ngIf="userIn()"
-  class="navbar navbar-expand-md navbar-dark sticky-top shadow-lg"
-  style="height: 72px; border-radius: 10px; background-color: white"
->
-  <img
-    src="http://localhost:8080/files/{{ userData?.profilePhoto }}"
-    width="70px"
-    height="70px"
-    style="border-radius: 50%"
-  />
-  <h4>
-    <i
-      style="cursor: pointer; color: blue; margin-left: 15px"
-      class="fa fa-home"
-      aria-hidden="true"
-    >
-      <a
-        class="font-weight-bold"
-        routerLinkActive="active-class"
-        routerLink="/home-page"
-        >Home page
+<nav *ngIf="userIn()" class="navbar navbar-expand-md navbar-dark sticky-top shadow-lg"
+  style="height: 72px; border-radius: 10px; background-color: white">
+  <img src="http://localhost:8080/files/{{ userData?.profilePhoto }}" width="70px" height="70px"
+    style="border-radius: 50%" />
+  <h5>
+    <i style="cursor: pointer; color: blue; margin-left: 15px" class="fa fa-home" aria-hidden="true">
+      <a class="font-weight-bold" routerLinkActive="active-class" routerLink="/home-page">Home page
       </a>
     </i>
-  </h4>
+  </h5>
 
-  <h4 style="margin-left: 30px">
+  <!-- <h4 style="margin-left: 30px">
     <i
       style="cursor: pointer; color: blue"
       class="fa fa-cog"
@@ -37,22 +22,14 @@
         >account-settings
       </a>
     </i>
-  </h4>
+  </h4> -->
 
-  <h4 style="margin-left: 35px">
-    <i
-      style="cursor: pointer; color: blue"
-      class="fa fa-user"
-      aria-hidden="true"
-    >
-      <a
-        class="font-weight-bold"
-        routerLinkActive="active-class"
-        routerLink="/user-profile"
-        >profile
+  <h5 style="margin-left: 35px">
+    <i style="cursor: pointer; color: blue" class="fa fa-user" aria-hidden="true">
+      <a class="font-weight-bold" routerLinkActive="active-class" routerLink="/user-profile">profile
       </a>
     </i>
-  </h4>
+  </h5>
 
   <!-- <h4 style="margin-left: 40px;">
     <img
@@ -76,25 +53,18 @@
     </span>
   </h4> -->
 
-  <h4>
-    <button
-      type="button"
-      style="float: right"
-      class="btn btn-outline-danger ml-5"
-      (click)="logOut()"
-    >
+  <h6>
+    <button type="button" style="margin-left: 400px;" class="btn btn-outline-danger btn-sm" (click)="logOut()">
       log Out
     </button>
-  </h4>
+  </h6>
 
-  <h4>
-    <button class="btn btn-danger-sm ml-4" (click)="deactivate()">
+  <h6>
+    <button class="btn btn-danger-sm ml-4" (click)="deactivate()" style="float: right;">
       deactivate my account
     </button>
-  </h4>
-  <p *ngIf="message" style="font-size: large; color: black" class="ml-5">
-    your data has been successfully updated
-  </p>
+  </h6>
+
 </nav>
 
 <!-- <div id="first-div" class="col-md-3" style="background-color: whitesmoke;">

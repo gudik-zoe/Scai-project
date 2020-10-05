@@ -5,9 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [{ path: ':id', component: MessengerComponent }];
-// const routes: Routes = [{ path: ':id', component: DescriptionComponent }];
 @NgModule({
   declarations: [MessengerComponent],
   imports: [CommonModule, RouterModule.forChild(routes), FormsModule],
 })
-export class MessengerModule {}
+export class MessengerModule { }

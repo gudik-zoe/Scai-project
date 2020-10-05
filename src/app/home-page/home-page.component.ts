@@ -19,8 +19,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class HomePageComponent implements OnInit {
   posts: any[] = [];
-  userFriends: any[] = JSON.parse(localStorage.getItem('user'));
-  currentUserId: number = JSON.parse(localStorage.getItem('key'));
   constructor(
     private _sanitizer: DomSanitizer,
     private http: HttpClient,
@@ -33,7 +31,7 @@ export class HomePageComponent implements OnInit {
     private pagesService: PagesService,
     private commentService: CommentsService,
     private friendsService: FriendsService
-  ) {}
+  ) { }
   likeBtn: boolean = false;
   input: string;
   foto: any;
@@ -44,7 +42,6 @@ export class HomePageComponent implements OnInit {
   id: number;
   show: boolean = false;
   users;
-  currentUser: number = JSON.parse(localStorage.getItem('key'));
   error: boolean = false;
   alertComponent: boolean = false;
   userData;
@@ -155,7 +152,7 @@ export class HomePageComponent implements OnInit {
     // })
   }
 
-  uploadImage() {}
+  uploadImage() { }
 
   // private async getUserData() {
   //   const { userData, image } = await this.accountService.getUserImageAndData();
@@ -167,15 +164,15 @@ export class HomePageComponent implements OnInit {
       this.users = data;
     });
   }
-  getUserData(){
-    this.accountService.getData().subscribe( data => {
-    (this.userData = data);
-  })
-}
+  getUserData() {
+    this.accountService.getData().subscribe(data => {
+      (this.userData = data);
+    })
+  }
 
   ngOnInit(): void {
     // this.getPosts();
-     this.getUserData();
+    this.getUserData();
     this.postService.close.subscribe((data) => {
       this.alertComponent = data;
     });

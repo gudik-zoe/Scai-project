@@ -2,8 +2,6 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Custome } from '../log-in/validator';
 import { Router } from '@angular/router';
-
-import { Subject } from 'rxjs';
 import { AccountService } from '../services/account.service';
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
@@ -14,29 +12,20 @@ import { DomSanitizer } from '@angular/platform-browser';
   selector: 'app-account-settings',
   templateUrl: './account-settings.component.html',
   styleUrls: ['./account-settings.component.css'],
-  // encapsulation: ViewEncapsulation.None,
 })
+
 export class AccountSettingsComponent implements OnInit {
   changeEssentialData: FormGroup;
-
-  // changePersonalData: FormGroup;
   constructor(
     private http: HttpClient,
-    private _sanitizer: DomSanitizer,
     private fb: FormBuilder,
     private route: Router,
-    private storageService: StorageService,
-    private auth: AuthService,
     private accountService: AccountService
-  ) {}
+  ) { }
   coverPhoto;
   profilePhoto;
   userData;
-  imageToShow;
 
-  image() {
-    return this.userData?.profilePhoto;
-  }
 
   goToHome() {
     this.route.navigate(['/user-profile']);
@@ -51,14 +40,14 @@ export class AccountSettingsComponent implements OnInit {
       this.http
         .post('http://localhost:8080/upload', formData)
         .subscribe((data) => {
-          console.log(data);
+          // console.log(data);
         });
       this.http
         .put(
           'http://localhost:8080/api/accounts/profilePhoto/' +
-            this.accountService.getId() +
-            '/' +
-            this.profilePhoto.name,
+          this.accountService.getId() +
+          '/' +
+          this.profilePhoto.name,
           {}
         )
         .subscribe(() => {
@@ -81,9 +70,9 @@ export class AccountSettingsComponent implements OnInit {
       this.http
         .put(
           'http://localhost:8080/api/accounts/coverPhoto/' +
-            this.accountService.getId() +
-            '/' +
-            this.coverPhoto.name,
+          this.accountService.getId() +
+          '/' +
+          this.coverPhoto.name,
           {}
         )
         .subscribe(() => {
@@ -93,8 +82,6 @@ export class AccountSettingsComponent implements OnInit {
   }
 
   confirm() {
-    this.changeEssentialData.value.profilePhoto = this.userData.profilePhoto;
-    console.log(this.changeEssentialData.value);
     this.accountService
       .updateAccount(this.changeEssentialData.value)
       .subscribe((data) => {
@@ -119,6 +106,8 @@ export class AccountSettingsComponent implements OnInit {
         wentTo: [this.userData.wentTo],
         livesIn: [this.userData.livesIn],
         from: [this.userData.from],
+        profilePhoto: [this.userData.profilePhoto],
+        coverPhoto: [this.userData.coverPhoto]
       },
       { validator: [Custome.changePassword] }
     );
@@ -127,44 +116,3 @@ export class AccountSettingsComponent implements OnInit {
     this.getUserData();
   }
 }
-
-// createImageFromBlob(image: Blob) {
-//   let reader = new FileReader();
-//   reader.addEventListener(
-//     'load',
-//     () => {
-//       this.imageToShow = this._sanitizer.bypassSecurityTrustResourceUrl(
-//         reader.result.toString()
-//       );
-//     },
-//     false
-//   );
-
-//   if (image) {
-//     reader.readAsDataURL(image);
-//   }
-// }
-
-// if (event.target.files) {
-//   let reader = new FileReader();
-//   reader.readAsDataURL(event.target.files[0]);
-//   reader.onload = (event) => {
-//     this.myImage = event.target.result;
-
-//   };
-// }
-// getImage() {
-//   if (this.image) {
-//     return this.image;
-//   } else {
-//     return this.storageService.getImage();
-//   }
-// }
-
-// getCover() {
-//   if (this.newCover) {
-//     return this.newCover;
-//   } else {
-//     return this.storageService.getCoverPhoto();
-//   }
-// }

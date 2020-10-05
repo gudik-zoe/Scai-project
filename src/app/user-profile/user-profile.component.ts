@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { AccountModel } from '../models/account';
 import { AccountService } from '../services/account.service';
 import { AuthService } from '../services/auth.service';
 import { EventsService } from '../services/events.service';
@@ -16,59 +18,38 @@ export class UserProfileComponent implements OnInit {
     private accountService: AccountService,
     private route: Router,
     private service: PostsService,
-    private storageService: StorageService,
-    private auth: AuthService,
-    private eventService: EventsService
-  ) {}
-  sharedPosts = [];
-  userEvents = [];
-  userData;
-  coverPhoto = 'https://www.w3schools.com/howto/img_avatar.png ';
+    private postService: PostsService,
+  ) { }
+  imgUrl: string = environment.rootUrl + 'files/';
+  userData: any
+  myPosts
 
-  // image() {
-  //   return this.storageService.getImage();
-  // }
-
-  edit(): void {
-    this.route.navigate(['/account-settings']);
+  private getUserData() {
+    return new Promise((resolve) => {
+      this.accountService.getData().subscribe(data => {
+        this.userData = data
+      })
+    })
   }
 
-  toDescription(id: number): void {
-    this.route.navigate(['description', id]);
+  async getUser() {
+    await this.getUserData()
   }
 
-  name() {
-    return this.userData.firstName;
-  }
-  lastName() {
-    return this.userData.lastName;
-  }
-  study() {
-    return this.userData.study;
-  }
-  wentTo() {
-    return this.userData.wentTo;
+  private getMyPosts() {
+    this.postService.getMyPosts().subscribe(data => {
+      this.myPosts = data
+      console.log(this.myPosts)
+    })
   }
 
-  livesIn() {
-    return this.userData.livesIn;
-  }
-  from() {
-    return this.userData.city;
+  goToEditing() {
+    this.route.navigate(['/account-settings'])
   }
 
-  getPersonalPosts() {
-    return this.storageService.getUserPosts();
-  }
 
-  getUserName() {
-    this.accountService.userData.firstName;
-  }
   ngOnInit() {
-    // this.backEnd.getData().subscribe((data) => {
-    //   this.userData = data;
-    // // });
-    // this.sharedPosts = this.service.sharedPosts;
-    // this.userEvents = this.eventService.userStatus;
+    this.getUser()
+    this.getMyPosts()
   }
 }

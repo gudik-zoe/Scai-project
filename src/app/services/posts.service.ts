@@ -1,6 +1,6 @@
 import { Injectable, ɵisListLikeIterable } from '@angular/core';
 
-import { CommentStmt } from '@angular/compiler';
+// import { CommentStmt } from '@angular/compiler';
 import { Subject } from 'rxjs';
 import { AuthService } from './auth.service';
 import { StorageService } from './storage.service';
@@ -22,7 +22,7 @@ export class PostsService {
     private auth: AuthService,
     private storage: StorageService,
     private http: HttpClient
-  ) {}
+  ) { }
 
   getPosts() {
     return this.http.get(this.rootUrl + 'posts');
@@ -69,7 +69,7 @@ export class PostsService {
     });
   }
 
-  getPostsByAccountId() {
+  getMyPosts() {
     return this.http.get(
       this.rootUrl + 'posts/accountId/' + this.accountService.getId()
     );

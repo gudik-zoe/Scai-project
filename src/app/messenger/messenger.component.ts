@@ -33,9 +33,11 @@ export class MessengerComponent implements OnInit {
   getMyConvWithId(id) {
     this.chatService.getMyConvWithId(id).subscribe((data) => {
       this.myConvWith = data;
-      console.log(this.myConvWith);
+      // console.log(this.myConvWith);
     });
   }
+
+  //  a = Date.parse("2018-05-23T18:30:00.000+0000");
 
   getUserById() {
     this.accountService.getAccountById(this.id).subscribe((data) => {

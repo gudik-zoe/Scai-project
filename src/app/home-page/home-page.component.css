@@ -2,6 +2,7 @@
   margin-top: 5px;
   height: 800px;
   overflow-y: scroll;
+  background-color: whitesmoke
 }
 
 #last-div {
@@ -38,4 +39,22 @@ body {
   overflow: hidden;
   position: absolute;
   z-index: -1;
+}
+
+::-webkit-scrollbar {
+  width: 6px; 
+   background-color: rgba(0,0,0,0);
+ 
+}
+::-webkit-scrollbar:hover {
+  background-color: rgba(0, 0, 0, 0.09);
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  background: rgba(0,0,0,0.61);
+
+}
+::-webkit-scrollbar-thumb:vertical:active {
+  background: rgba(0,0,0,0.61);
+
 }

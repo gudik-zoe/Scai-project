@@ -1,10 +1,10 @@
-#friend:hover {
+/* #friend:hover {
   width: 300px;
   color: blue;
   background-color: white;
 }
 
-.inputfile {
+/* .inputfile { 
   width: 0.1px;
   height: 0.1px;
   opacity: 1;
@@ -20,20 +20,46 @@
   overflow: hidden;
   position: absolute;
   z-index: -1;
-}
+} */
 
 body {
   background-color: whitesmoke;
+  overflow-y:hidden;
+  overflow-x:hidden;  
+  overflow:hidden;
 }
 
 .sender {
   background-color: greenyellow;
-  margin-left: 150px;
+  width: fit-content;
+  margin-left: 100px;
   border-radius: 8px;
+  list-style-type: none;
 }
 
 .receiver {
   background-color: whitesmoke;
+  width: fit-content;
   margin-right: 50px;
   border-radius: 8px;
+  list-style-type: none;
+}
+
+
+::-webkit-scrollbar {
+  width: 6px; 
+   background-color: rgba(0,0,0,0);
+ 
+}
+::-webkit-scrollbar:hover {
+  background-color: rgba(0, 0, 0, 0.09);
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  background: rgba(0,0,0,0.61);
+
+}
+::-webkit-scrollbar-thumb:vertical:active {
+  background: rgba(0,0,0,0.61);
+ 
 }
