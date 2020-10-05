@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { ActivatedRoute, Router } from '@angular/router';
+import { AccountService } from '../services/account.service';
 import { AuthService } from '../services/auth.service';
 import { ChatService } from '../services/chat.service';
 import { StorageService } from '../services/storage.service';
@@ -9,7 +12,6 @@ import { StorageService } from '../services/storage.service';
   selector: 'app-messenger',
   templateUrl: './messenger.component.html',
   styleUrls: ['./messenger.component.css'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class MessengerComponent implements OnInit {
   constructor(
@@ -17,91 +19,57 @@ export class MessengerComponent implements OnInit {
     private storageService: StorageService,
     private aroute: ActivatedRoute,
     private route: Router,
-    private chat: ChatService
-  ) {}
+    private accountService: AccountService,
+    private chatService: ChatService,
+    private http: HttpClient,
+    private _sanitizer: DomSanitizer
+  ) { }
+  id: number;
+  myConvWith;
+  userData;
+  requestedUser;
+  message: string;
 
-  users = this.auth.localStorageArray;
-  currentUser = JSON.parse(localStorage.getItem('key'));
-  id = null;
-  inputData;
-  messageTo;
-  sentMessage;
-  error;
-  foto;
-  audio;
-  audioFile;
-  audioProva;
-  playing = false;
-  messages = this.auth.localStorageArray[this.currentUser].messages;
-  ok() {
-    this.error = false;
-  }
-  navigate(id: number) {
-    this.id = id;
-  }
-  open(id: number) {
-    this.id = id;
+  getMyConvWithId(id) {
+    this.chatService.getMyConvWithId(id).subscribe((data) => {
+      this.myConvWith = data;
+      console.log(this.myConvWith);
+    });
   }
 
-  audioUpload(event) {
-    let reader = new FileReader();
-    reader.readAsDataURL(event.target.files[0]);
-    reader.onload = (event: any) => {
-      this.audioFile = event.target.result;
-    };
-  }
-  playProva() {
-    this.audioProva = new Audio();
-    this.audioProva.src = this.audioFile;
-    this.audioProva.load();
-    this.audioProva.play();
-    this.playing = true;
-  }
-  stopProva() {
-    this.audioProva.pause();
-    this.playing = false;
-  }
-  play(data) {
-    this.audio = new Audio();
-    this.audio.src = data;
-    this.audio.load();
-    this.audio.play();
-    this.playing = true;
-  }
-  stop(data) {
-    this.audio.src = data;
-    this.audio.pause();
+  getUserById() {
+    this.accountService.getAccountById(this.id).subscribe((data) => {
+      this.requestedUser = data;
+    });
   }
 
-  send(id: number, data: string, foto: ImageBitmap, audio: AudioBuffer) {
-    foto = this.foto;
-    audio = this.audioFile;
-    if (
-      this.inputData === '' ||
-      this.inputData === ' ' ||
-      (this.inputData == null && !foto && !audio)
-    ) {
-      this.error = true;
-    } else {
-      this.chat.send(id, data, foto, audio);
-      this.error = false;
-      this.foto = null;
-      this.inputData = null;
-      this.id = null;
-      this.audioFile = null;
-      this.playing = false;
-    }
+  sendMessage(text) {
+    this.chatService.sendAMessage(this.id, text).subscribe(
+      (data) => {
+        this.getMyConvWithId(this.id);
+        this.message = null;
+      },
+      (error) => {
+        if (
+          (error.error.message =
+            'No entity found for query; nested exception is javax.persistence.NoResultException: No entity found for query')
+        ) {
+          console.log('ur are not friend with the user yet');
+        }
+      }
+    );
   }
 
-  uploadImage(event) {
-    if (event.target.files) {
-      let reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (event) => {
-        this.foto = event.target.result;
-      };
-    }
+  getUserData() {
+    this.accountService.getData().subscribe((data) => {
+      this.userData = data;
+    });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.id = parseInt(this.aroute.snapshot.paramMap.get('id'));
+    this.getUserById();
+    this.getMyConvWithId(this.id);
+    this.getUserData();
+  }
 }

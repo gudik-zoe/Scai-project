@@ -67,8 +67,8 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     // this.backEnd.getData().subscribe((data) => {
     //   this.userData = data;
-    // });
-    this.sharedPosts = this.service.sharedPosts;
-    this.userEvents = this.eventService.userStatus;
+    // // });
+    // this.sharedPosts = this.service.sharedPosts;
+    // this.userEvents = this.eventService.userStatus;
   }
 }

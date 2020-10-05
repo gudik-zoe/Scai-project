@@ -43,7 +43,7 @@ export class HomePageComponent implements OnInit {
   inputData: string;
   id: number;
   show: boolean = false;
-  users: any[] = JSON.parse(localStorage.getItem('user'));
+  users;
   currentUser: number = JSON.parse(localStorage.getItem('key'));
   error: boolean = false;
   alertComponent: boolean = false;
@@ -53,33 +53,31 @@ export class HomePageComponent implements OnInit {
   postLikes;
   myImage;
   firstName;
-
-  goToDescription(id: number): void {
-    // this.route.navigate(['/description', id]);
-  }
+  theAccountObject;
+  imageToShow;
+  postImage;
 
   // getUserName() {
   //   return this.accountService.userData?.firstName;
   // }
 
-  getPosts() {
-    this.postService.getPosts().subscribe((data) => {
-      this.dbPosts = data;
-      console.log(data);
-    });
-  }
+  // getPosts() {
+  //   this.postService.getPosts().subscribe((data) => {
+  //     this.dbPosts = data;
+  //   });
+  // }
 
-  getMyPosts() {
-    this.postService.getPostsByAccountId().subscribe((data) => {
-      console.log(data);
-    });
-  }
+  // getMyPosts() {
+  //   this.postService.getPostsByAccountId().subscribe((data) => {
+  //     console.log(data);
+  //   });
+  // }
 
-  likePost(postId) {
-    this.postService.likePost(postId).subscribe((data) => {
-      console.log(data);
-    });
-  }
+  // likePost(postId) {
+  //   this.postService.likePost(postId).subscribe((data) => {
+  //     console.log(data);
+  //   });
+  // }
 
   getPostLikes(postId) {
     this.postService.getPostLikes(postId).subscribe((data) => {
@@ -89,12 +87,6 @@ export class HomePageComponent implements OnInit {
 
   getPostLikers(postId) {
     this.postService.getPostLikers(postId).subscribe((data) => {
-      console.log(data);
-    });
-  }
-
-  addPost() {
-    this.postService.addPost().subscribe((data) => {
       console.log(data);
     });
   }
@@ -111,11 +103,11 @@ export class HomePageComponent implements OnInit {
     });
   }
 
-  addComment(postId) {
-    this.commentService.addCommment(postId).subscribe((data) => {
-      console.log(data);
-    });
-  }
+  // addComment(postId) {
+  //   this.commentService.addCommment(postId).subscribe((data) => {
+  //     console.log(data);
+  //   });
+  // }
 
   likeComment(commentId) {
     this.commentService.likeComment(commentId).subscribe((data) => {
@@ -150,38 +142,12 @@ export class HomePageComponent implements OnInit {
   image() {
     return this.userData?.profilePhoto;
   }
-  openDiv(): void {
-    this.alertComponent = true;
+  openDiv() {
+    this.postService.close.next(true);
   }
 
   get() {
     console.log(this.userData.firstName);
-  }
-
-  like(id: number): void {
-    this.postService.like(id);
-  }
-
-  showComments(id: number): void {
-    this.postService.showComment(id);
-  }
-  commentLike(postId: number, commentId: number): void {
-    this.postService.commentLike(postId, commentId);
-  }
-
-  edit(postId: number, commentId: number, editedComment: string): void {
-    this.postService.edit(postId, commentId, editedComment);
-  }
-
-  comment(id: number, comment: string): void {
-    this.postService.comment(id, comment);
-    this.commentData = null;
-  }
-  removeComment(postId: number, commentId: number): void {
-    this.postService.removeComment(postId, commentId);
-  }
-  share(id: number): void {
-    this.postService.share(id);
   }
 
   callingThePosts() {
@@ -191,47 +157,27 @@ export class HomePageComponent implements OnInit {
 
   uploadImage() {}
 
-  createImageFromBlob(image: Blob) {
-    let reader = new FileReader();
-    reader.addEventListener(
-      'load',
-      () => {
-        this.imageToShow = this._sanitizer.bypassSecurityTrustResourceUrl(
-          reader.result.toString()
-        );
-      },
-      false
-    );
-
-    if (image) {
-      reader.readAsDataURL(image);
-    }
-  }
-  theAccountObject;
-  imageToShow;
-  ngOnInit(): void {
-    this.getPosts();
-    console.log(this.dbPosts);
-    this.accountService.getData().subscribe((data) => {
-      this.theAccountObject = data;
-      this.http
-        .get(
-          'http://localhost:8080/files/' + this.theAccountObject.profilePhoto,
-          {
-            responseType: 'blob',
-          }
-        )
-        .subscribe((data) => {
-          this.createImageFromBlob(data);
-          console.log(this.theAccountObject.profilePhoto);
-        });
+  // private async getUserData() {
+  //   const { userData, image } = await this.accountService.getUserImageAndData();
+  //   this.theAccountObject = userData;
+  //   this.imageToShow = image;
+  // }
+  getUsers() {
+    this.accountService.getUsers().subscribe((data) => {
+      this.users = data;
     });
+  }
+  getUserData(){
+    this.accountService.getData().subscribe( data => {
+    (this.userData = data);
+  })
+}
 
-    // this.postService.getPosts().subscribe((data) => {
-    //   this.dbPosts = data;
-    // });
-    this.accountService.getData().subscribe((data) => {
-      this.userData = data;
+  ngOnInit(): void {
+    // this.getPosts();
+     this.getUserData();
+    this.postService.close.subscribe((data) => {
+      this.alertComponent = data;
     });
   }
 }

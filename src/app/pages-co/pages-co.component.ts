@@ -8,17 +8,13 @@ import { PostsService } from '../services/posts.service';
   styleUrls: ['./pages-co.component.css'],
 })
 export class PagesCoComponent implements OnInit {
-  constructor(
-    private pagesService: PagesService,
-    private postsService: PostsService
-  ) {}
-  pages: any[] = [];
-  posts: any[] = [];
+  // constructor(
+  //   private pagesService: PagesService,
+  //   private postsService: PostsService
+  // ) {}
+  // pages: any[] = [];
+  // posts: any[] = [];
   ngOnInit() {
-    this.pages = this.pagesService.pages;
-    this.posts = this.postsService.posts;
-  }
-  like(id: number, text: string): void {
-    this.pagesService.like(id, text);
+    // this.posts = this.postsService.posts;
   }
 }

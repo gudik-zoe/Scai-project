@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { MyFriendsModule } from '../my-friends/my-friends.module';
 import { SideBarModule } from '../side-bar/side-bar.module';
 import { AlertModule } from '../alert/alert.module';
+import { PostsContainerModule } from '../posts-container/posts-container.module';
+import { PostModule } from '../post/post.module';
 
 const routes: Routes = [{ path: '', component: HomePageComponent }];
 
@@ -18,6 +20,7 @@ const routes: Routes = [{ path: '', component: HomePageComponent }];
     SideBarModule,
     MyFriendsModule,
     AlertModule,
+    PostsContainerModule,
   ],
 })
 export class HomePageModule {}

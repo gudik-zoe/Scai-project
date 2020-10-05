@@ -1,4 +1,32 @@
-<div class="row mt-5">
+<div class="container-fluid mt-3" style="width: 100; margin-left: 455px">
+  <div *ngIf="id === requestedUser?.idAccount"
+    style="height: fit-content; width: 300px; background-color: bisque; border-radius: 10px;">
+    <div style="background-color: darkslategrey; border-radius: 10px;">
+      <span class="font-weight-bold" style="color: white">
+        <img src="http://localhost:8080/files/{{ requestedUser?.profilePhoto }}" width="50px" style="border-radius: 50%"
+          height="50px" />
+        {{ requestedUser?.firstName + " " + requestedUser?.lastName }}</span>
+    </div>
+    <div class="container">
+      <ul *ngFor="let i of myConvWith">
+        <li [class]="(i.theSenderId==id )? 'sender' :'receiver' ">{{i.theMessage}}
+          <small>{{i.date| date:'MM/dd/yyyy' : 'UTC'}} </small>
+        </li>
+      </ul>
+    </div>
+    <br />
+    <br />
+    <span>
+      <img src="http://localhost:8080/files/{{ userData?.profilePhoto }}" width="40px" style="border-radius: 50%"
+        height="35px" />
+      <input [(ngModel)]="message" style="height: 25px; width: 200px" />
+      <button (click)="sendMessage(message)" class="btn btn-success btn-sm ml-1">
+        send
+      </button></span>
+  </div>
+</div>
+
+<!-- <div class="row mt-5">
   <div
     class="col-md-3 ml-5"
     style="
@@ -249,4 +277,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

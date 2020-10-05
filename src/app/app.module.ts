@@ -13,6 +13,9 @@ import {
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { MyInterceptor } from './my-interceptor';
 
+// import { PostComponent } from './post/post.component';
+// import { PostsComponent } from './posts/posts.component';
+
 // import { AlertComponent } from './alert/alert.component';
 // import { DescriptionComponent } from './description/description.component';
 // import { MessengerComponent } from './messenger/messenger.component';
@@ -28,6 +31,7 @@ import { MyInterceptor } from './my-interceptor';
 @NgModule({
   declarations: [
     AppComponent,
+    // PostsComponent,
     // AlertComponent,
     // DescriptionComponent,
     // MessengerComponent,
@@ -38,8 +42,8 @@ import { MyInterceptor } from './my-interceptor';
     // MyFriendsComponent,
   ],
   imports: [
-    ReactiveFormsModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

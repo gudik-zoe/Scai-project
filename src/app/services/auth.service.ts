@@ -28,7 +28,7 @@ export class AuthService {
 
   signIn(email: string, password: any) {
     return this.http.post(
-      'http://localhost:8080/login',
+      'http://localhost:8080/api/login',
       {
         email: email,
         password: password,

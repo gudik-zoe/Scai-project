@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject, Subscriber } from 'rxjs';
 import { AccountService } from './account.service';
 import { AuthService } from './auth.service';
 
@@ -35,73 +36,5 @@ export class ChatService {
         to,
       { theMessage: text }
     );
-  }
-
-  getCurrentUser() {
-    return JSON.parse(localStorage.getItem('key'));
-  }
-  send(id, data, foto, audio) {
-    this.currentUser = this.getCurrentUser();
-    console.log(this.currentUser, id);
-    let newMessage = this.auth.localStorageArray[id].messages;
-
-    newMessage.push({
-      message: data,
-      sender: this.currentUser,
-      foto,
-      audio,
-    });
-
-    let userMessage = this.auth.localStorageArray[this.currentUser].messages;
-
-    userMessage.push({
-      message: data,
-      to: id,
-      foto,
-      audio,
-    });
-
-    this.messageTo = {
-      ...this.auth.localStorageArray[id],
-      messages: newMessage,
-    };
-
-    this.sentMessage = {
-      ...this.auth.localStorageArray[this.currentUser],
-      messages: userMessage,
-    };
-
-    this.auth.localStorageArray[id] = this.messageTo;
-    this.auth.localStorageArray[this.currentUser] = this.sentMessage;
-    localStorage.setItem('user', JSON.stringify(this.auth.localStorageArray));
-  }
-  sendTo(id, data) {
-    this.currentUser = this.getCurrentUser();
-    let newMessage = this.auth.localStorageArray[id].messages;
-
-    newMessage.push({
-      message: data,
-      sender: this.currentUser,
-    });
-
-    let userMessage = this.auth.localStorageArray[this.currentUser].messages;
-    userMessage.push({
-      message: data,
-      to: id,
-    });
-
-    this.messageTo = {
-      ...this.auth.localStorageArray[id],
-      messages: newMessage,
-    };
-
-    this.sentMessage = {
-      ...this.auth.localStorageArray[this.currentUser],
-      messages: userMessage,
-    };
-
-    this.auth.localStorageArray[id] = this.messageTo;
-    this.auth.localStorageArray[this.currentUser] = this.sentMessage;
-    localStorage.setItem('user', JSON.stringify(this.auth.localStorageArray));
   }
 }

@@ -1,66 +1,55 @@
-<div class="container-fluid mt-5" *ngFor="let post of posts">
-  <div
-    class="container"
-    *ngIf="id === post.id"
-    style="border-radius: 10px; margin-top: 80px;"
-  >
+<div class="container-fluid mt-5" *ngFor="let post of dbPosts">
+  <div class="container" *ngIf="id === post.idPosts" style="border-radius: 10px; margin-top: 80px">
     <div class="row">
       <div class="col-md-8">
-        <img src="{{ post.image }}" style="width: 700px; height: 500px;" />
+        <img src="{{ imgUrl + post.image}}" style="width: 700px; height: 500px" />
+        <!-- <img src="{{ imgUrl + post.image}}" style="width: 80%; height: 80%" /> -->
       </div>
-      <div
-        class="col-md-3"
-        style="
+      <div class="col-md-3" style="
           background-color: white;
           border-right: 1px solid black;
           border-top: 1px solid black;
           border-bottom: 1px solid black;
-        "
-      >
+        ">
         <p>
           {{ post.description }}
         </p>
         <hr />
         <span class="font-weight-bold">
-          <img
-            src="https://i.pinimg.com/originals/37/9f/00/379f00ceb97d6a0b0672933022755b3a.png"
-            width="40px"
-            style="border-radius: 50%;"
-          />
-          {{ post.likes }}
+          <img src="https://i.pinimg.com/originals/37/9f/00/379f00ceb97d6a0b0672933022755b3a.png" width="30px"
+            style="border-radius: 50%" />
+          {{ post.postLikes.length }} likers:
         </span>
+
+        <div *ngFor="let u of post.postLikes">
+          <li class="ml-4" *ngIf="u.likedBy">{{ u.likedBy[0].firstName + " " + u.likedBy[0].lastName }}</li>
+        </div>
         <hr />
         <p class="font-weight-bold">comments:</p>
         <div *ngIf="post.comments.length > 0">
           <ul *ngFor="let i of post.comments">
             <li>
-              <div
-                class="container-fluid"
-                style="background-color: whitesmoke;"
-              >
-                <span>
-                  <img
-                    src="{{ i.image }}"
-                    width="35px"
-                    style="border-radius: 50%;"
-                  />
+              <div class="container-fluid" style="background-color: whitesmoke">
+                <span *ngIf=i.commentedBy>
+                  <img src="http://localhost:8080/files/{{i.commentedBy[0].profilePhoto }}" width="35px"
+                    style="border-radius: 50%" />
 
-                  {{ i.name }} :
-                  {{ i.comment }}
+                  {{ i.commentedBy[0].firstName + " " + i.commentedBy[0].lastName }} :
+                  {{ i.text }}
                 </span>
-                <span class="ml-5">
+                <!-- <span class="ml-5">
                   <i
                     class="fa fa-thumbs-up"
                     aria-hidden="true"
-                    style="color: blue;"
+                    style="color: blue"
                     >{{ i.likes }}</i
                   >
-                </span>
+                </span> -->
               </div>
             </li>
           </ul>
         </div>
-        <div *ngIf="post.comments.length === 0">no comments yet</div>
+
       </div>
     </div>
   </div>

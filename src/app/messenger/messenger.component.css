@@ -25,3 +25,15 @@
 body {
   background-color: whitesmoke;
 }
+
+.sender {
+  background-color: greenyellow;
+  margin-left: 150px;
+  border-radius: 8px;
+}
+
+.receiver {
+  background-color: whitesmoke;
+  margin-right: 50px;
+  border-radius: 8px;
+}

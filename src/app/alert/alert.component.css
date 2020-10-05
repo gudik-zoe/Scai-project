@@ -10,14 +10,15 @@
 
 .alert-box {
   position: fixed;
-  top: 20vh;
-  left: 28vw;
+  top: 15vh;
+  left: 30vw;
   width: 35vw;
-  height: fit-content;
+  height: 100vw;
   padding: 16px;
   z-index: 100;
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0, 0.26);
+  border-radius: 8px;
 }
 .alert-box-adctoins {
   text-align: right;

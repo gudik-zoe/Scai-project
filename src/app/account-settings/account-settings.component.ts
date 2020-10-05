@@ -29,14 +29,10 @@ export class AccountSettingsComponent implements OnInit {
     private auth: AuthService,
     private accountService: AccountService
   ) {}
-
-  newUser;
-  newCover;
-  myImage;
+  coverPhoto;
+  profilePhoto;
   userData;
-  name;
-  lastName;
-  password;
+  imageToShow;
 
   image() {
     return this.userData?.profilePhoto;
@@ -49,9 +45,9 @@ export class AccountSettingsComponent implements OnInit {
   newImage(event) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.myImage = file;
+      this.profilePhoto = file;
       const formData = new FormData();
-      formData.append('file', this.myImage);
+      formData.append('file', this.profilePhoto);
       this.http
         .post('http://localhost:8080/upload', formData)
         .subscribe((data) => {
@@ -59,114 +55,116 @@ export class AccountSettingsComponent implements OnInit {
         });
       this.http
         .put(
-          'http://localhost:8080/api/accounts/' +
+          'http://localhost:8080/api/accounts/profilePhoto/' +
             this.accountService.getId() +
             '/' +
-            this.myImage.name,
+            this.profilePhoto.name,
           {}
         )
+        .subscribe(() => {
+          this.getUserData();
+          this.accountService.imageSubject.next(true);
+        });
+    }
+  }
+  changeCoverPhoto(event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.coverPhoto = file;
+      const formData = new FormData();
+      formData.append('file', this.coverPhoto);
+      this.http
+        .post('http://localhost:8080/upload', formData)
         .subscribe((data) => {
           console.log(data);
         });
-    }
-
-    // if (event.target.files) {
-    //   let reader = new FileReader();
-    //   reader.readAsDataURL(event.target.files[0]);
-    //   reader.onload = (event) => {
-    //     this.myImage = event.target.result;
-
-    //   };
-    // }
-  }
-  changeCoverPhoto(event) {
-    if (event.target.files) {
-      let reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (event) => {
-        this.newCover = event.target.result;
-      };
-    }
-  }
-  coverPhoto = this.storageService.getCoverPhoto();
-  getImage() {
-    if (this.image) {
-      return this.image;
-    } else {
-      return this.storageService.getImage();
+      this.http
+        .put(
+          'http://localhost:8080/api/accounts/coverPhoto/' +
+            this.accountService.getId() +
+            '/' +
+            this.coverPhoto.name,
+          {}
+        )
+        .subscribe(() => {
+          this.getUserData();
+        });
     }
   }
 
-  getCover() {
-    if (this.newCover) {
-      return this.newCover;
-    } else {
-      return this.storageService.getCoverPhoto();
-    }
-  }
-  getFirstName() {
-    return this.userData.firstName;
-  }
-
-  getLastName() {
-    return this.userData.lastName;
-  }
   confirm() {
-    this.changeEssentialData.value.profilePhoto = this.myImage;
-
-    // console.log(this.changeEssentialData.value);
+    this.changeEssentialData.value.profilePhoto = this.userData.profilePhoto;
+    console.log(this.changeEssentialData.value);
     this.accountService
       .updateAccount(this.changeEssentialData.value)
       .subscribe((data) => {
-        console.log(data);
+        this.changeEssentialData.reset();
       });
   }
 
-  createImageFromBlob(image: Blob) {
-    let reader = new FileReader();
-    reader.addEventListener(
-      'load',
-      () => {
-        this.imageToShow = this._sanitizer.bypassSecurityTrustResourceUrl(
-          reader.result.toString()
-        );
-      },
-      false
-    );
-
-    if (image) {
-      reader.readAsDataURL(image);
-    }
+  async getUserData() {
+    this.userData = await this.accountService.getUserData();
+    this.fillFormValues();
   }
 
-  imageToShow;
-
-  ngOnInit() {
+  fillFormValues() {
     this.changeEssentialData = this.fb.group(
       {
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
+        firstName: [this.userData.firstName, Validators.required],
+        lastName: [this.userData.lastName, Validators.required],
+        email: [this.userData.email, [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmNewPassword: ['', Validators.required],
-        study: [''],
-        wentTo: [''],
-        livesIn: [''],
-        from: [''],
-        image: [''],
+        study: [this.userData.study],
+        wentTo: [this.userData.wentTo],
+        livesIn: [this.userData.livesIn],
+        from: [this.userData.from],
       },
       { validator: [Custome.changePassword] }
     );
-    this.accountService.getData().subscribe((data) => {
-      this.userData = data;
-      this.http
-        .get('http://localhost:8080/files/' + this.userData.profilePhoto, {
-          responseType: 'blob',
-        })
-        .subscribe((data) => {
-          this.createImageFromBlob(data);
-          console.log(this.userData.profilePhoto);
-        });
-    });
+  }
+  ngOnInit() {
+    this.getUserData();
   }
 }
+
+// createImageFromBlob(image: Blob) {
+//   let reader = new FileReader();
+//   reader.addEventListener(
+//     'load',
+//     () => {
+//       this.imageToShow = this._sanitizer.bypassSecurityTrustResourceUrl(
+//         reader.result.toString()
+//       );
+//     },
+//     false
+//   );
+
+//   if (image) {
+//     reader.readAsDataURL(image);
+//   }
+// }
+
+// if (event.target.files) {
+//   let reader = new FileReader();
+//   reader.readAsDataURL(event.target.files[0]);
+//   reader.onload = (event) => {
+//     this.myImage = event.target.result;
+
+//   };
+// }
+// getImage() {
+//   if (this.image) {
+//     return this.image;
+//   } else {
+//     return this.storageService.getImage();
+//   }
+// }
+
+// getCover() {
+//   if (this.newCover) {
+//     return this.newCover;
+//   } else {
+//     return this.storageService.getCoverPhoto();
+//   }
+// }

@@ -15,14 +15,14 @@ export class CommentsService {
     return this.http.get('http://localhost:8080/comments/postId/' + postId);
   }
 
-  addCommment(postId) {
+  addCommment(postId, commentText) {
     return this.http.post(
       'http://localhost:8080/comments/' +
         this.accountService.getId() +
         '/' +
         postId,
       {
-        text: 'my first comment from vsc',
+        text: commentText,
       }
     );
   }

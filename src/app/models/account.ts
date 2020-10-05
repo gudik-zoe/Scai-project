@@ -1,4 +1,4 @@
-export class Account {
+export class AccountModel {
   idAccount: number;
   firstName: String;
   lastName: String;

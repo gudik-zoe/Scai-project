@@ -8,16 +8,19 @@ import { AccountService } from './services/account.service';
 import { AuthService } from './services/auth.service';
 import { PostsService } from './services/posts.service';
 import { StorageService } from './services/storage.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { AccountModel } from './models/account';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private postService: PostsService,
+    private _sanitizer: DomSanitizer,
     private route: Router,
     private auth: AuthService,
     private storageService: StorageService
@@ -28,6 +31,7 @@ export class AppComponent implements OnInit, OnDestroy {
   message = false;
   loggedIn;
   userData;
+  userImage;
   userIn() {
     if (localStorage.getItem('token') !== null) {
       return true;
@@ -37,15 +41,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   navigate() {
     this.show = false;
-  }
-  getUserName() {
-    return this.userData.firstName;
-  }
-  getMessengerLength() {
-    return this.storageService.getMessages();
-  }
-  image() {
-    return this.accountService.userData?.profilePhoto;
   }
 
   deactivate() {
@@ -67,15 +62,25 @@ export class AppComponent implements OnInit, OnDestroy {
     this.show = true;
   }
 
-  ngOnInit() {
-    // this.backEnd.getData().subscribe((data) => {
-    //   this.userData = data;
-    // });
-    this.storageService.message.subscribe((data) => {
-      this.message = data;
+  getUserData() {
+    return new Promise((resolve) => {
+      this.accountService.getData().subscribe((data) => {
+        this.userData = data;
+        resolve(this.userData);
+      });
     });
   }
-  ngOnDestroy() {
-    this.loggedInSubscription.unsubscribe();
+
+  async myFunction() {
+    await this.getUserData();
+  }
+
+  ngOnInit() {
+    this.myFunction();
+    this.accountService.imageSubject.subscribe((data) => {
+      if (data) {
+        this.getUserData();
+      }
+    });
   }
 }

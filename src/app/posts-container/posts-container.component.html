@@ -1,0 +1,4 @@
+<div *ngFor="let postDB of dbPosts; let i = index">
+  <app-post [post]="postDB" [userData]="userData" [index]="i" (testOutput)="notifyMe($event)"
+    [usersDetails]="usersDetails"> </app-post>
+</div>
