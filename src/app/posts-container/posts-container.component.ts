@@ -4,6 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
 import { CommentsService } from '../services/comments.service';
+import { FriendsService } from '../services/friends.service';
 import { PostsService } from '../services/posts.service';
 
 @Component({
@@ -18,8 +19,9 @@ export class PostsContainerComponent implements OnInit {
     private accountService: AccountService,
     private commentService: CommentsService,
     private _sanitizer: DomSanitizer,
-    private route: Router
-  ) {}
+    private route: Router,
+    private friendService: FriendsService
+  ) { }
   dbPosts;
   commentText;
   userImage;
@@ -27,33 +29,8 @@ export class PostsContainerComponent implements OnInit {
   users: any;
   usersDetails = [];
 
-  // getPosts() {
-  //   this.postsService.getPosts().subscribe((data) => {
-  //     this.dbPosts = data;
-  //     for (let i of this.dbPosts) {
-  //       this.accountService
-  //         .getBasicAccountDetails(i.accountIdAccount)
-  //         .subscribe((u) => {
-  //           i.sharedBy = u;
-  //         });
 
-  //       for (let j of i.comments) {
-  //         this.accountService
-  //           .getBasicAccountDetails(j.accountIdAccount)
-  //           .subscribe((c) => {
-  //             j.commentedBy = c;
-  //           });
-  //       }
-  //       for (let k of i.postLikes) {
-  //         this.accountService
-  //           .getBasicAccountDetails(k.accountIdAccount)
-  //           .subscribe((l) => {
-  //             k.likedBy = l;
-  //           });
-  //       }
-  //     }
-  //   });
-  // }
+
 
   getUserData() {
     this.accountService.getData().subscribe((data) => {
@@ -71,7 +48,6 @@ export class PostsContainerComponent implements OnInit {
             this.usersDetails.push(u);
           });
       }
-      // console.log(this.usersDetails);
     });
   }
 
@@ -83,9 +59,12 @@ export class PostsContainerComponent implements OnInit {
     console.log(data);
   }
 
+
+
   ngOnInit() {
     this.getPosts();
     this.getUserData();
     this.getUsers();
+
   }
 }

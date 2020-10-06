@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthenticationGuard } from './authentication.guard';
+// import { AuthenticationGuard } from './authentication.guard';
 import {
   HttpClient,
   HttpClientModule,
@@ -12,6 +12,7 @@ import {
 } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { MyInterceptor } from './my-interceptor';
+import { FriendInfoComponent } from './friend-info/friend-info.component';
 
 // import { PostComponent } from './post/post.component';
 // import { PostsComponent } from './posts/posts.component';
@@ -31,6 +32,7 @@ import { MyInterceptor } from './my-interceptor';
 @NgModule({
   declarations: [
     AppComponent,
+    FriendInfoComponent,
     // PostsComponent,
     // AlertComponent,
     // DescriptionComponent,
@@ -49,7 +51,7 @@ import { MyInterceptor } from './my-interceptor';
     HttpClientModule,
   ],
   providers: [
-    AuthenticationGuard,
+    // AuthenticationGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MyInterceptor,

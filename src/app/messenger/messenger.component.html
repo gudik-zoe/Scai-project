@@ -7,7 +7,7 @@
           height="50px" />
         {{ requestedUser?.firstName + " " + requestedUser?.lastName }}</span>
     </div>
-    <div class="scrollable-element" style="overflow-y: scroll; height: 370px;">
+    <div class="scrollable-element" style="overflow-y: scroll; height: 350px;">
       <ul *ngFor="let i of myConvWith">
         <li [class]="(i.theSenderId==id )? 'sender' :'receiver' ">{{i.theMessage}}
           <small>{{i.date |  date:'MM/dd/yyyy' : 'UTC'}} </small>

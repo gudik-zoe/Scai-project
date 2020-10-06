@@ -1,0 +1,8 @@
+<h3>Friends</h3>
+<div *ngIf="notification">
+    you've got a friend request
+</div>
+<hr>
+<div *ngFor="let user of users">
+    <app-my-friends [user]="user" [userData]="userData"></app-my-friends>
+</div>

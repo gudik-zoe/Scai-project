@@ -28,6 +28,7 @@ export class PostsService {
     return this.http.get(this.rootUrl + 'posts');
   }
 
+
   // getPosts2() {
   //   this.getPosts().subscribe((data) => {
   //     this.dbPosts = data;
@@ -74,6 +75,11 @@ export class PostsService {
       this.rootUrl + 'posts/accountId/' + this.accountService.getId()
     );
   }
+
+  getPostsByAccountId(id) {
+    return this.http.get(this.rootUrl + 'posts/accountId/' + id)
+  }
+
 
   getPostLikes(postId) {
     return this.http.get(this.rootUrl + 'postLikes/likesNumber/' + postId);

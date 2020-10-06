@@ -8,6 +8,7 @@ import { SideBarModule } from '../side-bar/side-bar.module';
 import { AlertModule } from '../alert/alert.module';
 import { PostsContainerModule } from '../posts-container/posts-container.module';
 import { PostModule } from '../post/post.module';
+import { FriendsContainerModule } from '../friends-container/friends-container.module';
 
 const routes: Routes = [{ path: '', component: HomePageComponent }];
 
@@ -18,9 +19,9 @@ const routes: Routes = [{ path: '', component: HomePageComponent }];
     RouterModule.forChild(routes),
     FormsModule,
     SideBarModule,
-    MyFriendsModule,
+    FriendsContainerModule,
     AlertModule,
     PostsContainerModule,
   ],
 })
-export class HomePageModule {}
+export class HomePageModule { }

@@ -20,6 +20,11 @@ export class FriendsService {
     );
   }
 
+  relationChecker(id) {
+    return this.http.get(
+      'http://localhost:8080/relation/relationChecker/' + id
+    );
+  }
   sendFriendRequest(userId) {
     return this.http.post(
       'http://localhost:8080/relation/' +

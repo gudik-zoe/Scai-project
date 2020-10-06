@@ -1,10 +1,10 @@
-<div *ngIf="userData">
+<div *ngIf="requestedUserData">
   <div class="container-fluid mt-1"
-    style="width: 750px; height: 140px; border-radius: 10px; background-image: url(http://localhost:8080/files/{{userData?.coverPhoto}}); background-size:cover ;">
+    style="width: 750px; height: 140px; border-radius: 10px; background-image: url(http://localhost:8080/files/{{requestedUserData?.coverPhoto}}); background-size:cover ;">
     <br />
     <div class="text-center mt-5">
-      <img src="{{ imgUrl + userData.profilePhoto}}" width="120px" style="border-radius: 50%" />
-      <p class="font-weight-bold">{{ userData.firstName + " " + userData.lastName }}</p>
+      <img src="{{ imgUrl + requestedUserData.profilePhoto}}" width="120px" style="border-radius: 50%" />
+      <p class="font-weight-bold">{{ requestedUserData.firstName + " " + requestedUserData.lastName }}</p>
     </div>
 
   </div>
@@ -12,7 +12,10 @@
     <span class="new" routerLink="/home-page">Home page</span>
     <span class="new" routerLink="/my-friends">My Friends</span>
     <span class="new">Photos</span>
-    <button class="btn btn-info btn-sm " style="margin-left: 400px;" (click)="goToEditing()">
+    <button style="margin-left: 300px;" *ngIf="requestedUserData.idAccount !== LoggedInUserId"
+      class="btn btn-primary btn-sm">add friend<i class="fa fa-user-plus ml-1" aria-hidden="true"></i> </button>
+    <button *ngIf="requestedUserData.idAccount == LoggedInUserId" class="btn btn-info btn-sm "
+      style="margin-left: 400px;" (click)="goToEditing()">
       <i class="fa fa-pencil" aria-hidden="true"></i>
       Edit profile</button>
 
@@ -31,15 +34,15 @@
           <hr />
           <li>
             <i class="fa fa-graduation-cap" aria-hidden="true"></i> studied at
-            <span class="font-weight-bold">{{ userData?.study }}</span>
+            <span class="font-weight-bold">{{ requestedUserData?.study }}</span>
           </li>
           <li>
             <i class="fa fa-university" aria-hidden="true"></i> went to
-            <span class="font-weight-bold"> {{ userData.wentTo }}</span>
+            <span class="font-weight-bold"> {{ requestedUserData.wentTo }}</span>
           </li>
           <li>
             <i class="fa fa-home" aria-hidden="true"></i> lives in
-            <span class="font-weight-bold"> {{ userData.livesIn }}</span>
+            <span class="font-weight-bold"> {{ requestedUserData.livesIn }}</span>
           </li>
           <br />
           <button class="btn btn-primary" style="width: 200px; margin-left: 60px">
@@ -71,8 +74,8 @@
       <div class="col-5" style="background-color: lightgrey; border-radius: 10px">
         <div class="mt-2 ml-3" style="width: 450px; background-color: white; border-radius: 10px">
           <span>
-            <img src="{{ imgUrl + userData.profilePhoto}}" width="50px" style="border-radius: 50%" />
-            <input class="ml-2" placeholder="what's in your mind {{ userData.firstName }}?" style="
+            <img src="{{ imgUrl + requestedUserData.profilePhoto}}" width="50px" style="border-radius: 50%" />
+            <input class="ml-2" placeholder="leave a post for {{requestedUserData.firstName}}" style="
               width: 300px;
               border-radius: 10px;
               background-color: lightcyan;
@@ -92,10 +95,10 @@
         <div class="container-fluid">
           <h3 class="font-weight-bold">posts</h3>
           <hr />
-          <div *ngFor="let post of myPosts" class="post-container">
+          <div *ngFor="let post of requestedAccountPosts" class="post-container">
             <span style="float: left; margin-bottom: 10px;">
-              <img src="{{ imgUrl + userData.profilePhoto}}" width="50px" style="border-radius: 50%;" />
-              <span class="font-weight-bold">{{ userData.firstName }} has shared</span>
+              <img src="{{ imgUrl + requestedUserData.profilePhoto}}" width="50px" style="border-radius: 50%;" />
+              <span class="font-weight-bold">{{ requestedUserData.firstName }} has shared</span>
             </span>
 
             <img *ngIf="post.image" src="{{ imgUrl + post.image}}" width="300px" height="200px" />
