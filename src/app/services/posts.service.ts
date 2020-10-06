@@ -15,19 +15,18 @@ export class PostsService {
   rootUrl: string = environment.rootUrl;
   close = new Subject<boolean>();
   dbPosts;
-  userDetail = [];
+  accountPosts;
 
   constructor(
     private accountService: AccountService,
     private auth: AuthService,
     private storage: StorageService,
     private http: HttpClient
-  ) { }
+  ) {}
 
   getPosts() {
     return this.http.get(this.rootUrl + 'posts');
   }
-
 
   // getPosts2() {
   //   this.getPosts().subscribe((data) => {
@@ -38,33 +37,36 @@ export class PostsService {
   //   });
   // }
 
+  getPostsDetails(posts) {
+    for (let i of posts) {
+      this.accountService
+        .getBasicAccountDetails(i.accountIdAccount)
+        .subscribe((u) => {
+          i.sharedBy = u;
+        });
+
+      for (let j of i.comments) {
+        this.accountService
+          .getBasicAccountDetails(j.accountIdAccount)
+          .subscribe((c) => {
+            j.commentedBy = c;
+          });
+      }
+      for (let k of i.postLikes) {
+        this.accountService
+          .getBasicAccountDetails(k.accountIdAccount)
+          .subscribe((l) => {
+            k.likedBy = l;
+          });
+      }
+    }
+  }
+
   getPosts2() {
     return new Promise((resolve) => {
       this.getPosts().subscribe((data) => {
         this.dbPosts = data;
-        for (let i of this.dbPosts) {
-          this.accountService
-            .getBasicAccountDetails(i.accountIdAccount)
-            .subscribe((u) => {
-              i.sharedBy = u;
-            });
-
-          for (let j of i.comments) {
-            this.accountService
-              .getBasicAccountDetails(j.accountIdAccount)
-              .subscribe((c) => {
-                j.commentedBy = c;
-              });
-          }
-          for (let k of i.postLikes) {
-            this.accountService
-              .getBasicAccountDetails(k.accountIdAccount)
-              .subscribe((l) => {
-                k.likedBy = l;
-              });
-          }
-        }
-        // console.log(this.dbPosts);
+        this.getPostsDetails(this.dbPosts);
         resolve(this.dbPosts);
       });
     });
@@ -77,9 +79,17 @@ export class PostsService {
   }
 
   getPostsByAccountId(id) {
-    return this.http.get(this.rootUrl + 'posts/accountId/' + id)
+    return new Promise((resolve) => {
+      this.http
+        .get(this.rootUrl + 'posts/accountId/' + id)
+        .subscribe((data) => {
+          this.accountPosts = data;
+          this.getPostsDetails(this.accountPosts);
+          resolve(this.accountPosts);
+          console.log(this.accountPosts);
+        });
+    });
   }
-
 
   getPostLikes(postId) {
     return this.http.get(this.rootUrl + 'postLikes/likesNumber/' + postId);

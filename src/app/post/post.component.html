@@ -39,14 +39,15 @@
 
 
   <div class="container">
-    <img *ngIf="post.image" src="http://localhost:8080/files/{{ post.image }}" style="width: 80%; height: 80%;" />
+    <img *ngIf="post.image" src="http://localhost:8080/files/{{ post.image }}" style="width: 80%; height: 60%;" />
   </div>
   <p> {{ post.description }} </p>
 
   <hr />
 
   <span><i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue"></i> {{ post.postLikes.length }} </span>
-  <span class="font-weight-bold" style="margin-left: 140px">{{ post.comments.length }}comments</span>
+  <span (click)="openComments()" class="font-weight-bold"
+    style="margin-left: 140px; cursor: pointer;">{{ post.comments.length }}comments</span>
   <span (click)="goToDescription(post.idPosts)"
     style="cursor: pointer; color: blue; font-weight: bold; margin-left: 130px">description</span>
   <hr />
@@ -63,26 +64,18 @@
     share
   </button>
   <hr>
-  <div class="container" *ngFor="let c of post.comments">
-    <img />
-    <div class="container" style="background-color: whitesmoke; width:350px; height:40px; border-radius: 7px;">
-      <ng-container *ngIf="c.commentedBy">
-
-        <img src="http://localhost:8080/files/{{ c.commentedBy[0].profilePhoto }}" width="20px"
-          style="border-radius: 50%;" height="20px" />
-
-        <span class="font-weight-bold">{{c.commentedBy[0].firstName + " " + c.commentedBy[0].lastName }} </span>
-
-        <!-- <div *ngFor="let user of usersDetails">
-          <span *ngIf="c.accountIdAccount == user[0].idAccount"> {{user[0].firstName + user[0].lastName}} </span>
-        </div> -->
-
-
-      </ng-container>
-      <span>{{c.text}}</span>
+  <ng-container *ngIf="openCommentsList">
+    <div class="container" *ngFor="let c of post.comments">
+      <div class="container mt-3" style="background-color: whitesmoke; width:350px; height:40px; border-radius: 7px;">
+        <ng-container *ngIf="c.commentedBy">
+          <img src="http://localhost:8080/files/{{ c.commentedBy[0].profilePhoto }}" width="20px"
+            style="border-radius: 50%;" height="20px" />
+          <span class="font-weight-bold">{{c.commentedBy[0].firstName + " " + c.commentedBy[0].lastName }} </span>
+        </ng-container>
+        <span>{{c.text}}</span>
+      </div>
     </div>
-  </div>
-
+  </ng-container>
   <div style="margin-top: 10px;">
     <img src="http://localhost:8080/files/{{ userData?.profilePhoto }}" width="40px" height="40px"
       style="border-radius: 50%" />

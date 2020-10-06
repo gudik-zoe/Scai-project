@@ -26,7 +26,7 @@ export class UserProfileComponent implements OnInit {
   imgUrl: string = environment.rootUrl + 'files/';
   requestedUserData: any;
   id: number;
-  LoggedInUserId: number;
+  loggedInUserData;
   status: string;
   requestedAccountPosts;
 
@@ -43,19 +43,17 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  getPostsByAccountId(id) {
-    return new Promise((resolve) => {
-      this.postService.getPostsByAccountId(id).subscribe((data) => {
-        this.requestedAccountPosts = data;
-        resolve(this.requestedAccountPosts);
-      });
-    });
+  async getPostsByAccountId(id) {
+    await this.postService.getPostsByAccountId(id);
+    this.requestedAccountPosts = this.postService.accountPosts;
   }
 
-  getLoggedInUserId() {
+  getLoggedInUserData() {
     return new Promise((resolve) => {
-      this.LoggedInUserId = this.accountService.getId();
-      resolve(this.getLoggedInUserId);
+      this.accountService.getData().subscribe((data) => {
+        this.loggedInUserData = data;
+        resolve(this.loggedInUserData);
+      });
     });
   }
   goToMessengerOrAddFriend(id) {
@@ -67,7 +65,7 @@ export class UserProfileComponent implements OnInit {
       this.route.navigate(['/messenger', id]);
     } else {
       this.friendService
-        .deleteOrCancelFriendRequest(this.LoggedInUserId, this.id)
+        .deleteOrCancelFriendRequest(this.loggedInUserData.idAccount, this.id)
         .subscribe((data) => {
           this.status = 'add friend';
         });
@@ -85,7 +83,7 @@ export class UserProfileComponent implements OnInit {
     await this.getIdFromUrl();
     await this.getUserById();
     await this.getPostsByAccountId(this.id);
-    await this.getLoggedInUserId();
+    await this.getLoggedInUserData();
     await this.friendService.getRelationStatusBetweenMeAnd(this.id);
     this.status = this.friendService.status;
   }

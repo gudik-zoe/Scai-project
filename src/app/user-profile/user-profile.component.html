@@ -1,4 +1,5 @@
-<div *ngIf="requestedUserData">
+<div *ngIf="requestedUserData && loggedInUserData">
+
   <div class="container-fluid mt-1"
     style="width: 750px; height: 140px; border-radius: 10px; background-image: url(http://localhost:8080/files/{{requestedUserData?.coverPhoto}}); background-size:cover ;">
     <br />
@@ -8,14 +9,16 @@
     </div>
 
   </div>
+
   <div class="container" style="margin-top: 100px; margin-left: 140px;">
     <span class="new" routerLink="/home-page">Home page</span>
     <span class="new" routerLink="/my-friends">My Friends</span>
     <span class="new">Photos</span>
     <button (click)="goToMessengerOrAddFriend(requestedUserData.idAccount)" style="margin-left: 300px;"
-      *ngIf="requestedUserData.idAccount !== LoggedInUserId" class="btn btn-primary btn-sm">{{status}}<i
+      *ngIf="requestedUserData.idAccount !== loggedInUserData.idAccount"
+      [class]="(status == 'add friend' || status == 'chat' )? 'btn btn-primary btn-sm' :'btn btn-danger btn-sm' ">{{status}}<i
         class="fa fa-user-plus ml-1" aria-hidden="true"></i> </button>
-    <button *ngIf="requestedUserData.idAccount == LoggedInUserId" class="btn btn-info btn-sm "
+    <button *ngIf="requestedUserData.idAccount == loggedInUserData.idAccount" class="btn btn-info btn-sm "
       style="margin-left: 400px;" (click)="goToEditing()">
       <i class="fa fa-pencil" aria-hidden="true"></i>
       Edit profile</button>
@@ -25,7 +28,7 @@
 
   <div class="container-fluid mt-5">
     <div class="row">
-      <div class="col-4" style="margin-left: 10em;">
+      <div class="col-4" style="margin-left: 5em;">
         <div class="container" style="
           height: fit-content;
           background-color: lightgrey;
@@ -45,10 +48,6 @@
             <i class="fa fa-home" aria-hidden="true"></i> lives in
             <span class="font-weight-bold"> {{ requestedUserData.livesIn }}</span>
           </li>
-          <br />
-          <button class="btn btn-primary" style="width: 200px; margin-left: 60px">
-            <i class="fa fa-pencil" aria-hidden="true"></i> Edit
-          </button>
         </div>
         <div class="container mt-4" style="
           background-color: lightgrey;
@@ -72,10 +71,10 @@
 
         </div>
       </div>
-      <div class="col-5" style="background-color: lightgrey; border-radius: 10px">
-        <div class="mt-2 ml-3" style="width: 450px; background-color: white; border-radius: 10px">
+      <div class="col-6" style="background-color: lightgrey; border-radius: 10px">
+        <div class="mt-2 ml-3" style="width: 550px; background-color: white; border-radius: 10px">
           <span>
-            <img src="{{ imgUrl + requestedUserData.profilePhoto}}" width="50px" style="border-radius: 50%" />
+            <img src="{{ imgUrl + loggedInUserData.profilePhoto}}" width="50px" style="border-radius: 50%" />
             <input class="ml-2" placeholder="leave a post for {{requestedUserData.firstName}}" style="
               width: 300px;
               border-radius: 10px;
@@ -97,27 +96,8 @@
           <h3 class="font-weight-bold">posts</h3>
           <hr />
           <div *ngFor="let post of requestedAccountPosts" class="post-container">
-            <span style="float: left; margin-bottom: 10px;">
-              <img src="{{ imgUrl + requestedUserData.profilePhoto}}" width="50px" style="border-radius: 50%;" />
-              <span class="font-weight-bold">{{ requestedUserData.firstName }} has shared</span>
-            </span>
-
-            <img *ngIf="post.image" src="{{ imgUrl + post.image}}" width="300px" height="200px" />
-            <span class="font-weight-bold ml-2">{{ post.postLikes.length }}likes</span>
-            <span class="font-weight-bold ml-4">{{ post.comments.length }}comments</span>
-            <span class="font-weight-bold ml-5"><a style="color: blue; cursor: pointer">description </a></span>
-            <hr />
+            <app-post [post]="post" [userData]="loggedInUserData"> </app-post>
           </div>
-
-          <!-- <div *ngFor="let post of sharedPosts" class="container">
-          <p class="font-weight-bold">{{ name() }} has shared</p>
-          <img src="{{ post.image }}" width="300px" height="200px" />
-          <span class="font-weight-bold ml-2">{{ post.likes }}likes</span>
-          <span class="font-weight-bold ml-4">{{ post.comments.length }}comments</span>
-          <span class="font-weight-bold ml-5"><a style="color: blue; cursor: pointer">description
-            </a></span>
-          <hr />
-        </div> -->
         </div>
         <br />
       </div>

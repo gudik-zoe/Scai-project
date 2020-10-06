@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { AccountService } from '../services/account.service';
 import { CommentsService } from '../services/comments.service';
 import { PostsService } from '../services/posts.service';
 
@@ -21,11 +22,13 @@ export class PostComponent implements OnInit {
   use: any;
   commentText: string;
   liked: boolean;
+  openCommentsList: boolean = false;
 
   constructor(
     private postsService: PostsService,
     private commentService: CommentsService,
-    private route: Router
+    private route: Router,
+    private accountService: AccountService
   ) {}
 
   like(id: number) {
@@ -49,20 +52,25 @@ export class PostComponent implements OnInit {
       .addCommment(postId, commentText)
       .subscribe((data: any) => {
         data.commentedBy = [
-          [
-            this.userData.firstName,
-            this.userData.lastName,
-            this.userData.profilePhoto,
-            this.userData.idAccount,
-          ],
+          {
+            firstName: this.userData.firstName,
+            lastName: this.userData.lastName,
+            profilePhoto: this.userData.profilePhoto,
+            idAccount: this.userData.idAccount,
+          },
         ];
         this.post.comments.push(data);
+        console.log(data);
         this.commentText = null;
       });
   }
 
   goToDescription(id: number): void {
     this.route.navigate(['/description', id]);
+  }
+
+  openComments() {
+    this.openCommentsList = !this.openCommentsList;
   }
 
   ngOnInit(): void {
