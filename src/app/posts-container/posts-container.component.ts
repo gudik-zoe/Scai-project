@@ -21,16 +21,13 @@ export class PostsContainerComponent implements OnInit {
     private _sanitizer: DomSanitizer,
     private route: Router,
     private friendService: FriendsService
-  ) { }
+  ) {}
   dbPosts;
   commentText;
   userImage;
   userData;
   users: any;
   usersDetails = [];
-
-
-
 
   getUserData() {
     this.accountService.getData().subscribe((data) => {
@@ -59,12 +56,9 @@ export class PostsContainerComponent implements OnInit {
     console.log(data);
   }
 
-
-
   ngOnInit() {
     this.getPosts();
     this.getUserData();
     this.getUsers();
-
   }
 }

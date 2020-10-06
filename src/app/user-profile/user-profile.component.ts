@@ -27,7 +27,7 @@ export class UserProfileComponent implements OnInit {
   requestedUserData: any;
   id: number;
   LoggedInUserId: number;
-  status: number;
+  status: string;
   requestedAccountPosts;
 
   goToEditing() {
@@ -58,18 +58,22 @@ export class UserProfileComponent implements OnInit {
       resolve(this.getLoggedInUserId);
     });
   }
-
-  checkRelation(id) {
-    return new Promise((resolve) => {
+  goToMessengerOrAddFriend(id) {
+    if (this.status == 'add friend') {
+      this.friendService.sendFriendRequest(id).subscribe((data) => {
+        this.status = 'pending - cancel request';
+      });
+    } else if (this.status == 'chat') {
+      this.route.navigate(['/messenger', id]);
+    } else {
       this.friendService
-        .getRelationStatusBetweenMeAnd(id)
-        .subscribe((data: number) => {
-          this.status = data;
-          resolve(this.status);
-          console.log(this.status);
+        .deleteOrCancelFriendRequest(this.LoggedInUserId, this.id)
+        .subscribe((data) => {
+          this.status = 'add friend';
         });
-    });
+    }
   }
+
   getIdFromUrl() {
     return new Promise((resolve) => {
       this.id = parseInt(this.aroute.snapshot.paramMap.get('id'));
@@ -82,7 +86,8 @@ export class UserProfileComponent implements OnInit {
     await this.getUserById();
     await this.getPostsByAccountId(this.id);
     await this.getLoggedInUserId();
-    await this.checkRelation(this.id);
+    await this.friendService.getRelationStatusBetweenMeAnd(this.id);
+    this.status = this.friendService.status;
   }
 
   ngOnInit() {

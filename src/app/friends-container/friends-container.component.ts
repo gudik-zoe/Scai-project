@@ -45,17 +45,17 @@ export class FriendsContainerComponent implements OnInit {
     // await this.relationChecker();
   }
 
-  relationChecker() {
-    return new Promise((resolve) => {
-      this.friendService
-        .relationChecker(this.userData?.idAccount)
-        .subscribe((data) => {
-          this.notification = data;
-          console.log(this.notification);
-          resolve(this.notification);
-        });
-    });
-  }
+  // relationChecker() {
+  //   return new Promise((resolve) => {
+  //     this.friendService
+  //       .relationChecker(this.userData?.idAccount)
+  //       .subscribe((data) => {
+  //         this.notification = data;
+  //         console.log(this.notification);
+  //         resolve(this.notification);
+  //       });
+  //   });
+  // }
 
   // getRelation(){
   //   this.friendService.getRelationStatusBetweenMeAnd()

@@ -12,8 +12,9 @@
     <span class="new" routerLink="/home-page">Home page</span>
     <span class="new" routerLink="/my-friends">My Friends</span>
     <span class="new">Photos</span>
-    <button style="margin-left: 300px;" *ngIf="requestedUserData.idAccount !== LoggedInUserId"
-      class="btn btn-primary btn-sm">add friend<i class="fa fa-user-plus ml-1" aria-hidden="true"></i> </button>
+    <button (click)="goToMessengerOrAddFriend(requestedUserData.idAccount)" style="margin-left: 300px;"
+      *ngIf="requestedUserData.idAccount !== LoggedInUserId" class="btn btn-primary btn-sm">{{status}}<i
+        class="fa fa-user-plus ml-1" aria-hidden="true"></i> </button>
     <button *ngIf="requestedUserData.idAccount == LoggedInUserId" class="btn btn-info btn-sm "
       style="margin-left: 400px;" (click)="goToEditing()">
       <i class="fa fa-pencil" aria-hidden="true"></i>

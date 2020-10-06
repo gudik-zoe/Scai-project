@@ -28,19 +28,17 @@ export class AppComponent implements OnInit {
   title = 'scai-project';
   loggedInSubscription: Subscription;
   show = true;
-  message = false;
+  message: string;
   loggedIn;
   userData;
   userImage;
+  errorPhrase: string = 'JWT expired';
   userIn() {
     if (localStorage.getItem('token') !== null) {
       return true;
     } else {
       return false;
     }
-  }
-  navigate() {
-    this.show = false;
   }
 
   deactivate() {
@@ -63,12 +61,19 @@ export class AppComponent implements OnInit {
   }
 
   getUserData() {
-    return new Promise((resolve) => {
-      this.accountService.getData().subscribe((data) => {
+    this.accountService.getData().subscribe(
+      (data) => {
         this.userData = data;
-        resolve(this.userData);
-      });
-    });
+      },
+      (error) => {
+        const error2 = error.error.message.startsWith(this.errorPhrase);
+        if (error2) {
+          this.route.navigate(['/auth']);
+          localStorage.removeItem('token');
+          this.message = 'token is expired log in again to continue';
+        }
+      }
+    );
   }
 
   async myFunction() {
