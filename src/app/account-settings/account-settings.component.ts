@@ -7,13 +7,13 @@ import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AccountModel } from '../models/account';
 
 @Component({
   selector: 'app-account-settings',
   templateUrl: './account-settings.component.html',
   styleUrls: ['./account-settings.component.css'],
 })
-
 export class AccountSettingsComponent implements OnInit {
   changeEssentialData: FormGroup;
   constructor(
@@ -21,11 +21,10 @@ export class AccountSettingsComponent implements OnInit {
     private fb: FormBuilder,
     private route: Router,
     private accountService: AccountService
-  ) { }
+  ) {}
   coverPhoto;
   profilePhoto;
-  userData;
-
+  userData: AccountModel;
 
   goToHome() {
     this.route.navigate(['/user-profile']);
@@ -45,9 +44,9 @@ export class AccountSettingsComponent implements OnInit {
       this.http
         .put(
           'http://localhost:8080/api/accounts/profilePhoto/' +
-          this.accountService.getId() +
-          '/' +
-          this.profilePhoto.name,
+            this.accountService.getId() +
+            '/' +
+            this.profilePhoto.name,
           {}
         )
         .subscribe(() => {
@@ -70,9 +69,9 @@ export class AccountSettingsComponent implements OnInit {
       this.http
         .put(
           'http://localhost:8080/api/accounts/coverPhoto/' +
-          this.accountService.getId() +
-          '/' +
-          this.coverPhoto.name,
+            this.accountService.getId() +
+            '/' +
+            this.coverPhoto.name,
           {}
         )
         .subscribe(() => {
@@ -105,9 +104,8 @@ export class AccountSettingsComponent implements OnInit {
         study: [this.userData.study],
         wentTo: [this.userData.wentTo],
         livesIn: [this.userData.livesIn],
-        from: [this.userData.from],
         profilePhoto: [this.userData.profilePhoto],
-        coverPhoto: [this.userData.coverPhoto]
+        coverPhoto: [this.userData.coverPhoto],
       },
       { validator: [Custome.changePassword] }
     );

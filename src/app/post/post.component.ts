@@ -19,7 +19,6 @@ export class PostComponent implements OnInit {
   @Input() usersDetails;
 
   @Output() testOutput = new EventEmitter<{ likeObject: any }>();
-  use: any;
   commentText: string;
   liked: boolean;
   openCommentsList: boolean = false;

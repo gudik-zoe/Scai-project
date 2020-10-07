@@ -35,15 +35,6 @@ export class AuthService {
       },
       { observe: 'response' }
     );
-    // this.requestedUserIndex = this.localStorageArray.findIndex(
-    //   (item) => item.email === email && item.password === password
-    // );
-    // if (this.requestedUserIndex !== -1) {
-    //   localStorage.setItem('key', String(this.requestedUserIndex));
-    //   return true;
-    // } else {
-    //   return false;
-    // }
   }
 
   constructor(private http: HttpClient) {}

@@ -3,6 +3,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { Router } from '@angular/router';
+import { AccountModel } from '../models/account';
 import { AccountService } from '../services/account.service';
 
 import { StorageService } from '../services/storage.service';
@@ -20,13 +21,10 @@ export class SideBarComponent implements OnInit {
     private _sanitizer: DomSanitizer,
     private http: HttpClient
   ) {}
-  userImage;
-  userData;
+  userData: AccountModel;
 
-  getUserData() {
-    this.accountService.getData().subscribe((data) => {
-      this.userData = data;
-    });
+  async getUserData() {
+    this.userData = await this.accountService.getUserData();
   }
 
   ngOnInit() {

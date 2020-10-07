@@ -3,14 +3,17 @@ import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import jwt_decode from 'jwt-decode';
 import { Subject } from 'rxjs';
+import { AccountModel } from '../models/account';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
   userDetailList = [];
-  userData;
+  userData: AccountModel;
   imageSubject = new Subject<boolean>();
+  loggedIn = new Subject<boolean>();
+  refresh = new Subject<boolean>();
   constructor(private http: HttpClient, private _sanitizer: DomSanitizer) {}
 
   getId() {
@@ -26,11 +29,12 @@ export class AccountService {
     return this.http.get('http://localhost:8080/api/accounts/' + this.getId());
   }
 
-  getUserData() {
-    return new Promise((resolve) => {
-      return this.http
-        .get('http://localhost:8080/api/accounts/' + this.getId())
-        .subscribe((data) => {
+  async getUserData() {
+    const id = this.getId();
+    return new Promise<AccountModel>((resolve) => {
+      this.http
+        .get('http://localhost:8080/api/accounts/' + id)
+        .subscribe((data: AccountModel) => {
           this.userData = data;
           resolve(this.userData);
         });

@@ -27,26 +27,16 @@ export class AppComponent implements OnInit {
   ) {}
   title = 'scai-project';
   loggedInSubscription: Subscription;
-  show = true;
   message: string;
-  loggedIn;
-  userData;
-  userImage;
+  loggedIn: boolean = localStorage.getItem('token') ? true : false;
+  userData: AccountModel;
   errorPhrase: string = 'JWT expired';
-  userIn() {
-    if (localStorage.getItem('token') !== null) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   deactivate() {
     this.accountService.deleteAccount().subscribe(
       (data) => {
         localStorage.removeItem('token');
         this.route.navigate(['/auth']);
-        console.log(data);
       },
       (error) => {
         console.log(error);
@@ -55,37 +45,60 @@ export class AppComponent implements OnInit {
   }
 
   logOut() {
-    this.route.navigate(['/auth']);
     localStorage.removeItem('token');
-    this.show = true;
+    this.route.navigate(['/auth']);
+    this.loggedIn = false;
+  }
+
+  async getData() {
+    this.userData = await this.accountService.getUserData();
   }
 
   getUserData() {
-    this.accountService.getData().subscribe(
-      (data) => {
-        this.userData = data;
-      },
-      (error) => {
-        const error2 = error.error.message.startsWith(this.errorPhrase);
-        if (error2) {
-          this.route.navigate(['/auth']);
-          localStorage.removeItem('token');
-          this.message = 'token is expired log in again to continue';
-        }
+    this.accountService.refresh.subscribe((data: boolean) => {
+      if (data) {
+        this.getData();
       }
-    );
+    });
   }
 
-  async myFunction() {
-    await this.getUserData();
-  }
+  // getUserData() {
+  //   return new Promise((resolve, reject) => {
+  //     this.accountService.getData().subscribe(
+  //       (data: AccountModel) => {
+  //         this.userData = data;
+  //         resolve(this.userData);
+  //       },
+  //       (error) => {
+  //         const error2 = error.error.message.startsWith(this.errorPhrase);
+  //         if (error2) {
+  //           localStorage.removeItem('token');
+  //           this.route.navigate(['/auth']);
+  //           this.message = 'token is expired log in again to continue';
+  //           reject(this.message);
+  //         }
+  //       }
+  //     );
+  //   });
+  // }
 
-  ngOnInit() {
-    this.myFunction();
+  updateImage() {
     this.accountService.imageSubject.subscribe((data) => {
       if (data) {
         this.getUserData();
       }
     });
+  }
+  navBarController() {
+    this.accountService.loggedIn.subscribe((data: boolean) => {
+      this.loggedIn = data;
+    });
+  }
+
+  ngOnInit() {
+    this.getData();
+    this.getUserData();
+    this.updateImage();
+    this.navBarController();
   }
 }

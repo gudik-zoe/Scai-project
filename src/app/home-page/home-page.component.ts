@@ -31,7 +31,7 @@ export class HomePageComponent implements OnInit {
     private pagesService: PagesService,
     private commentService: CommentsService,
     private friendsService: FriendsService
-  ) { }
+  ) {}
   likeBtn: boolean = false;
   input: string;
   foto: any;
@@ -152,7 +152,7 @@ export class HomePageComponent implements OnInit {
     // })
   }
 
-  uploadImage() { }
+  uploadImage() {}
 
   // private async getUserData() {
   //   const { userData, image } = await this.accountService.getUserImageAndData();
@@ -164,14 +164,11 @@ export class HomePageComponent implements OnInit {
       this.users = data;
     });
   }
-  getUserData() {
-    this.accountService.getData().subscribe(data => {
-      (this.userData = data);
-    })
+  async getUserData() {
+    this.userData = await this.accountService.getUserData();
   }
 
   ngOnInit(): void {
-    // this.getPosts();
     this.getUserData();
     this.postService.close.subscribe((data) => {
       this.alertComponent = data;

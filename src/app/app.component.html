@@ -1,37 +1,37 @@
-<div *ngIf="userData">
-  <nav *ngIf="userIn()" class="navbar navbar-expand-md navbar-dark sticky-top shadow-lg"
-    style="height: 72px; border-radius: 10px; background-color: white">
-    <img src="http://localhost:8080/files/{{ userData?.profilePhoto }}" width="70px" height="70px"
-      style="border-radius: 50%" />
-    <h5>
-      <i style="cursor: pointer; color: blue; margin-left: 15px" class="fa fa-home" aria-hidden="true">
-        <a class="font-weight-bold" routerLinkActive="active-class" routerLink="/home-page">Home page
-        </a>
-      </i>
-    </h5>
+<nav *ngIf="loggedIn" class="navbar navbar-expand-md navbar-dark sticky-top shadow-lg"
+  style="height: 72px; border-radius: 10px; background-color: white">
+
+  <img *ngIf="userData" src="http://localhost:8080/files/{{ userData.profilePhoto }}" width="70px" height="70px"
+    style="border-radius: 50%" />
+
+  <h5>
+    <i style="cursor: pointer; color: blue; margin-left: 15px" class="fa fa-home" aria-hidden="true">
+      <a class="font-weight-bold" routerLinkActive="active-class" routerLink="/home-page">Home page
+      </a>
+    </i>
+  </h5>
 
 
-    <h5 style="margin-left: 35px">
-      <i style="cursor: pointer; color: blue" class="fa fa-user" aria-hidden="true">
-        <a class="font-weight-bold" routerLinkActive="active-class"
-          [routerLink]="['/user-profile',userData?.idAccount ]">
-          profile
-        </a>
-      </i>
-    </h5>
+  <h5 style="margin-left: 35px">
+    <i style="cursor: pointer; color: blue" class="fa fa-user" aria-hidden="true">
+      <a class="font-weight-bold" routerLinkActive="active-class" [routerLink]="['/user-profile',userData?.idAccount ]">
+        profile
+      </a>
+    </i>
+  </h5>
 
-    <h6>
-      <button type="button" style="margin-left: 400px;" class="btn btn-outline-danger btn-sm" (click)="logOut()">
-        log Out
-      </button>
-    </h6>
+  <h6>
+    <button type="button" style="margin-left: 400px;" class="btn btn-outline-danger btn-sm" (click)="logOut()">
+      log Out
+    </button>
+  </h6>
 
-    <h6>
-      <button class="btn btn-danger-sm ml-4" (click)="deactivate()" style="float: right;">
-        deactivate my account
-      </button>
-    </h6>
+  <h6>
+    <button class="btn btn-danger-sm ml-4" (click)="deactivate()" style="float: right;">
+      deactivate my account
+    </button>
+  </h6>
 
-  </nav>
-</div>
+</nav>
+
 <router-outlet></router-outlet>

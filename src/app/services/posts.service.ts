@@ -7,6 +7,7 @@ import { StorageService } from './storage.service';
 import { HttpClient } from '@angular/common/http';
 import { AccountService } from './account.service';
 import { environment } from 'src/environments/environment';
+import { PostsModel } from '../models/posts';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ import { environment } from 'src/environments/environment';
 export class PostsService {
   rootUrl: string = environment.rootUrl;
   close = new Subject<boolean>();
-  dbPosts;
+  dbPosts: PostsModel;
   accountPosts;
 
   constructor(
@@ -63,8 +64,8 @@ export class PostsService {
   }
 
   getPosts2() {
-    return new Promise((resolve) => {
-      this.getPosts().subscribe((data) => {
+    return new Promise<PostsModel>((resolve) => {
+      this.getPosts().subscribe((data: PostsModel) => {
         this.dbPosts = data;
         this.getPostsDetails(this.dbPosts);
         resolve(this.dbPosts);
@@ -79,14 +80,13 @@ export class PostsService {
   }
 
   getPostsByAccountId(id) {
-    return new Promise((resolve) => {
+    return new Promise<PostsModel>((resolve) => {
       this.http
         .get(this.rootUrl + 'posts/accountId/' + id)
         .subscribe((data) => {
           this.accountPosts = data;
           this.getPostsDetails(this.accountPosts);
           resolve(this.accountPosts);
-          console.log(this.accountPosts);
         });
     });
   }

@@ -1,3 +1,5 @@
+import { PostsModel } from './posts';
+
 export class AccountModel {
   idAccount: number;
   firstName: String;

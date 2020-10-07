@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { AccountModel } from '../models/account';
 import { AccountService } from '../services/account.service';
 import { CommentsService } from '../services/comments.service';
 import { FriendsService } from '../services/friends.service';
@@ -25,14 +26,12 @@ export class PostsContainerComponent implements OnInit {
   dbPosts;
   commentText;
   userImage;
-  userData;
+  userData: AccountModel;
   users: any;
   usersDetails = [];
 
-  getUserData() {
-    this.accountService.getData().subscribe((data) => {
-      this.userData = data;
-    });
+  async getUserData() {
+    this.userData = await this.accountService.getUserData();
   }
 
   getUsers() {

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { AccountModel } from '../models/account';
+import { PostsModel } from '../models/posts';
 import { AccountService } from '../services/account.service';
 import { AuthService } from '../services/auth.service';
 import { EventsService } from '../services/events.service';
@@ -24,38 +25,43 @@ export class UserProfileComponent implements OnInit {
     private friendService: FriendsService
   ) {}
   imgUrl: string = environment.rootUrl + 'files/';
-  requestedUserData: any;
+  requestedUserData: AccountModel;
   id: number;
-  loggedInUserData;
+  loggedInUserData: AccountModel;
   status: string;
-  requestedAccountPosts;
+  requestedAccountPosts: PostsModel;
 
   goToEditing() {
     this.route.navigate(['/account-settings']);
   }
 
   getUserById() {
-    return new Promise((resolve) => {
-      this.accountService.getAccountById(this.id).subscribe((data) => {
-        this.requestedUserData = data;
-        resolve(this.requestedUserData);
-      });
+    return new Promise<AccountModel>((resolve) => {
+      this.accountService
+        .getAccountById(this.id)
+        .subscribe((data: AccountModel) => {
+          this.requestedUserData = data;
+          resolve(this.requestedUserData);
+        });
     });
   }
 
   async getPostsByAccountId(id) {
-    await this.postService.getPostsByAccountId(id);
-    this.requestedAccountPosts = this.postService.accountPosts;
+    this.requestedAccountPosts = await this.postService.getPostsByAccountId(id);
   }
 
-  getLoggedInUserData() {
-    return new Promise((resolve) => {
-      this.accountService.getData().subscribe((data) => {
-        this.loggedInUserData = data;
-        resolve(this.loggedInUserData);
-      });
-    });
+  async getUserData() {
+    this.loggedInUserData = await this.accountService.getUserData();
   }
+
+  // getLoggedInUserData() {
+  //   return new Promise((resolve) => {
+  //     this.accountService.getData().subscribe((data) => {
+  //       this.loggedInUserData = data;
+  //       resolve(this.loggedInUserData);
+  //     });
+  //   });
+  // }
   goToMessengerOrAddFriend(id) {
     if (this.status == 'add friend') {
       this.friendService.sendFriendRequest(id).subscribe((data) => {
@@ -83,7 +89,7 @@ export class UserProfileComponent implements OnInit {
     await this.getIdFromUrl();
     await this.getUserById();
     await this.getPostsByAccountId(this.id);
-    await this.getLoggedInUserData();
+    await this.getUserData();
     await this.friendService.getRelationStatusBetweenMeAnd(this.id);
     this.status = this.friendService.status;
   }

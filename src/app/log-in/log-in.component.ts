@@ -43,16 +43,11 @@ export class LogInComponent implements OnInit {
   }
 
   signIn(email: string, password: any) {
-    // if (this.auth.signIn(email, password)) {
-
-    //   this.error = false;
-    // } else {
-    //   this.error = true;
-    // }
     this.auth.signIn(email, password).subscribe(
       (data) => {
-        console.log(data.headers);
         localStorage.setItem('token', data.headers.get('Authorization'));
+        this.accountService.refresh.next(true);
+        this.accountService.loggedIn.next(true);
         this.route.navigate(['/home-page']);
       },
       (error) => {
