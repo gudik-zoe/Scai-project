@@ -1,31 +1,4 @@
 <div class="container" class="post-container">
-  <!-- <div class="row">
-    <div class="container">
-      <h3>{{ post.accountIdAccount }} shared:</h3>
-      <p>{{ post.text }}</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="container image-container ">
-      <img src="http://localhost:8080/files/{{ post.image }}" alt="">
-    </div> 
-    {{ post.description }}
-  </div>
-  <div class="row" >
-    <ul style="list-style: none; display: inline-flex;">
-      <li  > <i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue"></i
-        > {{ post.postLikes.length }} </li>
-      <li>{{ post.comments.length }}comments</li>
-      <li>description</li>
-    </ul>
-  </div>
-  <div class="row">
-    <div class="container-fluide" style="margin-bottom: 20px;" >
-      <button>  <i class="fa fa-thumbs-up" aria-hidden="true"></i>  &nbsp; Like</button>
-      <button>   <i class="fa fa-comments" aria-hidden="true"></i> Comment</button>
-      <button>  <i class="fa fa-share-alt" aria-hidden="true"></i>share</button>
-    </div>
-  </div> -->
   <ng-container *ngIf="post.sharedBy">
     <!-- src="{{imgUrl + post.image}}" -->
     <img src="http://localhost:8080/files/{{ post.sharedBy[0].profilePhoto }}" width="50px"
@@ -33,7 +6,14 @@
     <span style="float: left;" class="font-weight-bold mt-3">
       {{ post.sharedBy[0].firstName + " " + post.sharedBy[0].lastName }}
       shared: </span>
+    <span *ngIf="post?.accountIdAccount == userData?.idAccount" (click)="editPost(post)"
+      style="float: right; margin-right: 20px; margin-top: 10px; font-size:large; cursor: pointer;"><i
+        class="fa fa-pencil" aria-hidden="true"></i>
+    </span>
+
   </ng-container>
+
+
 
   <p class="mt-5"> {{ post.text }} </p>
 

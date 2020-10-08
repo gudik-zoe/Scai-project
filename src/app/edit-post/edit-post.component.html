@@ -1,0 +1,41 @@
+<ng-container *ngIf="editPostComponent">
+    <div class="backdrop"></div>
+    <div class="alert-box" style="height: fit-content">
+        <span>
+            <i (click)="closeEditPostComponent()" style="color: red; float: right; cursor: pointer" class="fa fa-times"
+                aria-hidden="true"></i>
+            <h4 class="text-center">Edit post</h4>
+        </span>
+        <hr />
+        <div class="alert-box-action">
+            <img src="http://localhost:8080/files/{{ userData?.profilePhoto}}" width="60px" height="60px"
+                style="border-radius: 50%" />
+            <span class="font-weight-bold">
+                {{ userData?.firstName + " " + userData?.lastName }} shared:
+            </span>
+            <div class="md-form">
+                <p>{{ inputData }}</p>
+
+                <img *ngIf="post.image && showImage" src="http://localhost:8080/files/{{ post.image }}" width="150"
+                    height="100px" style="margin-left: 100px" />
+                <img *ngIf="postImage" [src]="postImage" width="150" height="100px" style="margin-left: 100px" />
+                <i *ngIf="showImage && post.image" style="color: lightskyblue; cursor: pointer;"
+                    class="fa fa-trash fa-lg" aria-hidden="true" (click)="deleteImage()"></i>
+                <textarea placeholder="what's in your mind {{ userData?.firstName }}" [(ngModel)]="inputData"
+                    class="md-textarea form-control mt-3" rows="3"></textarea>
+                <input type="file" name="file" (change)="uploadImage($event)" id="file" class="inputfile" />
+                <label style="float: right; cursor: pointer" for="file">
+                    <img src="https://png.pngtree.com/png-vector/20191129/ourmid/pngtree-image-upload-icon-photo-upload-icon-png-image_2047546.jpg"
+                        width="25px" height="25px" class="mt-4"
+                        style="border-radius: 50%; margin-left: 20px; color: blue" />
+                </label>
+            </div>
+
+            <br />
+            <button [disabled]="!inputData || inputData == ' '" type="button" class="btn btn-primary btn-block"
+                (click)="confirmEdit()">
+                Edit
+            </button>
+        </div>
+    </div>
+</ng-container>

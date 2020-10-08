@@ -25,7 +25,7 @@ export class PostsContainerComponent implements OnInit {
     private friendService: FriendsService
   ) {}
   dbPosts;
-  commentText;
+  commentText: string;
   userImage;
   userData: AccountModel;
   users: any;
@@ -52,8 +52,16 @@ export class PostsContainerComponent implements OnInit {
     this.dbPosts = await this.postsService.getPosts2();
   }
 
+  // editPost(edit: boolean, post: PostsModel) {
+  //   this.postsService.editPostComponent.next({ edit, post });
+  // }
+
   notifyParent(post: PostsModel) {
     this.dbPosts.push(post);
+  }
+
+  editPost(data) {
+    this.postsService.editPostComponent.next(data);
   }
 
   ngOnInit() {

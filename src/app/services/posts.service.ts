@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { AccountService } from './account.service';
 import { environment } from 'src/environments/environment';
 import { PostsModel } from '../models/posts';
+import { editPost } from '../models/editPostInt';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,7 @@ import { PostsModel } from '../models/posts';
 export class PostsService {
   rootUrl: string = environment.rootUrl;
   close = new Subject<boolean>();
+  editPostComponent = new Subject<editPost>();
   dbPosts: PostsModel;
   accountPosts;
 
@@ -114,6 +116,13 @@ export class PostsService {
         image,
         description,
       }
+    );
+  }
+
+  updatePost(post) {
+    return this.http.put(
+      this.rootUrl + 'posts/' + this.accountService.getId(),
+      post
     );
   }
 

@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { AccountModel } from '../models/account';
+import { editPost } from '../models/editPostInt';
 import { PostsModel } from '../models/posts';
 import { AccountService } from '../services/account.service';
 import { CommentsService } from '../services/comments.service';
@@ -17,10 +19,13 @@ export class PostComponent implements OnInit {
   @Input() post;
   @Input() userData;
   @Input() posters;
-  @Input() index;
+  @Input() i;
   @Input() usersDetails;
+  @Input() dbPosts;
 
   @Output() testOutput = new EventEmitter<PostsModel>();
+
+  @Output() editPostComponentEvent = new EventEmitter<editPost>();
   commentText: string;
   liked: boolean;
   openCommentsList: boolean = false;
@@ -89,6 +94,14 @@ export class PostComponent implements OnInit {
       });
   }
 
+  editPost(post: PostsModel) {
+    this.editPostComponentEvent.emit({
+      edit: true,
+      post: post,
+      userData: this.userData,
+    });
+  }
+
   goToDescription(id: number): void {
     this.route.navigate(['/description', id]);
   }
@@ -96,10 +109,6 @@ export class PostComponent implements OnInit {
   openComments() {
     this.openCommentsList = !this.openCommentsList;
   }
-
-  // checkIfUserLikedPost(postId){
-
-  // }
 
   ngOnInit() {}
 }
