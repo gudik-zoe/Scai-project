@@ -38,7 +38,6 @@ export class MyInterceptor implements HttpInterceptor {
           errorMsg = `Error Code: ${error.status},  Message: ${error.error.message}`;
           const tokenErrorPhrase = error.error.message;
           if (tokenErrorPhrase.startsWith('JWT expired')) {
-            console.log('heeeeey token expired!!!!');
             this.route.navigate(['/auth']);
             localStorage.removeItem('token');
             this.accountService.loggedIn.next(false);

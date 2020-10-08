@@ -14,7 +14,7 @@ export class AuthService {
   currentUser: any[] = [];
 
   loggedIn(): boolean {
-    return !!localStorage.getItem('key');
+    return !!localStorage.getItem('token');
   }
   signUp(data) {
     return this.http.post('http://localhost:8080/api/signUp', data);
