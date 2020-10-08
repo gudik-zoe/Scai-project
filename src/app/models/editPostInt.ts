@@ -3,6 +3,7 @@ import { PostsModel } from './posts';
 
 export interface editPost {
   edit: boolean;
-  post: PostsModel;
-  userData: AccountModel;
+  post?: PostsModel;
+  userData?: AccountModel;
+  id?: number;
 }

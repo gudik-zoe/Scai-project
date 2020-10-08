@@ -25,20 +25,23 @@ export class EditPostComponent implements OnInit {
   showImage: boolean = true;
   myImage;
   postImage: string | ArrayBuffer;
+  id;
 
-  openEditPostComponent() {
-    this.postService.editPostComponent.subscribe((data: editPost) => {
-      (this.editPostComponent = data.edit),
-        (this.post = data.post),
-        (this.userData = data.userData);
-      this.inputData = data.post.text;
-      // console.log(this.editPostComponent, this.post, this.userData);
-    });
+  // openEditPostComponent() {
+  //   this.postService.sendPost.subscribe((data) => {
+  //     this.post = data;
+  //     console.log(data);
+  //   });
+  // }
+
+  async getUserData() {
+    this.userData = await this.accountService.getUserData();
   }
 
   closeEditPostComponent() {
-    this.editPostComponent = false;
-    this.showImage = true;
+    this.postService.editPostComponent.next();
+
+    // this.showImage = true;
   }
 
   deleteImage() {
@@ -81,6 +84,11 @@ export class EditPostComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.openEditPostComponent();
+    this.postService.editPostComponent.subscribe((data) => {
+      this.id = data.id;
+      this.post = data.post;
+      this.editPostComponent = data.edit;
+    });
+    this.getUserData();
   }
 }

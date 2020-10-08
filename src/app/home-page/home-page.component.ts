@@ -54,111 +54,18 @@ export class HomePageComponent implements OnInit {
   imageToShow;
   postImage;
 
-  // getUserName() {
-  //   return this.accountService.userData?.firstName;
-  // }
-
-  // getPosts() {
-  //   this.postService.getPosts().subscribe((data) => {
-  //     this.dbPosts = data;
-  //   });
-  // }
-
-  // getMyPosts() {
-  //   this.postService.getPostsByAccountId().subscribe((data) => {
-  //     console.log(data);
-  //   });
-  // }
-
-  // likePost(postId) {
-  //   this.postService.likePost(postId).subscribe((data) => {
-  //     console.log(data);
-  //   });
-  // }
-
-  getPostLikes(postId) {
-    this.postService.getPostLikes(postId).subscribe((data) => {
-      console.log(data);
-    });
-  }
-
-  getPostLikers(postId) {
-    this.postService.getPostLikers(postId).subscribe((data) => {
-      console.log(data);
-    });
-  }
-
-  deletePost(postId) {
-    this.postService.deletePost(postId).subscribe((data) => {
-      console.log(data);
-    });
-  }
-
-  getCommentsByPostId(postId) {
-    this.commentService.getCommentsByPostId(postId).subscribe((data) => {
-      console.log(data);
-    });
-  }
-
-  // addComment(postId) {
-  //   this.commentService.addCommment(postId).subscribe((data) => {
-  //     console.log(data);
-  //   });
-  // }
-
-  likeComment(commentId) {
-    this.commentService.likeComment(commentId).subscribe((data) => {
-      console.log(data);
-    });
-  }
-
-  getCommentLikes(commentId) {
-    this.commentService.getCommentLikes(commentId).subscribe((data) => {
-      console.log(data);
-    });
-  }
-
-  getCommentLikers(commentId) {
-    this.commentService.getCommentLikers(commentId).subscribe((data) => {
-      console.log(data);
-    });
-  }
-
-  editComment(postId, commentId) {
-    this.commentService.updateComment(postId, commentId).subscribe((data) => {
-      console.log(data);
-    });
-  }
-
-  deleteComment(commentId) {
-    this.commentService.deleteComment(commentId).subscribe((data) => {
-      console.log(data);
-    });
-  }
-
   image() {
     return this.userData?.profilePhoto;
   }
   openDiv() {
-    this.postService.close.next(true);
+    // this.postService.close.next(true);
+    this.alertComponent = true;
   }
 
   get() {
     console.log(this.userData.firstName);
   }
 
-  callingThePosts() {
-    // this.postService.getPosts().subscribe(data => {
-    // })
-  }
-
-  uploadImage() {}
-
-  // private async getUserData() {
-  //   const { userData, image } = await this.accountService.getUserImageAndData();
-  //   this.theAccountObject = userData;
-  //   this.imageToShow = image;
-  // }
   getUsers() {
     this.accountService.getUsers().subscribe((data) => {
       this.users = data;

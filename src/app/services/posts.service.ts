@@ -9,6 +9,7 @@ import { AccountService } from './account.service';
 import { environment } from 'src/environments/environment';
 import { PostsModel } from '../models/posts';
 import { editPost } from '../models/editPostInt';
+import { EditPostModule } from '../edit-post/edit-post.module';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,8 @@ export class PostsService {
   rootUrl: string = environment.rootUrl;
   close = new Subject<boolean>();
   editPostComponent = new Subject<editPost>();
+  doneLoading = new Subject<boolean>();
+  sendPost = new Subject<any>();
   dbPosts: PostsModel;
   accountPosts;
 

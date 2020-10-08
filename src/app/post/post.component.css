@@ -1,12 +1,15 @@
-
 .post-container {
-  border: 1px solid black; 
+  border: 1px solid black;
   text-align: center;
-  background: white;
   border-radius: 6px;
   margin-top: 30px;
 }
 
-
-
-
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 1;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}

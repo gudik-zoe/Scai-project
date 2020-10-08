@@ -1,4 +1,4 @@
-<ng-container *ngIf="editPostComponent">
+<ng-container *ngIf="editPostComponent && id == post.idPosts">
     <div class="backdrop"></div>
     <div class="alert-box" style="height: fit-content">
         <span>
@@ -14,12 +14,12 @@
                 {{ userData?.firstName + " " + userData?.lastName }} shared:
             </span>
             <div class="md-form">
-                <p>{{ inputData }}</p>
+                <p>{{ post?.text }}</p>
 
-                <img *ngIf="post.image && showImage" src="http://localhost:8080/files/{{ post.image }}" width="150"
+                <img *ngIf="post?.image && showImage" src="http://localhost:8080/files/{{ post?.image }}" width="150"
                     height="100px" style="margin-left: 100px" />
                 <img *ngIf="postImage" [src]="postImage" width="150" height="100px" style="margin-left: 100px" />
-                <i *ngIf="showImage && post.image" style="color: lightskyblue; cursor: pointer;"
+                <i *ngIf="showImage && post?.image" style="color: lightskyblue; cursor: pointer;"
                     class="fa fa-trash fa-lg" aria-hidden="true" (click)="deleteImage()"></i>
                 <textarea placeholder="what's in your mind {{ userData?.firstName }}" [(ngModel)]="inputData"
                     class="md-textarea form-control mt-3" rows="3"></textarea>

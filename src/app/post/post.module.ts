@@ -6,7 +6,7 @@ import { EditPostModule } from '../edit-post/edit-post.module';
 
 @NgModule({
   declarations: [PostComponent],
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, EditPostModule],
   exports: [PostComponent],
 })
 export class PostModule {}

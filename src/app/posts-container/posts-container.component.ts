@@ -60,10 +60,6 @@ export class PostsContainerComponent implements OnInit {
     this.dbPosts.push(post);
   }
 
-  editPost(data) {
-    this.postsService.editPostComponent.next(data);
-  }
-
   ngOnInit() {
     this.getPosts();
     this.getUserData();

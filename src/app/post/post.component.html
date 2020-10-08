@@ -1,4 +1,4 @@
-<div class="container" class="post-container">
+<div class="container" class="post-container" [style.background-color]="editMode ? 'whitesmoke' : 'white'">
   <ng-container *ngIf="post.sharedBy">
     <!-- src="{{imgUrl + post.image}}" -->
     <img src="http://localhost:8080/files/{{ post.sharedBy[0].profilePhoto }}" width="50px"
@@ -9,17 +9,38 @@
     <span *ngIf="post?.accountIdAccount == userData?.idAccount" (click)="editPost(post)"
       style="float: right; margin-right: 20px; margin-top: 10px; font-size:large; cursor: pointer;"><i
         class="fa fa-pencil" aria-hidden="true"></i>
+
+
     </span>
 
   </ng-container>
 
 
-
-  <p class="mt-5"> {{ post.text }} </p>
+  <p class="mt-5" *ngIf="!editMode"> {{ post.text }} </p>
+  <input class="mt-5 mr-5" style="  width:auto;
+  border-radius: 8px;
+  background-color: lightgray;
+  border-style: none;
+  margin-left: 10px;
+  outline: none;" *ngIf=" editMode" [(ngModel)]="postEditText" />
 
 
   <div class="container">
-    <img *ngIf="post.image" src="http://localhost:8080/files/{{ post.image }}" style="width: 80%; height: 60%;" />
+    <img *ngIf="post.image && !hideImage" src="http://localhost:8080/files/{{ post.image }}"
+      style="width: 80%; height: 60%;" />
+    <img *ngIf="postImage" [src]="postImage" style="width: 80%; height: 60%;" />
+    <i *ngIf="editMode && post.image" style="color: lightskyblue; cursor: pointer;" class="fa fa-trash fa-lg mt-4"
+      aria-hidden="true" (click)="deleteImage()"></i>
+    <input *ngIf="editMode && !post.image || hideImage" type="file" name="file" (change)="uploadImage($event)" id="file"
+      class="inputfile" />
+    <label *ngIf="editMode && !post.image || hideImage" style="float: right; cursor: pointer" for="file">
+
+      <img
+        src="https://png.pngtree.com/png-vector/20191129/ourmid/pngtree-image-upload-icon-photo-upload-icon-png-image_2047546.jpg"
+        width="25px" height="25px" class="mt-4" style="border-radius: 50%; margin-left: 20px; color: blue" />
+    </label>
+    <button *ngIf="editMode" (click)="confirmEditPost(post)" class="btn btn-block btn-md btn-primary mt-2">Edit post
+    </button>
   </div>
   <p> {{ post.description }} </p>
 

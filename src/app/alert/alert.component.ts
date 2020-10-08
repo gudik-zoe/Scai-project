@@ -31,52 +31,6 @@ export class AlertComponent implements OnInit {
     this.postsService.close.next(false);
   }
 
-  // newImage(event) {
-  //   if (event.target.files.length > 0) {
-  //     const file = event.target.files[0];
-  //     this.myImage = file;
-  //     const formData = new FormData();
-  //     formData.append('file', this.myImage);
-  //     this.http
-  //       .post('http://localhost:8080/upload', formData)
-  //       .subscribe((data) => {
-  //         console.log(data);
-  //       });
-  //     this.http
-  //       .put(
-  //         'http://localhost:8080/api/accounts/' +
-  //           this.accountService.getId() +
-  //           '/' +
-  //           this.myImage.name,
-  //         {}
-  //       )
-  //       .subscribe(async () => {
-  //         await this.getUserData();
-  //         this.accountService.imageSubject.next(this.imageToShow);
-  //       });
-  //   }
-  // }
-
-  createImageFromBlob(image: Blob) {
-    return new Promise((resolve) => {
-      let reader = new FileReader();
-      reader.addEventListener(
-        'load',
-        () => {
-          const image = this._sanitizer.bypassSecurityTrustResourceUrl(
-            reader.result.toString()
-          );
-          resolve(image);
-        },
-        false
-      );
-
-      if (image) {
-        reader.readAsDataURL(image);
-      }
-    });
-  }
-
   uploadImage(event): void {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
