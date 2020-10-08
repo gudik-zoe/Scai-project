@@ -52,16 +52,13 @@ export class CommentsService {
       'http://localhost:8080/commentLikes/likers/' + commentId
     );
   }
-  updateComment(postId, commentId) {
+  updateComment(postId, newComment) {
     return this.http.put(
       'http://localhost:8080/comments/' +
         this.accountService.getId() +
         '/' +
         postId,
-      {
-        idComment: commentId,
-        text: 'edited comment',
-      }
+      newComment
     );
   }
 }

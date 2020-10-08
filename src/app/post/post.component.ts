@@ -29,6 +29,9 @@ export class PostComponent implements OnInit {
   commentText: string;
   liked: boolean;
   openCommentsList: boolean = false;
+  editCommentOn: boolean = false;
+  commentId: number;
+  editCommentValue: string;
 
   constructor(
     private postsService: PostsService,
@@ -108,6 +111,22 @@ export class PostComponent implements OnInit {
 
   openComments() {
     this.openCommentsList = !this.openCommentsList;
+  }
+
+  editComment(text, id) {
+    this.commentId = id;
+    this.editCommentOn = !this.editCommentOn;
+    this.editCommentValue = text;
+  }
+
+  confirmEditComment(comment) {
+    comment.text = this.editCommentValue;
+    this.commentService
+      .updateComment(comment.postsIdPost, comment)
+      .subscribe((data) => {
+        this.editCommentOn = false;
+        console.log(data);
+      });
   }
 
   ngOnInit() {}

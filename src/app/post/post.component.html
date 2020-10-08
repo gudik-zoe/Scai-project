@@ -51,8 +51,19 @@
           <img src="http://localhost:8080/files/{{ c.commentedBy[0].profilePhoto }}" width="20px"
             style="border-radius: 50%;" height="20px" />
           <span class="font-weight-bold">{{c.commentedBy[0].firstName + " " + c.commentedBy[0].lastName }} </span>
+          <span *ngIf="!editCommentOn || commentId != c.idComment">{{c.text}}</span>
+          <input *ngIf="editCommentOn && commentId == c.idComment" [(ngModel)]="editCommentValue" style="
+          width: 120px;
+          border-radius: 8px;
+          background-color: white;
+          border-style: none;
+          margin-left: 10px;
+          outline: none;" />
+          <button [disabled]="!editCommentValue" (click)="confirmEditComment(c)"
+            *ngIf="editCommentOn && commentId == c.idComment" class="btn btn-info btn-sm">edit</button>
+          <i (click)="editComment(c.text ,c.idComment)" *ngIf="c.accountIdAccount == userData.idAccount"
+            style="float: right; color: blue; cursor: pointer;" class="fa fa-pencil fa-xxs" aria-hidden="true"></i>
         </ng-container>
-        <span>{{c.text}}</span>
       </div>
     </div>
   </ng-container>
