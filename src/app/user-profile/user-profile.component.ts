@@ -7,6 +7,7 @@ import { AccountService } from '../services/account.service';
 import { AuthService } from '../services/auth.service';
 import { EventsService } from '../services/events.service';
 import { FriendsService } from '../services/friends.service';
+import { NotificationService } from '../services/notification.service';
 import { PostsService } from '../services/posts.service';
 import { StorageService } from '../services/storage.service';
 
@@ -22,7 +23,8 @@ export class UserProfileComponent implements OnInit {
     private service: PostsService,
     private postService: PostsService,
     private aroute: ActivatedRoute,
-    private friendService: FriendsService
+    private friendService: FriendsService,
+    private notificationService: NotificationService
   ) {}
   imgUrl: string = environment.rootUrl + 'files/';
   requestedUserData: AccountModel;
@@ -30,6 +32,8 @@ export class UserProfileComponent implements OnInit {
   loggedInUserData: AccountModel;
   status: string;
   requestedAccountPosts: PostsModel;
+  notificationObject;
+  user;
 
   goToEditing() {
     this.route.navigate(['/account-settings']);
@@ -54,14 +58,15 @@ export class UserProfileComponent implements OnInit {
     this.loggedInUserData = await this.accountService.getUserData();
   }
 
-  // getLoggedInUserData() {
-  //   return new Promise((resolve) => {
-  //     this.accountService.getData().subscribe((data) => {
-  //       this.loggedInUserData = data;
-  //       resolve(this.loggedInUserData);
-  //     });
-  //   });
-  // }
+  getFriendRequests() {
+    return new Promise((resolve) => {
+      this.friendService.getFriendRequests(this.id).subscribe((data) => {
+        this.user = data;
+        resolve(this.user);
+      });
+    });
+  }
+
   goToMessengerOrAddFriend(id) {
     if (this.status == 'add friend') {
       this.friendService.sendFriendRequest(id).subscribe((data) => {
@@ -85,16 +90,37 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  async function() {
-    await this.getIdFromUrl();
-    await this.getUserById();
-    await this.getPostsByAccountId(this.id);
-    await this.getUserData();
+  respondFriendRequest(id: number, status: number) {
+    this.friendService.acceptFriendRequest(id, status).subscribe((data) => {
+      console.log(data);
+    });
+  }
+
+  getNotifications() {
+    return new Promise((resolve) => {
+      this.notificationService.getNotification().subscribe((data) => {
+        this.notificationObject = data;
+        resolve(this.notificationObject);
+      });
+    });
+  }
+
+  async getStatusWith() {
     await this.friendService.getRelationStatusBetweenMeAnd(this.id);
     this.status = this.friendService.status;
   }
 
+  async userProfileSetFunctions() {
+    await this.getIdFromUrl();
+    await this.getUserById();
+    await this.getPostsByAccountId(this.id);
+    await this.getUserData();
+    await this.getFriendRequests();
+    await this.getStatusWith();
+    await this.getNotifications();
+  }
+
   ngOnInit() {
-    this.function();
+    this.userProfileSetFunctions();
   }
 }

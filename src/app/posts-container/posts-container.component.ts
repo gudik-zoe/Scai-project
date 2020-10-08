@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AccountModel } from '../models/account';
+import { PostsModel } from '../models/posts';
 import { AccountService } from '../services/account.service';
 import { CommentsService } from '../services/comments.service';
 import { FriendsService } from '../services/friends.service';
@@ -51,8 +52,8 @@ export class PostsContainerComponent implements OnInit {
     this.dbPosts = await this.postsService.getPosts2();
   }
 
-  notifyMe(data: { likeObject: any }) {
-    console.log(data);
+  notifyParent(post: PostsModel) {
+    this.dbPosts.push(post);
   }
 
   ngOnInit() {

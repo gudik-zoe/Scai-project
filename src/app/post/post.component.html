@@ -51,7 +51,7 @@
   <span (click)="goToDescription(post.idPosts)"
     style="cursor: pointer; color: blue; font-weight: bold; margin-left: 130px">description</span>
   <hr />
-  <button class="btn btn-light btn-md col-md-3 ml-2" (click)="like(post.idPosts)">
+  <button class="btn btn-light btn-md col-md-3 ml-2'" (click)="like(post.idPosts , post.accountIdAccount)">
     <i class="fa fa-thumbs-up" aria-hidden="true"></i>
     like
   </button>
@@ -59,7 +59,7 @@
     <i class="fa fa-comments" aria-hidden="true"></i>
     comment
   </button>
-  <button class="btn btn-light btn-md col-md-3 ml-2">
+  <button (click)="sharePost(post)" class="btn btn-light btn-md col-md-3 ml-2">
     <i class="fa fa-share-alt" aria-hidden="true"></i>
     share
   </button>

@@ -62,26 +62,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-  // getUserData() {
-  //   return new Promise((resolve, reject) => {
-  //     this.accountService.getData().subscribe(
-  //       (data: AccountModel) => {
-  //         this.userData = data;
-  //         resolve(this.userData);
-  //       },
-  //       (error) => {
-  //         const error2 = error.error.message.startsWith(this.errorPhrase);
-  //         if (error2) {
-  //           localStorage.removeItem('token');
-  //           this.route.navigate(['/auth']);
-  //           this.message = 'token is expired log in again to continue';
-  //           reject(this.message);
-  //         }
-  //       }
-  //     );
-  //   });
-  // }
-
   updateImage() {
     this.accountService.imageSubject.subscribe((data) => {
       if (data) {

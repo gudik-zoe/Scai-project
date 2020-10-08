@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AccountService } from './account.service';
 
@@ -13,6 +14,7 @@ export class FriendsService {
   ) {}
   rootUrl: string = environment.rootUrl;
   status: string;
+  notifier = new Subject<boolean>();
   // getRelationStatusBetweenMeAnd(userId) {
   //   return this.http.get(
   //     'http://localhost:8080/relation/getRelation/' +
@@ -50,9 +52,9 @@ export class FriendsService {
     });
   }
 
-  relationChecker(id) {
+  getFriendRequests(id) {
     return this.http.get(
-      'http://localhost:8080/relation/relationChecker/' + id
+      'http://localhost:8080/relation/getFriendRequests/' + id
     );
   }
   sendFriendRequest(userId) {
@@ -65,12 +67,10 @@ export class FriendsService {
     );
   }
 
-  respondeToFriendRequest(userId, status) {
+  acceptFriendRequest(relationshipId, status) {
     return this.http.put(
       'http://localhost:8080/relation/answerRequest/' +
-        this.accountService.getId() +
-        '/' +
-        userId +
+        relationshipId +
         '/' +
         status,
       {}

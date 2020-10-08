@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { PostsModel } from '../models/posts';
 import { AccountService } from '../services/account.service';
 import { CommentsService } from '../services/comments.service';
+import { NotificationService } from '../services/notification.service';
 import { PostsService } from '../services/posts.service';
 
 @Component({
@@ -18,7 +20,7 @@ export class PostComponent implements OnInit {
   @Input() index;
   @Input() usersDetails;
 
-  @Output() testOutput = new EventEmitter<{ likeObject: any }>();
+  @Output() testOutput = new EventEmitter<PostsModel>();
   commentText: string;
   liked: boolean;
   openCommentsList: boolean = false;
@@ -27,18 +29,33 @@ export class PostComponent implements OnInit {
     private postsService: PostsService,
     private commentService: CommentsService,
     private route: Router,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private notificationService: NotificationService
   ) {}
 
-  like(id: number) {
+  like(id: number, accountPostId: number) {
     this.postsService.likePost(id).subscribe((data) => {
-      console.log(data);
       if (data) {
+        // console.log(data);
         this.liked = true;
         this.post.postLikes.push({
           data,
         });
-        this.testOutput.emit({ likeObject: data });
+        const notification = {
+          notCreator: this.userData.idAccount,
+          action: 'like',
+          notReceiver: accountPostId,
+          postId: id,
+          date: new Date(),
+          seen: false,
+        };
+        console.log(notification);
+        this.notificationService
+          .addNotification(notification)
+          .subscribe((data) => {
+            console.log(data);
+          });
+        // this.testOutput.emit({ likeObject: data });
       } else {
         this.liked = false;
         this.post.postLikes.pop();
@@ -64,6 +81,14 @@ export class PostComponent implements OnInit {
       });
   }
 
+  sharePost(post) {
+    this.postsService
+      .addPost(post.text, post.image, post.description)
+      .subscribe((data: PostsModel) => {
+        this.testOutput.emit(data);
+      });
+  }
+
   goToDescription(id: number): void {
     this.route.navigate(['/description', id]);
   }
@@ -72,7 +97,9 @@ export class PostComponent implements OnInit {
     this.openCommentsList = !this.openCommentsList;
   }
 
-  ngOnInit(): void {
-    //  setTimeout(()=>console.log(this.userData),2000) ;
-  }
+  // checkIfUserLikedPost(postId){
+
+  // }
+
+  ngOnInit() {}
 }

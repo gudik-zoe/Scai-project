@@ -106,17 +106,15 @@ export class AlertComponent implements OnInit {
     this.postsService
       .addPost(text, this.myImage?.name, null)
       .subscribe((data) => {
-        // this.postsService.refreshPosts.next(true);
-        this.postsService.getPosts()
-         this.postsService.close.next(false);
-        console.log(data)
+        this.postsService.getPosts();
+        this.postsService.close.next(false);
       });
   }
 
-  getUserData(){
-    this.accountService.getData().subscribe(data => {
-      this.userData = data
-    })
+  getUserData() {
+    this.accountService.getData().subscribe((data) => {
+      this.userData = data;
+    });
   }
   ngOnInit() {
     this.getUserData();
