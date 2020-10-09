@@ -1,5 +1,5 @@
 <div class="container" class="post-container" [style.background-color]="editMode ? 'whitesmoke' : 'white'">
-  <ng-container *ngIf="post.sharedBy">
+  <ng-container *ngIf="post.sharedBy && userData">
     <!-- src="{{imgUrl + post.image}}" -->
     <img src="http://localhost:8080/files/{{ post.sharedBy[0].profilePhoto }}" width="50px"
       style="border-radius: 50%; float: left;" height="50px" />

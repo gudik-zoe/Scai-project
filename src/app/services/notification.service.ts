@@ -11,6 +11,7 @@ export class NotificationService {
     private http: HttpClient,
     private accountService: AccountService
   ) {}
+  notificationObject;
   rootUrl: string = environment.rootUrl;
   addNotification(notification) {
     return this.http.post(
@@ -20,10 +21,23 @@ export class NotificationService {
   }
 
   getNotification() {
-    return this.http.get(
-      this.rootUrl +
-        'notification/getNotification/' +
-        this.accountService.getId()
-    );
+    return new Promise((resolve) => {
+      this.http
+        .get(
+          this.rootUrl +
+            'notification/getNotification/' +
+            this.accountService.getId()
+        )
+        .subscribe((data) => {
+          this.notificationObject = data;
+          resolve(this.notificationObject);
+        });
+    });
+  }
+
+  notHasBeenSeen(id: number) {
+    this.http
+      .put(this.rootUrl + 'notification/notificationSeen/' + id, {})
+      .subscribe();
   }
 }

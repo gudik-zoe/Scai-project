@@ -96,15 +96,6 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  getNotifications() {
-    return new Promise((resolve) => {
-      this.notificationService.getNotification().subscribe((data) => {
-        this.notificationObject = data;
-        resolve(this.notificationObject);
-      });
-    });
-  }
-
   async getStatusWith() {
     await this.friendService.getRelationStatusBetweenMeAnd(this.id);
     this.status = this.friendService.status;
@@ -117,7 +108,6 @@ export class UserProfileComponent implements OnInit {
     await this.getUserData();
     await this.getFriendRequests();
     await this.getStatusWith();
-    await this.getNotifications();
   }
 
   ngOnInit() {

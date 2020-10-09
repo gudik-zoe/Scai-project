@@ -13,9 +13,10 @@ import {
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { MyInterceptor } from './my-interceptor';
 import { AuthenticationGuard } from './authentication.guard';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, NotificationComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,

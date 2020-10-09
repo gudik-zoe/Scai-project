@@ -10,6 +10,7 @@ import { PostsService } from './services/posts.service';
 import { StorageService } from './services/storage.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AccountModel } from './models/account';
+import { NotificationService } from './services/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -19,11 +20,9 @@ import { AccountModel } from './models/account';
 export class AppComponent implements OnInit {
   constructor(
     private accountService: AccountService,
-    private postService: PostsService,
-    private _sanitizer: DomSanitizer,
     private route: Router,
     private auth: AuthService,
-    private storageService: StorageService
+    private notificationService: NotificationService
   ) {}
   title = 'scai-project';
   loggedInSubscription: Subscription;
@@ -31,6 +30,7 @@ export class AppComponent implements OnInit {
   loggedIn: boolean = localStorage.getItem('token') ? true : false;
   userData: AccountModel;
   errorPhrase: string = 'JWT expired';
+  notificationObject;
 
   deactivate() {
     this.accountService.deleteAccount().subscribe(

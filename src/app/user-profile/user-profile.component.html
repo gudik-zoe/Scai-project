@@ -70,27 +70,7 @@
             <br>
           </ng-container>
         </div>
-        <div class="container mt-4" style="
-        background-color: lightgrey;
-        border-radius: 10px;
-        height:max-content;
-        
-        ">
-          <h5>Notifications</h5>
-          <hr>
-          <ng-container *ngIf="user && requestedUserData.idAccount == loggedInUserData.idAccount ">
-            <div style="background-color: white;border-radius: 8px; border: 1px solid ">
-              <div *ngFor="let not of notificationObject">
-                <li>
-                  {{not.notCreator}} has
-                  {{not.action}} the post of the id
-                  {{not.postId}} at {{not.date}} </li>
-                <hr>
-              </div>
-            </div>
-            <br>
-          </ng-container>
-        </div>
+
       </div>
       <div class="col-6" style="background-color: lightgrey; border-radius: 10px">
         <div class="mt-2 ml-3" style="width: 550px; background-color: white; border-radius: 10px">

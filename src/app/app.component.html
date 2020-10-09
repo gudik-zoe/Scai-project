@@ -21,17 +21,12 @@
   </h5>
 
   <h6>
-    <button type="button" style="margin-left: 400px;" class="btn btn-outline-danger btn-sm" (click)="logOut()">
+    <button type="button" style="margin-left: 400px; margin-top: 10px;" class="btn btn-outline-danger btn-sm"
+      (click)="logOut()">
       log Out
     </button>
   </h6>
-
-  <h6>
-    <button class="btn btn-danger-sm ml-4" (click)="deactivate()" style="float: right;">
-      deactivate my account
-    </button>
-  </h6>
-
+  <app-notification></app-notification>
 </nav>
 
 <router-outlet></router-outlet>
