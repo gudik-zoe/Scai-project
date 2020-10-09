@@ -48,6 +48,10 @@ export class PostsContainerComponent implements OnInit {
     });
   }
 
+  deletePostInParent(id) {
+    console.log(id);
+    this.dbPosts = this.dbPosts.filter((item) => item.idPosts !== id);
+  }
   async getPosts() {
     this.dbPosts = await this.postsService.getPosts2();
   }

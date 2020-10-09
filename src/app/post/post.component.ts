@@ -23,8 +23,10 @@ export class PostComponent implements OnInit {
   @Input() posters;
   @Input() i;
   @Input() usersDetails;
+  @Input() dbPosts;
 
   @Output() testOutput = new EventEmitter<PostsModel>();
+  @Output() deletePostEvent = new EventEmitter<number>();
 
   commentText: string;
   liked: boolean;
@@ -51,7 +53,6 @@ export class PostComponent implements OnInit {
   like(id: number, accountPostId: number) {
     this.postsService.likePost(id).subscribe((data) => {
       if (data) {
-        // console.log(data);
         this.liked = true;
         this.post.postLikes.push({
           data,
@@ -96,13 +97,13 @@ export class PostComponent implements OnInit {
       });
   }
 
-  sharePost(post) {
-    this.postsService
-      .addPost(post.text, post.image, post.description)
-      .subscribe((data: PostsModel) => {
-        this.testOutput.emit(data);
-      });
-  }
+  // sharePost(post) {
+  //   this.postsService
+  //     .addPost(post.text, post.image, post.description)
+  //     .subscribe((data: PostsModel) => {
+  //       this.testOutput.emit(data);
+  //     });
+  // }
 
   deleteImage() {
     this.hideImage = true;
@@ -121,8 +122,12 @@ export class PostComponent implements OnInit {
     this.postsService.updatePost(post).subscribe((data: PostModule) => {
       this.postImage = null;
       this.hideImage = false;
-      console.log(data);
       this.editMode = false;
+    });
+  }
+  deletePost(id: number) {
+    this.postsService.deletePost(id).subscribe((data) => {
+      this.deletePostEvent.emit(id);
     });
   }
 
@@ -133,7 +138,6 @@ export class PostComponent implements OnInit {
       const formData = new FormData();
       formData.append('file', this.myImage);
       this.imageString = this.myImage.name;
-      console.log(this.imageString);
       this.http
         .post('http://localhost:8080/upload', formData)
         .subscribe((data) => {
@@ -143,7 +147,6 @@ export class PostComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = (event) => {
         this.postImage = event.target.result;
-        console.log(typeof this.postImage);
       };
     }
   }
@@ -168,13 +171,16 @@ export class PostComponent implements OnInit {
       .updateComment(comment.postsIdPost, comment)
       .subscribe((data) => {
         this.editCommentOn = false;
-        console.log(data);
       });
   }
 
-  ngOnInit() {
-    // this.postsService.editPostComponent.subscribe((data) => {
-    //   this.editPostComponent = data;
-    // });
+  deleteComment(id: number) {
+    this.commentService.deleteComment(id).subscribe((data) => {
+      this.post.comments = this.post.comments.filter(
+        (item) => item.idComment !== id
+      );
+    });
   }
+
+  ngOnInit() {}
 }

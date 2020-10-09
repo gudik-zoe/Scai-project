@@ -16,7 +16,7 @@ import { EditPostModule } from '../edit-post/edit-post.module';
 })
 export class PostsService {
   rootUrl: string = environment.rootUrl;
-  close = new Subject<boolean>();
+  close = new Subject<any>();
   editPostComponent = new Subject<editPost>();
   doneLoading = new Subject<boolean>();
   sendPost = new Subject<any>();
@@ -111,14 +111,10 @@ export class PostsService {
     );
   }
 
-  addPost(text, image?, description?) {
+  addPost(post) {
     return this.http.post(
       this.rootUrl + 'posts/' + this.accountService.getId(),
-      {
-        text,
-        image,
-        description,
-      }
+      post
     );
   }
 
@@ -129,7 +125,7 @@ export class PostsService {
     );
   }
 
-  deletePost(postId) {
+  deletePost(postId: number) {
     return this.http.delete(this.rootUrl + 'posts/' + postId);
   }
 }

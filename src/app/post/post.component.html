@@ -6,13 +6,12 @@
     <span style="float: left;" class="font-weight-bold mt-3">
       {{ post.sharedBy[0].firstName + " " + post.sharedBy[0].lastName }}
       shared: </span>
-    <span *ngIf="post?.accountIdAccount == userData?.idAccount" (click)="editPost(post)"
-      style="float: right; margin-right: 20px; margin-top: 10px; font-size:large; cursor: pointer;"><i
-        class="fa fa-pencil" aria-hidden="true"></i>
-
-
-    </span>
-
+    <i *ngIf="post.accountIdAccount == userData.idAccount" (click)="editPost(post)"
+      style="float: right; margin-right: 20px; margin-top: 10px; font-size:large; cursor: pointer;"
+      class=" fa fa-pencil" aria-hidden="true"></i>
+    <i *ngIf="post.accountIdAccount == userData.idAccount"
+      style="float: right; color:red; margin-right: 20px; margin-top: 10px; font-size:large; cursor: pointer;"
+      (click)=" deletePost(post.idPosts)" class="fa fa-trash" aria-hidden="true"></i>
   </ng-container>
 
 
@@ -60,7 +59,7 @@
     <i class="fa fa-comments" aria-hidden="true"></i>
     comment
   </button>
-  <button (click)="sharePost(post)" class="btn btn-light btn-md col-md-3 ml-2">
+  <button class="btn btn-light btn-md col-md-3 ml-2">
     <i class="fa fa-share-alt" aria-hidden="true"></i>
     share
   </button>
@@ -84,6 +83,8 @@
             *ngIf="editCommentOn && commentId == c.idComment" class="btn btn-info btn-sm">edit</button>
           <i (click)="editComment(c.text ,c.idComment)" *ngIf="c.accountIdAccount == userData.idAccount"
             style="float: right; color: blue; cursor: pointer;" class="fa fa-pencil fa-xxs" aria-hidden="true"></i>
+          <i (click)="deleteComment(c.idComment)" *ngIf="c.accountIdAccount == userData.idAccount"
+            style="float: right; color: red; cursor: pointer;" class="fa fa-trash mr-1" aria-hidden="true"></i>
         </ng-container>
       </div>
     </div>

@@ -11,6 +11,9 @@ import { Component, OnInit, Sanitizer } from '@angular/core';
 import { CommentsService } from '../services/comments.service';
 import { FriendsService } from '../services/friends.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { PostsModel } from '../models/posts';
+import { postLikesModel } from '../models/postLikes';
+import { AccountModel } from '../models/account';
 
 @Component({
   selector: 'app-home-page',
@@ -18,7 +21,6 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit {
-  posts: any[] = [];
   constructor(
     private _sanitizer: DomSanitizer,
     private http: HttpClient,
@@ -44,21 +46,17 @@ export class HomePageComponent implements OnInit {
   users;
   error: boolean = false;
   alertComponent: boolean = false;
-  userData;
+  userData: AccountModel;
   name: String;
-  dbPosts;
-  postLikes;
+  dbPosts: Array<PostsModel>;
+  postLikes: postLikesModel;
   myImage;
-  firstName;
-  theAccountObject;
-  imageToShow;
   postImage;
 
   image() {
     return this.userData?.profilePhoto;
   }
   openDiv() {
-    // this.postService.close.next(true);
     this.alertComponent = true;
   }
 

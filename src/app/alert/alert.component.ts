@@ -50,19 +50,15 @@ export class AlertComponent implements OnInit {
     }
   }
 
-  // async getUserData() {
-  //   const { userData, image } = await this.accountService.getUserImageAndData();
-  //   this.userData = userData;
-  //   this.userImage = image;
-  // }
-
   post(text: string): void {
-    this.postsService
-      .addPost(text, this.myImage?.name, null)
-      .subscribe((data) => {
-        this.postsService.getPosts();
-        this.postsService.close.next(false);
-      });
+    const post = {
+      text,
+      image: this.myImage?.name,
+      description: null,
+    };
+    this.postsService.addPost(post).subscribe((data) => {
+      this.postsService.close.next(false);
+    });
   }
 
   getUserData() {
