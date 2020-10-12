@@ -22,6 +22,7 @@ export class PostsService {
   sendPost = new Subject<any>();
   dbPosts: PostsModel;
   accountPosts;
+  basicData = [];
 
   constructor(
     private accountService: AccountService,
@@ -30,58 +31,40 @@ export class PostsService {
     private http: HttpClient
   ) {}
 
-  getPosts() {
-    return this.http.get(this.rootUrl + 'posts');
-  }
-
-  // getPosts2() {
-  //   this.getPosts().subscribe((data) => {
-  //     this.dbPosts = data;
-  //     for (let i of this.dbPosts) {
-  //       this.accountService.getBasicAccountDetails(i.accountIdAccount);
-  //     }
-  //   });
-  // }
-
-  getPostsDetails(posts) {
-    for (let i of posts) {
-      this.accountService
-        .getBasicAccountDetails(i.accountIdAccount)
-        .subscribe((u) => {
-          i.sharedBy = u;
-        });
-
-      for (let j of i.comments) {
-        this.accountService
-          .getBasicAccountDetails(j.accountIdAccount)
-          .subscribe((c) => {
-            j.commentedBy = c;
-          });
-      }
-      for (let k of i.postLikes) {
-        this.accountService
-          .getBasicAccountDetails(k.accountIdAccount)
-          .subscribe((l) => {
-            k.likedBy = l;
-          });
+  async function(a: any) {
+    for (let i of a) {
+      const b = this.basicData.find(
+        (item) => item.idAccount == i.accountIdAccount
+      );
+      if (!b) {
+        const data = await this.accountService.getBasicAccountDetails2(
+          i.accountIdAccount
+        );
+        this.basicData.push(data);
+        i.doneBy = data;
+      } else {
+        i.doneBy = b;
       }
     }
   }
 
-  getPosts2() {
-    return new Promise<PostsModel>((resolve) => {
-      this.getPosts().subscribe((data: PostsModel) => {
-        this.dbPosts = data;
-        this.getPostsDetails(this.dbPosts);
-        resolve(this.dbPosts);
-      });
-    });
+  getPostsFullDetails(posts) {
+    for (let i of posts) {
+      this.function(posts);
+      this.function(i.comments);
+      this.function(i.postLikes);
+    }
   }
 
-  getMyPosts() {
-    return this.http.get(
-      this.rootUrl + 'posts/accountId/' + this.accountService.getId()
-    );
+  getPosts() {
+    return new Promise<PostsModel>((resolve) => {
+      this.http.get(this.rootUrl + 'posts').subscribe((data: PostsModel) => {
+        this.dbPosts = data;
+        this.getPostsFullDetails(this.dbPosts);
+        resolve(this.dbPosts);
+        console.log(this.dbPosts);
+      });
+    });
   }
 
   getPostsByAccountId(id) {
@@ -90,7 +73,7 @@ export class PostsService {
         .get(this.rootUrl + 'posts/accountId/' + id)
         .subscribe((data) => {
           this.accountPosts = data;
-          this.getPostsDetails(this.accountPosts);
+          this.getPostsFullDetails(this.accountPosts);
           resolve(this.accountPosts);
         });
     });
@@ -129,3 +112,46 @@ export class PostsService {
     return this.http.delete(this.rootUrl + 'posts/' + postId);
   }
 }
+
+// for (let post of posts) {
+//   const accountData = this.basicData.find(
+//     (item) => item.idAccount == post.accountIdAccount
+//   );
+//   if (!accountData) {
+//     const data = await this.accountService.getBasicAccountDetails2(
+//       post.accountIdAccount
+//     );
+//     this.basicData.push(data);
+//     post.sharedBy = data;
+//   } else {
+//     post.sharedBy = accountData;
+//   }
+//   for (let comment of post.comments) {
+//     const accountData2 = this.basicData.find(
+//       (item) => item.idAccount == comment.accountIdAccount
+//     );
+//     if (!accountData2) {
+//       const data = await this.accountService.getBasicAccountDetails2(
+//         comment.accountIdAccount
+//       );
+//       this.basicData.push(data);
+//       comment.commentedBy = data;
+//     } else {
+//       comment.commentedBy = accountData2;
+//     }
+//   }
+//   for (let like of post.postLikes) {
+//     const accountData3 = this.basicData.find(
+//       (item) => item.idAccount == like.accountIdAccount
+//     );
+//     if (!accountData3) {
+//       const data = await this.accountService.getBasicAccountDetails2(
+//         like.accountIdAccount
+//       );
+//       this.basicData.push(data);
+//       like.likedBy = data;
+//     } else {
+//       like.likedBy = accountData3;
+//     }
+//   }
+// }

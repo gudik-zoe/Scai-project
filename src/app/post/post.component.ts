@@ -91,15 +91,13 @@ export class PostComponent implements OnInit {
     this.commentService
       .addCommment(post.idPosts, commentText)
       .subscribe((data: any) => {
-        data.commentedBy = [
-          {
-            firstName: this.userData.firstName,
-            lastName: this.userData.lastName,
-            profilePhoto: this.userData.profilePhoto,
-            idAccount: this.userData.idAccount,
-          },
-        ];
-        this.post.comments.push(data);
+        (data.doneBy = {
+          firstName: this.userData.firstName,
+          lastName: this.userData.lastName,
+          profilePhoto: this.userData.profilePhoto,
+          idAccount: this.userData.idAccount,
+        }),
+          this.post.comments.push(data);
         this.commentText = null;
         this.notificationService
           .addNotification(notification)

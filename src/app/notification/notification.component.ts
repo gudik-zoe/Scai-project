@@ -14,6 +14,7 @@ export class NotificationComponent implements OnInit {
   userData: AccountModel;
   haveNotification: boolean;
   basicData = [];
+  prova = [{ idAccount: 4, hey: 'asd' }, { idAccount: 5 }];
 
   constructor(
     private notificationService: NotificationService,
@@ -62,5 +63,7 @@ export class NotificationComponent implements OnInit {
   ngOnInit(): void {
     this.getUserData();
     this.getNotifications();
+    const find = this.prova.find((item) => item.idAccount == 4);
+    console.log(find);
   }
 }

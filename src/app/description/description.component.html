@@ -22,7 +22,7 @@
         </span>
 
         <div *ngFor="let u of post.postLikes">
-          <li class="ml-4" *ngIf="u.likedBy">{{ u.likedBy[0].firstName + " " + u.likedBy[0].lastName }}</li>
+          <li class="ml-4" *ngIf="u.doneBy">{{ u.doneBy.firstName + " " + u.doneBy.lastName }}</li>
         </div>
         <hr />
         <p class="font-weight-bold">comments:</p>
@@ -30,11 +30,11 @@
           <ul *ngFor="let i of post.comments">
             <li>
               <div class="container-fluid" style="background-color: whitesmoke">
-                <span *ngIf=i.commentedBy>
-                  <img src="http://localhost:8080/files/{{i.commentedBy[0].profilePhoto }}" width="35px"
+                <span *ngIf=i.doneBy>
+                  <img src="http://localhost:8080/files/{{i.doneBy.profilePhoto }}" width="35px"
                     style="border-radius: 50%" />
 
-                  {{ i.commentedBy[0].firstName + " " + i.commentedBy[0].lastName }} :
+                  {{ i.doneBy.firstName + " " + i.doneBy.lastName }} :
                   {{ i.text }}
                 </span>
                 <!-- <span class="ml-5">

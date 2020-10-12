@@ -53,7 +53,7 @@ export class PostsContainerComponent implements OnInit {
     this.dbPosts = this.dbPosts.filter((item) => item.idPosts !== id);
   }
   async getPosts() {
-    this.dbPosts = await this.postsService.getPosts2();
+    this.dbPosts = await this.postsService.getPosts();
   }
 
   // editPost(edit: boolean, post: PostsModel) {

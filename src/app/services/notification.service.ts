@@ -39,26 +39,19 @@ export class NotificationService {
 
   async getBasicData() {
     for (let i of this.notificationObject) {
-      const check = this.basicData.some(
+      const find = this.basicData.find(
         (item) => item.idAccount == i.notCreator
       );
-      if (!check) {
+      if (!find) {
         const data = await this.accountService.getBasicAccountDetails2(
           i.notCreator
         );
         this.basicData.push(data);
         i.doneBy = data;
       } else {
-        for (let j of this.basicData) {
-          if (j.idAccount == i.notCreator) {
-            i.doneBy = j;
-          }
-        }
+        i.doneBy = find;
       }
     }
-
-    console.log(this.basicData);
-    console.log(this.notificationObject);
   }
 
   notHasBeenSeen(id: number) {
