@@ -5,15 +5,13 @@
         <span style="color:red; font-weight: bolder;" *ngIf="unseenNots.length > 0">{{unseenNots.length}} </span>
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
         <p *ngIf="!haveNotification"> no notification </p>
         <div *ngFor="let not of notificationObject; let i = index">
-            <li class="dropdown-item " style="font-size: small;">
-                {{not.notCreator}} {{ not.doneBy?.firstName + " " + not.doneBy?.lastName }} <span>
+            <li (click)="goToDescription(not.postId)" class="dropdown-item " style="font-size: small; cursor: pointer;">
+                <img src="{{ imgUrl + not.doneBy?.profilePhoto}}" width="30px" style="border-radius: 50%">
+                {{ not.doneBy?.firstName }} <span>
                 </span>has
-                {{not.action}} the post of the id
-                {{not.postId}} at {{not.date}} </li>
+                {{not.postId}} {{not.action}} your post at {{not.date}} </li>
             <hr>
         </div>
-
     </div>

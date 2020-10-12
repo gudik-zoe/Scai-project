@@ -62,7 +62,7 @@ export class PostsService {
         this.dbPosts = data;
         this.getPostsFullDetails(this.dbPosts);
         resolve(this.dbPosts);
-        console.log(this.dbPosts);
+        // console.log(this.dbPosts);
       });
     });
   }

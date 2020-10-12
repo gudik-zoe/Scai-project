@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { AccountModel } from '../models/account';
 import { AccountService } from '../services/account.service';
 import { NotificationService } from '../services/notification.service';
@@ -14,11 +16,14 @@ export class NotificationComponent implements OnInit {
   userData: AccountModel;
   haveNotification: boolean;
   basicData = [];
-  prova = [{ idAccount: 4, hey: 'asd' }, { idAccount: 5 }];
+  imgUrl: string = environment.rootUrl + 'files/';
+  now = new Date().getTime();
+  date = new Date('10/11/2020').getTime();
 
   constructor(
     private notificationService: NotificationService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private route: Router
   ) {}
 
   async getNotifications() {
@@ -33,23 +38,8 @@ export class NotificationComponent implements OnInit {
         this.unseenNots.push(i);
       }
     }
-    this.notificationService.getBasicData();
+    console.log(this.notificationObject);
   }
-
-  // async getBasicData() {
-  //   for (let i of this.notificationObject) {
-  //     const check = this.basicData.some(
-  //       (item) => item.idAccount == i.notCreator
-  //     );
-  //     if (!check) {
-  //       const data = await this.accountService.getBasicAccountDetails2(
-  //         i.notCreator
-  //       );
-  //       this.basicData.push(data);
-  //     }
-  //   }
-  //   console.log(this.basicData);
-  // }
 
   notificationSeen() {
     this.notificationService.notHasBeenSeen(this.userData.idAccount);
@@ -60,10 +50,12 @@ export class NotificationComponent implements OnInit {
     this.userData = await this.accountService.getUserData();
   }
 
+  goToDescription(postId) {
+    this.route.navigate(['/description', postId]);
+  }
+
   ngOnInit(): void {
     this.getUserData();
     this.getNotifications();
-    const find = this.prova.find((item) => item.idAccount == 4);
-    console.log(find);
   }
 }

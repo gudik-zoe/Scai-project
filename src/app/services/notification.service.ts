@@ -32,13 +32,14 @@ export class NotificationService {
         )
         .subscribe((data) => {
           this.notificationObject = data;
+          this.getBasicData(this.notificationObject);
           resolve(this.notificationObject);
         });
     });
   }
 
-  async getBasicData() {
-    for (let i of this.notificationObject) {
+  async getBasicData(nots) {
+    for (let i of nots) {
       const find = this.basicData.find(
         (item) => item.idAccount == i.notCreator
       );
