@@ -59,6 +59,16 @@ export class AccountService {
     return this.http.get('http://localhost:8080/api/accounts/details/' + id);
   }
 
+  getBasicAccountDetails2(id) {
+    return new Promise((resolve) => {
+      this.http
+        .get('http://localhost:8080/api/accounts/details/' + id)
+        .subscribe((data) => {
+          resolve(data[0]);
+        });
+    });
+  }
+
   getAccountById(accountId) {
     return this.http.get('http://localhost:8080/api/accounts/' + accountId);
   }
@@ -75,87 +85,3 @@ export class AccountService {
     );
   }
 }
-// createImageFromBlob(image: Blob) {
-//   return new Promise((resolve) => {
-//     let reader = new FileReader();
-//     reader.addEventListener(
-//       'load',
-//       () => {
-//         const image = this._sanitizer.bypassSecurityTrustResourceUrl(
-//           reader.result.toString()
-//         );
-//         resolve(image);
-//       },
-//       false
-//     );
-
-//     if (image) {
-//       reader.readAsDataURL(image);
-//     }
-//   });
-// }
-
-// getUserImageAndData() {
-//   return new Promise<any>((resolve) => {
-//     this.getData().subscribe((data: any) => {
-//       this.http
-//         .get('http://localhost:8080/files/' + data.profilePhoto, {
-//           responseType: 'blob',
-//         })
-//         .subscribe(async (blob) => {
-//           const image = await this.createImageFromBlob(blob);
-//           const object = {
-//             userData: data,
-//             image,
-//           };
-//           resolve(object);
-//           // console.log(this.theAccountObject.profilePhoto);
-//         });
-//     });
-//   });
-// }
-
-// createImageFromBlob(image: Blob) {
-//   let reader = new FileReader();
-//   reader.addEventListener(
-//     'load',
-//     () => {
-//       this.userImage = this._sanitizer.bypassSecurityTrustResourceUrl(
-//         reader.result.toString()
-//       );
-//     },
-//     false
-//   );
-
-//   if (image) {
-//     reader.readAsDataURL(image);
-//   }
-// }
-
-// getUserImage(dataObject, myImage) {
-//   this.getData().subscribe((data) => {
-//     dataObject = data;
-//     this.http
-//       .get('http://localhost:8080/files/' + dataObject?.profilePhoto, {
-//         responseType: 'blob',
-//       })
-//       .subscribe((data) => {
-//         data = myImage;
-//         let reader = new FileReader();
-//         reader.addEventListener(
-//           'load',
-//           () => {
-//             myImage = this._sanitizer.bypassSecurityTrustResourceUrl(
-//               reader.result.toString()
-//             );
-//           },
-//           false
-//         );
-
-//         // if (image) {
-//         //   reader.readAsDataURL(image);
-//         // }
-//       });
-//   });
-//   return myImage;
-// }

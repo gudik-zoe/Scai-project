@@ -1,15 +1,19 @@
-<div style="float: right; margin-left: 50px;" class="dropdown">
+<div style="float: right; margin-left: 10px;" class="dropdown">
     <button (click)="notificationSeen()" class="btn btn-light btn-sm dropdown-toggle" type="button"
         id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fa fa-bell" style="color:blue;" aria-hidden="true"></i>
-        <small style="color:red; font-weight: bolder;" *ngIf="unseenNots.length > 0">{{unseenNots.length}} </small>
+        <span style="color:red; font-weight: bolder;" *ngIf="unseenNots.length > 0">{{unseenNots.length}} </span>
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div *ngFor="let not of notificationObject">
-            <li class="dropdown-item">
-                {{not.notCreator}} has
+
+        <p *ngIf="!haveNotification"> no notification </p>
+        <div *ngFor="let not of notificationObject; let i = index">
+            <li class="dropdown-item " style="font-size: small;">
+                {{not.notCreator}} {{ not.doneBy?.firstName + " " + not.doneBy?.lastName }} <span>
+                </span>has
                 {{not.action}} the post of the id
                 {{not.postId}} at {{not.date}} </li>
             <hr>
         </div>
+
     </div>

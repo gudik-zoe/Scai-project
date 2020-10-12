@@ -1,6 +1,5 @@
 <div class="container" class="post-container" [style.background-color]="editMode ? 'whitesmoke' : 'white'">
   <ng-container *ngIf="post.sharedBy && userData">
-    <!-- src="{{imgUrl + post.image}}" -->
     <img src="http://localhost:8080/files/{{ post.sharedBy[0].profilePhoto }}" width="50px"
       style="border-radius: 50%; float: left;" height="50px" />
     <span style="float: left;" class="font-weight-bold mt-3">
@@ -55,7 +54,7 @@
     <i class="fa fa-thumbs-up" aria-hidden="true"></i>
     like
   </button>
-  <button class="btn btn-light btn-md col-md-3 ml-2" (click)="comment(post.idPosts, commentText)">
+  <button class="btn btn-light btn-md col-md-3 ml-2" (click)="comment(post , commentText)">
     <i class="fa fa-comments" aria-hidden="true"></i>
     comment
   </button>
@@ -66,7 +65,8 @@
   <hr>
   <ng-container *ngIf="openCommentsList">
     <div class="container" *ngFor="let c of post.comments">
-      <div class="container mt-3" style="background-color: whitesmoke; width:350px; height:40px; border-radius: 7px;">
+      <div class="container mt-3"
+        style="background-color: whitesmoke; width:350px; height:fit-content; border-radius: 7px;">
         <ng-container *ngIf="c.commentedBy">
           <img src="http://localhost:8080/files/{{ c.commentedBy[0].profilePhoto }}" width="20px"
             style="border-radius: 50%;" height="20px" />

@@ -79,9 +79,17 @@ export class PostComponent implements OnInit {
     });
   }
 
-  comment(postId: number, commentText: string) {
+  comment(post, commentText: string) {
+    const notification = {
+      notCreator: this.userData.idAccount,
+      action: 'comment',
+      notReceiver: post.accountIdAccount,
+      postId: post.idPosts,
+      date: new Date(),
+      seen: false,
+    };
     this.commentService
-      .addCommment(postId, commentText)
+      .addCommment(post.idPosts, commentText)
       .subscribe((data: any) => {
         data.commentedBy = [
           {
@@ -92,18 +100,14 @@ export class PostComponent implements OnInit {
           },
         ];
         this.post.comments.push(data);
-        console.log(data);
         this.commentText = null;
+        this.notificationService
+          .addNotification(notification)
+          .subscribe((data) => {
+            console.log(data);
+          });
       });
   }
-
-  // sharePost(post) {
-  //   this.postsService
-  //     .addPost(post.text, post.image, post.description)
-  //     .subscribe((data: PostsModel) => {
-  //       this.testOutput.emit(data);
-  //     });
-  // }
 
   deleteImage() {
     this.hideImage = true;
