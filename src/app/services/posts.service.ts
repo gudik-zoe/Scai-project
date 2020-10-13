@@ -37,7 +37,7 @@ export class PostsService {
         (item) => item.idAccount == i.accountIdAccount
       );
       if (!b) {
-        const data = await this.accountService.getBasicAccountDetails2(
+        const data: any = await this.accountService.getBasicAccountDetails2(
           i.accountIdAccount
         );
         this.basicData.push(data);
@@ -50,6 +50,15 @@ export class PostsService {
 
   getPostsFullDetails(posts) {
     for (let i of posts) {
+      // this.getPostLikers(i.idPosts).subscribe((data: any) => {
+      //   for (let j of data) {
+      //     if (j == this.accountService.getId()) {
+      //       i.currentUserLikedThisPost = true;
+      //     } else {
+      //       i.currentUserLikedThisPost = false;
+      //     }
+      //   }
+      // });
       this.function(posts);
       this.function(i.comments);
       this.function(i.postLikes);
@@ -62,7 +71,6 @@ export class PostsService {
         this.dbPosts = data;
         this.getPostsFullDetails(this.dbPosts);
         resolve(this.dbPosts);
-        // console.log(this.dbPosts);
       });
     });
   }
@@ -112,46 +120,3 @@ export class PostsService {
     return this.http.delete(this.rootUrl + 'posts/' + postId);
   }
 }
-
-// for (let post of posts) {
-//   const accountData = this.basicData.find(
-//     (item) => item.idAccount == post.accountIdAccount
-//   );
-//   if (!accountData) {
-//     const data = await this.accountService.getBasicAccountDetails2(
-//       post.accountIdAccount
-//     );
-//     this.basicData.push(data);
-//     post.sharedBy = data;
-//   } else {
-//     post.sharedBy = accountData;
-//   }
-//   for (let comment of post.comments) {
-//     const accountData2 = this.basicData.find(
-//       (item) => item.idAccount == comment.accountIdAccount
-//     );
-//     if (!accountData2) {
-//       const data = await this.accountService.getBasicAccountDetails2(
-//         comment.accountIdAccount
-//       );
-//       this.basicData.push(data);
-//       comment.commentedBy = data;
-//     } else {
-//       comment.commentedBy = accountData2;
-//     }
-//   }
-//   for (let like of post.postLikes) {
-//     const accountData3 = this.basicData.find(
-//       (item) => item.idAccount == like.accountIdAccount
-//     );
-//     if (!accountData3) {
-//       const data = await this.accountService.getBasicAccountDetails2(
-//         like.accountIdAccount
-//       );
-//       this.basicData.push(data);
-//       like.likedBy = data;
-//     } else {
-//       like.likedBy = accountData3;
-//     }
-//   }
-// }

@@ -50,14 +50,22 @@
   <span (click)="goToDescription(post.idPosts)"
     style="cursor: pointer; color: blue; font-weight: bold; margin-left: 130px">description</span>
   <hr />
-  <button class="btn btn-light btn-md col-md-3 ml-2'" (click)="like(post.idPosts , post.accountIdAccount)">
+
+  <button [ngClass]="getLike() ? 'btn btn-primary btn-md col-md-3' : 'btn btn-light btn-md col-md-3'"
+    (click)="like(post.idPosts , post.accountIdAccount)">
     <i class="fa fa-thumbs-up" aria-hidden="true"></i>
     like
   </button>
-  <button class="btn btn-light btn-md col-md-3 ml-2" (click)="comment(post , commentText)">
+
+
+  <button [ngClass]="getComment() ? 'btn btn-primary btn-md col-md-3 ml-2' : 'btn btn-light btn-md col-md-3 ml-2'"
+    (click)="comment(post , commentText)">
     <i class="fa fa-comments" aria-hidden="true"></i>
     comment
   </button>
+
+  <!-- <p *ngIf="j.accountIdAccount == userData?.idAccount && j.postsIdPosts == post.idPosts "> this account has liked that
+    post</p> -->
   <button class="btn btn-light btn-md col-md-3 ml-2">
     <i class="fa fa-share-alt" aria-hidden="true"></i>
     share

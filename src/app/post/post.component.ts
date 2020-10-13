@@ -24,6 +24,7 @@ export class PostComponent implements OnInit {
   @Input() i;
   @Input() usersDetails;
   @Input() dbPosts;
+  @Input() j;
 
   @Output() testOutput = new EventEmitter<PostsModel>();
   @Output() deletePostEvent = new EventEmitter<number>();
@@ -55,7 +56,7 @@ export class PostComponent implements OnInit {
       if (data) {
         this.liked = true;
         this.post.postLikes.push({
-          data,
+          ...data,
         });
         const notification = {
           notCreator: this.userData.idAccount,
@@ -133,6 +134,25 @@ export class PostComponent implements OnInit {
     });
   }
 
+  getLike() {
+    if (this.userData) {
+      return !!this.post.postLikes.find(
+        (item) => item.accountIdAccount == this.userData.idAccount
+      );
+    }
+    return false;
+  }
+
+  getComment(): boolean {
+    if (this.userData) {
+      const check = this.post.comments.find(
+        (item) => item.accountIdAccount == this.userData.idAccount
+      );
+      return check;
+    }
+    return false;
+  }
+
   uploadImage(event) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
@@ -183,6 +203,7 @@ export class PostComponent implements OnInit {
       );
     });
   }
+  postLiked: boolean = false;
 
   ngOnInit() {}
 }

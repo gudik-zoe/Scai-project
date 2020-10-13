@@ -38,7 +38,6 @@ export class NotificationComponent implements OnInit {
         this.unseenNots.push(i);
       }
     }
-    console.log(this.notificationObject);
   }
 
   notificationSeen() {

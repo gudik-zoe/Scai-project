@@ -35,38 +35,33 @@ export class PostsContainerComponent implements OnInit {
     this.userData = await this.accountService.getUserData();
   }
 
-  getUsers() {
-    this.accountService.getUsers().subscribe((data) => {
-      this.users = data;
-      for (let i of this.users) {
-        this.accountService
-          .getBasicAccountDetails(i.idAccount)
-          .subscribe((u) => {
-            this.usersDetails.push(u);
-          });
-      }
-    });
-  }
-
   deletePostInParent(id) {
-    console.log(id);
     this.dbPosts = this.dbPosts.filter((item) => item.idPosts !== id);
   }
   async getPosts() {
     this.dbPosts = await this.postsService.getPosts();
+    console.log(this.dbPosts);
   }
-
-  // editPost(edit: boolean, post: PostsModel) {
-  //   this.postsService.editPostComponent.next({ edit, post });
-  // }
 
   notifyParent(post: PostsModel) {
     this.dbPosts.push(post);
+  }
+  j: number;
+
+  postLikesLoop() {
+    return new Promise((resolve) => {
+      for (let i of this.dbPosts) {
+        for (let j of i.postLikes) {
+          this.j = j;
+          resolve(this.j);
+        }
+      }
+    });
   }
 
   ngOnInit() {
     this.getPosts();
     this.getUserData();
-    this.getUsers();
+    // this.getUsers()
   }
 }

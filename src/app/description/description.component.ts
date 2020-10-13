@@ -29,7 +29,10 @@ export class DescriptionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.id = parseInt(this.aroute.snapshot.paramMap.get('id'));
-    this.getPosts();
+    this.aroute.params.subscribe((data) => {
+      console.log(data);
+      this.id = parseInt(data.id);
+      this.getPosts();
+    });
   }
 }
