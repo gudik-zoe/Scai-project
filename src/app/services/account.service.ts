@@ -41,25 +41,7 @@ export class AccountService {
     });
   }
 
-  //  getBasicAccountDetails(id) {
-  //   const userDetail = this.userDetailList.find((userD) => {
-  //     userD.idAccount === id;
-  //   });
-  //   if (userDetail) {
-  //     return userDetail;
-  //   } else {
-  //     return this.http
-  //       .get('http://localhost:8080/api/accounts/details/' + id)
-  //       .subscribe((data) => {
-  //         this.userDetailList.push(data[0]);
-  //       });
-  //     }
-  //   }
   getBasicAccountDetails(id) {
-    return this.http.get('http://localhost:8080/api/accounts/details/' + id);
-  }
-
-  getBasicAccountDetails2(id) {
     return new Promise((resolve) => {
       this.http
         .get('http://localhost:8080/api/accounts/details/' + id)

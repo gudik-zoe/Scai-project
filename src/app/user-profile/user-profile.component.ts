@@ -106,13 +106,13 @@ export class UserProfileComponent implements OnInit {
   }
 
   async userProfileSetFunctions() {
+    await this.getPosts();
     await this.getIdFromUrl();
     await this.getUserById();
     await this.getPostsByAccountId(this.id);
     await this.getUserData();
     await this.getFriendRequests();
     await this.getStatusWith();
-    this.getPosts;
   }
 
   ngOnInit() {

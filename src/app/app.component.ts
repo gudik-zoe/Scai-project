@@ -82,8 +82,5 @@ export class AppComponent implements OnInit {
     this.getUserData();
     this.updateImage();
     this.navBarController();
-    this.postService.editPostComponent.subscribe((data) => {
-      this.editPost = data.openComponent;
-    });
   }
 }

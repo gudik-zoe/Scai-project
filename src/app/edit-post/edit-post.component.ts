@@ -87,6 +87,7 @@ export class EditPostComponent implements OnInit {
     this.getUserData();
     this.postService.editPostComponent.subscribe((data) => {
       this.post = data.post;
+      this.editPostComponent = data.openComponent;
       console.log(this.post);
     });
   }

@@ -24,7 +24,6 @@ export class PostComponent implements OnInit {
   @Input() i;
   @Input() usersDetails;
   @Input() dbPosts;
-  @Input() j;
 
   @Output() testOutput = new EventEmitter<PostsModel>();
   @Output() deletePostEvent = new EventEmitter<number>();
@@ -108,14 +107,14 @@ export class PostComponent implements OnInit {
       });
   }
 
-  click(post) {
-    this.postsService.editPostComponent.next({ post, openComponent: true });
-    // this.postsService.
+  toDescription(id: number) {
+    this.route.navigate(['/description', id]);
   }
 
-  sharePost(post, postId) {
+  sharePost(post) {
     const thePost = {
-      sharedPostId: postId,
+      postOriginalId: post.idPosts,
+      postOriginalOwnerId: post.accountIdAccount,
     };
     this.postsService.addPost(thePost).subscribe((data) => {
       console.log(data);
@@ -128,6 +127,7 @@ export class PostComponent implements OnInit {
   }
 
   editPost(post) {
+    // this.postsService.editPostComponent.next({ post, openComponent: true });
     this.editMode = !this.editMode;
     this.postEditText = post.text;
     this.imageString = post.image;

@@ -1,12 +1,12 @@
 <div *ngIf="userData" class="container" class="post-container"
   [style.background-color]="editMode ? 'whitesmoke' : 'white'">
-  <button *ngIf="post.accountIdAccount == userData.idAccount" (click)="click(post)">click</button>
+  <!-- <button *ngIf="post.accountIdAccount == userData.idAccount" (click)="click(post)">click</button> -->
   <ng-container *ngIf="post.doneBy && userData">
     <img src="http://localhost:8080/files/{{ post.doneBy.profilePhoto }}" width="50px"
       style="border-radius: 50%; float: left;" height="50px" />
     <span style="float: left;" class="font-weight-bold mt-3">
       {{ post.doneBy.firstName + " " + post.doneBy.lastName }}
-      {{post.sharedPostId ? 'reshared' : 'shared'}}: </span>
+      {{post.postOriginalId ? 'reshared' : 'shared'}}: </span>
     <i *ngIf="post.accountIdAccount == userData.idAccount" (click)="editPost(post)"
       style="float: right; margin-right: 20px; margin-top: 10px; font-size:large; cursor: pointer;"
       class=" fa fa-pencil" aria-hidden="true"></i>
@@ -15,8 +15,9 @@
       (click)=" deletePost(post.idPosts)" class="fa fa-trash" aria-hidden="true"></i>
   </ng-container>
 
-  <div *ngIf="post.sharedPostId && post.doneBy && post.originalPostDoneBy"
-    style="margin-top: 50px; border: 1px solid black  ;">
+  <div (click)="toDescription(post.postOriginalId)"
+    *ngIf="post.postOriginalId && post.doneBy && post.originalPostDoneBy"
+    style="margin-top: 50px; border: 1px solid black; cursor: pointer; ">
     <div style="margin-top: 10px; float: left;">
       <img *ngIf="post.originalPostDoneBy.profilePhoto"
         src="http://localhost:8080/files/{{ post.originalPostDoneBy.profilePhoto }}" width="50px"
@@ -28,9 +29,12 @@
     <p style="padding-right: 250px; margin-top: 50px;"> {{ post.text }} </p>
     <img *ngIf=" post.image && !hideImage" src="http://localhost:8080/files/{{ post.image }}"
       style="width: 80%; height: 60%;" />
+    <p><i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue"> </i>{{post.likesNumber}}
+      <i class="fa fa-comments" aria-hidden="true" style="margin-left: 150px;"></i>{{post.commentsNumber}}</p>
+
   </div>
 
-  <p class="mt-5" *ngIf="!editMode && !post.sharedPostId"> {{ post.text }} </p>
+  <p class="mt-5" *ngIf="!editMode && !post.postOriginalId"> {{ post.text }} </p>
   <input class="mt-5 mr-5" style="  width:auto;
   border-radius: 8px;
   background-color: lightgray;
@@ -39,7 +43,7 @@
   outline: none;" *ngIf=" editMode" [(ngModel)]="postEditText" />
 
 
-  <div class="container" *ngIf="!post.sharedPostId">
+  <div class="container" *ngIf="!post.postOriginalId">
     <img *ngIf="post.image && !hideImage" src="http://localhost:8080/files/{{ post.image }}"
       style="width: 80%; height: 60%;" />
     <img *ngIf="postImage" [src]="postImage" style="width: 80%; height: 60%;" />
@@ -81,7 +85,7 @@
   </button>
 
 
-  <button (click)="sharePost(post , post.idPosts)" class="btn btn-light btn-md col-md-3 ml-2">
+  <button (click)="sharePost(post)" class="btn btn-light btn-md col-md-3 ml-2">
     <i class="fa fa-share-alt" aria-hidden="true"></i>
     share
   </button>

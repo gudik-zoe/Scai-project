@@ -44,7 +44,7 @@ export class NotificationService {
         (item) => item.idAccount == i.notCreator
       );
       if (!find) {
-        const data = await this.accountService.getBasicAccountDetails2(
+        const data = await this.accountService.getBasicAccountDetails(
           i.notCreator
         );
         this.basicData.push(data);

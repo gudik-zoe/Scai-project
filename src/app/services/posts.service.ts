@@ -18,8 +18,6 @@ export class PostsService {
   rootUrl: string = environment.rootUrl;
   close = new Subject<any>();
   editPostComponent = new Subject<any>();
-  doneLoading = new Subject<boolean>();
-  sendPost = new Subject<any>();
   dbPosts: PostsModel;
   accountPosts;
   basicData = [];
@@ -33,28 +31,25 @@ export class PostsService {
 
   async getPostOriginalUserData(posts) {
     for (let post of posts) {
-      if (post.sharedPostId) {
-        const originalPostId = await this.accountService.getAccountIdByPostId(
-          post.sharedPostId
+      if (post.postOriginalOwnerId) {
+        const postData = posts.find(
+          (item) => item.idPosts == post.postOriginalId
         );
-        const likesNumber = await this.getPostLikes(post.sharedPostId);
-        post.likesNumber = likesNumber;
-
-        const checkIfUserExistInThisBasicData = this.basicData.find(
-          (item) => item.idAccount == originalPostId
-        );
-        if (!checkIfUserExistInThisBasicData) {
-          const userBasicData = await this.accountService.getBasicAccountDetails2(
-            originalPostId
-          );
-          this.basicData.push(userBasicData);
-          post.originalPostDoneBy = userBasicData;
-        } else {
-          post.originalPostDoneBy = checkIfUserExistInThisBasicData;
-        }
+        post.likesNumber = postData.postLikes.length;
+        post.commentsNumber = postData.comments.length;
+        post.originalPostDoneBy = postData.doneBy;
       }
     }
   }
+
+  // async getPostOriginalUserDataToMyPosts(accountPosts){
+  //   for(let post of accountPosts){
+  //     if(post.sharedPostId){
+
+  //     }
+  //   }
+
+  // }
 
   async getUserDetails(posts: any) {
     for (let post of posts) {
@@ -63,7 +58,7 @@ export class PostsService {
       );
 
       if (!checkIfUserExistInThisBasicData) {
-        const data: any = await this.accountService.getBasicAccountDetails2(
+        const data: any = await this.accountService.getBasicAccountDetails(
           post.accountIdAccount
         );
         this.basicData.push(data);
@@ -71,11 +66,11 @@ export class PostsService {
       } else {
         post.doneBy = checkIfUserExistInThisBasicData;
       }
+      this.getPostOriginalUserData(posts);
     }
   }
 
   getPostsFullDetails(posts) {
-    this.getPostOriginalUserData(posts);
     for (let post of posts) {
       this.getUserDetails(posts);
       this.getUserDetails(post.comments);
