@@ -22,7 +22,8 @@ export class AppComponent implements OnInit {
     private accountService: AccountService,
     private route: Router,
     private auth: AuthService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private postService: PostsService
   ) {}
   title = 'scai-project';
   loggedInSubscription: Subscription;
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit {
   userData: AccountModel;
   errorPhrase: string = 'JWT expired';
   notificationObject;
+  editPost: boolean = false;
 
   deactivate() {
     this.accountService.deleteAccount().subscribe(
@@ -80,5 +82,8 @@ export class AppComponent implements OnInit {
     this.getUserData();
     this.updateImage();
     this.navBarController();
+    this.postService.editPostComponent.subscribe((data) => {
+      this.editPost = data.openComponent;
+    });
   }
 }

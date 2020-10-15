@@ -34,6 +34,7 @@ export class UserProfileComponent implements OnInit {
   requestedAccountPosts: PostsModel;
   notificationObject;
   user;
+  dbPosts: PostsModel;
 
   goToEditing() {
     this.route.navigate(['/account-settings']);
@@ -52,6 +53,9 @@ export class UserProfileComponent implements OnInit {
 
   async getPostsByAccountId(id) {
     this.requestedAccountPosts = await this.postService.getPostsByAccountId(id);
+  }
+  async getPosts() {
+    this.dbPosts = await this.postService.getPosts();
   }
 
   async getUserData() {
@@ -108,6 +112,7 @@ export class UserProfileComponent implements OnInit {
     await this.getUserData();
     await this.getFriendRequests();
     await this.getStatusWith();
+    this.getPosts;
   }
 
   ngOnInit() {

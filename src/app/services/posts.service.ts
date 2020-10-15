@@ -9,7 +9,7 @@ import { AccountService } from './account.service';
 import { environment } from 'src/environments/environment';
 import { PostsModel } from '../models/posts';
 import { editPost } from '../models/editPostInt';
-import { EditPostModule } from '../edit-post/edit-post.module';
+import { AccountModel } from '../models/account';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,7 @@ import { EditPostModule } from '../edit-post/edit-post.module';
 export class PostsService {
   rootUrl: string = environment.rootUrl;
   close = new Subject<any>();
-  editPostComponent = new Subject<editPost>();
+  editPostComponent = new Subject<any>();
   doneLoading = new Subject<boolean>();
   sendPost = new Subject<any>();
   dbPosts: PostsModel;
@@ -31,37 +31,55 @@ export class PostsService {
     private http: HttpClient
   ) {}
 
-  async function(a: any) {
-    for (let i of a) {
-      const b = this.basicData.find(
-        (item) => item.idAccount == i.accountIdAccount
+  async getPostOriginalUserData(posts) {
+    for (let post of posts) {
+      if (post.sharedPostId) {
+        const originalPostId = await this.accountService.getAccountIdByPostId(
+          post.sharedPostId
+        );
+        const likesNumber = await this.getPostLikes(post.sharedPostId);
+        post.likesNumber = likesNumber;
+
+        const checkIfUserExistInThisBasicData = this.basicData.find(
+          (item) => item.idAccount == originalPostId
+        );
+        if (!checkIfUserExistInThisBasicData) {
+          const userBasicData = await this.accountService.getBasicAccountDetails2(
+            originalPostId
+          );
+          this.basicData.push(userBasicData);
+          post.originalPostDoneBy = userBasicData;
+        } else {
+          post.originalPostDoneBy = checkIfUserExistInThisBasicData;
+        }
+      }
+    }
+  }
+
+  async getUserDetails(posts: any) {
+    for (let post of posts) {
+      const checkIfUserExistInThisBasicData = this.basicData.find(
+        (item) => item.idAccount == post.accountIdAccount
       );
-      if (!b) {
+
+      if (!checkIfUserExistInThisBasicData) {
         const data: any = await this.accountService.getBasicAccountDetails2(
-          i.accountIdAccount
+          post.accountIdAccount
         );
         this.basicData.push(data);
-        i.doneBy = data;
+        post.doneBy = data;
       } else {
-        i.doneBy = b;
+        post.doneBy = checkIfUserExistInThisBasicData;
       }
     }
   }
 
   getPostsFullDetails(posts) {
-    for (let i of posts) {
-      // this.getPostLikers(i.idPosts).subscribe((data: any) => {
-      //   for (let j of data) {
-      //     if (j == this.accountService.getId()) {
-      //       i.currentUserLikedThisPost = true;
-      //     } else {
-      //       i.currentUserLikedThisPost = false;
-      //     }
-      //   }
-      // });
-      this.function(posts);
-      this.function(i.comments);
-      this.function(i.postLikes);
+    this.getPostOriginalUserData(posts);
+    for (let post of posts) {
+      this.getUserDetails(posts);
+      this.getUserDetails(post.comments);
+      this.getUserDetails(post.postLikes);
     }
   }
 
@@ -88,7 +106,13 @@ export class PostsService {
   }
 
   getPostLikes(postId) {
-    return this.http.get(this.rootUrl + 'postLikes/likesNumber/' + postId);
+    return new Promise((resolve) => {
+      this.http
+        .get(this.rootUrl + 'postLikes/likesNumber/' + postId)
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
 
   getPostLikers(postId) {
@@ -111,7 +135,7 @@ export class PostsService {
 
   updatePost(post) {
     return this.http.put(
-      this.rootUrl + 'posts/' + this.accountService.getId(),
+      this.rootUrl + 'posts/update/' + this.accountService.getId(),
       post
     );
   }
@@ -120,3 +144,14 @@ export class PostsService {
     return this.http.delete(this.rootUrl + 'posts/' + postId);
   }
 }
+// const sharedPosts = []
+// posts.forEach(post => {
+//   if(post.sharedPostId) {
+//     sharedPosts.push(post)
+//   }
+//   return sharedPosts
+// });
+
+// sharedPosts.map(post => this.basicData.find(
+//          (post) => post.idAccount == originalPostDoneBy
+//        );)

@@ -55,6 +55,7 @@ export class AlertComponent implements OnInit {
       text,
       image: this.myImage?.name,
       description: null,
+      sharedPostId: null,
     };
     this.postsService.addPost(post).subscribe((data) => {
       this.postsService.close.next(false);

@@ -108,6 +108,20 @@ export class PostComponent implements OnInit {
       });
   }
 
+  click(post) {
+    this.postsService.editPostComponent.next({ post, openComponent: true });
+    // this.postsService.
+  }
+
+  sharePost(post, postId) {
+    const thePost = {
+      sharedPostId: postId,
+    };
+    this.postsService.addPost(thePost).subscribe((data) => {
+      console.log(data);
+    });
+  }
+
   deleteImage() {
     this.hideImage = true;
     this.imageString = null;
@@ -122,6 +136,7 @@ export class PostComponent implements OnInit {
   confirmEditPost(post) {
     post.image = this.imageString || null;
     post.text = this.postEditText;
+    console.log(post);
     this.postsService.updatePost(post).subscribe((data: PostModule) => {
       this.postImage = null;
       this.hideImage = false;

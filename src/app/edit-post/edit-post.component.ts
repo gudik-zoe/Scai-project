@@ -39,7 +39,7 @@ export class EditPostComponent implements OnInit {
   }
 
   closeEditPostComponent() {
-    this.postService.editPostComponent.next();
+    this.postService.editPostComponent.next({ boolean: false, post: null });
 
     // this.showImage = true;
   }
@@ -84,11 +84,10 @@ export class EditPostComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.postService.editPostComponent.subscribe((data) => {
-      this.id = data.id;
-      this.post = data.post;
-      this.editPostComponent = data.edit;
-    });
     this.getUserData();
+    this.postService.editPostComponent.subscribe((data) => {
+      this.post = data.post;
+      console.log(this.post);
+    });
   }
 }

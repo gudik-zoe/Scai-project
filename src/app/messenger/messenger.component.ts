@@ -23,7 +23,7 @@ export class MessengerComponent implements OnInit {
     private chatService: ChatService,
     private http: HttpClient,
     private _sanitizer: DomSanitizer
-  ) { }
+  ) {}
   id: number;
   myConvWith;
   userData;
@@ -46,20 +46,11 @@ export class MessengerComponent implements OnInit {
   }
 
   sendMessage(text) {
-    this.chatService.sendAMessage(this.id, text).subscribe(
-      (data) => {
-        this.getMyConvWithId(this.id);
-        this.message = null;
-      },
-      (error) => {
-        if (
-          (error.error.message =
-            'No entity found for query; nested exception is javax.persistence.NoResultException: No entity found for query')
-        ) {
-          console.log('ur are not friend with the user yet');
-        }
-      }
-    );
+    this.chatService.sendAMessage(this.id, text).subscribe((data) => {
+      this.chatService.sendMessage(text);
+      this.getMyConvWithId(this.id);
+      this.message = null;
+    });
   }
 
   getUserData() {
@@ -73,5 +64,6 @@ export class MessengerComponent implements OnInit {
     this.getUserById();
     this.getMyConvWithId(this.id);
     this.getUserData();
+    this.chatService.initializeWebSocketConnection();
   }
 }

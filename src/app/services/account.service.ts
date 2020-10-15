@@ -69,8 +69,20 @@ export class AccountService {
     });
   }
 
-  getAccountById(accountId) {
+  getAccountById(accountId: number) {
     return this.http.get('http://localhost:8080/api/accounts/' + accountId);
+  }
+
+  getAccountIdByPostId(postId: number) {
+    return new Promise((resolve) => {
+      this.http
+        .get(
+          'http://localhost:8080/api/accounts/getAccountIdByPostId/' + postId
+        )
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
 
   updateAccount(data) {
