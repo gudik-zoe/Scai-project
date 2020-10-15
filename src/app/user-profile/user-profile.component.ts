@@ -53,9 +53,7 @@ export class UserProfileComponent implements OnInit {
 
   async getPostsByAccountId(id) {
     this.requestedAccountPosts = await this.postService.getPostsByAccountId(id);
-  }
-  async getPosts() {
-    this.dbPosts = await this.postService.getPosts();
+    console.log(this.requestedAccountPosts);
   }
 
   async getUserData() {
@@ -106,7 +104,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   async userProfileSetFunctions() {
-    await this.getPosts();
     await this.getIdFromUrl();
     await this.getUserById();
     await this.getPostsByAccountId(this.id);

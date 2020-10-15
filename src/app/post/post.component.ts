@@ -121,28 +121,25 @@ export class PostComponent implements OnInit {
     });
   }
 
-  deleteImage() {
-    this.hideImage = true;
-    this.imageString = null;
-  }
+  // deleteImage() {
+  //   this.hideImage = true;
+  //   this.imageString = null;
+  // }
 
   editPost(post) {
-    // this.postsService.editPostComponent.next({ post, openComponent: true });
-    this.editMode = !this.editMode;
-    this.postEditText = post.text;
-    this.imageString = post.image;
+    this.postsService.editPostComponent.next({ post, openComponent: true });
   }
 
-  confirmEditPost(post) {
-    post.image = this.imageString || null;
-    post.text = this.postEditText;
-    console.log(post);
-    this.postsService.updatePost(post).subscribe((data: PostModule) => {
-      this.postImage = null;
-      this.hideImage = false;
-      this.editMode = false;
-    });
-  }
+  // confirmEditPost(post) {
+  //   post.image = this.imageString || null;
+  //   post.text = this.postEditText;
+  //   console.log(post);
+  //   this.postsService.updatePost(post).subscribe((data: PostModule) => {
+  //     this.postImage = null;
+  //     this.hideImage = false;
+  //     this.editMode = false;
+  //   });
+  // }
   deletePost(id: number) {
     this.postsService.deletePost(id).subscribe((data) => {
       this.deletePostEvent.emit(id);
@@ -168,25 +165,25 @@ export class PostComponent implements OnInit {
     return false;
   }
 
-  uploadImage(event) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.myImage = file;
-      const formData = new FormData();
-      formData.append('file', this.myImage);
-      this.imageString = this.myImage.name;
-      this.http
-        .post('http://localhost:8080/upload', formData)
-        .subscribe((data) => {
-          console.log(data);
-        });
-      let reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (event) => {
-        this.postImage = event.target.result;
-      };
-    }
-  }
+  // uploadImage(event) {
+  //   if (event.target.files.length > 0) {
+  //     const file = event.target.files[0];
+  //     this.myImage = file;
+  //     const formData = new FormData();
+  //     formData.append('file', this.myImage);
+  //     this.imageString = this.myImage.name;
+  //     this.http
+  //       .post('http://localhost:8080/upload', formData)
+  //       .subscribe((data) => {
+  //         console.log(data);
+  //       });
+  //     let reader = new FileReader();
+  //     reader.readAsDataURL(event.target.files[0]);
+  //     reader.onload = (event) => {
+  //       this.postImage = event.target.result;
+  //     };
+  //   }
+  // }
 
   goToDescription(id: number): void {
     this.route.navigate(['/description', id]);

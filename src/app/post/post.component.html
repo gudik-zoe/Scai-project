@@ -1,6 +1,5 @@
-<div *ngIf="userData" class="container" class="post-container"
-  [style.background-color]="editMode ? 'whitesmoke' : 'white'">
-  <!-- <button *ngIf="post.accountIdAccount == userData.idAccount" (click)="click(post)">click</button> -->
+<div *ngIf="userData" class="container" class="post-container" style="background-color: white;">
+
   <ng-container *ngIf="post.doneBy && userData">
     <img src="http://localhost:8080/files/{{ post.doneBy.profilePhoto }}" width="50px"
       style="border-radius: 50%; float: left;" height="50px" />
@@ -27,38 +26,19 @@
         shared: </span>
     </div>
     <p style="padding-right: 250px; margin-top: 50px;"> {{ post.text }} </p>
-    <img *ngIf=" post.image && !hideImage" src="http://localhost:8080/files/{{ post.image }}"
-      style="width: 80%; height: 60%;" />
+    <img *ngIf=" post.image" src="http://localhost:8080/files/{{ post.image }}" style="width: 80%; height: 60%;" />
     <p><i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue"> </i>{{post.likesNumber}}
       <i class="fa fa-comments" aria-hidden="true" style="margin-left: 150px;"></i>{{post.commentsNumber}}</p>
 
   </div>
 
-  <p class="mt-5" *ngIf="!editMode && !post.postOriginalId"> {{ post.text }} </p>
-  <input class="mt-5 mr-5" style="  width:auto;
-  border-radius: 8px;
-  background-color: lightgray;
-  border-style: none;
-  margin-left: 10px;
-  outline: none;" *ngIf=" editMode" [(ngModel)]="postEditText" />
+  <p class="mt-5" *ngIf="!post.postOriginalId"> {{ post.text }} </p>
+
 
 
   <div class="container" *ngIf="!post.postOriginalId">
-    <img *ngIf="post.image && !hideImage" src="http://localhost:8080/files/{{ post.image }}"
-      style="width: 80%; height: 60%;" />
-    <img *ngIf="postImage" [src]="postImage" style="width: 80%; height: 60%;" />
-    <i *ngIf="editMode && post.image" style="color: lightskyblue; cursor: pointer;" class="fa fa-trash fa-lg mt-4"
-      aria-hidden="true" (click)="deleteImage()"></i>
-    <input *ngIf="editMode && !post.image || hideImage" type="file" name="file" (change)="uploadImage($event)" id="file"
-      class="inputfile" />
-    <label *ngIf="editMode && !post.image || hideImage" style="float: right; cursor: pointer" for="file">
+    <img *ngIf="post.image" src="http://localhost:8080/files/{{ post.image }}" style="width: 80%; height: 60%;" />
 
-      <img
-        src="https://png.pngtree.com/png-vector/20191129/ourmid/pngtree-image-upload-icon-photo-upload-icon-png-image_2047546.jpg"
-        width="25px" height="25px" class="mt-4" style="border-radius: 50%; margin-left: 20px; color: blue" />
-    </label>
-    <button *ngIf="editMode" (click)="confirmEditPost(post)" class="btn btn-block btn-md btn-primary mt-2">Edit post
-    </button>
   </div>
 
 

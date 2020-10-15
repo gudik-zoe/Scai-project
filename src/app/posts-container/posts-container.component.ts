@@ -40,7 +40,7 @@ export class PostsContainerComponent implements OnInit {
   }
   async getPosts() {
     this.dbPosts = await this.postsService.getPosts();
-    console.log(this.dbPosts);
+    // console.log(this.dbPosts);
   }
 
   notifyParent(post: PostsModel) {

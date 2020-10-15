@@ -20,6 +20,7 @@ export class PostsService {
   editPostComponent = new Subject<any>();
   dbPosts: PostsModel;
   accountPosts;
+  postDetails: PostsModel;
   basicData = [];
 
   constructor(
@@ -35,21 +36,16 @@ export class PostsService {
         const postData = posts.find(
           (item) => item.idPosts == post.postOriginalId
         );
-        post.likesNumber = postData.postLikes.length;
-        post.commentsNumber = postData.comments.length;
-        post.originalPostDoneBy = postData.doneBy;
+        if (postData) {
+          post.likesNumber = postData.postLikes.length;
+          post.commentsNumber = postData.comments.length;
+          post.originalPostDoneBy = postData.doneBy;
+        } else {
+          const newPostData = await this.getPostByPostId(post.postOriginalId);
+        }
       }
     }
   }
-
-  // async getPostOriginalUserDataToMyPosts(accountPosts){
-  //   for(let post of accountPosts){
-  //     if(post.sharedPostId){
-
-  //     }
-  //   }
-
-  // }
 
   async getUserDetails(posts: any) {
     for (let post of posts) {
@@ -66,8 +62,8 @@ export class PostsService {
       } else {
         post.doneBy = checkIfUserExistInThisBasicData;
       }
-      this.getPostOriginalUserData(posts);
     }
+    this.getPostOriginalUserData(posts);
   }
 
   getPostsFullDetails(posts) {
@@ -96,6 +92,17 @@ export class PostsService {
           this.accountPosts = data;
           this.getPostsFullDetails(this.accountPosts);
           resolve(this.accountPosts);
+        });
+    });
+  }
+
+  getPostByPostId(id: number) {
+    return new Promise((resolve) => {
+      this.http
+        .get(this.rootUrl + '/posts/postId/' + id)
+        .subscribe((data: PostsModel) => {
+          console.log(data);
+          resolve(data);
         });
     });
   }

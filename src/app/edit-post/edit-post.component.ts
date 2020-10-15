@@ -25,14 +25,6 @@ export class EditPostComponent implements OnInit {
   showImage: boolean = true;
   myImage;
   postImage: string | ArrayBuffer;
-  id;
-
-  // openEditPostComponent() {
-  //   this.postService.sendPost.subscribe((data) => {
-  //     this.post = data;
-  //     console.log(data);
-  //   });
-  // }
 
   async getUserData() {
     this.userData = await this.accountService.getUserData();
@@ -40,8 +32,6 @@ export class EditPostComponent implements OnInit {
 
   closeEditPostComponent() {
     this.postService.editPostComponent.next({ boolean: false, post: null });
-
-    // this.showImage = true;
   }
 
   deleteImage() {
@@ -71,14 +61,12 @@ export class EditPostComponent implements OnInit {
 
   confirmEdit() {
     if (this.myImage) {
-      this.post.image = this.myImage;
+      this.post.image = this.myImage.name;
     } else {
       this.post.image = null;
     }
     this.post.text = this.inputData;
-    console.log(this.post);
     this.postService.updatePost(this.post).subscribe((data) => {
-      console.log(data);
       this.editPostComponent = false;
     });
   }
@@ -88,7 +76,6 @@ export class EditPostComponent implements OnInit {
     this.postService.editPostComponent.subscribe((data) => {
       this.post = data.post;
       this.editPostComponent = data.openComponent;
-      console.log(this.post);
     });
   }
 }
