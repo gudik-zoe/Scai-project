@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Account } from '../models/account';
-import { editPost } from '../models/editPostInt';
+import { EditPost } from '../models/editPostInt';
 import { Post } from '../models/post';
 import { AccountService } from '../services/account.service';
 import { PostsService } from '../services/posts.service';

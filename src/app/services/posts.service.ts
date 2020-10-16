@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { AccountService } from './account.service';
 import { environment } from 'src/environments/environment';
 import { Post } from '../models/post';
-import { editPost } from '../models/editPostInt';
+import { EditPost } from '../models/editPostInt';
 import { Account } from '../models/account';
 
 @Injectable({
@@ -32,16 +32,24 @@ export class PostsService {
 
   async getPostOriginalUserData(posts) {
     for (let post of posts) {
-      if (post.postOriginalOwnerId) {
+      if (post.postOriginalId) {
         const postData = posts.find(
           (item) => item.idPosts == post.postOriginalId
         );
         if (postData) {
+          post.text = postData.text;
+          post.image = postData.image;
+          post.description = postData.description;
           post.likesNumber = postData.postLikes.length;
           post.commentsNumber = postData.comments.length;
           post.originalPostDoneBy = postData.doneBy;
         } else {
-          const newPostData = await this.getPostByPostId(post.postOriginalId);
+          post.text = null;
+          post.image = null;
+          post.description = null;
+          post.likesNumber = null;
+          post.commentsNumber = null;
+          post.originalPostDoneBy = null;
         }
       }
     }

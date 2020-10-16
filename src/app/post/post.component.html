@@ -31,6 +31,10 @@
       <i class="fa fa-comments" aria-hidden="true" style="margin-left: 150px;"></i>{{post.commentsNumber}}</p>
 
   </div>
+  <div style="margin-top: 50px; border: 1px solid black; cursor: pointer; "
+    *ngIf="post.postOriginalId && !post.originalPostDoneBy">
+    content is unavailabe could be because of its setting was set on private or that it has been deleted
+  </div>
 
   <p class="mt-5" *ngIf="!post.postOriginalId"> {{ post.text }} </p>
 

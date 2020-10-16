@@ -1,4 +1,4 @@
-import { comment } from './comment';
+import { Comment } from './comment';
 import { postLike } from './postLikes';
 
 export class Post {
@@ -7,6 +7,6 @@ export class Post {
   image: string;
   description: string;
   accountIdAccount: number;
-  comments: Array<comment>;
+  comments: Array<Comment>;
   postLikes: Array<postLike>;
 }

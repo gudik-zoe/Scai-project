@@ -1,6 +1,6 @@
 import { Post } from './post';
 
-export interface editPost {
+export interface EditPost {
   edit: boolean;
   post?: Post;
   userData?: Account;

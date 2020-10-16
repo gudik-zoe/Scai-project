@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { editPost } from '../models/editPostInt';
+import { EditPost } from '../models/editPostInt';
 import { Post } from '../models/post';
 import { AccountService } from '../services/account.service';
 import { CommentsService } from '../services/comments.service';
@@ -23,12 +23,14 @@ export class PostComponent implements OnInit {
   @Input() i;
   @Input() usersDetails;
   @Input() dbPosts;
+  @Input() commentText;
 
   @Output() testOutput = new EventEmitter<Post>();
   @Output() deletePostEvent = new EventEmitter<number>();
   @Output() likePostEvent = new EventEmitter<Post>();
+  @Output() commentPostEvent = new EventEmitter<any>();
+  @Output() editPostEvent = new EventEmitter<any>();
 
-  commentText: string;
   openCommentsList: boolean = false;
   editCommentOn: boolean;
   commentId: number;
@@ -53,32 +55,8 @@ export class PostComponent implements OnInit {
     this.likePostEvent.emit(post);
   }
 
-  comment(post, commentText: string) {
-    const notification = {
-      notCreator: this.userData.idAccount,
-      action: 'comment',
-      notReceiver: post.accountIdAccount,
-      postId: post.idPosts,
-      date: new Date(),
-      seen: false,
-    };
-    this.commentService
-      .addCommment(post.idPosts, commentText)
-      .subscribe((data: any) => {
-        (data.doneBy = {
-          firstName: this.userData.firstName,
-          lastName: this.userData.lastName,
-          profilePhoto: this.userData.profilePhoto,
-          idAccount: this.userData.idAccount,
-        }),
-          this.post.comments.push(data);
-        this.commentText = null;
-        this.notificationService
-          .addNotification(notification)
-          .subscribe((data) => {
-            console.log(data);
-          });
-      });
+  comment(post: Post, commentText: string) {
+    this.commentPostEvent.emit({ post, commentText });
   }
 
   toDescription(id: number) {
@@ -88,14 +66,14 @@ export class PostComponent implements OnInit {
   sharePost(post) {
     const thePost = {
       postOriginalId: post.idPosts,
-      postOriginalOwnerId: post.accountIdAccount,
     };
     this.postsService.addPost(thePost).subscribe((data) => {
       console.log(data);
     });
   }
 
-  editPost(post) {
+  editPost(post: Post) {
+    // this.editPostEvent.emit({ post, openComponent: true });
     this.postsService.editPostComponent.next({ post, openComponent: true });
   }
 
@@ -154,7 +132,6 @@ export class PostComponent implements OnInit {
       );
     });
   }
-  postLiked: boolean = false;
 
   ngOnInit() {}
 }
