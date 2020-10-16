@@ -1,9 +1,8 @@
-import { AccountModel } from './account';
-import { PostsModel } from './posts';
+import { Post } from './post';
 
 export interface editPost {
   edit: boolean;
-  post?: PostsModel;
-  userData?: AccountModel;
+  post?: Post;
+  userData?: Account;
   id?: number;
 }

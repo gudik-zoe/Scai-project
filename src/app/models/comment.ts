@@ -1,4 +1,4 @@
-export class commentModel {
+export class comment {
   idComment: number;
   text: string;
   postsIdPost: number;

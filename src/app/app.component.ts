@@ -9,7 +9,7 @@ import { AuthService } from './services/auth.service';
 import { PostsService } from './services/posts.service';
 import { StorageService } from './services/storage.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AccountModel } from './models/account';
+import { Account } from './models/account';
 import { NotificationService } from './services/notification.service';
 
 @Component({
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
   loggedInSubscription: Subscription;
   message: string;
   loggedIn: boolean = localStorage.getItem('token') ? true : false;
-  userData: AccountModel;
+  userData: Account;
   errorPhrase: string = 'JWT expired';
   notificationObject;
   editPost: boolean = false;

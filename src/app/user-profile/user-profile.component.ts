@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { AccountModel } from '../models/account';
-import { PostsModel } from '../models/posts';
+import { Account } from '../models/account';
+import { Post } from '../models/post';
 import { AccountService } from '../services/account.service';
 import { AuthService } from '../services/auth.service';
 import { EventsService } from '../services/events.service';
@@ -27,27 +27,25 @@ export class UserProfileComponent implements OnInit {
     private notificationService: NotificationService
   ) {}
   imgUrl: string = environment.rootUrl + 'files/';
-  requestedUserData: AccountModel;
+  requestedUserData: Account;
   id: number;
-  loggedInUserData: AccountModel;
+  loggedInUserData: Account;
   status: string;
-  requestedAccountPosts: PostsModel;
+  requestedAccountPosts: Post;
   notificationObject;
   user;
-  dbPosts: PostsModel;
+  dbPosts: Post;
 
   goToEditing() {
     this.route.navigate(['/account-settings']);
   }
 
   getUserById() {
-    return new Promise<AccountModel>((resolve) => {
-      this.accountService
-        .getAccountById(this.id)
-        .subscribe((data: AccountModel) => {
-          this.requestedUserData = data;
-          resolve(this.requestedUserData);
-        });
+    return new Promise<Account>((resolve) => {
+      this.accountService.getAccountById(this.id).subscribe((data: Account) => {
+        this.requestedUserData = data;
+        resolve(this.requestedUserData);
+      });
     });
   }
 

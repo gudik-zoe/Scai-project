@@ -1,6 +1,4 @@
-import { PostsModel } from './posts';
-
-export class AccountModel {
+export class Account {
   idAccount: number;
   firstName: String;
   lastName: String;

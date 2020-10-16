@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { AccountModel } from '../models/account';
-import { PostsModel } from '../models/posts';
+import { Account } from '../models/account';
+import { postLike } from '../models/postLikes';
+import { Post } from '../models/post';
 import { AccountService } from '../services/account.service';
 import { CommentsService } from '../services/comments.service';
 import { FriendsService } from '../services/friends.service';
@@ -27,7 +28,7 @@ export class PostsContainerComponent implements OnInit {
   dbPosts;
   commentText: string;
   userImage;
-  userData: AccountModel;
+  userData: Account;
   users: any;
   usersDetails = [];
 
@@ -43,18 +44,16 @@ export class PostsContainerComponent implements OnInit {
     // console.log(this.dbPosts);
   }
 
-  notifyParent(post: PostsModel) {
+  notifyParent(post: Post) {
     this.dbPosts.push(post);
   }
-  j: number;
 
-  postLikesLoop() {
-    return new Promise((resolve) => {
-      for (let i of this.dbPosts) {
-        for (let j of i.postLikes) {
-          this.j = j;
-          resolve(this.j);
-        }
+  likePost(post: Post) {
+    this.postsService.likePost(post.idPosts).subscribe((data: postLike) => {
+      if (data) {
+        post.postLikes.push({ ...data });
+      } else {
+        post.postLikes.pop();
       }
     });
   }

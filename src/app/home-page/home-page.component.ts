@@ -11,9 +11,9 @@ import { Component, OnInit, Sanitizer } from '@angular/core';
 import { CommentsService } from '../services/comments.service';
 import { FriendsService } from '../services/friends.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { PostsModel } from '../models/posts';
-import { postLikesModel } from '../models/postLikes';
-import { AccountModel } from '../models/account';
+import { Post } from '../models/post';
+import { postLike } from '../models/postLikes';
+import { Account } from '../models/account';
 
 @Component({
   selector: 'app-home-page',
@@ -46,10 +46,10 @@ export class HomePageComponent implements OnInit {
   users;
   error: boolean = false;
   alertComponent: boolean = false;
-  userData: AccountModel;
+  userData: Account;
   name: String;
-  dbPosts: Array<PostsModel>;
-  postLikes: postLikesModel;
+  dbPosts: Array<Post>;
+  postLikes: postLike;
   myImage;
   postImage;
 

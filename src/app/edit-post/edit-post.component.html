@@ -1,4 +1,4 @@
-<ng-container *ngIf="post && editPostComponent">
+<ng-container *ngIf="post && editPostComponent && userData">
     <div class="backdrop"></div>
     <div class="alert-box" style="height: fit-content">
         <span>
@@ -8,16 +8,16 @@
         </span>
         <hr />
         <div class="alert-box-action">
-            <img src="http://localhost:8080/files/{{ userData?.profilePhoto}}" width="60px" height="60px"
+            <img src="http://localhost:8080/files/{{ userData.profilePhoto}}" width="60px" height="60px"
                 style="border-radius: 50%" />
             <span class="font-weight-bold">
-                {{ userData?.firstName + " " + userData?.lastName }} shared:
+                {{ userData.firstName + " " + userData.lastName }} shared:
             </span>
             <div class="md-form">
-                <p>{{ post?.text }}</p>
+                <p>{{ inputData }}</p>
 
-                <img *ngIf="post?.image && showImage" src="http://localhost:8080/files/{{ post?.image }}" width="150"
-                    height="100px" style="margin-left: 100px" />
+                <img *ngIf="post.image && showImage" src="http://localhost:8080/files/{{ post?.image }}" width="300"
+                    height="200px" style="margin-left: 50px" />
                 <img *ngIf="postImage" [src]="postImage" width="150" height="100px" style="margin-left: 100px" />
                 <i *ngIf="showImage && post?.image" style="color: lightskyblue; cursor: pointer;"
                     class="fa fa-trash fa-lg" aria-hidden="true" (click)="deleteImage()"></i>

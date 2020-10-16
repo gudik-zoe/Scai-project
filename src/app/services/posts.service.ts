@@ -7,9 +7,9 @@ import { StorageService } from './storage.service';
 import { HttpClient } from '@angular/common/http';
 import { AccountService } from './account.service';
 import { environment } from 'src/environments/environment';
-import { PostsModel } from '../models/posts';
+import { Post } from '../models/post';
 import { editPost } from '../models/editPostInt';
-import { AccountModel } from '../models/account';
+import { Account } from '../models/account';
 
 @Injectable({
   providedIn: 'root',
@@ -18,9 +18,9 @@ export class PostsService {
   rootUrl: string = environment.rootUrl;
   close = new Subject<any>();
   editPostComponent = new Subject<any>();
-  dbPosts: PostsModel;
+  dbPosts: Post;
   accountPosts;
-  postDetails: PostsModel;
+  postDetails: Post;
   basicData = [];
 
   constructor(
@@ -75,8 +75,8 @@ export class PostsService {
   }
 
   getPosts() {
-    return new Promise<PostsModel>((resolve) => {
-      this.http.get(this.rootUrl + 'posts').subscribe((data: PostsModel) => {
+    return new Promise<Post>((resolve) => {
+      this.http.get(this.rootUrl + 'posts').subscribe((data: Post) => {
         this.dbPosts = data;
         this.getPostsFullDetails(this.dbPosts);
         resolve(this.dbPosts);
@@ -85,7 +85,7 @@ export class PostsService {
   }
 
   getPostsByAccountId(id) {
-    return new Promise<PostsModel>((resolve) => {
+    return new Promise<Post>((resolve) => {
       this.http
         .get(this.rootUrl + 'posts/accountId/' + id)
         .subscribe((data) => {
@@ -100,7 +100,7 @@ export class PostsService {
     return new Promise((resolve) => {
       this.http
         .get(this.rootUrl + '/posts/postId/' + id)
-        .subscribe((data: PostsModel) => {
+        .subscribe((data: Post) => {
           console.log(data);
           resolve(data);
         });
@@ -121,7 +121,7 @@ export class PostsService {
     return this.http.get(this.rootUrl + 'postLikes/likers/' + postId);
   }
 
-  likePost(postId) {
+  likePost(postId: number) {
     return this.http.post(
       this.rootUrl + 'postLikes/' + this.accountService.getId() + '/' + postId,
       {}

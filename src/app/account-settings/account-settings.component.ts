@@ -7,7 +7,7 @@ import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AccountModel } from '../models/account';
+import { Account } from '../models/account';
 
 @Component({
   selector: 'app-account-settings',
@@ -24,7 +24,7 @@ export class AccountSettingsComponent implements OnInit {
   ) {}
   coverPhoto;
   profilePhoto;
-  userData: AccountModel;
+  userData: Account;
 
   goToHome() {
     this.route.navigate(['/user-profile']);

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AccountModel } from '../models/account';
+import { Account } from '../models/account';
 import { AccountService } from '../services/account.service';
 import { PostsService } from '../services/posts.service';
 import { StorageService } from '../services/storage.service';

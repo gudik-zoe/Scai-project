@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { AccountModel } from '../models/account';
+import { Account } from '../models/account';
 import { AccountService } from '../services/account.service';
 import { NotificationService } from '../services/notification.service';
 
@@ -13,7 +13,7 @@ import { NotificationService } from '../services/notification.service';
 export class NotificationComponent implements OnInit {
   notificationObject;
   unseenNots = [];
-  userData: AccountModel;
+  userData: Account;
   haveNotification: boolean;
   basicData = [];
   imgUrl: string = environment.rootUrl + 'files/';

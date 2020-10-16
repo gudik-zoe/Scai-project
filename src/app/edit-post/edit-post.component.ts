@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { AccountModel } from '../models/account';
+import { Account } from '../models/account';
 import { editPost } from '../models/editPostInt';
-import { PostsModel } from '../models/posts';
+import { Post } from '../models/post';
 import { AccountService } from '../services/account.service';
 import { PostsService } from '../services/posts.service';
 
@@ -19,8 +19,8 @@ export class EditPostComponent implements OnInit {
   ) {}
 
   editPostComponent: boolean;
-  post: PostsModel;
-  userData: AccountModel;
+  post: Post;
+  userData: Account;
   inputData: string;
   showImage: boolean = true;
   myImage;
@@ -30,8 +30,8 @@ export class EditPostComponent implements OnInit {
     this.userData = await this.accountService.getUserData();
   }
 
-  closeEditPostComponent() {
-    this.postService.editPostComponent.next({ boolean: false, post: null });
+  public closeEditPostComponent(): void {
+    this.editPostComponent = false;
   }
 
   deleteImage() {
@@ -71,11 +71,16 @@ export class EditPostComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.getUserData();
+  getPostData() {
     this.postService.editPostComponent.subscribe((data) => {
       this.post = data.post;
       this.editPostComponent = data.openComponent;
+      this.inputData = data.post.text;
     });
+  }
+
+  ngOnInit() {
+    this.getUserData();
+    this.getPostData();
   }
 }

@@ -1,4 +1,4 @@
-export class postLikesModel {
+export class postLike {
   accountIdAccount: number;
   idPost: number;
   postsIdPosts: number;
