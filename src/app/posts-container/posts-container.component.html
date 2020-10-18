@@ -1,6 +1,6 @@
-<div *ngFor="let postDB of dbPosts; let i = index">
-  <app-post [dbPosts]="dbPosts" [commentText]="commentText" [post]="postDB" [userData]="userData"
-    (commentPostEvent)="commentPost($event)" (likePostEvent)="likePost($event)" (testOutput)="notifyParent($event)"
-    [usersDetails]="usersDetails" [i]="i" (deletePostEvent)="deletePostInParent($event)">
+<div *ngFor="let post of dbPosts; let i = index">
+  <app-post [commentText]="commentText" [post]="post" [userData]="userData" (commentPostEvent)="commentPost($event)"
+    (likePostEvent)="likePost($event)" (testOutput)="notifyParent($event)" [usersDetails]="usersDetails"
+    (deletePostEvent)="deletePostInParent($event)">
   </app-post>
 </div>

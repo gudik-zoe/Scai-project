@@ -34,7 +34,7 @@ export class PostsService {
     for (let post of posts) {
       if (post.postOriginalId) {
         const postData = posts.find(
-          (item) => item.idPosts == post.postOriginalId
+          (item) => item.idPost == post.postOriginalId
         );
         if (postData) {
           post.text = postData.text;
@@ -58,35 +58,55 @@ export class PostsService {
   async getUserDetails(posts: any) {
     for (let post of posts) {
       const checkIfUserExistInThisBasicData = this.basicData.find(
-        (item) => item.idAccount == post.accountIdAccount
+        (item) => item.idAccount == post.postCreatorId
       );
-
       if (!checkIfUserExistInThisBasicData) {
         const data: any = await this.accountService.getBasicAccountDetails(
-          post.accountIdAccount
+          post.postCreatorId
         );
         this.basicData.push(data);
         post.doneBy = data;
       } else {
         post.doneBy = checkIfUserExistInThisBasicData;
       }
+      for (let comment of post.comments) {
+        const checkIfUserExistInThisBasicData = this.basicData.find(
+          (item) => item.idAccount == comment.commentCreatorId
+        );
+        if (!checkIfUserExistInThisBasicData) {
+          const data: any = await this.accountService.getBasicAccountDetails(
+            comment.postCreatorId
+          );
+          this.basicData.push(data);
+          comment.doneBy = data;
+        } else {
+          comment.doneBy = checkIfUserExistInThisBasicData;
+        }
+      }
+      for (let like of post.postLikes) {
+        const checkIfUserExistInThisBasicData = this.basicData.find(
+          (item) => item.idAccount == like.postLikeCreatorId
+        );
+        if (!checkIfUserExistInThisBasicData) {
+          const data: any = await this.accountService.getBasicAccountDetails(
+            like.postLikeCreatorId
+          );
+          this.basicData.push(data);
+          like.doneBy = data;
+        } else {
+          like.doneBy = checkIfUserExistInThisBasicData;
+        }
+      }
     }
     this.getPostOriginalUserData(posts);
-  }
-
-  getPostsFullDetails(posts) {
-    for (let post of posts) {
-      this.getUserDetails(posts);
-      this.getUserDetails(post.comments);
-      this.getUserDetails(post.postLikes);
-    }
   }
 
   getPosts() {
     return new Promise<Post>((resolve) => {
       this.http.get(this.rootUrl + 'posts').subscribe((data: Post) => {
         this.dbPosts = data;
-        this.getPostsFullDetails(this.dbPosts);
+        this.getUserDetails(this.dbPosts);
+        console.log(this.dbPosts);
         resolve(this.dbPosts);
       });
     });
@@ -98,7 +118,7 @@ export class PostsService {
         .get(this.rootUrl + 'posts/accountId/' + id)
         .subscribe((data) => {
           this.accountPosts = data;
-          this.getPostsFullDetails(this.accountPosts);
+          this.getUserDetails(this.accountPosts);
           resolve(this.accountPosts);
         });
     });
@@ -143,7 +163,7 @@ export class PostsService {
     );
   }
 
-  updatePost(post) {
+  updatePost(post: Post) {
     return this.http.put(
       this.rootUrl + 'posts/update/' + this.accountService.getId(),
       post

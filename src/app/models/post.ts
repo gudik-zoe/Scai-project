@@ -1,12 +1,13 @@
 import { Comment } from './comment';
-import { postLike } from './postLikes';
+import { PostLike } from './postLike';
 
 export class Post {
-  idPosts: number;
+  idPost: number;
   text: string;
   image: string;
   description: string;
-  accountIdAccount: number;
+  postCreatorId: number;
+  postOriginalId?: number;
   comments: Array<Comment>;
-  postLikes: Array<postLike>;
+  postLikes: Array<PostLike>;
 }

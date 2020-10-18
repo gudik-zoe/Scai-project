@@ -3,7 +3,6 @@ import { Component, OnInit, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Account } from '../models/account';
-import { postLike } from '../models/postLikes';
 import { Post } from '../models/post';
 import { AccountService } from '../services/account.service';
 import { CommentsService } from '../services/comments.service';
@@ -11,6 +10,7 @@ import { FriendsService } from '../services/friends.service';
 import { PostsService } from '../services/posts.service';
 import { NotificationService } from '../services/notification.service';
 import { Comment } from '../models/comment';
+import { PostLike } from '../models/postLike';
 
 @Component({
   selector: 'app-posts-container',
@@ -40,7 +40,7 @@ export class PostsContainerComponent implements OnInit {
   }
 
   deletePostInParent(id) {
-    this.dbPosts = this.dbPosts.filter((item) => item.idPosts !== id);
+    this.dbPosts = this.dbPosts.filter((item) => item.idPost !== id);
   }
   async getPosts() {
     this.dbPosts = await this.postsService.getPosts();
@@ -65,12 +65,12 @@ export class PostsContainerComponent implements OnInit {
     const notification = {
       notCreator: this.userData.idAccount,
       action: 'like',
-      notReceiver: post.accountIdAccount,
-      postId: post.idPosts,
+      notReceiver: post.postCreatorId,
+      relatedPostId: post.idPost,
       date: new Date(),
       seen: false,
     };
-    this.postsService.likePost(post.idPosts).subscribe((data: postLike) => {
+    this.postsService.likePost(post.idPost).subscribe((data: PostLike) => {
       if (data) {
         this.sendNotification(notification);
         post.postLikes.push({ ...data });
@@ -85,12 +85,12 @@ export class PostsContainerComponent implements OnInit {
       notCreator: this.userData.idAccount,
       action: 'comment',
       notReceiver: data.post.accountIdAccount,
-      postId: data.post.idPosts,
+      relatedPostId: data.post.idPost,
       date: new Date(),
       seen: false,
     };
     this.commentService
-      .addCommment(data.post.idPosts, data.commentText)
+      .addCommment(data.post.idPost, data.commentText)
       .subscribe((comment: Comment) => {
         comment.doneBy = {
           firstName: this.userData.firstName,

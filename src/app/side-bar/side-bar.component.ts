@@ -17,9 +17,7 @@ export class SideBarComponent implements OnInit {
   constructor(
     private storageService: StorageService,
     private route: Router,
-    private accountService: AccountService,
-    private _sanitizer: DomSanitizer,
-    private http: HttpClient
+    private accountService: AccountService
   ) {}
   userData: Account;
 

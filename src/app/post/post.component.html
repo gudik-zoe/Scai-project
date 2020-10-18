@@ -6,12 +6,12 @@
     <span style="float: left;" class="font-weight-bold mt-3">
       {{ post.doneBy.firstName + " " + post.doneBy.lastName }}
       {{post.postOriginalId ? 'reshared' : 'shared'}}: </span>
-    <i *ngIf="post.accountIdAccount == userData.idAccount" (click)="editPost(post)"
+    <i *ngIf="post.postCreatorId == userData.idAccount" (click)="editPost(post)"
       style="float: right; margin-right: 20px; margin-top: 10px; font-size:large; cursor: pointer;"
       class=" fa fa-pencil" aria-hidden="true"></i>
-    <i *ngIf="post.accountIdAccount == userData.idAccount"
+    <i *ngIf="post.postCreatorId == userData.idAccount"
       style="float: right; color:red; margin-right: 20px; margin-top: 10px; font-size:large; cursor: pointer;"
-      (click)=" deletePost(post.idPosts)" class="fa fa-trash" aria-hidden="true"></i>
+      (click)=" deletePost(post.idPost)" class="fa fa-trash" aria-hidden="true"></i>
   </ng-container>
 
   <div (click)="toDescription(post.postOriginalId)"
@@ -51,25 +51,27 @@
   <span><i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue"></i> {{ post.postLikes.length }} </span>
   <span (click)="openComments()" class="font-weight-bold"
     style="margin-left: 140px; cursor: pointer;">{{ post.comments.length }}comments</span>
-  <span (click)="goToDescription(post.idPosts)"
+  <span (click)="goToDescription(post.idPost)"
     style="cursor: pointer; color: blue; font-weight: bold; margin-left: 130px">description</span>
   <hr />
 
-  <button [ngClass]="getLike() ? 'btn btn-primary btn-md col-md-3' : 'btn btn-light btn-md col-md-3'"
-    (click)="like(post)">
+  <button [disabled]="post.postOriginalId && !post.originalPostDoneBy"
+    [ngClass]="getLike() ? 'btn btn-primary btn-md col-md-3' : 'btn btn-light btn-md col-md-3'" (click)="like(post)">
     <i class="fa fa-thumbs-up" aria-hidden="true"></i>
     like
   </button>
 
 
-  <button [ngClass]="getComment() ? 'btn btn-primary btn-md col-md-3 ml-2' : 'btn btn-light btn-md col-md-3 ml-2'"
+  <button [disabled]="post.postOriginalId && !post.originalPostDoneBy"
+    [ngClass]="getComment() ? 'btn btn-primary btn-md col-md-3 ml-2' : 'btn btn-light btn-md col-md-3 ml-2'"
     (click)="comment(post , commentText)">
     <i class="fa fa-comments" aria-hidden="true"></i>
     comment
   </button>
 
 
-  <button (click)="sharePost(post)" class="btn btn-light btn-md col-md-3 ml-2">
+  <button [disabled]="post.postOriginalId && !post.originalPostDoneBy" (click)="sharePost(post)"
+    class="btn btn-light btn-md col-md-3 ml-2">
     <i class="fa fa-share-alt" aria-hidden="true"></i>
     share
   </button>
@@ -92,9 +94,9 @@
           outline: none;" />
           <button [disabled]="!editCommentValue" (click)="confirmEditComment(c)"
             *ngIf="editCommentOn && commentId == c.idComment" class="btn btn-info btn-sm">edit</button>
-          <i (click)="editComment(c.text ,c.idComment)" *ngIf="c.accountIdAccount == userData.idAccount"
+          <i (click)="editComment(c.text ,c.idComment)" *ngIf="c.commentCreatorId == userData.idAccount"
             style="float: right; color: blue; cursor: pointer;" class="fa fa-pencil fa-xxs" aria-hidden="true"></i>
-          <i (click)="deleteComment(c.idComment)" *ngIf="c.accountIdAccount == userData.idAccount"
+          <i (click)="deleteComment(c.idComment)" *ngIf="c.commentCreatorId == userData.idAccount"
             style="float: right; color: red; cursor: pointer;" class="fa fa-trash mr-1" aria-hidden="true"></i>
         </ng-container>
       </div>

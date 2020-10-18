@@ -1,5 +1,5 @@
 export class commentLikesModel {
-  idCommentLikes: number;
-  commentsIdComment: number;
-  accountIdAccount: number;
+  idCommentLike: number;
+  commentLikeCreatorId: number;
+  relatedCommentId: number;
 }

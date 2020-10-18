@@ -58,12 +58,12 @@
           <ng-container *ngIf="user && requestedUserData.idAccount == loggedInUserData.idAccount ">
             <div style="background-color: white;border-radius: 8px;">
               <div *ngFor="let u of user; let i = index">
-                you've a friend request from user with the id {{user[i].accountIdAccount}}
+                you've a friend request from user with the id {{user[i].userOneId}}
                 <button class="btn btn-primary btn-sm mt-3"
-                  (click)="respondFriendRequest(user[i].relationshipId ,1)">Accept
+                  (click)="respondFriendRequest(user[i].idRelationship ,1)">Accept
                 </button>
                 <button class="btn btn-danger btn-sm ml-2 mt-3"
-                  (click)="respondFriendRequest(user[i].relationshipId ,2)">Decline</button>
+                  (click)="respondFriendRequest(user[i].idRelationship ,2)">Decline</button>
                 <hr>
               </div>
             </div>
@@ -96,9 +96,11 @@
         <div class="container-fluid">
           <h3 class="font-weight-bold">posts</h3>
           <hr />
-          <app-posts-container *ngFor="let post of requestedAccountPosts" class="post-container">
-            <app-post [post]="post" [userData]="loggedInUserData"> </app-post>
-          </app-posts-container>
+
+          <app-posts-container></app-posts-container>
+          <!-- <div *ngFor="let post of requestedAccountPosts" class="post-container">
+            <app-post [dbPosts]="dbPosts" [post]="post" [userData]="loggedInUserData"> </app-post>
+          </div> -->
         </div>
         <br />
       </div>

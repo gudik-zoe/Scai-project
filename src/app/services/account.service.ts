@@ -41,12 +41,12 @@ export class AccountService {
     });
   }
 
-  getBasicAccountDetails(id) {
+  getBasicAccountDetails(id: number) {
     return new Promise((resolve) => {
       this.http
         .get('http://localhost:8080/api/accounts/details/' + id)
         .subscribe((data) => {
-          resolve(data[0]);
+          resolve(data);
         });
     });
   }

@@ -12,7 +12,7 @@ import { CommentsService } from '../services/comments.service';
 import { FriendsService } from '../services/friends.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Post } from '../models/post';
-import { postLike } from '../models/postLikes';
+import { PostLike } from '../models/postLike';
 import { Account } from '../models/account';
 
 @Component({
@@ -22,17 +22,8 @@ import { Account } from '../models/account';
 })
 export class HomePageComponent implements OnInit {
   constructor(
-    private _sanitizer: DomSanitizer,
-    private http: HttpClient,
     private postService: PostsService,
-    private accountService: AccountService,
-    private route: Router,
-    private auth: AuthService,
-    private storageService: StorageService,
-    private chatService: ChatService,
-    private pagesService: PagesService,
-    private commentService: CommentsService,
-    private friendsService: FriendsService
+    private accountService: AccountService
   ) {}
   likeBtn: boolean = false;
   input: string;
@@ -48,8 +39,8 @@ export class HomePageComponent implements OnInit {
   alertComponent: boolean = false;
   userData: Account;
   name: String;
-  dbPosts: Array<Post>;
-  postLikes: postLike;
+  dbPosts: Post;
+  postLikes: PostLike;
   myImage;
   postImage;
 
@@ -73,8 +64,13 @@ export class HomePageComponent implements OnInit {
     this.userData = await this.accountService.getUserData();
   }
 
+  async getPosts() {
+    this.dbPosts = await this.postService.getPosts();
+  }
+
   ngOnInit(): void {
     this.getUserData();
+    this.getPosts();
     this.postService.close.subscribe((data) => {
       this.alertComponent = data;
     });

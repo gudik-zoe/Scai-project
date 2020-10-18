@@ -67,6 +67,7 @@ export class EditPostComponent implements OnInit {
     }
     this.post.text = this.inputData;
     this.postService.updatePost(this.post).subscribe((data) => {
+      console.log(data);
       this.editPostComponent = false;
     });
   }

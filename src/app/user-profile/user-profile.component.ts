@@ -51,7 +51,6 @@ export class UserProfileComponent implements OnInit {
 
   async getPostsByAccountId(id) {
     this.requestedAccountPosts = await this.postService.getPostsByAccountId(id);
-    console.log(this.requestedAccountPosts);
   }
 
   async getUserData() {
@@ -62,6 +61,7 @@ export class UserProfileComponent implements OnInit {
     return new Promise((resolve) => {
       this.friendService.getFriendRequests(this.id).subscribe((data) => {
         this.user = data;
+        console.log(this.user);
         resolve(this.user);
       });
     });

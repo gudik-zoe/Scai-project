@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { EditPost } from '../models/editPostInt';
 import { Post } from '../models/post';
+import { PostLike } from '../models/postLike';
 import { AccountService } from '../services/account.service';
 import { CommentsService } from '../services/comments.service';
 import { NotificationService } from '../services/notification.service';
@@ -22,7 +23,6 @@ export class PostComponent implements OnInit {
   @Input() posters;
   @Input() i;
   @Input() usersDetails;
-  @Input() dbPosts;
   @Input() commentText;
 
   @Output() testOutput = new EventEmitter<Post>();
@@ -65,7 +65,7 @@ export class PostComponent implements OnInit {
 
   sharePost(post) {
     const thePost = {
-      postOriginalId: post.idPosts,
+      postOriginalId: post.idPost,
     };
     this.postsService.addPost(thePost).subscribe((data) => {
       console.log(data);
@@ -86,7 +86,7 @@ export class PostComponent implements OnInit {
   getLike() {
     if (this.userData) {
       return !!this.post.postLikes.find(
-        (item) => item.accountIdAccount == this.userData.idAccount
+        (item: PostLike) => item.postLikeCreatorId == this.userData.idAccount
       );
     }
     return false;
@@ -95,7 +95,7 @@ export class PostComponent implements OnInit {
   getComment(): boolean {
     if (this.userData) {
       const check = this.post.comments.find(
-        (item) => item.accountIdAccount == this.userData.idAccount
+        (item) => item.commentCreatorId == this.userData.idAccount
       );
       return check;
     }

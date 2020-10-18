@@ -1,8 +1,8 @@
 <div class="container-fluid" *ngFor="let post of dbPosts">
-  <div class="container" *ngIf="id === post.idPosts" style="border-radius: 10px; margin-top: 10px">
+  <div class="container" *ngIf="id === post.idPost" style="border-radius: 10px; margin-top: 10px">
     <div class="row">
       <div class="col-md-8">
-        <img src="{{ imgUrl + post.image}}" style="width: 700px; height: 500px" />
+        <img *ngIf="post.image" src="{{ imgUrl + post.image}}" style="width: 700px; height: 500px" />
         <!-- <img src="{{ imgUrl + post.image}}" style="width: 80%; height: 80%" /> -->
       </div>
       <div class="col-md-3" style="
