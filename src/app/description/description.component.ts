@@ -29,7 +29,6 @@ export class DescriptionComponent implements OnInit {
 
   ngOnInit() {
     this.aroute.params.subscribe((data) => {
-      console.log(data);
       this.id = parseInt(data.id);
       this.getPosts();
     });

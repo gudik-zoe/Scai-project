@@ -56,16 +56,6 @@ export class UserProfileComponent implements OnInit {
     this.loggedInUserData = await this.accountService.getUserData();
   }
 
-  getFriendRequests() {
-    return new Promise((resolve) => {
-      this.friendService.getFriendRequests(this.id).subscribe((data) => {
-        this.user = data;
-        console.log(this.user);
-        resolve(this.user);
-      });
-    });
-  }
-
   goToMessengerOrAddFriend(id) {
     if (this.status == 'add friend') {
       this.friendService.sendFriendRequest(id).subscribe((data) => {
@@ -105,7 +95,6 @@ export class UserProfileComponent implements OnInit {
     await this.getUserById();
     await this.getPostsByAccountId(this.id);
     await this.getUserData();
-    await this.getFriendRequests();
     await this.getStatusWith();
   }
 

@@ -1,3 +1,5 @@
+import { AccountBasicData } from './accountBasicData';
+
 export class Notification {
   idNotification: number;
   notCreator: number;
@@ -6,5 +8,6 @@ export class Notification {
   date: number;
   relatedPostId: number;
   seen: boolean;
+  doneBy?: AccountBasicData;
   dateInMinutes?: number;
 }

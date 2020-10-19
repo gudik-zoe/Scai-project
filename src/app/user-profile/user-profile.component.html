@@ -48,28 +48,6 @@
             <span class="font-weight-bold"> {{ requestedUserData.livesIn }}</span>
           </li>
         </div>
-        <div class="container mt-4" style="
-          background-color: lightgrey;
-          border-radius: 10px;
-          height: fit-content;
-        ">
-          <h5>FriendRequests</h5>
-          <hr />
-          <ng-container *ngIf="user && requestedUserData.idAccount == loggedInUserData.idAccount ">
-            <div style="background-color: white;border-radius: 8px;">
-              <div *ngFor="let u of user; let i = index">
-                you've a friend request from user with the id {{user[i].userOneId}}
-                <button class="btn btn-primary btn-sm mt-3"
-                  (click)="respondFriendRequest(user[i].idRelationship ,1)">Accept
-                </button>
-                <button class="btn btn-danger btn-sm ml-2 mt-3"
-                  (click)="respondFriendRequest(user[i].idRelationship ,2)">Decline</button>
-                <hr>
-              </div>
-            </div>
-            <br>
-          </ng-container>
-        </div>
 
       </div>
       <div class="col-6" style="background-color: lightgrey; border-radius: 10px">
@@ -97,10 +75,7 @@
           <h3 class="font-weight-bold">posts</h3>
           <hr />
 
-          <!-- <app-posts-container></app-posts-container> -->
-          <div *ngFor="let post of requestedAccountPosts" class="post-container">
-            <app-post [post]="post" [userData]="loggedInUserData"> </app-post>
-          </div>
+          <app-posts-container [posts]="requestedAccountPosts"> </app-posts-container>
         </div>
         <br />
       </div>

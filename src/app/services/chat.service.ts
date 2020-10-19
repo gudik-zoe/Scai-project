@@ -61,7 +61,7 @@ export class ChatService {
         this.accountService.getId() +
         '/' +
         to,
-      { theMessage: text }
+      { message: text }
     );
   }
 }

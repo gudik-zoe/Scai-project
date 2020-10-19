@@ -9,8 +9,8 @@
     </div>
     <div class="scrollable-element" style="overflow-y: scroll; height: 350px;">
       <ul *ngFor="let i of myConvWith">
-        <li [class]="(i.theSenderId==id )? 'sender' :'receiver' ">{{i.message}}
-          <small>{{i.date |  date:'MM/dd/yyyy' : 'UTC'}} </small>
+        <li [class]="(i.idSender==id )? 'sender' :'receiver' "><span>{{i.message}}</span>
+          <small>{{i.date |  date:'dd/MM/yyyy' : 'UTC'}} </small>
         </li>
       </ul>
     </div>

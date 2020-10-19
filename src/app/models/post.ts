@@ -1,3 +1,4 @@
+import { AccountBasicData } from './accountBasicData';
 import { Comment } from './comment';
 import { PostLike } from './postLike';
 
@@ -9,7 +10,7 @@ export class Post {
   postCreatorId: number;
   postOriginalId?: number;
   extraText?: string;
-  doneBy?: any;
-  comments: Array<Comment>;
-  postLikes: Array<PostLike>;
+  doneBy?: AccountBasicData;
+  comments: Comment[];
+  postLikes: PostLike[];
 }

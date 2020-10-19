@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
+import { AccountBasicData } from '../models/accountBasicData';
 import { Notification } from '../models/notification';
 import { AccountService } from '../services/account.service';
 import { NotificationService } from '../services/notification.service';
@@ -16,10 +17,9 @@ export class NotificationComponent implements OnInit {
   unseenNots = [];
   userData: Account;
   haveNotification: boolean;
-  basicData = [];
+  basicData: AccountBasicData[] = [];
   imgUrl: string = environment.rootUrl + 'files/';
-  now = new Date().getTime();
-  date = new Date('10/11/2020').getTime();
+  now: number = new Date().getTime();
 
   constructor(
     private notificationService: NotificationService,

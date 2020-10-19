@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AccountBasicData } from '../models/accountBasicData';
 import { AccountService } from './account.service';
 
 @Injectable({
@@ -12,17 +13,11 @@ export class FriendsService {
     private http: HttpClient,
     private accountService: AccountService
   ) {}
+  relations;
   rootUrl: string = environment.rootUrl;
   status: string;
   notifier = new Subject<boolean>();
-  // getRelationStatusBetweenMeAnd(userId) {
-  //   return this.http.get(
-  //     'http://localhost:8080/relation/getRelation/' +
-  //       this.accountService.getId() +
-  //       '/' +
-  //       userId
-  //   );
-  // }
+  basicData = [];
 
   getRelationStatusBetweenMeAnd(userId) {
     return new Promise((resolve) => {
@@ -53,10 +48,34 @@ export class FriendsService {
   }
 
   getFriendRequests(id) {
-    return this.http.get(
-      'http://localhost:8080/relation/getFriendRequests/' + id
-    );
+    return new Promise((resolve) => {
+      this.http
+        .get('http://localhost:8080/relation/getFriendRequests/' + id)
+        .subscribe((data) => {
+          this.relations = data;
+          this.getFullRelationshipData(this.relations);
+          resolve(this.relations);
+        });
+    });
   }
+
+  async getFullRelationshipData(relations) {
+    for (let relation of relations) {
+      const checkIfUserExist = this.basicData.find((item) => {
+        item.idAccount == relation.userOneId;
+      });
+      if (checkIfUserExist) {
+        relation.doneBy = checkIfUserExist;
+      } else {
+        const userBasicData = await this.accountService.getBasicAccountDetails(
+          relation.userOneId
+        );
+        this.basicData.push(userBasicData);
+        relation.doneBy = userBasicData;
+      }
+    }
+  }
+
   sendFriendRequest(userId) {
     return this.http.post(
       'http://localhost:8080/relation/' +

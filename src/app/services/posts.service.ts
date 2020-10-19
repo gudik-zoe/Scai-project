@@ -12,6 +12,7 @@ import { EditPost } from '../models/editPostInt';
 import { Account } from '../models/account';
 import { PostLike } from '../models/postLike';
 import { Comment } from '../models/comment';
+import { AccountBasicData } from '../models/accountBasicData';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,7 @@ export class PostsService {
   accountPosts;
   postDetails: Post;
   basicData = [];
-  userBasicData;
+  userBasicData: AccountBasicData;
 
   constructor(
     private accountService: AccountService,
@@ -66,11 +67,11 @@ export class PostsService {
         (item) => item.idAccount == post.postCreatorId
       );
       if (!checkIfUserExistInThisBasicData) {
-        const data = await this.accountService.getBasicAccountDetails(
+        this.userBasicData = await this.accountService.getBasicAccountDetails(
           post.postCreatorId
         );
-        this.basicData.push(data);
-        post.doneBy = data;
+        this.basicData.push(this.userBasicData);
+        post.doneBy = this.userBasicData;
       } else {
         post.doneBy = checkIfUserExistInThisBasicData;
       }
@@ -79,11 +80,11 @@ export class PostsService {
           (item) => item.idAccount == comment.commentCreatorId
         );
         if (!checkIfUserExistInThisBasicData) {
-          const data: any = await this.accountService.getBasicAccountDetails(
+          this.userBasicData = await this.accountService.getBasicAccountDetails(
             comment.commentCreatorId
           );
-          this.basicData.push(data);
-          comment.doneBy = data;
+          this.basicData.push(this.userBasicData);
+          comment.doneBy = this.userBasicData;
         } else {
           comment.doneBy = checkIfUserExistInThisBasicData;
         }
@@ -93,11 +94,11 @@ export class PostsService {
           (item) => item.idAccount == like.postLikeCreatorId
         );
         if (!checkIfUserExistInThisBasicData) {
-          const data: any = await this.accountService.getBasicAccountDetails(
+          this.userBasicData = await this.accountService.getBasicAccountDetails(
             like.postLikeCreatorId
           );
-          this.basicData.push(data);
-          like.doneBy = data;
+          this.basicData.push(this.userBasicData);
+          like.doneBy = this.userBasicData;
         } else {
           like.doneBy = checkIfUserExistInThisBasicData;
         }
@@ -111,7 +112,7 @@ export class PostsService {
       this.http.get(this.rootUrl + 'posts').subscribe((data: Post[]) => {
         this.dbPosts = data;
         this.getUserDetails(this.dbPosts);
-        console.log(this.dbPosts);
+        // console.log(this.dbPosts);
         resolve(this.dbPosts);
       });
     });

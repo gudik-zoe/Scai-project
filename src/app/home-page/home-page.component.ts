@@ -42,6 +42,7 @@ export class HomePageComponent implements OnInit {
   postLikes: PostLike;
   myImage;
   postImage;
+  dbPosts;
 
   image() {
     return this.userData?.profilePhoto;
@@ -63,7 +64,12 @@ export class HomePageComponent implements OnInit {
     this.userData = await this.accountService.getUserData();
   }
 
+  async getPosts() {
+    this.dbPosts = await this.postService.getPosts();
+  }
+
   ngOnInit(): void {
+    this.getPosts();
     this.getUserData();
     this.postService.close.subscribe((data) => {
       this.alertComponent = data;

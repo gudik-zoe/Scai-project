@@ -14,9 +14,10 @@ import { MyInterceptor } from './my-interceptor';
 import { AuthenticationGuard } from './authentication.guard';
 import { NotificationComponent } from './notification/notification.component';
 import { SocketComponent } from './socket/socket.component';
+import { FriendRequestComponent } from './friend-request/friend-request.component';
 
 @NgModule({
-  declarations: [AppComponent, NotificationComponent, SocketComponent],
+  declarations: [AppComponent, NotificationComponent, SocketComponent, FriendRequestComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Account } from '../models/account';
@@ -11,6 +11,7 @@ import { PostsService } from '../services/posts.service';
 import { NotificationService } from '../services/notification.service';
 import { Comment } from '../models/comment';
 import { PostLike } from '../models/postLike';
+import { AccountBasicData } from '../models/accountBasicData';
 
 @Component({
   selector: 'app-posts-container',
@@ -28,7 +29,7 @@ export class PostsContainerComponent implements OnInit {
     private friendService: FriendsService,
     private notificationService: NotificationService
   ) {}
-  dbPosts;
+  @Input() posts;
   commentText: string;
   userImage;
   userData: Account;
@@ -40,11 +41,7 @@ export class PostsContainerComponent implements OnInit {
   }
 
   deletePostInParent(id) {
-    this.dbPosts = this.dbPosts.filter((item) => item.idPost !== id);
-  }
-  async getPosts() {
-    this.dbPosts = await this.postsService.getPosts();
-    // console.log(this.dbPosts);
+    this.posts = this.posts.filter((item) => item.idPost !== id);
   }
 
   sendNotification(notification) {
@@ -57,9 +54,9 @@ export class PostsContainerComponent implements OnInit {
     }
   }
 
-  notifyParent(post: Post) {
-    this.dbPosts.push(post);
-  }
+  // notifyParent(post: Post) {
+  //   this.dbPosts.push(post);
+  // }
 
   likePost(post: Post) {
     const notification = {
@@ -93,19 +90,18 @@ export class PostsContainerComponent implements OnInit {
       .addCommment(data.post.idPost, data.commentText)
       .subscribe((comment: Comment) => {
         comment.doneBy = {
+          idAccount: this.userData.idAccount,
           firstName: this.userData.firstName,
           lastName: this.userData.lastName,
           profilePhoto: this.userData.profilePhoto,
-          idAccount: this.userData.idAccount,
         };
-        data.post.comments.push(comment);
+        data.post.comments.push(data.post.comment);
         this.commentText = null;
         this.sendNotification(notification);
       });
   }
 
   ngOnInit() {
-    this.getPosts();
     this.getUserData();
   }
 }

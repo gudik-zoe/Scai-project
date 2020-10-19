@@ -1,13 +1,13 @@
 export class Account {
   idAccount: number;
-  firstName: String;
-  lastName: String;
+  firstName: string;
+  lastName: string;
   email: string;
-  password: String;
-  gender: String;
-  wentTo: String;
-  livesIn: String;
-  study: String;
-  profilePhoto: String;
-  coverPhoto: String;
+  password: string;
+  gender: string;
+  wentTo: string;
+  livesIn: string;
+  study: string;
+  profilePhoto: string;
+  coverPhoto: string;
 }

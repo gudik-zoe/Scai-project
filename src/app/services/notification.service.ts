@@ -34,7 +34,7 @@ export class NotificationService {
         .subscribe((data: Notification[]) => {
           this.notificationObject = data;
           this.getBasicData(this.notificationObject);
-          console.log(this.notificationObject);
+          // console.log(this.notificationObject);
           resolve(this.notificationObject);
         });
     });

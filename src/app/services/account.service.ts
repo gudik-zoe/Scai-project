@@ -10,7 +10,6 @@ import { AccountBasicData } from '../models/accountBasicData';
   providedIn: 'root',
 })
 export class AccountService {
-  userDetailList = [];
   userData: Account;
   imageSubject = new Subject<boolean>();
   loggedIn = new Subject<boolean>();
@@ -43,7 +42,7 @@ export class AccountService {
   }
 
   getBasicAccountDetails(id: number) {
-    return new Promise((resolve) => {
+    return new Promise<AccountBasicData>((resolve) => {
       this.http
         .get('http://localhost:8080/api/accounts/details/' + id)
         .subscribe((data: AccountBasicData) => {
