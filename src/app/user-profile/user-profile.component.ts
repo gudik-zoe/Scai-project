@@ -31,10 +31,9 @@ export class UserProfileComponent implements OnInit {
   id: number;
   loggedInUserData: Account;
   status: string;
-  requestedAccountPosts: Post;
+  requestedAccountPosts: Post[];
   notificationObject;
   user;
-  dbPosts: Post;
 
   goToEditing() {
     this.route.navigate(['/account-settings']);

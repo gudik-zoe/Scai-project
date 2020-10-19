@@ -14,15 +14,9 @@ import { MyInterceptor } from './my-interceptor';
 import { AuthenticationGuard } from './authentication.guard';
 import { NotificationComponent } from './notification/notification.component';
 import { SocketComponent } from './socket/socket.component';
-import { EditPostComponent } from './edit-post/edit-post.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NotificationComponent,
-    SocketComponent,
-    EditPostComponent,
-  ],
+  declarations: [AppComponent, NotificationComponent, SocketComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,

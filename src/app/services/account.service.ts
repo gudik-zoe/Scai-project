@@ -4,6 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import jwt_decode from 'jwt-decode';
 import { Subject } from 'rxjs';
 import { Account } from '../models/account';
+import { AccountBasicData } from '../models/accountBasicData';
 
 @Injectable({
   providedIn: 'root',
@@ -45,7 +46,7 @@ export class AccountService {
     return new Promise((resolve) => {
       this.http
         .get('http://localhost:8080/api/accounts/details/' + id)
-        .subscribe((data) => {
+        .subscribe((data: AccountBasicData) => {
           resolve(data);
         });
     });

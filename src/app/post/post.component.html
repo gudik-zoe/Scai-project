@@ -6,17 +6,17 @@
     <span style="float: left;" class="font-weight-bold mt-3">
       {{ post.doneBy.firstName + " " + post.doneBy.lastName }}
       {{post.postOriginalId ? 'reshared' : 'shared'}}: </span>
-    <i *ngIf="post.postCreatorId == userData.idAccount" (click)="editPost(post)"
+    <i *ngIf="post.postCreatorId == userData.idAccount && !post.postOriginalId" (click)="editPost(post)"
       style="float: right; margin-right: 20px; margin-top: 10px; font-size:large; cursor: pointer;"
       class=" fa fa-pencil" aria-hidden="true"></i>
     <i *ngIf="post.postCreatorId == userData.idAccount"
       style="float: right; color:red; margin-right: 20px; margin-top: 10px; font-size:large; cursor: pointer;"
       (click)=" deletePost(post.idPost)" class="fa fa-trash" aria-hidden="true"></i>
+    <p class="mt-5" *ngIf="post.extraText">{{post.extraText}}</p>
   </ng-container>
 
-  <div (click)="toDescription(post.postOriginalId)"
-    *ngIf="post.postOriginalId && post.doneBy && post.originalPostDoneBy"
-    style="margin-top: 50px; border: 1px solid black; cursor: pointer; ">
+  <div *ngIf="post.postOriginalId && post.doneBy && post.originalPostDoneBy"
+    (click)="toDescription(post.postOriginalId)" style="margin-top: 30px; border: 1px solid black; cursor: pointer; ">
     <div style="margin-top: 10px; float: left;">
       <img *ngIf="post.originalPostDoneBy.profilePhoto"
         src="http://localhost:8080/files/{{ post.originalPostDoneBy.profilePhoto }}" width="50px"

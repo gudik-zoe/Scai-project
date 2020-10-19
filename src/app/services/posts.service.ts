@@ -10,6 +10,8 @@ import { environment } from 'src/environments/environment';
 import { Post } from '../models/post';
 import { EditPost } from '../models/editPostInt';
 import { Account } from '../models/account';
+import { PostLike } from '../models/postLike';
+import { Comment } from '../models/comment';
 
 @Injectable({
   providedIn: 'root',
@@ -18,10 +20,13 @@ export class PostsService {
   rootUrl: string = environment.rootUrl;
   close = new Subject<any>();
   editPostComponent = new Subject<any>();
-  dbPosts: Post;
+  sharePostComponent = new Subject<any>();
+  dbPosts: Post[];
+  comment: Comment;
   accountPosts;
   postDetails: Post;
   basicData = [];
+  userBasicData;
 
   constructor(
     private accountService: AccountService,
@@ -55,13 +60,13 @@ export class PostsService {
     }
   }
 
-  async getUserDetails(posts: any) {
+  async getUserDetails(posts: Post[]) {
     for (let post of posts) {
       const checkIfUserExistInThisBasicData = this.basicData.find(
         (item) => item.idAccount == post.postCreatorId
       );
       if (!checkIfUserExistInThisBasicData) {
-        const data: any = await this.accountService.getBasicAccountDetails(
+        const data = await this.accountService.getBasicAccountDetails(
           post.postCreatorId
         );
         this.basicData.push(data);
@@ -75,7 +80,7 @@ export class PostsService {
         );
         if (!checkIfUserExistInThisBasicData) {
           const data: any = await this.accountService.getBasicAccountDetails(
-            comment.postCreatorId
+            comment.commentCreatorId
           );
           this.basicData.push(data);
           comment.doneBy = data;
@@ -102,8 +107,8 @@ export class PostsService {
   }
 
   getPosts() {
-    return new Promise<Post>((resolve) => {
-      this.http.get(this.rootUrl + 'posts').subscribe((data: Post) => {
+    return new Promise<Post[]>((resolve) => {
+      this.http.get(this.rootUrl + 'posts').subscribe((data: Post[]) => {
         this.dbPosts = data;
         this.getUserDetails(this.dbPosts);
         console.log(this.dbPosts);
@@ -112,8 +117,8 @@ export class PostsService {
     });
   }
 
-  getPostsByAccountId(id) {
-    return new Promise<Post>((resolve) => {
+  getPostsByAccountId(id: number) {
+    return new Promise<Post[]>((resolve) => {
       this.http
         .get(this.rootUrl + 'posts/accountId/' + id)
         .subscribe((data) => {
@@ -174,14 +179,47 @@ export class PostsService {
     return this.http.delete(this.rootUrl + 'posts/' + postId);
   }
 }
-// const sharedPosts = []
-// posts.forEach(post => {
-//   if(post.sharedPostId) {
-//     sharedPosts.push(post)
-//   }
-//   return sharedPosts
-// });
 
-// sharedPosts.map(post => this.basicData.find(
-//          (post) => post.idAccount == originalPostDoneBy
-//        );)
+// posts.forEach(async (post: Post) => {
+//   const checkIfUserExistInThisBasicData = this.basicData.find(
+//     (item) => item.idAccount == post.postCreatorId
+//   );
+//   if (!checkIfUserExistInThisBasicData) {
+//     const data = await this.accountService.getBasicAccountDetails(
+//       post.postCreatorId
+//     );
+//     this.basicData.push(data);
+//     post.doneBy = data;
+//   } else {
+//     post.doneBy = checkIfUserExistInThisBasicData;
+//   }
+
+//   post.comments.forEach(async (comment: Comment) => {
+//     const checkIfUserExistInThisBasicData = this.basicData.find(
+//       (item) => item.idAccount == comment.commentCreatorId
+//     );
+//     if (!checkIfUserExistInThisBasicData) {
+//       const data = await this.accountService.getBasicAccountDetails(
+//         comment.commentCreatorId
+//       );
+//       this.basicData.push(data);
+//       comment.doneBy = data;
+//     } else {
+//       comment.doneBy = checkIfUserExistInThisBasicData;
+//     }
+//   });
+//   post.postLikes.forEach(async (like: PostLike) => {
+//     const checkIfUserExistInThisBasicData = this.basicData.find(
+//       (item) => item.idAccount == like.postLikeCreatorId
+//     );
+//     if (!checkIfUserExistInThisBasicData) {
+//       const data = await this.accountService.getBasicAccountDetails(
+//         like.postLikeCreatorId
+//       );
+//       this.basicData.push(data);
+//       like.doneBy = data;
+//     } else {
+//       like.doneBy = checkIfUserExistInThisBasicData;
+//     }
+//   });
+// });

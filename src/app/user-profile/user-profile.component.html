@@ -97,10 +97,10 @@
           <h3 class="font-weight-bold">posts</h3>
           <hr />
 
-          <app-posts-container></app-posts-container>
-          <!-- <div *ngFor="let post of requestedAccountPosts" class="post-container">
-            <app-post [dbPosts]="dbPosts" [post]="post" [userData]="loggedInUserData"> </app-post>
-          </div> -->
+          <!-- <app-posts-container></app-posts-container> -->
+          <div *ngFor="let post of requestedAccountPosts" class="post-container">
+            <app-post [post]="post" [userData]="loggedInUserData"> </app-post>
+          </div>
         </div>
         <br />
       </div>

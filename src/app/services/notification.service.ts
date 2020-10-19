@@ -3,7 +3,7 @@ import { isNgTemplate } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AccountService } from './account.service';
-
+import { Notification } from '../models/notification';
 @Injectable({
   providedIn: 'root',
 })
@@ -12,7 +12,8 @@ export class NotificationService {
     private http: HttpClient,
     private accountService: AccountService
   ) {}
-  notificationObject;
+  notificationObject: Notification[];
+
   basicData = [];
   rootUrl: string = environment.rootUrl;
   addNotification(notification) {
@@ -23,16 +24,17 @@ export class NotificationService {
   }
 
   getNotification() {
-    return new Promise((resolve) => {
+    return new Promise<Notification[]>((resolve) => {
       this.http
         .get(
           this.rootUrl +
             'notification/getNotification/' +
             this.accountService.getId()
         )
-        .subscribe((data) => {
+        .subscribe((data: Notification[]) => {
           this.notificationObject = data;
           this.getBasicData(this.notificationObject);
+          console.log(this.notificationObject);
           resolve(this.notificationObject);
         });
     });

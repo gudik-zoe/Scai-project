@@ -39,7 +39,6 @@ export class HomePageComponent implements OnInit {
   alertComponent: boolean = false;
   userData: Account;
   name: String;
-  dbPosts: Post;
   postLikes: PostLike;
   myImage;
   postImage;
@@ -64,13 +63,8 @@ export class HomePageComponent implements OnInit {
     this.userData = await this.accountService.getUserData();
   }
 
-  async getPosts() {
-    this.dbPosts = await this.postService.getPosts();
-  }
-
   ngOnInit(): void {
     this.getUserData();
-    this.getPosts();
     this.postService.close.subscribe((data) => {
       this.alertComponent = data;
     });

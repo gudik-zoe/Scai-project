@@ -64,17 +64,27 @@ export class PostComponent implements OnInit {
   }
 
   sharePost(post) {
-    const thePost = {
-      postOriginalId: post.idPost,
-    };
-    this.postsService.addPost(thePost).subscribe((data) => {
-      console.log(data);
+    this.postsService.sharePostComponent.next({
+      post,
+      openComponent: true,
+      userData: this.userData,
+      doneBy: post.doneBy,
     });
+    // const thePost = {
+    //   postOriginalId: post.idPost,
+    // };
+    // this.postsService.addPost(thePost).subscribe((data) => {
+    //   console.log(data);
+    // });
   }
 
   editPost(post: Post) {
     // this.editPostEvent.emit({ post, openComponent: true });
-    this.postsService.editPostComponent.next({ post, openComponent: true });
+    this.postsService.editPostComponent.next({
+      post,
+      openComponent: true,
+      userData: this.userData,
+    });
   }
 
   deletePost(id: number) {

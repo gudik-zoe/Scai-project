@@ -75,13 +75,13 @@ export class EditPostComponent implements OnInit {
   getPostData() {
     this.postService.editPostComponent.subscribe((data) => {
       this.post = data.post;
+      this.userData = data.userData;
       this.editPostComponent = data.openComponent;
       this.inputData = data.post.text;
     });
   }
 
   ngOnInit() {
-    this.getUserData();
     this.getPostData();
   }
 }

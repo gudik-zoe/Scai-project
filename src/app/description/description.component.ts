@@ -13,7 +13,7 @@ import { PostsService } from '../services/posts.service';
 })
 export class DescriptionComponent implements OnInit {
   imgUrl: string = environment.rootUrl + 'files/';
-  dbPosts: Post;
+  dbPosts: Post[];
   id: number;
   postLikersList: object;
 

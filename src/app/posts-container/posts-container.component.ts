@@ -64,10 +64,10 @@ export class PostsContainerComponent implements OnInit {
   likePost(post: Post) {
     const notification = {
       notCreator: this.userData.idAccount,
-      action: 'like',
+      action: 'liked',
       notReceiver: post.postCreatorId,
       relatedPostId: post.idPost,
-      date: new Date(),
+      date: new Date().getTime(),
       seen: false,
     };
     this.postsService.likePost(post.idPost).subscribe((data: PostLike) => {
@@ -83,10 +83,10 @@ export class PostsContainerComponent implements OnInit {
   commentPost(data) {
     const notification = {
       notCreator: this.userData.idAccount,
-      action: 'comment',
-      notReceiver: data.post.accountIdAccount,
+      action: 'commented on',
+      notReceiver: data.post.postCreatorId,
       relatedPostId: data.post.idPost,
-      date: new Date(),
+      date: new Date().getTime(),
       seen: false,
     };
     this.commentService
