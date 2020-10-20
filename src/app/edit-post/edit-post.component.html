@@ -16,8 +16,8 @@
             <div class="md-form">
                 <p>{{ inputData }}</p>
 
-                <img *ngIf="post.image && showImage" src="http://localhost:8080/files/{{ post?.image }}" width="300"
-                    height="200px" style="margin-left: 50px" />
+                <img *ngIf="post.image && showImage" src="http://localhost:8080/files/{{ post?.image }}" width="60%"
+                    height="60%" style="margin-left: 50px" />
                 <img *ngIf="postImage" [src]="postImage" width="150" height="100px" style="margin-left: 100px" />
                 <i *ngIf="showImage && post?.image" style="color: lightskyblue; cursor: pointer;"
                     class="fa fa-trash fa-lg" aria-hidden="true" (click)="deleteImage()"></i>

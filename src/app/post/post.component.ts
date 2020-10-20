@@ -68,21 +68,10 @@ export class PostComponent implements OnInit {
       userData: this.userData,
       doneBy: post.doneBy,
     });
-    // const thePost = {
-    //   postOriginalId: post.idPost,
-    // };
-    // this.postsService.addPost(thePost).subscribe((data) => {
-    //   console.log(data);
-    // });
   }
 
   editPost(post: Post) {
-    // this.editPostEvent.emit({ post, openComponent: true });
-    this.postsService.editPostComponent.next({
-      post,
-      openComponent: true,
-      userData: this.userData,
-    });
+    this.editPostEvent.emit(post);
   }
 
   deletePost(id: number) {

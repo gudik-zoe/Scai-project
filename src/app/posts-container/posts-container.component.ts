@@ -54,11 +54,7 @@ export class PostsContainerComponent implements OnInit {
     }
   }
 
-  // notifyParent(post: Post) {
-  //   this.dbPosts.push(post);
-  // }
-
-  likePost(post: Post) {
+  likePostInParent(post: Post) {
     const notification = {
       notCreator: this.userData.idAccount,
       action: 'liked',
@@ -77,7 +73,7 @@ export class PostsContainerComponent implements OnInit {
     });
   }
 
-  commentPost(data) {
+  commentPostInParent(data) {
     const notification = {
       notCreator: this.userData.idAccount,
       action: 'commented on',
@@ -99,6 +95,14 @@ export class PostsContainerComponent implements OnInit {
         this.commentText = null;
         this.sendNotification(notification);
       });
+  }
+
+  editPostInParent(data) {
+    this.postsService.editPostComponent.next({
+      post: data,
+      openComponent: true,
+      userData: this.userData,
+    });
   }
 
   ngOnInit() {

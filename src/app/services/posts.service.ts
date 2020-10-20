@@ -25,6 +25,8 @@ export class PostsService {
   dbPosts: Post[];
   comment: Comment;
   basicData = [];
+  ù;
+  postsData = [];
   userBasicData: AccountBasicData;
   accountPosts: Post[];
 
@@ -49,24 +51,27 @@ export class PostsService {
           post.originalPostDoneBy = postData.doneBy;
         } else {
           const postData = await this.getPostByPostId(post.postOriginalId);
-          const checkIfUserExistInThisBasicData = this.basicData.find(
-            (item) => item.idAccount == postData.postCreatorId
-          );
-          if (checkIfUserExistInThisBasicData) {
-            post.text = postData.text;
-            post.image = postData.image;
-            post.likesNumber = postData.postLikes.length;
-            post.commentsNumber = postData.comments.length;
-            post.originalPostDoneBy = checkIfUserExistInThisBasicData;
-          } else {
-            this.userBasicData = await this.accountService.getBasicAccountDetails(
-              postData.postCreatorId
+          if (postData) {
+            const checkIfUserExistInThisBasicData = this.basicData.find(
+              (item) => item.idAccount == postData.postCreatorId
             );
-            post.text = postData.text;
-            post.image = postData.image;
-            post.likesNumber = postData.postLikes.length;
-            post.commentsNumber = postData.comments.length;
-            post.originalPostDoneBy = this.userBasicData;
+            if (checkIfUserExistInThisBasicData) {
+              post.text = postData.text;
+              post.image = postData.image;
+              post.likesNumber = postData.postLikes.length;
+              post.commentsNumber = postData.comments.length;
+              post.originalPostDoneBy = checkIfUserExistInThisBasicData;
+            } else {
+              this.userBasicData = await this.accountService.getBasicAccountDetails(
+                postData.postCreatorId
+              );
+              this.basicData.push(this.userBasicData);
+              post.text = postData.text;
+              post.image = postData.image;
+              post.likesNumber = postData.postLikes.length;
+              post.commentsNumber = postData.comments.length;
+              post.originalPostDoneBy = this.userBasicData;
+            }
           }
         }
       }
@@ -146,24 +151,23 @@ export class PostsService {
       this.http
         .get(this.rootUrl + '/posts/postId/' + id)
         .subscribe((data: Post) => {
-          console.log(data);
           resolve(data);
+          reject('there is no post with this id');
         });
-      reject('there is no post with this id');
     });
   }
 
-  getPostLikes(postId) {
-    return new Promise((resolve) => {
+  getPostLikes(postId: number) {
+    return new Promise<number>((resolve) => {
       this.http
         .get(this.rootUrl + 'postLikes/likesNumber/' + postId)
-        .subscribe((data) => {
+        .subscribe((data: number) => {
           resolve(data);
         });
     });
   }
 
-  getPostLikers(postId) {
+  getPostLikers(postId: number) {
     return this.http.get(this.rootUrl + 'postLikes/likers/' + postId);
   }
 

@@ -52,33 +52,26 @@ export class AppComponent implements OnInit {
     this.loggedIn = false;
   }
 
-  async getData() {
+  async getUserData() {
     this.userData = await this.accountService.getUserData();
   }
-
-  // getUserData() {
-  //   this.accountService.refresh.subscribe((data: boolean) => {
-  //     if (data) {
-  //       this.getData();
-  //     }
-  //   });
-  // }
 
   getTheUpdatedImage() {
     this.accountService.imageSubject.subscribe((data: boolean) => {
       if (data) {
-        this.getData();
+        this.getUserData();
       }
     });
   }
   navBarController() {
     this.accountService.loggedIn.subscribe((data: boolean) => {
       this.loggedIn = data;
+      this.getUserData();
     });
   }
 
   ngOnInit() {
-    this.getData();
+    this.getUserData();
     this.getTheUpdatedImage();
     this.navBarController();
   }

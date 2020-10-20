@@ -25,6 +25,7 @@ export class EditPostComponent implements OnInit {
   showImage: boolean = true;
   myImage;
   postImage: string | ArrayBuffer;
+  imageChanged: boolean = false;
 
   async getUserData() {
     this.userData = await this.accountService.getUserData();
@@ -36,6 +37,7 @@ export class EditPostComponent implements OnInit {
 
   deleteImage() {
     this.showImage = false;
+    this.imageChanged = true;
   }
 
   uploadImage(event): void {
@@ -48,7 +50,7 @@ export class EditPostComponent implements OnInit {
       this.http
         .post('http://localhost:8080/upload', formData)
         .subscribe((data) => {
-          console.log(data);
+          this.imageChanged = true;
         });
       let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
@@ -60,9 +62,9 @@ export class EditPostComponent implements OnInit {
   }
 
   confirmEdit() {
-    if (this.myImage) {
+    if (this.imageChanged && this.myImage) {
       this.post.image = this.myImage.name;
-    } else {
+    } else if (this.imageChanged && !this.myImage) {
       this.post.image = null;
     }
     this.post.text = this.inputData;
@@ -74,6 +76,7 @@ export class EditPostComponent implements OnInit {
 
   getPostData() {
     this.postService.editPostComponent.subscribe((data) => {
+      console.log(data.post.text);
       this.post = data.post;
       this.userData = data.userData;
       this.editPostComponent = data.openComponent;

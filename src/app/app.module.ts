@@ -16,8 +16,16 @@ import { NotificationComponent } from './notification/notification.component';
 import { SocketComponent } from './socket/socket.component';
 import { FriendRequestComponent } from './friend-request/friend-request.component';
 
+import { EditPostComponent } from './edit-post/edit-post.component';
+
 @NgModule({
-  declarations: [AppComponent, NotificationComponent, SocketComponent, FriendRequestComponent],
+  declarations: [
+    AppComponent,
+    NotificationComponent,
+    SocketComponent,
+    FriendRequestComponent,
+    EditPostComponent,
+  ],
   imports: [
     FormsModule,
     ReactiveFormsModule,
