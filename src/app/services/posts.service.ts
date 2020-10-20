@@ -35,18 +35,39 @@ export class PostsService {
     private http: HttpClient
   ) {}
 
-  async getPostOriginalUserData(posts) {
+  async getPostOriginalUserData(posts: Post[]) {
     for (let post of posts) {
       if (post.postOriginalId) {
         const postData = posts.find(
           (item) => item.idPost == post.postOriginalId
         );
         if (postData) {
-          post = { ...postData };
+          post.text = postData.text;
+          post.image = postData.image;
+          post.likesNumber = postData.postLikes.length;
+          post.commentsNumber = postData.comments.length;
           post.originalPostDoneBy = postData.doneBy;
         } else {
           const postData = await this.getPostByPostId(post.postOriginalId);
-          post = postData;
+          const checkIfUserExistInThisBasicData = this.basicData.find(
+            (item) => item.idAccount == postData.postCreatorId
+          );
+          if (checkIfUserExistInThisBasicData) {
+            post.text = postData.text;
+            post.image = postData.image;
+            post.likesNumber = postData.postLikes.length;
+            post.commentsNumber = postData.comments.length;
+            post.originalPostDoneBy = checkIfUserExistInThisBasicData;
+          } else {
+            this.userBasicData = await this.accountService.getBasicAccountDetails(
+              postData.postCreatorId
+            );
+            post.text = postData.text;
+            post.image = postData.image;
+            post.likesNumber = postData.postLikes.length;
+            post.commentsNumber = postData.comments.length;
+            post.originalPostDoneBy = this.userBasicData;
+          }
         }
       }
     }
@@ -103,7 +124,6 @@ export class PostsService {
       this.http.get(this.rootUrl + 'posts').subscribe((data: Post[]) => {
         this.dbPosts = data;
         this.getUserDetails(this.dbPosts);
-        // console.log(this.dbPosts);
         resolve(this.dbPosts);
       });
     });
@@ -122,13 +142,14 @@ export class PostsService {
   }
 
   getPostByPostId(id: number) {
-    return new Promise((resolve) => {
+    return new Promise<Post>((resolve, reject) => {
       this.http
         .get(this.rootUrl + '/posts/postId/' + id)
         .subscribe((data: Post) => {
           console.log(data);
           resolve(data);
         });
+      reject('there is no post with this id');
     });
   }
 

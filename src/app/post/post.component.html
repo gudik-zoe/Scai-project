@@ -15,16 +15,16 @@
     <p class="mt-5" *ngIf="post.extraText">{{post.extraText}}</p>
   </ng-container>
 
-  <div *ngIf="post.postOriginalId && post.doneBy" (click)="toDescription(post.postOriginalId)"
+  <div *ngIf="post.postOriginalId  && post.originalPostDoneBy" (click)="toDescription(post.postOriginalId)"
     style="margin-top: 30px; border: 1px solid black; cursor: pointer; ">
     <div style="margin-top: 10px; float: left;">
-      <img src="http://localhost:8080/files/{{ post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%;"
-        height="50px" />
+      <img src="http://localhost:8080/files/{{ post.originalPostDoneBy.profilePhoto }}" width="50px"
+        style="border-radius: 50%;" height="50px" />
       <span class="font-weight-bold">
-        {{ post.doneBy.firstName + " " + post.doneBy.lastName }}
+        {{ post.originalPostDoneBy.firstName + " " + post.originalPostDoneBy.lastName }}
         shared: </span>
     </div>
-    <p style="padding-right: 250px; margin-top: 50px;"> {{ post.text }} </p>
+    <p style="padding-right: 220px; margin-top: 50px;"> {{ post.text }} </p>
     <img *ngIf=" post.image" src="http://localhost:8080/files/{{ post.image }}" style="width: 80%; height: 60%;" />
     <p><i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue"> </i>{{post.likesNumber}}
       <i class="fa fa-comments" aria-hidden="true" style="margin-left: 150px;"></i>{{post.commentsNumber}}</p>
@@ -36,17 +36,10 @@
   </div>
 
   <p class="mt-5" *ngIf="!post.postOriginalId"> {{ post.text }} </p>
-
-
-
   <div class="container" *ngIf="!post.postOriginalId">
     <img *ngIf="post.image" src="http://localhost:8080/files/{{ post.image }}" style="width: 80%; height: 60%;" />
-
   </div>
-
-
   <hr />
-
   <span><i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue"></i> {{ post.postLikes.length }} </span>
   <span (click)="openComments()" class="font-weight-bold"
     style="margin-left: 140px; cursor: pointer;">{{ post.comments.length }}comments</span>

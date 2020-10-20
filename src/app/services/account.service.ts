@@ -13,7 +13,7 @@ export class AccountService {
   userData: Account;
   imageSubject = new Subject<boolean>();
   loggedIn = new Subject<boolean>();
-  refresh = new Subject<boolean>();
+  // refresh = new Subject<boolean>();
   constructor(private http: HttpClient, private _sanitizer: DomSanitizer) {}
 
   getId() {

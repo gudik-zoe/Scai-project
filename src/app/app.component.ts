@@ -56,18 +56,18 @@ export class AppComponent implements OnInit {
     this.userData = await this.accountService.getUserData();
   }
 
-  getUserData() {
-    this.accountService.refresh.subscribe((data: boolean) => {
+  // getUserData() {
+  //   this.accountService.refresh.subscribe((data: boolean) => {
+  //     if (data) {
+  //       this.getData();
+  //     }
+  //   });
+  // }
+
+  getTheUpdatedImage() {
+    this.accountService.imageSubject.subscribe((data: boolean) => {
       if (data) {
         this.getData();
-      }
-    });
-  }
-
-  updateImage() {
-    this.accountService.imageSubject.subscribe((data) => {
-      if (data) {
-        this.getUserData();
       }
     });
   }
@@ -79,8 +79,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.getData();
-    this.getUserData();
-    this.updateImage();
+    this.getTheUpdatedImage();
     this.navBarController();
   }
 }

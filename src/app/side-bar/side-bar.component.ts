@@ -25,12 +25,16 @@ export class SideBarComponent implements OnInit {
     this.userData = await this.accountService.getUserData();
   }
 
-  ngOnInit() {
-    this.getUserData();
-    this.accountService.imageSubject.subscribe((data) => {
+  getTheUpdatedImage() {
+    this.accountService.imageSubject.subscribe((data: boolean) => {
       if (data) {
         this.getUserData();
       }
     });
+  }
+
+  ngOnInit() {
+    this.getUserData();
+    this.getTheUpdatedImage();
   }
 }

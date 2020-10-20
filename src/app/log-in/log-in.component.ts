@@ -25,7 +25,6 @@ export class LogInComponent implements OnInit {
   signUp: boolean = true;
   dataSaved: boolean = false;
   error: boolean = false;
-  logged = [];
   emailExist: boolean = false;
 
   signUpfunc(account: Account): void {
@@ -51,7 +50,7 @@ export class LogInComponent implements OnInit {
     this.auth.signIn(email, password).subscribe(
       (data) => {
         localStorage.setItem('token', data.headers.get('Authorization'));
-        this.accountService.refresh.next(true);
+        // this.accountService.refresh.next(true);
         this.accountService.loggedIn.next(true);
         this.route.navigate(['/home-page']);
       },
