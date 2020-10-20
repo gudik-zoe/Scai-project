@@ -6,6 +6,7 @@ import { AuthService } from '../services/auth.service';
 import { PostsService } from '../services/posts.service';
 import { AccountService } from '../services/account.service';
 import { HttpClient } from '@angular/common/http';
+import { Account } from '../models/account';
 
 @Component({
   selector: 'app-log-in',
@@ -26,13 +27,17 @@ export class LogInComponent implements OnInit {
   error: boolean = false;
   logged = [];
   emailExist: boolean = false;
-  theAccountObject;
-  userProfilePhoto;
 
-  signUpfunc(data: any): void {
-    this.auth.signUp(data).subscribe((data) => {
-      console.log('u ha been registered');
+  signUpfunc(account: Account): void {
+    if (account.gender == 'male') {
+      account.profilePhoto = 'download (3).jpg';
+    } else if (account.gender == 'female') {
+      account.profilePhoto = 'Unknown-Girl.jpg';
+    }
+    account.coverPhoto = 'nature-design.jpg';
+    this.auth.signUp(account).subscribe((data) => {
       console.log(data);
+      console.log('u ha been registered');
       this.signUp = false;
     });
   }
@@ -42,7 +47,7 @@ export class LogInComponent implements OnInit {
     this.signUpForm.reset();
   }
 
-  signIn(email: string, password: any) {
+  signIn(email: string, password: string) {
     this.auth.signIn(email, password).subscribe(
       (data) => {
         localStorage.setItem('token', data.headers.get('Authorization'));
@@ -85,18 +90,5 @@ export class LogInComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
-    // this.accountService.getData().subscribe((data) => {
-    //   this.theAccountObject = data;
-    //   this.http
-    //     .get(
-    //       'http://localhost:8080/files/' + this.theAccountObject.profilePhoto,
-    //       {
-    //         responseType: 'blob',
-    //       }
-    //     )
-    //     .subscribe((data) => {
-    //       this.accountService.userData.profilePhoto = data;
-    //     });
-    // });
   }
 }

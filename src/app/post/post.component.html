@@ -15,14 +15,13 @@
     <p class="mt-5" *ngIf="post.extraText">{{post.extraText}}</p>
   </ng-container>
 
-  <div *ngIf="post.postOriginalId && post.doneBy && post.originalPostDoneBy"
-    (click)="toDescription(post.postOriginalId)" style="margin-top: 30px; border: 1px solid black; cursor: pointer; ">
+  <div *ngIf="post.postOriginalId && post.doneBy" (click)="toDescription(post.postOriginalId)"
+    style="margin-top: 30px; border: 1px solid black; cursor: pointer; ">
     <div style="margin-top: 10px; float: left;">
-      <img *ngIf="post.originalPostDoneBy.profilePhoto"
-        src="http://localhost:8080/files/{{ post.originalPostDoneBy.profilePhoto }}" width="50px"
-        style="border-radius: 50%;" height="50px" />
+      <img src="http://localhost:8080/files/{{ post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%;"
+        height="50px" />
       <span class="font-weight-bold">
-        {{ post.originalPostDoneBy.firstName + " " + post.originalPostDoneBy.lastName }}
+        {{ post.doneBy.firstName + " " + post.doneBy.lastName }}
         shared: </span>
     </div>
     <p style="padding-right: 250px; margin-top: 50px;"> {{ post.text }} </p>

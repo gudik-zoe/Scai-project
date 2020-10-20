@@ -1,5 +1,5 @@
 <div *ngFor="let post of posts; let i = index">
   <app-post [commentText]="commentText" [post]="post" [userData]="userData" (commentPostEvent)="commentPost($event)"
-    (likePostEvent)="likePost($event)" [usersDetails]="usersDetails" (deletePostEvent)="deletePostInParent($event)">
+    (likePostEvent)="likePost($event)" (deletePostEvent)="deletePostInParent($event)">
   </app-post>
 </div>

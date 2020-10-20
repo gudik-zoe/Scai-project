@@ -18,11 +18,9 @@ import { PostModule } from './post.module';
 })
 export class PostComponent implements OnInit {
   imgUrl: string = environment.rootUrl + '/files/';
-  @Input() post;
+  @Input() post: Post;
   @Input() userData;
-  @Input() posters;
-  @Input() i;
-  @Input() usersDetails;
+
   @Input() commentText;
 
   @Output() testOutput = new EventEmitter<Post>();
@@ -102,7 +100,7 @@ export class PostComponent implements OnInit {
     return false;
   }
 
-  getComment(): boolean {
+  getComment() {
     if (this.userData) {
       const check = this.post.comments.find(
         (item) => item.commentCreatorId == this.userData.idAccount

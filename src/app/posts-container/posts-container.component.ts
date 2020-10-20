@@ -95,7 +95,7 @@ export class PostsContainerComponent implements OnInit {
           lastName: this.userData.lastName,
           profilePhoto: this.userData.profilePhoto,
         };
-        data.post.comments.push(data.post.comment);
+        data.post.comments.push(comment);
         this.commentText = null;
         this.sendNotification(notification);
       });

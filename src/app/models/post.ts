@@ -10,7 +10,10 @@ export class Post {
   postCreatorId: number;
   postOriginalId?: number;
   extraText?: string;
+  originalPostDoneBy?: AccountBasicData;
   doneBy?: AccountBasicData;
   comments: Comment[];
   postLikes: PostLike[];
+  commentsNumber?: number;
+  likesNumber?: number;
 }

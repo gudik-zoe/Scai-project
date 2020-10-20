@@ -24,10 +24,9 @@ export class PostsService {
   sharePostComponent = new Subject<any>();
   dbPosts: Post[];
   comment: Comment;
-  accountPosts;
-  postDetails: Post;
   basicData = [];
   userBasicData: AccountBasicData;
+  accountPosts: Post[];
 
   constructor(
     private accountService: AccountService,
@@ -43,19 +42,11 @@ export class PostsService {
           (item) => item.idPost == post.postOriginalId
         );
         if (postData) {
-          post.text = postData.text;
-          post.image = postData.image;
-          post.description = postData.description;
-          post.likesNumber = postData.postLikes.length;
-          post.commentsNumber = postData.comments.length;
+          post = { ...postData };
           post.originalPostDoneBy = postData.doneBy;
         } else {
-          post.text = null;
-          post.image = null;
-          post.description = null;
-          post.likesNumber = null;
-          post.commentsNumber = null;
-          post.originalPostDoneBy = null;
+          const postData = await this.getPostByPostId(post.postOriginalId);
+          post = postData;
         }
       }
     }
@@ -122,7 +113,7 @@ export class PostsService {
     return new Promise<Post[]>((resolve) => {
       this.http
         .get(this.rootUrl + 'posts/accountId/' + id)
-        .subscribe((data) => {
+        .subscribe((data: Post[]) => {
           this.accountPosts = data;
           this.getUserDetails(this.accountPosts);
           resolve(this.accountPosts);
