@@ -33,6 +33,8 @@ export class EditPostComponent implements OnInit {
 
   public closeEditPostComponent(): void {
     this.editPostComponent = false;
+    this.showImage = true;
+    this.postImage = null;
   }
 
   deleteImage() {
@@ -56,6 +58,7 @@ export class EditPostComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = (event) => {
         this.postImage = event.target.result;
+        this.showImage = false;
         console.log(typeof this.postImage);
       };
     }

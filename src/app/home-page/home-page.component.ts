@@ -1,17 +1,7 @@
 import { Router } from '@angular/router';
-
-import { HttpClient } from '@angular/common/http';
 import { AccountService } from '../services/account.service';
-import { AuthService } from '../services/auth.service';
-import { ChatService } from '../services/chat.service';
-import { PagesService } from '../services/pages.service';
 import { PostsService } from '../services/posts.service';
-import { StorageService } from '../services/storage.service';
 import { Component, OnInit, Sanitizer } from '@angular/core';
-import { CommentsService } from '../services/comments.service';
-import { FriendsService } from '../services/friends.service';
-import { DomSanitizer } from '@angular/platform-browser';
-import { Post } from '../models/post';
 import { PostLike } from '../models/postLike';
 import { Account } from '../models/account';
 
