@@ -30,7 +30,6 @@ export class FriendsService {
             userId
         )
         .subscribe((data: Relationship) => {
-          console.log(data, userId, this.accountService.getId());
           if (!data) {
             this.status = 'add friend';
           } else if (

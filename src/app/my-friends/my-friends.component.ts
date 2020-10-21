@@ -30,7 +30,7 @@ export class MyFriendsComponent implements OnInit {
     this.route.navigate(['/messenger', id]);
   }
 
-  goToProfile(id) {
+  goToProfile(id: number) {
     this.route.navigate(['/user-profile', id]);
   }
 

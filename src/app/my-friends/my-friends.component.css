@@ -13,3 +13,8 @@
     opacity: 0;
   }
 }
+
+#span:hover {
+  background-color: white;
+  border-radius: 8px;
+}
