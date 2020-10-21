@@ -9,7 +9,8 @@
         <div *ngFor="let not of notificationObject; let i = index">
             <li (click)="goToDescription(not.relatedPostId)" class="dropdown-item "
                 style="font-size: small; cursor: pointer;">
-                <img src="{{ imgUrl + not.doneBy?.profilePhoto}}" width="30px" style="border-radius: 50%">
+                <img *ngIf="not.doneBy" src="{{ imgUrl + not.doneBy.profilePhoto}}" width="30px"
+                    style="border-radius: 50%">
                 <span class="font-weight-bold"> {{ not.doneBy?.firstName + " " + not.doneBy?.lastName }}
                 </span>
                 {{not.action}} your post
