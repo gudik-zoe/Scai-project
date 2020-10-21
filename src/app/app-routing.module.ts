@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthenticationGuard } from './authentication.guard';
 import { LoggedUserGuard } from './logged-user.guard';
-import { SocketComponent } from './socket/socket.component';
+// import { SocketComponent } from './socket/socket.component';
 
 const routes: Routes = [
   {
@@ -60,7 +60,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages-co/pages-co.module').then((m) => m.PagesCoModule),
   },
-  { path: 'socket', component: SocketComponent },
+  // { path: 'socket', component: SocketComponent },
 
   {
     path: 'account-settings',

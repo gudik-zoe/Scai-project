@@ -24,7 +24,6 @@ export class ChatService {
     const ws = new SockJS(serverUrl);
     this.stompClient = Stomp.over(ws);
     const that = this;
-    // tslint:disable-next-line:only-arrow-functions
     this.stompClient.connect({}, function (frame) {
       that.stompClient.subscribe('/message', (message) => {
         if (message.body) {
@@ -40,11 +39,6 @@ export class ChatService {
 
   public stompClient;
   public msg = [];
-
-  users = JSON.parse(localStorage.getItem('user'));
-  currentUser;
-  messageTo;
-  sentMessage;
 
   getMyConvWithId(senderId) {
     return this.http.get(
