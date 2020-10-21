@@ -1,6 +1,6 @@
 <ng-container *ngIf="post && editPostComponent && userData">
     <div class="backdrop"></div>
-    <div class="alert-box" style="height: fit-content">
+    <div class="alert-box">
         <span>
             <i (click)="closeEditPostComponent()" style="color: red; float: right; cursor: pointer" class="fa fa-times"
                 aria-hidden="true"></i>
@@ -13,7 +13,7 @@
             <span class="font-weight-bold">
                 {{ userData.firstName + " " + userData.lastName }} shared:
             </span>
-            <div class="md-form">
+            <div>
                 <p>{{ inputData }}</p>
 
                 <img *ngIf="post.image && showImage" src="http://localhost:8080/files/{{ post?.image }}" width="60%"
@@ -22,7 +22,7 @@
                 <i *ngIf="showImage && post?.image" style="color: lightskyblue; cursor: pointer;"
                     class="fa fa-trash fa-lg" aria-hidden="true" (click)="deleteImage()"></i>
                 <textarea placeholder="what's in your mind {{ userData?.firstName }}" [(ngModel)]="inputData"
-                    class="md-textarea form-control mt-3" rows="3"></textarea>
+                    class="md-textarea form-control mt-3" rows="2"></textarea>
                 <input type="file" name="file" (change)="uploadImage($event)" id="file" class="inputfile" />
                 <label style="float: right; cursor: pointer" for="file">
                     <img src="https://png.pngtree.com/png-vector/20191129/ourmid/pngtree-image-upload-icon-photo-upload-icon-png-image_2047546.jpg"

@@ -9,7 +9,7 @@ import { AccountService } from '../services/account.service';
 import { CommentsService } from '../services/comments.service';
 import { NotificationService } from '../services/notification.service';
 import { PostsService } from '../services/posts.service';
-import { PostModule } from './post.module';
+import { Comment } from '../models/comment';
 
 @Component({
   selector: 'app-post',
@@ -107,16 +107,16 @@ export class PostComponent implements OnInit {
     this.openCommentsList = !this.openCommentsList;
   }
 
-  editComment(text, id) {
+  editComment(text: string, id: number) {
     this.commentId = id;
     this.editCommentOn = !this.editCommentOn;
     this.editCommentValue = text;
   }
 
-  confirmEditComment(comment) {
+  confirmEditComment(comment: Comment) {
     comment.text = this.editCommentValue;
     this.commentService
-      .updateComment(comment.postsIdPost, comment)
+      .updateComment(comment.relatedPostId, comment)
       .subscribe((data) => {
         this.editCommentOn = false;
       });

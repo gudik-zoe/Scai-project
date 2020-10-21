@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AccountBasicData } from '../models/accountBasicData';
+import { Relationship } from '../models/relationship';
 import { AccountService } from './account.service';
 
 @Injectable({
@@ -19,8 +20,8 @@ export class FriendsService {
   notifier = new Subject<boolean>();
   basicData = [];
 
-  getRelationStatusBetweenMeAnd(userId) {
-    return new Promise((resolve) => {
+  getRelationStatusBetweenMeAnd(userId: number) {
+    return new Promise<string>((resolve) => {
       this.http
         .get(
           'http://localhost:8080/relation/getRelation/' +
@@ -28,19 +29,22 @@ export class FriendsService {
             '/' +
             userId
         )
-        .subscribe((data: number) => {
-          switch (data) {
-            case null:
-              this.status = 'add friend';
-              break;
-            case 0:
-              this.status = 'pending-cancel request';
-              break;
-            case 1:
-              this.status = 'chat';
-              break;
-            default:
-              this.status = 'blocked';
+        .subscribe((data: Relationship) => {
+          console.log(data, userId, this.accountService.getId());
+          if (!data) {
+            this.status = 'add friend';
+          } else if (
+            data.status == 0 &&
+            data.userTwoId == this.accountService.getId()
+          ) {
+            this.status = 'sent you a friend request';
+          } else if (
+            data.status == 0 &&
+            data.userTwoId !== this.accountService.getId()
+          ) {
+            this.status = 'pending..cancel friend request';
+          } else {
+            this.status = 'chat';
           }
           resolve(this.status);
         });
@@ -48,7 +52,7 @@ export class FriendsService {
   }
 
   getFriendRequests(id) {
-    return new Promise((resolve) => {
+    return new Promise<Relationship[]>((resolve) => {
       this.http
         .get('http://localhost:8080/relation/getFriendRequests/' + id)
         .subscribe((data) => {
@@ -102,3 +106,14 @@ export class FriendsService {
     );
   }
 }
+// switch (data.status) {
+
+//   case 0 &&
+//     data.userOneId == this.accountService.getId() &&
+//     data.userTwoId == userId:
+//     this.status = 'pending-cancel request';
+//     break;
+//   case 1:
+//     this.status = 'chat';
+//     break;
+// }

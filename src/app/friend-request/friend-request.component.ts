@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Relationship } from '../models/relationship';
 import { AccountService } from '../services/account.service';
 import { FriendsService } from '../services/friends.service';
 
@@ -9,7 +10,7 @@ import { FriendsService } from '../services/friends.service';
   styleUrls: ['./friend-request.component.css'],
 })
 export class FriendRequestComponent implements OnInit {
-  relations;
+  relations: Relationship[];
   id: number;
   imgUrl: string = environment.rootUrl + 'files/';
   constructor(
@@ -19,7 +20,6 @@ export class FriendRequestComponent implements OnInit {
 
   async getFriendRequests() {
     this.relations = await this.friendService.getFriendRequests(this.id);
-    console.log(this.relations);
   }
 
   respondFriendRequest(id: number, status: number) {

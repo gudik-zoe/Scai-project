@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
 import { Post } from '../models/post';
+import { Notification } from '../models/notification';
 import { AccountService } from '../services/account.service';
 import { AuthService } from '../services/auth.service';
 import { EventsService } from '../services/events.service';
@@ -32,8 +33,7 @@ export class UserProfileComponent implements OnInit {
   loggedInUserData: Account;
   status: string;
   requestedAccountPosts: Post[];
-  notificationObject;
-  user;
+  btnDisable: boolean;
 
   goToEditing() {
     this.route.navigate(['/account-settings']);
@@ -48,7 +48,7 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  async getPostsByAccountId(id) {
+  async getPostsByAccountId(id: number) {
     this.requestedAccountPosts = await this.postService.getPostsByAccountId(id);
   }
 
@@ -56,13 +56,15 @@ export class UserProfileComponent implements OnInit {
     this.loggedInUserData = await this.accountService.getUserData();
   }
 
-  goToMessengerOrAddFriend(id) {
+  goToMessengerOrAddFriend(id: number) {
     if (this.status == 'add friend') {
       this.friendService.sendFriendRequest(id).subscribe((data) => {
-        this.status = 'pending - cancel request';
+        this.status = 'pending..cancel friend request';
       });
     } else if (this.status == 'chat') {
       this.route.navigate(['/messenger', id]);
+    } else if (this.status == 'sent you a friend request') {
+      return null;
     } else {
       this.friendService
         .deleteOrCancelFriendRequest(this.loggedInUserData.idAccount, this.id)
@@ -73,7 +75,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   getIdFromUrl() {
-    return new Promise((resolve) => {
+    return new Promise<number>((resolve) => {
       this.id = parseInt(this.aroute.snapshot.paramMap.get('id'));
       resolve(this.id);
     });
@@ -86,8 +88,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   async getStatusWith() {
-    await this.friendService.getRelationStatusBetweenMeAnd(this.id);
-    this.status = this.friendService.status;
+    this.status = await this.friendService.getRelationStatusBetweenMeAnd(
+      this.id
+    );
   }
 
   async userProfileSetFunctions() {
