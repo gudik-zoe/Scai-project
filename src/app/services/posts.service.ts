@@ -24,7 +24,7 @@ export class PostsService {
   dbPosts: Post[];
   comment: Comment;
   basicData = [];
-  ù;
+  post: Post;
   postsData = [];
   userBasicData: AccountBasicData;
   accountPosts: Post[];
@@ -37,7 +37,6 @@ export class PostsService {
   async getPostOriginalUserData(posts: Post[]) {
     for (let post of posts) {
       if (post.postOriginalId) {
-        const postOriginalId = post.postOriginalId;
         const postData = posts.find(
           (item) => item.idPost == post.postOriginalId
         );
@@ -143,13 +142,21 @@ export class PostsService {
         });
     });
   }
+  async getPostDetail(post: Post) {
+    const userData = await this.accountService.getBasicAccountDetails(
+      post.postCreatorId
+    );
+    post.doneBy = userData;
+  }
 
   getPostByPostId(id: number) {
     return new Promise<Post>((resolve, reject) => {
       this.http
         .get(this.rootUrl + '/posts/postId/' + id)
         .subscribe((data: Post) => {
-          resolve(data);
+          this.post = data;
+          // this.getPostDetail(this.post);
+          resolve(this.post);
           reject('there is no post with this id');
         });
     });

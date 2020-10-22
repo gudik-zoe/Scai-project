@@ -16,7 +16,7 @@ export class NotificationService {
 
   basicData = [];
   rootUrl: string = environment.rootUrl;
-  addNotification(notification) {
+  addNotification(notification: Notification) {
     return this.http.post(
       this.rootUrl + 'notification/addNotification',
       notification

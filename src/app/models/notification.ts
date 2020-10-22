@@ -1,7 +1,7 @@
 import { AccountBasicData } from './accountBasicData';
 
 export class Notification {
-  idNotification: number;
+  idNotification?: number;
   notCreator: number;
   action: string;
   notReceiver: number;
@@ -10,4 +10,6 @@ export class Notification {
   seen: boolean;
   doneBy?: AccountBasicData;
   dateInMinutes?: number;
+  timeUnit?: string;
+  time?: number;
 }
