@@ -1,39 +1,40 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { AccountService } from './account.service';
+import { Comment } from '../models/comment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommentsService {
+  rootUrl: string = environment.rootUrl;
   constructor(
     private http: HttpClient,
     private accountService: AccountService
   ) {}
 
-  getCommentsByPostId(postId) {
+  getCommentsByPostId(postId: number) {
     return this.http.get('http://localhost:8080/comments/postId/' + postId);
   }
 
-  addCommment(postId, commentText) {
+  addCommment(postId: number, commentText: string) {
     return this.http.post(
-      'http://localhost:8080/comments/' +
-        this.accountService.getId() +
-        '/' +
-        postId,
+      this.rootUrl + 'comments/' + this.accountService.getId() + '/' + postId,
       {
         text: commentText,
       }
     );
   }
 
-  deleteComment(commentId) {
-    return this.http.delete('http://localhost:8080/comments/' + commentId);
+  deleteComment(commentId: number) {
+    return this.http.delete(this.rootUrl + 'comments/' + commentId);
   }
 
-  likeComment(commentId) {
+  likeComment(commentId: number) {
     return this.http.post(
-      'http://localhost:8080/commentLikes/' +
+      this.rootUrl +
+        'commentLikes/' +
         this.accountService.getId() +
         '/' +
         commentId,
@@ -41,23 +42,18 @@ export class CommentsService {
     );
   }
 
-  getCommentLikes(commentId) {
+  getCommentLikes(commentId: number) {
     return this.http.get(
-      'http://localhost:8080/commentLikes/likesNumber/' + commentId
+      this.rootUrl + 'commentLikes/likesNumber/' + commentId
     );
   }
 
-  getCommentLikers(commentId) {
-    return this.http.get(
-      'http://localhost:8080/commentLikes/likers/' + commentId
-    );
+  getCommentLikers(commentId: number) {
+    return this.http.get(this.rootUrl + 'commentLikes/likers/' + commentId);
   }
-  updateComment(postId, newComment) {
+  updateComment(postId: number, newComment: Comment) {
     return this.http.put(
-      'http://localhost:8080/comments/' +
-        this.accountService.getId() +
-        '/' +
-        postId,
+      this.rootUrl + 'comments/' + this.accountService.getId() + '/' + postId,
       newComment
     );
   }

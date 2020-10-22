@@ -24,9 +24,8 @@
 
 body {
   background-color: whitesmoke;
-  overflow-y:hidden;
-  overflow-x:hidden;  
-  overflow:hidden;
+  /* overflow-y:hidden;
+  /* overflow-x:hidden;   */
 }
 
 .sender {
@@ -45,21 +44,17 @@ body {
   list-style-type: none;
 }
 
-
 ::-webkit-scrollbar {
-  width: 6px; 
-   background-color: rgba(0,0,0,0);
- 
+  width: 6px;
+  background-color: rgba(0, 0, 0, 0);
 }
 ::-webkit-scrollbar:hover {
   background-color: rgba(0, 0, 0, 0.09);
 }
 
 ::-webkit-scrollbar-thumb:vertical {
-  background: rgba(0,0,0,0.61);
-
+  background: rgba(0, 0, 0, 0.61);
 }
 ::-webkit-scrollbar-thumb:vertical:active {
-  background: rgba(0,0,0,0.61);
- 
+  background: rgba(0, 0, 0, 0.61);
 }

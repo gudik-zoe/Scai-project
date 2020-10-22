@@ -34,25 +34,24 @@ export class NotificationService {
         .subscribe((data: Notification[]) => {
           this.notificationObject = data;
           this.getBasicData(this.notificationObject);
-          // console.log(this.notificationObject);
           resolve(this.notificationObject);
         });
     });
   }
 
-  async getBasicData(nots) {
-    for (let i of nots) {
+  async getBasicData(notifications: Notification[]) {
+    for (let not of notifications) {
       const find = this.basicData.find(
-        (item) => item.idAccount == i.notCreator
+        (item) => item.idAccount == not.notCreator
       );
       if (!find) {
         const data = await this.accountService.getBasicAccountDetails(
-          i.notCreator
+          not.notCreator
         );
         this.basicData.push(data);
-        i.doneBy = data;
+        not.doneBy = data;
       } else {
-        i.doneBy = find;
+        not.doneBy = find;
       }
     }
   }

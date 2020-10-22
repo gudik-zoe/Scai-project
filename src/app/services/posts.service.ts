@@ -3,7 +3,6 @@ import { Injectable, ɵisListLikeIterable } from '@angular/core';
 // import { CommentStmt } from '@angular/compiler';
 import { Subject } from 'rxjs';
 import { AuthService } from './auth.service';
-import { StorageService } from './storage.service';
 import { HttpClient } from '@angular/common/http';
 import { AccountService } from './account.service';
 import { environment } from 'src/environments/environment';
@@ -32,14 +31,13 @@ export class PostsService {
 
   constructor(
     private accountService: AccountService,
-    private auth: AuthService,
-    private storage: StorageService,
     private http: HttpClient
   ) {}
 
   async getPostOriginalUserData(posts: Post[]) {
     for (let post of posts) {
       if (post.postOriginalId) {
+        const postOriginalId = post.postOriginalId;
         const postData = posts.find(
           (item) => item.idPost == post.postOriginalId
         );

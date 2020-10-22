@@ -1,14 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-
-import { Route } from '@angular/compiler/src/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { Subscription } from 'rxjs';
 import { AccountService } from './services/account.service';
 import { AuthService } from './services/auth.service';
 import { PostsService } from './services/posts.service';
-import { StorageService } from './services/storage.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Account } from './models/account';
 import { NotificationService } from './services/notification.service';
 
@@ -18,13 +13,7 @@ import { NotificationService } from './services/notification.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(
-    private accountService: AccountService,
-    private route: Router,
-    private auth: AuthService,
-    private notificationService: NotificationService,
-    private postService: PostsService
-  ) {}
+  constructor(private accountService: AccountService, private route: Router) {}
   title = 'scai-project';
   loggedInSubscription: Subscription;
   message: string;

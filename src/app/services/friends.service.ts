@@ -24,7 +24,8 @@ export class FriendsService {
     return new Promise<string>((resolve) => {
       this.http
         .get(
-          'http://localhost:8080/relation/getRelation/' +
+          this.rootUrl +
+            'relation/getRelation/' +
             this.accountService.getId() +
             '/' +
             userId
@@ -53,7 +54,7 @@ export class FriendsService {
   getFriendRequests(id) {
     return new Promise<Relationship[]>((resolve) => {
       this.http
-        .get('http://localhost:8080/relation/getFriendRequests/' + id)
+        .get(this.rootUrl + 'relation/getFriendRequests/' + id)
         .subscribe((data) => {
           this.relations = data;
           this.getFullRelationshipData(this.relations);
@@ -81,20 +82,14 @@ export class FriendsService {
 
   sendFriendRequest(userId) {
     return this.http.post(
-      'http://localhost:8080/relation/' +
-        this.accountService.getId() +
-        '/' +
-        userId,
+      this.rootUrl + 'relation/' + this.accountService.getId() + '/' + userId,
       {}
     );
   }
 
   acceptFriendRequest(relationshipId, status) {
     return this.http.put(
-      'http://localhost:8080/relation/answerRequest/' +
-        relationshipId +
-        '/' +
-        status,
+      this.rootUrl + 'relation/answerRequest/' + relationshipId + '/' + status,
       {}
     );
   }
@@ -105,14 +100,3 @@ export class FriendsService {
     );
   }
 }
-// switch (data.status) {
-
-//   case 0 &&
-//     data.userOneId == this.accountService.getId() &&
-//     data.userTwoId == userId:
-//     this.status = 'pending-cancel request';
-//     break;
-//   case 1:
-//     this.status = 'chat';
-//     break;
-// }

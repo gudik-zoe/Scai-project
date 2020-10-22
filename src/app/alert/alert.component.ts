@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Account } from '../models/account';
+import { Post } from '../models/post';
 import { AccountService } from '../services/account.service';
 import { PostsService } from '../services/posts.service';
-import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-alert',
@@ -13,9 +12,7 @@ import { StorageService } from '../services/storage.service';
 })
 export class AlertComponent implements OnInit {
   constructor(
-    private storageService: StorageService,
     private postsService: PostsService,
-    private _sanitizer: DomSanitizer,
     private accountService: AccountService,
 
     private http: HttpClient
@@ -50,13 +47,12 @@ export class AlertComponent implements OnInit {
     }
   }
 
-  post(text: string): void {
+  post(text: string) {
     const post = {
-      text,
+      text: text,
       image: this.myImage?.name,
       description: null,
       postOriginalId: null,
-      postOriginalOwnerId: null,
     };
     this.postsService.addPost(post).subscribe((data) => {
       this.postsService.close.next(false);

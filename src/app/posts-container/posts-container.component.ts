@@ -33,7 +33,6 @@ export class PostsContainerComponent implements OnInit {
   commentText: string;
   userImage;
   userData: Account;
-  users: any;
   usersDetails = [];
 
   async getUserData() {

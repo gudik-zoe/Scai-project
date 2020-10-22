@@ -24,7 +24,7 @@
     "angular-in-memory-web-api": "^0.11.0",
     "bootstrap": "^4.5.0",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.5.1",
+    "jquery": "^3.4.1",
     "jwt-decode": "^3.0.0-beta.2",
     "net": "^1.0.2",
     "popper.js": "^1.16.1",

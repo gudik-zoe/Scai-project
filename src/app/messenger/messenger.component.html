@@ -1,25 +1,27 @@
-<div class="container-fluid mt-3" style="width: 100; margin-left: 455px">
-  <div *ngIf="id === requestedUser?.idAccount"
+<div *ngIf="requestedUser && userData" class="container-fluid mt-3" style="width: 100; margin-left: 455px">
+  <div *ngIf="id === requestedUser.idAccount"
     style="height: fit-content; width: 300px; background-color: bisque; border-radius: 10px;">
     <div style="background-color: darkslategrey; border-radius: 10px;">
       <span class="font-weight-bold" style="color: white">
-        <img src="http://localhost:8080/files/{{ requestedUser?.profilePhoto }}" width="50px" style="border-radius: 50%"
+        <img src="http://localhost:8080/files/{{ requestedUser.profilePhoto }}" width="50px" style="border-radius: 50%"
           height="50px" />
         {{ requestedUser?.firstName + " " + requestedUser?.lastName }}</span>
     </div>
     <div class="scrollable-element" style="overflow-y: scroll; height: 350px;">
-      <ul *ngFor="let i of myConvWith">
-        <li [class]="(i.idSender==id )? 'sender' :'receiver' "><span>{{i.message}}</span>
+      <ul *ngFor="let chatMessage of webSocketService.chatMessages">
+        <!-- <li [class]="(i.idSender==id )? 'sender' :'receiver' "><span>{{i.message}}</span>
           <small>{{i.date |  date:'dd/MM/yyyy' : 'UTC'}} </small>
-        </li>
+        </li> -->
+        <li>{{chatMessage.user}}:</li>
+        <span>{{chatMessage.message}}</span>
       </ul>
     </div>
 
     <span>
-      <img src="http://localhost:8080/files/{{ userData?.profilePhoto }}" width="40px" style="border-radius: 50%"
+      <img src="http://localhost:8080/files/{{ userData.profilePhoto }}" width="40px" style="border-radius: 50%"
         height="35px" />
       <input [(ngModel)]="message" style="height: 25px; width: 200px" />
-      <button (click)="sendMessage(message)" class="btn btn-success btn-sm ml-1">
+      <button (click)="sendMessage(userData.firstName , message)" class="btn btn-success btn-sm ml-1">
         send
       </button></span>
   </div>

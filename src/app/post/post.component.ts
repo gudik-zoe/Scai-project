@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { EditPost } from '../models/editPostInt';
 import { Post } from '../models/post';
 import { PostLike } from '../models/postLike';
 import { AccountService } from '../services/account.service';
@@ -10,6 +9,7 @@ import { CommentsService } from '../services/comments.service';
 import { NotificationService } from '../services/notification.service';
 import { PostsService } from '../services/posts.service';
 import { Comment } from '../models/comment';
+import { Account } from '../models/account';
 
 @Component({
   selector: 'app-post',
@@ -19,9 +19,9 @@ import { Comment } from '../models/comment';
 export class PostComponent implements OnInit {
   imgUrl: string = environment.rootUrl + '/files/';
   @Input() post: Post;
-  @Input() userData;
+  @Input() userData: Account;
 
-  @Input() commentText;
+  @Input() commentText: string;
 
   @Output() testOutput = new EventEmitter<Post>();
   @Output() deletePostEvent = new EventEmitter<number>();

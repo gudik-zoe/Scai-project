@@ -7,11 +7,10 @@
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <p *ngIf="!haveNotification"> no notification </p>
         <div *ngFor="let not of notificationObject; let i = index">
-            <li (click)="goToDescription(not.relatedPostId)" class="dropdown-item "
+            <li *ngIf="not.doneBy" (click)="goToDescription(not.relatedPostId)" class="dropdown-item "
                 style="font-size: small; cursor: pointer;">
-                <img *ngIf="not.doneBy" src="{{ imgUrl + not.doneBy.profilePhoto}}" width="30px"
-                    style="border-radius: 50%">
-                <span class="font-weight-bold"> {{ not.doneBy?.firstName + " " + not.doneBy?.lastName }}
+                <img src="{{ imgUrl + not.doneBy.profilePhoto}}" width="30px" style="border-radius: 50%">
+                <span class="font-weight-bold"> {{ not.doneBy.firstName + " " + not.doneBy.lastName }}
                 </span>
                 {{not.action}} your post
                 <small style="color: blue;">

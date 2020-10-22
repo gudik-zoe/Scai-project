@@ -69,26 +69,27 @@
   </button>
   <hr>
   <ng-container *ngIf="openCommentsList">
-    <div class="container" *ngFor="let c of post.comments">
+    <div class="container" *ngFor="let comment of post.comments">
       <div class="container mt-3"
         style="background-color: whitesmoke; width:350px; height:fit-content; border-radius: 7px;">
-        <ng-container *ngIf="c.doneBy">
-          <img src="http://localhost:8080/files/{{ c.doneBy.profilePhoto }}" width="20px" style="border-radius: 50%;"
-            height="20px" />
-          <span class="font-weight-bold">{{c.doneBy.firstName + " " + c.doneBy.lastName }} </span>
-          <span *ngIf="!editCommentOn || commentId != c.idComment">{{c.text}}</span>
-          <input *ngIf="editCommentOn && commentId == c.idComment" [(ngModel)]="editCommentValue" style="
+        <ng-container *ngIf="comment.doneBy">
+          <img src="http://localhost:8080/files/{{ comment.doneBy.profilePhoto }}" width="20px"
+            style="border-radius: 50%;" height="20px" />
+          <span class="font-weight-bold">{{comment.doneBy.firstName + " " + comment.doneBy.lastName }} </span>
+          <span *ngIf="!editCommentOn || commentId != comment.idComment">{{comment.text}}</span>
+          <input *ngIf="editCommentOn && commentId == comment.idComment" [(ngModel)]="editCommentValue" style="
           width: 120px;
           border-radius: 8px;
           background-color: white;
           border-style: none;
           margin-left: 10px;
           outline: none;" />
-          <button [disabled]="!editCommentValue" (click)="confirmEditComment(c)"
-            *ngIf="editCommentOn && commentId == c.idComment" class="btn btn-info btn-sm">edit</button>
-          <i (click)="editComment(c.text ,c.idComment)" *ngIf="c.commentCreatorId == userData.idAccount"
-            style="float: right; color: blue; cursor: pointer;" class="fa fa-pencil fa-xxs" aria-hidden="true"></i>
-          <i (click)="deleteComment(c.idComment)" *ngIf="c.commentCreatorId == userData.idAccount"
+          <button [disabled]="!editCommentValue" (click)="confirmEditComment(comment)"
+            *ngIf="editCommentOn && commentId == comment.idComment" class="btn btn-info btn-sm">edit</button>
+          <i (click)="editComment(comment.text ,comment.idComment)"
+            *ngIf="comment.commentCreatorId == userData.idAccount" style="float: right; color: blue; cursor: pointer;"
+            class="fa fa-pencil fa-xxs" aria-hidden="true"></i>
+          <i (click)="deleteComment(comment.idComment)" *ngIf="comment.commentCreatorId == userData.idAccount"
             style="float: right; color: red; cursor: pointer;" class="fa fa-trash mr-1" aria-hidden="true"></i>
         </ng-container>
       </div>

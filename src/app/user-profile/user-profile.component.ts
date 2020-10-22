@@ -3,14 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
 import { Post } from '../models/post';
-import { Notification } from '../models/notification';
 import { AccountService } from '../services/account.service';
-import { AuthService } from '../services/auth.service';
-import { EventsService } from '../services/events.service';
 import { FriendsService } from '../services/friends.service';
 import { NotificationService } from '../services/notification.service';
 import { PostsService } from '../services/posts.service';
-import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-user-profile',

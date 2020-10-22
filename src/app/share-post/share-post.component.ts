@@ -47,6 +47,7 @@ export class SharePostComponent implements OnInit {
       extraText: this.inputData,
       postOriginalId: this.post.idPost,
     };
+
     this.postService.addPost(post).subscribe((data) => {
       this.notificationService
         .addNotification(notification)
