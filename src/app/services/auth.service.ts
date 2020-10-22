@@ -14,8 +14,8 @@ export class AuthService {
   loggedIn(): boolean {
     return !!localStorage.getItem('token');
   }
-  signUp(data: Account) {
-    return this.http.post('http://localhost:8080/api/signUp', data);
+  signUp(account: Account) {
+    return this.http.post('http://localhost:8080/api/signUp', account);
   }
 
   signIn(email: string, password: any) {

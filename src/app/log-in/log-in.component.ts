@@ -35,9 +35,12 @@ export class LogInComponent implements OnInit {
     }
     account.coverPhoto = 'nature-design.jpg';
     this.auth.signUp(account).subscribe((data) => {
-      console.log(data);
-      console.log('u ha been registered');
-      this.signUp = false;
+      if (data) {
+        this.signUp = false;
+        console.log('registered');
+      } else {
+        console.log('email already exist');
+      }
     });
   }
 
