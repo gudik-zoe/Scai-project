@@ -38,8 +38,6 @@ export class LogInComponent implements OnInit {
       if (data) {
         this.signUp = false;
         console.log('registered');
-      } else {
-        console.log('email already exist');
       }
     });
   }
@@ -69,7 +67,7 @@ export class LogInComponent implements OnInit {
 
   switch(): void {
     this.signUp = !this.signUp;
-    this.dataSaved = false;
+    this.signUpForm.reset();
   }
 
   signUpForm: FormGroup;

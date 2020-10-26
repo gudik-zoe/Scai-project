@@ -43,6 +43,9 @@ body {
   border-radius: 8px;
   list-style-type: none;
 }
+li {
+  list-style-type: none;
+}
 
 ::-webkit-scrollbar {
   width: 6px;

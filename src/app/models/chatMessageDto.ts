@@ -1,8 +1,22 @@
 export class ChatMessageDto {
-  user: string;
+  idMessage?: number;
   message: string;
-  constructor(user: string, message: string) {
-    this.user = user;
-    this.message = message;
-  }
+  idSender: number;
+  idReceiver: number;
+  seen: boolean;
+  date: number;
+
+  // constructor(
+  //   message: string,
+  //   idSender: number,
+  //   idReceiver: number,
+  //   seen: boolean,
+  //   date: number
+  // ) {
+  //   this.idSender = idSender;
+  //   this.message = message;
+  //   this.idReceiver = idReceiver;
+  //   this.seen = seen;
+  //   this.date = date;
+  // }
 }

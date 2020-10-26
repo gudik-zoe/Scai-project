@@ -1,11 +1,11 @@
-<div class="row mt-2">
+<div *ngIf="userData" class="row mt-2">
   <div class="col-3 ml-3">
     <app-side-bar></app-side-bar>
   </div>
   <div class="cold-md-4 ml-3" style="background-color: lightgrey; height: fit-content; border-radius: 9px">
     <div class="container-fluid">
       <div class="container"
-        style="width: 550px; height: 140px; border-radius: 10px; background-image: url(http://localhost:8080/files/{{userData?.coverPhoto}}); background-size:cover ;">
+        style="width: 550px; height: 140px; border-radius: 10px; background-image: url(http://localhost:8080/files/{{userData.coverPhoto}}); background-size:cover ;">
         <input type="file" (change)="changeCoverPhoto($event)" name="cover" id="cover" class="inputfile" />
         <label style="
               cursor: pointer;
@@ -18,8 +18,8 @@
           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
         </label>
         <div class="text-center mt-5">
-          <img src="http://localhost:8080/files/{{userData?.profilePhoto}}" width="120px" height="120px"
-            style="border-radius: 50%" />
+          <img *ngIf="userData.profilePhoto" src="http://localhost:8080/files/{{userData?.profilePhoto}}" width="120px"
+            height="120px" style="border-radius: 50%" />
         </div>
       </div>
       <input type="file" (change)="newImage($event)" name="file" id="file" class="inputfile" />
@@ -67,21 +67,46 @@
                 [class.is-invalid]="
             changeEssentialData.get('email').invalid &&
             changeEssentialData.get('email').touched
-          " />
+            " />
+              <small class="text-danger" *ngIf="emailExistError">
+                email already exist
+              </small>
+              <small class="text-danger" *ngIf="
+              changeEssentialData.get('email').errors?.required &&
+              changeEssentialData.get('email').touched
+            ">
+                this.field is required
+              </small>
+              <small class="text-danger" *ngIf="
+              changeEssentialData.get('email').errors?.email &&
+              changeEssentialData.get('email').touched
+            ">
+                invalid email
+              </small>
             </div>
           </div>
-          <small class="text-danger" *ngIf="
-            changeEssentialData.get('email').errors?.required &&
-            changeEssentialData.get('email').touched
-          ">
-            this.field is required
-          </small>
-          <small class="text-danger" *ngIf="
-            changeEssentialData.get('email').errors?.email &&
-            changeEssentialData.get('email').touched
-          ">
-            invalid email
-          </small>
+
+          <div class="row">
+            <div class="col-md-4 mt-2 ml-5">
+              <label>studied at <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+              </label>
+              <input type="text" formControlName="study" placeholder="Ex: University of Riot" class="form-control" />
+            </div>
+            <div class="col-md-4 mt-2 ml-5">
+              <label>went to <i class="fa fa-university" aria-hidden="true"></i></label>
+              <input type="text" formControlName="wentTo" placeholder="Ex: High School of Riot" class="form-control" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 mt-2 ml-5">
+              <label>lives in <i class="fa fa-home" aria-hidden="true"></i></label>
+              <input type="text" formControlName="livesIn" placeholder="Ex: Turin, Italy" class="form-control" />
+            </div>
+            <div class="col-md-4 mt-2 ml-5">
+              <!-- <label>from <i class="fa fa-map-marker" aria-hidden="true"></i></label>
+              <input type="text" formControlName="from" placeholder="Ex: Syria" class="form-control" /> -->
+            </div>
+          </div>
           <div class="row">
             <div class="col-md-4 mt-3 ml-5">
               <label>password</label>
@@ -123,27 +148,6 @@
                 ">
                 not identical to the new password
               </small>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4 mt-2 ml-5">
-              <label>studied at <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-              </label>
-              <input type="text" formControlName="study" placeholder="Ex: University of Riot" class="form-control" />
-            </div>
-            <div class="col-md-4 mt-2 ml-5">
-              <label>went to <i class="fa fa-university" aria-hidden="true"></i></label>
-              <input type="text" formControlName="wentTo" placeholder="Ex: High School of Riot" class="form-control" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4 mt-2 ml-5">
-              <label>lives in <i class="fa fa-home" aria-hidden="true"></i></label>
-              <input type="text" formControlName="livesIn" placeholder="Ex: Turin, Italy" class="form-control" />
-            </div>
-            <div class="col-md-4 mt-2 ml-5">
-              <!-- <label>from <i class="fa fa-map-marker" aria-hidden="true"></i></label>
-              <input type="text" formControlName="from" placeholder="Ex: Syria" class="form-control" /> -->
             </div>
           </div>
         </form>

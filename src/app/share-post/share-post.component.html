@@ -8,21 +8,21 @@
         </span>
         <hr />
         <div class="alert-box-action">
-            <img src="http://localhost:8080/files/{{ userData.profilePhoto}}" width="60px" height="60px"
-                style="border-radius: 50%" />
+            <img *ngIf="userData.profilePhoto" src="http://localhost:8080/files/{{ userData.profilePhoto}}" width="60px"
+                height="60px" style="border-radius: 50%" />
             <span class="font-weight-bold">
                 {{ userData.firstName + " " + userData.lastName }} shared:
             </span>
             <div class="md-form">
                 <textarea [(ngModel)]="inputData"></textarea>
                 <div style="border: 1px solid black;">
-                    <img src="http://localhost:8080/files/{{ postDoneBy.profilePhoto }}" width="50px"
-                        style="border-radius: 50%;" height="50px" />
+                    <img *ngIf="postDoneBy.profilePhoto" src="http://localhost:8080/files/{{ postDoneBy.profilePhoto }}"
+                        width="50px" style="border-radius: 50%;" height="50px" />
                     <span class="font-weight-bold">
                         {{ postDoneBy.firstName + " " + postDoneBy.lastName }}
                         shared: </span>
                     <p style="margin-left: 50%;">{{post.text}}</p>
-                    <img *ngIf="post.image" src="http://localhost:8080/files/{{ post?.image }}" width="300"
+                    <img *ngIf="post.image" src="http://localhost:8080/files/{{ post.image }}" width="300"
                         height="200px" style="margin-left: 50px" />
 
 

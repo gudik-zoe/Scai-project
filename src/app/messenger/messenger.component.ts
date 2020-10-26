@@ -57,15 +57,20 @@ export class MessengerComponent implements OnInit, OnDestroy {
     });
   }
 
-  sendMessage(user, message) {
-    const chatMessageDto = new ChatMessageDto(user, message);
+  sendMessage(message) {
+    const chatMessageDto = {
+      message: message,
+      idSender: this.userData.idAccount,
+      idReceiver: this.id,
+      seen: false,
+      date: new Date().getTime(),
+    };
+    console.log(chatMessageDto);
     this.webSocketService.sendMessage(chatMessageDto);
     this.message = null;
-
-    // this.chatService.sendAMessage(this.id, text).subscribe((data) => {
-    //   this.getMyConvWithId(this.id);
-    //   this.message = null;
-    // });
+    this.chatService.sendAMessage(chatMessageDto).subscribe((data) => {
+      this.message = null;
+    });
   }
 
   getUserData() {

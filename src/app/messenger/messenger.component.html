@@ -8,12 +8,16 @@
         {{ requestedUser?.firstName + " " + requestedUser?.lastName }}</span>
     </div>
     <div class="scrollable-element" style="overflow-y: scroll; height: 350px;">
+      <ul *ngFor="let conv of myConvWith">
+        <li [class]="(conv.idSender==id )? 'sender' :'receiver' "><span>{{conv.message}}</span>
+          <small style="color: grey; margin-left: 4px;">{{conv.date |  date:'dd/MM/yyyy' : 'UTC'}} </small>
+        </li>
+      </ul>
       <ul *ngFor="let chatMessage of webSocketService.chatMessages">
-        <!-- <li [class]="(i.idSender==id )? 'sender' :'receiver' "><span>{{i.message}}</span>
-          <small>{{i.date |  date:'dd/MM/yyyy' : 'UTC'}} </small>
-        </li> -->
-        <li>{{chatMessage.user}}:</li>
-        <span>{{chatMessage.message}}</span>
+        <li [class]="(chatMessage.senderId == id )? 'sender' :'receiver' ">
+          <span>{{chatMessage.message}}<small style="color: grey; margin-left: 4px;">{{chatMessage.date}}
+            </small></span>
+        </li>
       </ul>
     </div>
 
@@ -21,7 +25,7 @@
       <img src="http://localhost:8080/files/{{ userData.profilePhoto }}" width="40px" style="border-radius: 50%"
         height="35px" />
       <input [(ngModel)]="message" style="height: 25px; width: 200px" />
-      <button (click)="sendMessage(userData.firstName , message)" class="btn btn-success btn-sm ml-1">
+      <button (click)="sendMessage(message)" class="btn btn-success btn-sm ml-1">
         send
       </button></span>
   </div>

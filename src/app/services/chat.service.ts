@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { ChatMessageDto } from '../models/chatMessageDto';
 import { AccountService } from './account.service';
 import { AuthService } from './auth.service';
 
@@ -25,10 +26,7 @@ export class ChatService {
     );
   }
 
-  sendAMessage(to: number, text: string) {
-    return this.http.post(
-      this.rootUrl + 'messages/' + this.accountService.getId() + '/' + to,
-      { message: text }
-    );
+  sendAMessage(message: ChatMessageDto) {
+    return this.http.post(this.rootUrl + 'messages/sendMessage', message);
   }
 }

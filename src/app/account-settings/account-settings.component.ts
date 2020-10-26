@@ -22,6 +22,7 @@ export class AccountSettingsComponent implements OnInit {
   coverPhoto;
   profilePhoto;
   userData: Account;
+  emailExistError: boolean = false;
 
   goToHome() {
     this.route.navigate(['/user-profile']);
@@ -81,7 +82,12 @@ export class AccountSettingsComponent implements OnInit {
     this.accountService
       .updateAccount(this.changeEssentialData.value)
       .subscribe((data) => {
-        this.changeEssentialData.reset();
+        console.log(data);
+        if (data) {
+          this.changeEssentialData.reset();
+        } else {
+          this.emailExistError = true;
+        }
       });
   }
 

@@ -68,7 +68,8 @@ export class AccountService {
 
   updateAccount(account: Account) {
     account.idAccount = this.getId();
-    return this.http.put(this.rootUrl + 'api/accounts/', account);
+
+    return this.http.put(this.rootUrl + 'api/accounts/updateAccount', account);
   }
 
   deleteAccount() {
