@@ -65,18 +65,9 @@ export class FriendsService {
 
   async getFullRelationshipData(relations) {
     for (let relation of relations) {
-      const checkIfUserExist = this.basicData.find((item) => {
-        item.idAccount == relation.userOneId;
-      });
-      if (checkIfUserExist) {
-        relation.doneBy = checkIfUserExist;
-      } else {
-        const userBasicData = await this.accountService.getBasicAccountDetails(
-          relation.userOneId
-        );
-        this.basicData.push(userBasicData);
-        relation.doneBy = userBasicData;
-      }
+      relation.doneBy = this.accountService.getBasicAccountDetails(
+        relation.userOneId
+      );
     }
   }
 

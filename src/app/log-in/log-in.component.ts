@@ -38,6 +38,8 @@ export class LogInComponent implements OnInit {
       if (data) {
         this.signUp = false;
         console.log('registered');
+      } else {
+        console.log('email already exist');
       }
     });
   }

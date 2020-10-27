@@ -15,7 +15,7 @@ export class CommentsService {
   ) {}
 
   getCommentsByPostId(postId: number) {
-    return this.http.get('http://localhost:8080/comments/postId/' + postId);
+    return this.http.get(this.rootUrl + 'comments/postId/' + postId);
   }
 
   addCommment(postId: number, commentText: string) {

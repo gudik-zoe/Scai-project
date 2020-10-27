@@ -15,6 +15,7 @@ export class AccountService {
   imageSubject = new Subject<boolean>();
   loggedIn = new Subject<boolean>();
   rootUrl: string = environment.rootUrl;
+  accountBasicData: AccountBasicData[] = [];
   constructor(private http: HttpClient) {}
 
   getId() {
@@ -43,13 +44,19 @@ export class AccountService {
   }
 
   getBasicAccountDetails(id: number) {
-    return new Promise<AccountBasicData>((resolve) => {
-      this.http
-        .get(this.rootUrl + 'api/accounts/details/' + id)
-        .subscribe((data: AccountBasicData) => {
-          resolve(data);
-        });
-    });
+    const check = this.accountBasicData.find((item) => item.idAccount == id);
+    if (check) {
+      return check;
+    } else {
+      return new Promise<AccountBasicData>((resolve) => {
+        this.http
+          .get(this.rootUrl + 'api/accounts/details/' + id)
+          .subscribe((data: AccountBasicData) => {
+            this.accountBasicData.push(data);
+            resolve(data);
+          });
+      });
+    }
   }
 
   getAccountById(accountId: number) {

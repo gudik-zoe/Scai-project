@@ -23,7 +23,6 @@ export class PostsService {
   sharePostComponent = new Subject<any>();
   dbPosts: Post[];
   comment: Comment;
-  basicData = [];
   post: Post;
   postsData = [];
   userBasicData: AccountBasicData;
@@ -49,20 +48,19 @@ export class PostsService {
         } else {
           const postData = await this.getPostByPostId(post.postOriginalId);
           if (postData) {
-            const checkIfUserExistInThisBasicData = this.basicData.find(
+            const checkIfUserExistInBasicDataArray = this.accountService.accountBasicData.find(
               (item) => item.idAccount == postData.postCreatorId
             );
-            if (checkIfUserExistInThisBasicData) {
+            if (checkIfUserExistInBasicDataArray) {
               post.text = postData.text;
               post.image = postData.image;
               post.likesNumber = postData.postLikes.length;
               post.commentsNumber = postData.comments.length;
-              post.originalPostDoneBy = checkIfUserExistInThisBasicData;
+              post.originalPostDoneBy = checkIfUserExistInBasicDataArray;
             } else {
               this.userBasicData = await this.accountService.getBasicAccountDetails(
                 postData.postCreatorId
               );
-              this.basicData.push(this.userBasicData);
               post.text = postData.text;
               post.image = postData.image;
               post.likesNumber = postData.postLikes.length;
@@ -77,45 +75,21 @@ export class PostsService {
 
   async getUserDetails(posts: Post[]) {
     for (let post of posts) {
-      const checkIfUserExistInThisBasicData = this.basicData.find(
-        (item) => item.idAccount == post.postCreatorId
+      this.userBasicData = await this.accountService.getBasicAccountDetails(
+        post.postCreatorId
       );
-      if (!checkIfUserExistInThisBasicData) {
-        this.userBasicData = await this.accountService.getBasicAccountDetails(
-          post.postCreatorId
-        );
-        this.basicData.push(this.userBasicData);
-        post.doneBy = this.userBasicData;
-      } else {
-        post.doneBy = checkIfUserExistInThisBasicData;
-      }
+      post.doneBy = this.userBasicData;
       for (let comment of post.comments) {
-        const checkIfUserExistInThisBasicData = this.basicData.find(
-          (item) => item.idAccount == comment.commentCreatorId
+        this.userBasicData = await this.accountService.getBasicAccountDetails(
+          comment.commentCreatorId
         );
-        if (!checkIfUserExistInThisBasicData) {
-          this.userBasicData = await this.accountService.getBasicAccountDetails(
-            comment.commentCreatorId
-          );
-          this.basicData.push(this.userBasicData);
-          comment.doneBy = this.userBasicData;
-        } else {
-          comment.doneBy = checkIfUserExistInThisBasicData;
-        }
+        comment.doneBy = this.userBasicData;
       }
       for (let like of post.postLikes) {
-        const checkIfUserExistInThisBasicData = this.basicData.find(
-          (item) => item.idAccount == like.postLikeCreatorId
+        this.userBasicData = await this.accountService.getBasicAccountDetails(
+          like.postLikeCreatorId
         );
-        if (!checkIfUserExistInThisBasicData) {
-          this.userBasicData = await this.accountService.getBasicAccountDetails(
-            like.postLikeCreatorId
-          );
-          this.basicData.push(this.userBasicData);
-          like.doneBy = this.userBasicData;
-        } else {
-          like.doneBy = checkIfUserExistInThisBasicData;
-        }
+        like.doneBy = this.userBasicData;
       }
     }
     this.getPostOriginalUserData(posts);

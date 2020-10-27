@@ -41,18 +41,9 @@ export class NotificationService {
 
   async getBasicData(notifications: Notification[]) {
     for (let not of notifications) {
-      const find = this.basicData.find(
-        (item) => item.idAccount == not.notCreator
+      not.doneBy = await this.accountService.getBasicAccountDetails(
+        not.notCreator
       );
-      if (!find) {
-        const data = await this.accountService.getBasicAccountDetails(
-          not.notCreator
-        );
-        this.basicData.push(data);
-        not.doneBy = data;
-      } else {
-        not.doneBy = find;
-      }
     }
   }
 
