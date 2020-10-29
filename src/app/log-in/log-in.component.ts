@@ -25,7 +25,8 @@ export class LogInComponent implements OnInit {
   signUp: boolean = true;
   dataSaved: boolean = false;
   error: boolean = false;
-  emailExist: boolean = false;
+  emailExistError: boolean = false;
+  invalidCredentialsError: boolean = false;
 
   signUpfunc(account: Account): void {
     if (account.gender == 'male') {
@@ -37,28 +38,30 @@ export class LogInComponent implements OnInit {
     this.auth.signUp(account).subscribe((data) => {
       if (data) {
         this.signUp = false;
+        this.emailExistError = true;
         console.log('registered');
       } else {
-        console.log('email already exist');
+        this.emailExistError = true;
       }
     });
   }
 
   signUpAgain(): void {
-    this.emailExist = false;
-    this.signUpForm.reset();
+    this.emailExistError = false;
+    this.signUpForm.get('email').reset();
   }
 
   signIn(email: string, password: string) {
     this.auth.signIn(email, password).subscribe(
       (data) => {
+        console.log(data.statusText);
+        this.invalidCredentialsError = false;
         localStorage.setItem('token', data.headers.get('Authorization'));
-        // this.accountService.refresh.next(true);
         this.accountService.loggedIn.next(true);
         this.route.navigate(['/home-page']);
       },
       (error) => {
-        console.log(error);
+        this.invalidCredentialsError = true;
       }
     );
   }

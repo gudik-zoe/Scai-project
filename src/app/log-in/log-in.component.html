@@ -1,177 +1,167 @@
-<div id="main" class="container mt-5" style="background-color: lightblue; width: 1500px">
-  <div class="row">
-    <div *ngIf="!signUp" class="col-md-4">
-      <div class="container-fluid mt-5">
-        <form [formGroup]="signInForm">
-          <div class="form-group">
-            <input type="email" style="width: 240px" placeholder="Email" class="form-control" formControlName="email"
-              [class.is-invalid]="
+<div id="back">
+  <div id="main" class="container">
+    <div class="row">
+      <div style="background-color: blueviolet; border-radius: 8px; width: 350px; height: 305px; opacity: 0.6;">
+        <h2 style="color: white; margin-top: 30px; margin-left: 10px;">welcome back </h2>
+        <p style="color: white;  margin-left: 10px"> to stay connected with us please sign up..already a friend </p>
+        <div style="width: 300px; margin-left: 25px;">
+          <button (click)="switch()"
+            class="btn btn-outline-light btn-block   mt-5">{{signUp ? 'Sign in' : 'Sign up'}}</button>
+        </div>
+      </div>
+
+      <div *ngIf="signUp" style="background-color:white; border-radius: 8px; width: 350px; height: max-content;">
+        <div class="container mt-3">
+          <form [formGroup]="signUpForm">
+            <div class="row">
+              <div class="col-md-6">
+                <input class="form-control" formControlName="firstName" [class.is-invalid]="
+                  signUpForm.get('firstName').invalid &&
+                  signUpForm.get('firstName').touched
+                " placeholder="first name" />
+                <small class="text-danger" *ngIf="
+                signUpForm.get('firstName').errors?.required &&
+                signUpForm.get('firstName').touched
+              ">this field is required
+                </small>
+              </div>
+
+              <div class="col-md-6">
+                <input class="form-control " placeholder="Last name" formControlName="lastName" [class.is-invalid]="
+                  signUpForm.get('lastName').invalid &&
+                  signUpForm.get('lastName').touched
+                  " />
+                <small class="text-danger" *ngIf="
+                    signUpForm.get('lastName').errors?.required &&
+                    signUpForm.get('lastName').touched
+                  ">this field is required
+                </small>
+              </div>
+            </div>
+
+
+            <div class="form-group mt-3">
+              <input class="form-control" type="email" placeholder="Email" style="width: 240px" formControlName="email"
+                [class.is-invalid]="
+                signUpForm.get('email').invalid &&
+                signUpForm.get('email').touched
+              " />
+              <small class="text-danger" *ngIf="
+                signUpForm.get('email').errors?.required &&
+                signUpForm.get('email').touched
+              ">this field is required
+              </small>
+              <small class="text-danger" *ngIf="
+                signUpForm.get('email').errors?.email &&
+                signUpForm.get('email').touched
+              ">
+                invalid mail
+              </small>
+              <small *ngIf="emailExistError">this email already exist
+                <button style="font-size: smaller;" class="btn btn-danger btn-sm" (click)="signUpAgain()">
+                  ok
+                </button></small>
+            </div>
+            <div class="form-group mt-2">
+              <input class="form-control" type="password" placeholder="Password" style="width: 240px"
+                formControlName="password" />
+              <small class="text-danger" *ngIf="
+                  signUpForm.get('password').errors?.required &&
+                  signUpForm.get('password').touched
+                ">this field is required
+              </small>
+              <small class="text-danger" *ngIf="
+                  signUpForm.get('password').errors?.minlength &&
+                  signUpForm.get('password').touched
+                ">
+                password should be longer than 6 characters
+              </small>
+            </div>
+            <div class="form-group mt-2">
+              <input class="form-control" type="password" placeholder="Confirm password" style="width: 240px"
+                formControlName="confirmPassword" />
+              <small class="text-danger" *ngIf="
+                  signUpForm.get('confirmPassword').errors?.required &&
+                  signUpForm.get('confirmPassword').touched
+                ">this field is required
+              </small>
+              <small class="text-danger" *ngIf="
+                  signUpForm.get('confirmPassword').errors?.customeError &&
+                  signUpForm.get('confirmPassword').touched
+                ">not identical to password
+              </small>
+            </div>
+
+            <div id="gender" class="form-group">
+              <input formControlName="gender" type="radio" value="male" />
+              <label>male</label>
+            </div>
+            <div id="gender" class="form-group">
+              <input type="radio" formControlName="gender" value="female" />
+              <label>female</label>
+            </div>
+            <div id="gender" class="form-group">
+              <input type="radio" formControlName="gender" value="other" />
+              <label>other</label>
+            </div>
+            <span *ngIf="!dataSaved">
+              <button [disabled]="!signUpForm.valid" class="btn btn-success btn-block mb-2"
+                (click)="signUpfunc(signUpForm.value)">
+                Sign Up
+              </button>
+
+            </span>
+          </form>
+        </div>
+      </div>
+      <div *ngIf="!signUp" style="background-color: white; border-radius: 8px; width: 350px; height: 305px;">
+        <div class="container mt-3">
+          <form [formGroup]="signInForm">
+            <div class="form-group">
+              <input type="email" placeholder="Email" class="form-control" formControlName="email" [class.is-invalid]="
                 signInForm.get('email').invalid &&
                 signInForm.get('email').touched
               " />
-            <small class="text-danger" *ngIf="
+              <small class="text-danger" *ngIf="
                 signInForm.get('email').errors?.required &&
                 signInForm.get('email').touched
               ">
-              this field is required
-            </small>
-            <small class="text-danger" *ngIf="
+                this field is required
+              </small>
+              <small class="text-danger" *ngIf="
                 signInForm.get('email').errors?.email &&
                 signInForm.get('email').touched
               ">
-              invalid email
-            </small>
-          </div>
-          <div class="form-group">
-            <input type="password" style="width: 240px" placeholder="Password" class="form-control"
-              formControlName="password" />
-            <small class="text-danger" *ngIf="
+                invalid email
+              </small>
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control" formControlName="password" />
+              <small class="text-danger" *ngIf="
                 signInForm.get('password').errors?.required &&
                 signInForm.get('password').touched
               ">
-              this field is required
-            </small>
-            <small class="text-danger" *ngIf="error">invalid username or password
-              <button class="btn btn-danger btn-sm" (click)="ok()">
-                ok
-              </button></small>
-          </div>
-          <button [disabled]="!signInForm.valid" class="btn btn-primary" (click)="
+                this field is required
+              </small>
+
+              <small class="text-danger" *ngIf="
+                invalidCredentialsError
+              ">
+                invalid credentials
+              </small>
+
+            </div>
+            <button style="margin-top:65px;" [disabled]="!signInForm.valid" class="btn btn-outline-primary btn-block"
+              (click)="
               signIn(
                 signInForm.get('email').value,
                 signInForm.get('password').value
               )
             ">
-            Log In</button><span>
-            <small>not registered click here </small><button class="btn btn-info btn-sm" (click)="switch()">
-              Sign Up
-            </button>
-          </span>
-        </form>
+              Log In</button>
+          </form>
+        </div>
       </div>
-    </div>
-
-    <div *ngIf="signUp" class="col-md-4">
-      <div class="container-fluid mt-5">
-        <form [formGroup]="signUpForm">
-          <div class="row">
-            <div class="col-md-4">
-              <input class="form-control" formControlName="firstName" [class.is-invalid]="
-                  signUpForm.get('firstName').invalid &&
-                  signUpForm.get('firstName').touched
-                " placeholder="first name " />
-            </div>
-
-            <div class="col-md-4">
-              <input class="form-control" style="width: 122px" placeholder="Last name" formControlName="lastName"
-                [class.is-invalid]="
-                  signUpForm.get('lastName').invalid &&
-                  signUpForm.get('lastName').touched
-                " />
-            </div>
-            <small class="text-danger" *ngIf="
-                signUpForm.get('lastName').errors?.required &&
-                signUpForm.get('lastName').touched
-              ">this field is required
-            </small>
-          </div>
-          <small class="text-danger" *ngIf="
-              signUpForm.get('firstName').errors?.required &&
-              signUpForm.get('firstName').touched
-            ">this field is required
-          </small>
-
-          <div class="form-group mt-2">
-            <input class="form-control" type="email" placeholder="Email" style="width: 240px" formControlName="email"
-              [class.is-invalid]="
-                signUpForm.get('email').invalid &&
-                signUpForm.get('email').touched
-              " />
-          </div>
-          <small class="text-danger" *ngIf="
-              signUpForm.get('email').errors?.required &&
-              signUpForm.get('email').touched
-            ">this field is required
-          </small>
-          <small class="text-danger" *ngIf="
-              signUpForm.get('email').errors?.email &&
-              signUpForm.get('email').touched
-            ">
-            invalid mail
-          </small>
-          <div class="form-group mt-2">
-            <input class="form-control" type="password" placeholder="Password" style="width: 240px"
-              formControlName="password" />
-          </div>
-          <small class="text-danger" *ngIf="
-              signUpForm.get('password').errors?.required &&
-              signUpForm.get('password').touched
-            ">this field is required
-          </small>
-          <small class="text-danger" *ngIf="
-              signUpForm.get('password').errors?.minlength &&
-              signUpForm.get('password').touched
-            ">
-            password should be longer than 6 characters
-          </small>
-          <div class="form-group mt-2">
-            <input class="form-control" type="password" placeholder="Confirm password" style="width: 240px"
-              formControlName="confirmPassword" />
-          </div>
-          <small class="text-danger" *ngIf="
-              signUpForm.get('confirmPassword').errors?.required &&
-              signUpForm.get('confirmPassword').touched
-            ">this field is required
-          </small>
-          <small class="text-danger" *ngIf="
-              signUpForm.get('confirmPassword').errors?.customeError &&
-              signUpForm.get('confirmPassword').touched
-            ">not identical to password
-          </small>
-          <br />
-          <div id="gender" class="form-group">
-            <input formControlName="gender" type="radio" value="male" />
-            <label>male</label>
-          </div>
-          <div id="gender" class="form-group">
-            <input type="radio" formControlName="gender" value="female" />
-            <label>female</label>
-          </div>
-          <div id="gender" class="form-group">
-            <input type="radio" formControlName="gender" value="other" />
-            <label>other</label>
-          </div>
-          <br />
-          <span *ngIf="!dataSaved">
-            <button [disabled]="!signUpForm.valid" class="btn btn-success" (click)="signUpfunc(signUpForm.value)">
-              Sign Up
-            </button>
-            <small> already registered click here</small>
-            <button class="btn btn-info btn-sm" (click)="switch()">
-              sign in
-            </button>
-            <small *ngIf="emailExist">this user already exist
-              <button class="btn btn-danger" (click)="signUpAgain()">
-                ok
-              </button></small>
-          </span>
-          <span *ngIf="dataSaved">your data have been registered click here to
-            <button type="button" class="btn btn-primary btn-sm" (click)="switch()">
-              Sign In
-            </button>
-          </span>
-        </form>
-      </div>
-    </div>
-    <div style="width: 600px" class="col-md-4 ml-5 mt-5">
-      <h3 style="font-size: xx-large; font-weight: bolder">
-        welcome to our project
-      </h3>
-      <p style="font-size: xx-large; width: 650px">
-        sign in to enjoy our service..don't have an account yet go ahead and
-        sign up
-      </p>
     </div>
   </div>
-  <br />
 </div>
