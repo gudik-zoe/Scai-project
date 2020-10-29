@@ -1,5 +1,6 @@
 .active-class {
   text-decoration: underline;
+  color: white;
 }
 
 #messenger:hover {
@@ -10,6 +11,9 @@ p {
   animation-name: example;
   animation-duration: 4s;
 }
+h2:hover {
+  margin-top: 10px;
+}
 
 @keyframes example {
   from {
@@ -18,4 +22,13 @@ p {
   to {
     opacity: 0;
   }
+}
+.imageAndName {
+  width: 150px;
+  color: silver;
+}
+.imageAndName:hover {
+  background-color: whitesmoke;
+  opacity: 0.3;
+  border-radius: 10px;
 }
