@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
 import { HttpClient } from '@angular/common/http';
 import { Account } from '../models/account';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-account-settings',
@@ -23,6 +24,7 @@ export class AccountSettingsComponent implements OnInit {
   profilePhoto;
   userData: Account;
   emailExistError: boolean = false;
+  rootUrl: string = environment.rootUrl;
 
   goToHome() {
     this.route.navigate(['/user-profile']);
@@ -34,16 +36,13 @@ export class AccountSettingsComponent implements OnInit {
       this.profilePhoto = file;
       const formData = new FormData();
       formData.append('file', this.profilePhoto);
-      this.http
-        .post('http://localhost:8080/upload', formData)
-        .subscribe((data) => {
-          // console.log(data);
-        });
+      this.http.post(this.rootUrl + 'upload', formData).subscribe((data) => {
+        // console.log(data);
+      });
       this.http
         .put(
-          'http://localhost:8080/api/accounts/profilePhoto/' +
-            this.accountService.getId() +
-            '/' +
+          this.rootUrl +
+            'api/accounts/profilePhoto/accountId/' +
             this.profilePhoto.name,
           {}
         )
@@ -59,16 +58,13 @@ export class AccountSettingsComponent implements OnInit {
       this.coverPhoto = file;
       const formData = new FormData();
       formData.append('file', this.coverPhoto);
-      this.http
-        .post('http://localhost:8080/upload', formData)
-        .subscribe((data) => {
-          console.log(data);
-        });
+      this.http.post(this.rootUrl + 'upload', formData).subscribe((data) => {
+        console.log(data);
+      });
       this.http
         .put(
-          'http://localhost:8080/api/accounts/coverPhoto/' +
-            this.accountService.getId() +
-            '/' +
+          this.rootUrl +
+            'api/accounts/coverPhoto/accountId/' +
             this.coverPhoto.name,
           {}
         )

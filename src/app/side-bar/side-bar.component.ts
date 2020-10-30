@@ -13,7 +13,8 @@ export class SideBarComponent implements OnInit {
   userData: Account;
 
   async getUserData() {
-    this.userData = await this.accountService.getUserData();
+    this.userData =
+      this.accountService.userData || (await this.accountService.getUserData());
   }
 
   getTheUpdatedImage() {

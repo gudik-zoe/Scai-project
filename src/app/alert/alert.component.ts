@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { Post } from '../models/post';
+import { Account } from '../models/account';
 import { AccountService } from '../services/account.service';
 import { PostsService } from '../services/posts.service';
 
@@ -10,22 +12,24 @@ import { PostsService } from '../services/posts.service';
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.css'],
 })
-export class AlertComponent implements OnInit {
+export class AlertComponent implements OnInit, OnDestroy {
   constructor(
     private postsService: PostsService,
     private accountService: AccountService,
-
+    private route: Router,
     private http: HttpClient
   ) {}
+  ngOnDestroy() {}
   foto: Blob;
+  alertComponent: boolean = false;
   inputData: string;
-  userData;
+  userData: Account;
   userImage: Blob;
   myImage;
   postImage;
 
   close() {
-    this.postsService.close.next(false);
+    this.alertComponent = false;
   }
 
   uploadImage(event): void {
@@ -54,17 +58,29 @@ export class AlertComponent implements OnInit {
       description: null,
       postOriginalId: null,
     };
-    this.postsService.addPost(post).subscribe((data) => {
-      this.postsService.close.next(false);
+    this.postsService.addPost(post).subscribe((data: Post) => {
+      this.alertComponent = false;
+      (data.postLikes = []), (data.comments = []);
+      data.doneBy = {
+        idAccount: this.userData.idAccount,
+        profilePhoto: this.userData.profilePhoto,
+        firstName: this.userData.firstName,
+        lastName: this.userData.lastName,
+      };
+      this.postsService.dbPosts.push(data);
+      this.userData = null;
+      this.postImage = null;
+      this.inputData = null;
     });
   }
 
-  getUserData() {
-    this.accountService.getData().subscribe((data) => {
-      this.userData = data;
+  getComponentData() {
+    this.postsService.alertComponent.subscribe((data) => {
+      (this.userData = data.userData),
+        (this.alertComponent = data.openComponent);
     });
   }
   ngOnInit() {
-    this.getUserData();
+    this.getComponentData();
   }
 }

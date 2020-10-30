@@ -38,7 +38,10 @@ export class HomePageComponent implements OnInit {
     return this.userData?.profilePhoto;
   }
   openDiv() {
-    this.alertComponent = true;
+    this.postService.alertComponent.next({
+      userData: this.userData,
+      openComponent: true,
+    });
   }
 
   get() {
@@ -51,7 +54,8 @@ export class HomePageComponent implements OnInit {
     });
   }
   async getUserData() {
-    this.userData = await this.accountService.getUserData();
+    this.userData =
+      this.accountService.userData || (await this.accountService.getUserData());
   }
 
   async getPosts() {

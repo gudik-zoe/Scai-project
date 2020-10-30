@@ -21,6 +21,7 @@ export class PostsService {
   close = new Subject<any>();
   editPostComponent = new Subject<any>();
   sharePostComponent = new Subject<any>();
+  alertComponent = new Subject<any>();
   dbPosts: Post[];
   comment: Comment;
   post: Post;
@@ -157,11 +158,8 @@ export class PostsService {
     );
   }
 
-  addPost(post) {
-    return this.http.post(
-      this.rootUrl + 'posts/' + this.accountService.getId(),
-      post
-    );
+  addPost(post: Post) {
+    return this.http.post(this.rootUrl + 'posts/accountId', post);
   }
 
   updatePost(post: Post) {

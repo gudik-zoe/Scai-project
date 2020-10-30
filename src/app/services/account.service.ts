@@ -28,7 +28,7 @@ export class AccountService {
   }
 
   getData() {
-    return this.http.get(this.rootUrl + 'api/accounts/' + this.getId());
+    return this.http.get(this.rootUrl + 'api/accounts/accountId');
   }
 
   async getUserData() {
@@ -59,8 +59,8 @@ export class AccountService {
     }
   }
 
-  getAccountById(accountId: number) {
-    return this.http.get(this.rootUrl + 'api/accounts/' + accountId);
+  getAccountById(id: number) {
+    return this.http.get(this.rootUrl + 'api/accounts/' + id);
   }
 
   getAccountIdByPostId(postId: number) {
@@ -80,6 +80,6 @@ export class AccountService {
   }
 
   deleteAccount() {
-    return this.http.delete(this.rootUrl + 'api/accounts/' + this.getId());
+    return this.http.delete(this.rootUrl + 'api/accounts/accountId');
   }
 }
