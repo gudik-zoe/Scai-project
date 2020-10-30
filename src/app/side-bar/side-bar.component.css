@@ -19,3 +19,9 @@ span {
 body {
   background-color: whitesmoke;
 }
+.main {
+  border: 1px solid;
+  border-radius: 9px;
+  padding: 10px;
+  box-shadow: 2px 3px 4px 2px #888888;
+}

@@ -14,6 +14,7 @@ export class WebSocketService {
   public openWebSocket() {
     this.webSocket = new WebSocket('ws://localhost:8080/chat');
     this.webSocket.onopen = (event) => {
+      this.webSocket.send(localStorage.getItem('token'));
       console.log('open ', event);
     };
 

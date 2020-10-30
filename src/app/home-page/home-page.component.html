@@ -5,12 +5,7 @@
     </div>
 
     <div id="second-div" class="col-md-6">
-      <div class="container mt-2" style="
-          width: 500px;
-          background-color: white;
-          margin-left: 50px;
-          border-radius: 10px;
-        ">
+      <div class="whatSInYourMind">
         <span *ngIf="userData">
           <img src="http://localhost:8080/files/{{userData.profilePhoto}}" width="50px" style="border-radius: 50%" />
           <input (click)="openDiv()" class="ml-2" [(ngModel)]="input" placeholder="what's in your mind, {{

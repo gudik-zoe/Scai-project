@@ -7,21 +7,22 @@
     {{userData.firstName + " " +userData.lastName}}
   </div>
 
-  <h2 style="margin-left:430px;outline: none;color: silver; " routerLink="/home-page">
-    <i routerLinkActive="active-class" style="cursor: pointer;  margin-left: 15px;" class="fa fa-home"
+  <a style="margin-left:430px; color: silver; " routerLink="/home-page">
+    <i routerLinkActive="active-class" style="cursor: pointer;   font-size: 2rem;" class="fa fa-home"
       aria-hidden="true"></i>
 
-  </h2>
+  </a>
 
 
-  <h2 style="margin-left: 100px; outline: none; color: silver;" [routerLink]="['/user-profile',userData.idAccount ]">
-    <i routerLinkActive="active-class" style="cursor: pointer; margin-left: 15px;" class="fa fa-user"
-      aria-hidden="true">
+  <a style="margin-left: 100px; outline: none; color: silver;" [routerLink]="['/user-profile',userData.idAccount ]">
+
+    <i routerLinkActive="active-class" style="cursor: pointer;  font-size: 2rem;" class="fa fa-user"
+      aria-hidden=" true">
     </i>
-  </h2>
+  </a>
 
 
-  <app-friend-request style="margin-left: 275px;"></app-friend-request>
+  <app-friend-request style="margin-left: 200px;"></app-friend-request>
 
   <app-notification style="margin-left: 10px;"></app-notification>
   <h6>

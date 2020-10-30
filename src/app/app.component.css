@@ -1,5 +1,4 @@
 .active-class {
-  text-decoration: underline;
   color: white;
 }
 
@@ -11,8 +10,8 @@ p {
   animation-name: example;
   animation-duration: 4s;
 }
-h2:hover {
-  margin-top: 10px;
+i:hover {
+  color: black;
 }
 
 @keyframes example {
@@ -26,9 +25,4 @@ h2:hover {
 .imageAndName {
   width: 150px;
   color: silver;
-}
-.imageAndName:hover {
-  background-color: whitesmoke;
-  opacity: 0.3;
-  border-radius: 10px;
 }
