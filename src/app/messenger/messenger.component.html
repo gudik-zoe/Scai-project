@@ -15,7 +15,10 @@
       </ul>
       <ul *ngFor="let chatMessage of webSocketService.chatMessages">
         <li [class]="(chatMessage.idSender == id )? 'sender' :'receiver' ">
-          <span>{{chatMessage.message}}<small style="color: grey; margin-left: 4px;">{{chatMessage.date}}
+
+          <span
+            *ngIf="chatMessage.idReceiver == userData.idAccount  || chatMessage.idReceiver == id">{{chatMessage.message}}<small
+              style="color: grey; margin-left: 4px;">{{chatMessage.date}}
             </small></span>
         </li>
       </ul>

@@ -19,12 +19,9 @@ export class CommentsService {
   }
 
   addCommment(postId: number, commentText: string) {
-    return this.http.post(
-      this.rootUrl + 'comments/' + this.accountService.getId() + '/' + postId,
-      {
-        text: commentText,
-      }
-    );
+    return this.http.post(this.rootUrl + 'comments/idAccount/' + postId, {
+      text: commentText,
+    });
   }
 
   deleteComment(commentId: number) {
@@ -33,11 +30,7 @@ export class CommentsService {
 
   likeComment(commentId: number) {
     return this.http.post(
-      this.rootUrl +
-        'commentLikes/' +
-        this.accountService.getId() +
-        '/' +
-        commentId,
+      this.rootUrl + 'commentLikes/idAccount' + commentId,
       {}
     );
   }
@@ -53,7 +46,7 @@ export class CommentsService {
   }
   updateComment(postId: number, newComment: Comment) {
     return this.http.put(
-      this.rootUrl + 'comments/' + this.accountService.getId() + '/' + postId,
+      this.rootUrl + 'comments/idAccount/' + postId,
       newComment
     );
   }

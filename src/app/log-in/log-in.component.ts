@@ -23,7 +23,7 @@ export class LogInComponent implements OnInit {
     private http: HttpClient
   ) {}
   signUp: boolean = true;
-  dataSaved: boolean = false;
+  // dataSaved: boolean = false;
   error: boolean = false;
   emailExistError: boolean = false;
   invalidCredentialsError: boolean = false;

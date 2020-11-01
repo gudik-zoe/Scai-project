@@ -22,14 +22,6 @@ export class MessengerComponent implements OnInit, OnDestroy {
     public webSocketService: WebSocketService
   ) {}
 
-  ngOnInit() {
-    this.webSocketService.openWebSocket();
-    this.id = parseInt(this.aroute.snapshot.paramMap.get('id'));
-    this.getUserById();
-    this.getMyConvWithId(this.id);
-    this.getUserData();
-  }
-
   ngOnDestroy() {
     this.webSocketService.closeWebSocket();
   }
@@ -60,22 +52,25 @@ export class MessengerComponent implements OnInit, OnDestroy {
   sendMessage(message) {
     const chatMessageDto = {
       message: message,
-      idSender: this.userData.idAccount,
       idReceiver: this.id,
       seen: false,
       date: new Date().getTime(),
+      token: localStorage.getItem('token'),
     };
-    console.log(chatMessageDto);
     this.webSocketService.sendMessage(chatMessageDto);
+    console.log(chatMessageDto);
     this.message = null;
-    this.chatService.sendAMessage(chatMessageDto).subscribe((data) => {
-      this.message = null;
-    });
   }
 
-  getUserData() {
-    this.accountService.getData().subscribe((data) => {
-      this.userData = data;
-    });
+  async getUserData() {
+    this.userData =
+      this.accountService.userData || (await this.accountService.getUserData());
+  }
+  ngOnInit() {
+    this.getUserData();
+    this.id = parseInt(this.aroute.snapshot.paramMap.get('id'));
+    this.webSocketService.openWebSocket();
+    this.getUserById();
+    this.getMyConvWithId(this.id);
   }
 }

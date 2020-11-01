@@ -13,16 +13,13 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { MyInterceptor } from './my-interceptor';
 import { AuthenticationGuard } from './authentication.guard';
 import { NotificationComponent } from './notification/notification.component';
-// import { SocketComponent } from './socket/socket.component';
 import { FriendRequestComponent } from './friend-request/friend-request.component';
-
 import { EditPostComponent } from './edit-post/edit-post.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotificationComponent,
-    // SocketComponent,
     FriendRequestComponent,
     EditPostComponent,
   ],

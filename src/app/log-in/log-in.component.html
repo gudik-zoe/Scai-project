@@ -104,13 +104,10 @@
               <input type="radio" formControlName="gender" value="other" />
               <label>other</label>
             </div>
-            <span *ngIf="!dataSaved">
-              <button [disabled]="!signUpForm.valid" class="btn btn-success btn-block mb-2"
-                (click)="signUpfunc(signUpForm.value)">
-                Sign Up
-              </button>
-
-            </span>
+            <button [disabled]="!signUpForm.valid" class="btn btn-outline-success btn-block  mb-2"
+              (click)="signUpfunc(signUpForm.value)">
+              Sign Up
+            </button>
           </form>
         </div>
       </div>

@@ -152,10 +152,7 @@ export class PostsService {
   }
 
   likePost(postId: number) {
-    return this.http.post(
-      this.rootUrl + 'postLikes/' + this.accountService.getId() + '/' + postId,
-      {}
-    );
+    return this.http.post(this.rootUrl + 'postLikes/accountId/' + postId, {});
   }
 
   addPost(post: Post) {
@@ -163,57 +160,10 @@ export class PostsService {
   }
 
   updatePost(post: Post) {
-    return this.http.put(
-      this.rootUrl + 'posts/update/' + this.accountService.getId(),
-      post
-    );
+    return this.http.put(this.rootUrl + 'posts/update/idAccount', post);
   }
 
   deletePost(postId: number) {
     return this.http.delete(this.rootUrl + 'posts/' + postId);
   }
 }
-
-// posts.forEach(async (post: Post) => {
-//   const checkIfUserExistInThisBasicData = this.basicData.find(
-//     (item) => item.idAccount == post.postCreatorId
-//   );
-//   if (!checkIfUserExistInThisBasicData) {
-//     const data = await this.accountService.getBasicAccountDetails(
-//       post.postCreatorId
-//     );
-//     this.basicData.push(data);
-//     post.doneBy = data;
-//   } else {
-//     post.doneBy = checkIfUserExistInThisBasicData;
-//   }
-
-//   post.comments.forEach(async (comment: Comment) => {
-//     const checkIfUserExistInThisBasicData = this.basicData.find(
-//       (item) => item.idAccount == comment.commentCreatorId
-//     );
-//     if (!checkIfUserExistInThisBasicData) {
-//       const data = await this.accountService.getBasicAccountDetails(
-//         comment.commentCreatorId
-//       );
-//       this.basicData.push(data);
-//       comment.doneBy = data;
-//     } else {
-//       comment.doneBy = checkIfUserExistInThisBasicData;
-//     }
-//   });
-//   post.postLikes.forEach(async (like: PostLike) => {
-//     const checkIfUserExistInThisBasicData = this.basicData.find(
-//       (item) => item.idAccount == like.postLikeCreatorId
-//     );
-//     if (!checkIfUserExistInThisBasicData) {
-//       const data = await this.accountService.getBasicAccountDetails(
-//         like.postLikeCreatorId
-//       );
-//       this.basicData.push(data);
-//       like.doneBy = data;
-//     } else {
-//       like.doneBy = checkIfUserExistInThisBasicData;
-//     }
-//   });
-// });

@@ -29,9 +29,7 @@ export class WebSocketService {
   }
 
   public sendMessage(chatMessageDto: ChatMessageDto) {
-    if (this.webSocket) {
-      this.webSocket.send(JSON.stringify(chatMessageDto));
-    }
+    this.webSocket.send(JSON.stringify(chatMessageDto));
   }
 
   public closeWebSocket() {
