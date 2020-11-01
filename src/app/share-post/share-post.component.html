@@ -14,24 +14,21 @@
                 {{ userData.firstName + " " + userData.lastName }} shared:
             </span>
             <div class="md-form">
-                <textarea [(ngModel)]="inputData"></textarea>
-                <div style="border: 1px solid black;">
+                <input class="form-control mb-1" placeholder="enter your own text" [(ngModel)]="inputData">
+                <div style="border: 1px solid black; border-radius: 8px;">
                     <img *ngIf="postDoneBy.profilePhoto" src="http://localhost:8080/files/{{ postDoneBy.profilePhoto }}"
                         width="50px" style="border-radius: 50%;" height="50px" />
                     <span class="font-weight-bold">
                         {{ postDoneBy.firstName + " " + postDoneBy.lastName }}
                         shared: </span>
-                    <p style="margin-left: 50%;">{{post.text}}</p>
-                    <img *ngIf="post.image" src="http://localhost:8080/files/{{ post.image }}" width="300"
-                        height="200px" style="margin-left: 50px" />
-
-
+                    <p class="text-center">{{post.text}}</p>
+                    <img style="padding-left: 20px;" *ngIf="post.image"
+                        src="http://localhost:8080/files/{{ post.image }}" width="300" height="200px"
+                        style="margin-left: 84px; margin-bottom: 5px;" />
                 </div>
             </div>
-
-            <br />
-            <button [disabled]="!inputData || inputData == ' '" type="button" class="btn btn-primary btn-block"
-                (click)="confirmShare(post)">
+            <button [disabled]="!inputData || inputData == ' '" type="button"
+                class="btn btn-primary btn-block mb-1 mt-1" (click)="confirmShare(post)">
                 Share
             </button>
         </div>

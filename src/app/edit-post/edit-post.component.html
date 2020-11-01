@@ -19,19 +19,19 @@
 
 
 
-            <p class="mb-0 ml-5 ">{{ inputData }}</p>
+            <p class="text-center">{{ inputData }}</p>
 
             <div class="container">
-                <img *ngIf="post.image && showImage" src="http://localhost:8080/files/{{ post?.image }}" width="90%"
-                    height="230px;" />
-                <img *ngIf=" postImage" [src]="postImage" width="150" height="100px" style="margin-left: 100px" />
+                <img *ngIf="post.image && showImage" src="http://localhost:8080/files/{{ post?.image }}" width="80%"
+                    height="80%;" style="margin-left: 50px;" />
+                <img *ngIf=" postImage" [src]="postImage" width="150" height="100px" style="margin-left: 50px" />
                 <i *ngIf="showImage && post?.image" style="color: lightskyblue; cursor: pointer;"
                     class="fa fa-trash fa-lg" aria-hidden="true" (click)="deleteImage()"></i>
+
             </div>
 
             <div class="container-fluid" style="margin: 10px 0 10px 0 ; display: flex;">
-                <textarea placeholder="what's in your mind {{ userData?.firstName }}" [(ngModel)]="inputData"
-                    class="md-textarea form-control " rows="2"></textarea>
+                <input class="form-control" value="{{inputData}}" [(ngModel)]="inputData">
                 <input type="file" name="file" (change)="uploadImage($event)" id="file" class="inputfile" />
                 <label style=" cursor: pointer" for="file">
                     <img src="https://png.pngtree.com/png-vector/20191129/ourmid/pngtree-image-upload-icon-photo-upload-icon-png-image_2047546.jpg"

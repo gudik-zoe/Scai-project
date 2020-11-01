@@ -41,8 +41,6 @@ export class SharePostComponent implements OnInit {
       date: new Date().getTime(),
       postCreatorId: theOriginalPost.postCreatorId,
     };
-    console.log(post);
-
     this.postService.addPost(post).subscribe((data) => {
       this.sharePostComponent = false;
     });
