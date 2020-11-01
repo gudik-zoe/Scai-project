@@ -54,17 +54,8 @@ export class PostsContainerComponent implements OnInit {
   }
 
   likePostInParent(post: Post) {
-    const notification = {
-      notCreator: this.userData.idAccount,
-      action: 'liked',
-      notReceiver: post.postCreatorId,
-      relatedPostId: post.idPost,
-      date: new Date().getTime(),
-      seen: false,
-    };
-    this.postsService.likePost(post.idPost).subscribe((data: PostLike) => {
+    this.postsService.likePost(post).subscribe((data: PostLike) => {
       if (data) {
-        this.sendNotification(notification);
         post.postLikes.push({ ...data });
       } else {
         post.postLikes.pop();
@@ -73,16 +64,8 @@ export class PostsContainerComponent implements OnInit {
   }
 
   commentPostInParent(data) {
-    const notification = {
-      notCreator: this.userData.idAccount,
-      action: 'commented on',
-      notReceiver: data.post.postCreatorId,
-      relatedPostId: data.post.idPost,
-      date: new Date().getTime(),
-      seen: false,
-    };
     this.commentService
-      .addCommment(data.post.idPost, data.commentText)
+      .addCommment(data.post, data.commentText)
       .subscribe((comment: Comment) => {
         comment.doneBy = {
           idAccount: this.userData.idAccount,
@@ -92,7 +75,6 @@ export class PostsContainerComponent implements OnInit {
         };
         data.post.comments.push(comment);
         this.commentText = null;
-        this.sendNotification(notification);
       });
   }
 

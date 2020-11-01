@@ -16,4 +16,5 @@ export class Post {
   postLikes?: PostLike[];
   commentsNumber?: number;
   likesNumber?: number;
+  date?: number;
 }

@@ -34,26 +34,16 @@ export class SharePostComponent implements OnInit {
     this.sharePostComponent = false;
   }
 
-  confirmShare() {
-    const notification = {
-      notCreator: this.userData.idAccount,
-      action: 'shared',
-      notReceiver: this.post.postCreatorId,
-      relatedPostId: this.post.idPost,
-      date: new Date().getTime(),
-      seen: false,
-    };
+  confirmShare(theOriginalPost: Post) {
     const post = {
       extraText: this.inputData,
-      postOriginalId: this.post.idPost,
+      postOriginalId: theOriginalPost.idPost,
+      date: new Date().getTime(),
+      postCreatorId: theOriginalPost.postCreatorId,
     };
+    console.log(post);
 
     this.postService.addPost(post).subscribe((data) => {
-      this.notificationService
-        .addNotification(notification)
-        .subscribe((data) => {
-          console.log(data);
-        });
       this.sharePostComponent = false;
     });
   }

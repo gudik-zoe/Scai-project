@@ -113,12 +113,12 @@ export class PostComponent implements OnInit {
     this.editCommentValue = text;
   }
 
-  confirmEditComment(comment: Comment) {
-    comment.text = this.editCommentValue;
+  confirmEditComment(comment: Comment, newComment: string) {
     this.commentService
-      .updateComment(comment.relatedPostId, comment)
-      .subscribe((data) => {
+      .updateComment(comment.idComment, newComment)
+      .subscribe((data: Comment) => {
         this.editCommentOn = false;
+        comment.text = data.text;
       });
   }
 

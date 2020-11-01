@@ -84,7 +84,7 @@
           border-style: none;
           margin-left: 10px;
           outline: none;" />
-          <button [disabled]="!editCommentValue" (click)="confirmEditComment(comment)"
+          <button [disabled]="!editCommentValue" (click)="confirmEditComment(comment , editCommentValue)"
             *ngIf="editCommentOn && commentId == comment.idComment" class="btn btn-info btn-sm">edit</button>
           <i (click)="editComment(comment.text ,comment.idComment)"
             *ngIf="comment.commentCreatorId == userData.idAccount" style="float: right; color: blue; cursor: pointer;"

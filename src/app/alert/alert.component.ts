@@ -51,12 +51,13 @@ export class AlertComponent implements OnInit, OnDestroy {
     }
   }
 
-  post(text: string) {
+  sharePost(text: string) {
     const post = {
       text: text,
       image: this.myImage?.name,
       description: null,
       postOriginalId: null,
+      date: new Date().getTime(),
     };
     this.postsService.addPost(post).subscribe((data: Post) => {
       this.alertComponent = false;
