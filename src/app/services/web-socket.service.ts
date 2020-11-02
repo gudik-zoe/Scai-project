@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { ChatMessageDto } from '../models/chatMessageDto';
+import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ export class WebSocketService {
   webSocket: WebSocket;
   chatMessages: ChatMessageDto[] = [];
 
-  constructor() {}
+  constructor(private accountService: AccountService) {}
 
   public openWebSocket() {
     this.webSocket = new WebSocket('ws://localhost:8080/chat');
@@ -19,7 +20,9 @@ export class WebSocketService {
     };
 
     this.webSocket.onmessage = (event) => {
+      console.log(event);
       const chatMessageDto = JSON.parse(event.data);
+      //  chatMessageDto.idSender = this.accountService.getId();
       this.chatMessages.push(chatMessageDto);
     };
 

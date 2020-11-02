@@ -1,6 +1,6 @@
 .dropdown-menu {
-  width: fit-content;
-  height: 200px;
+  width: max-content;
+  height: 100px;
   overflow-y: scroll;
   overflow-x: hidden;
 }

@@ -36,6 +36,7 @@ export class MessengerComponent implements OnInit, OnDestroy {
   disabled: boolean;
   showConversation: boolean = false;
   name: string;
+  now = new Date().getDay();
 
   getMyConvWithId(id) {
     this.chatService.getMyConvWithId(id).subscribe((data) => {
@@ -54,11 +55,11 @@ export class MessengerComponent implements OnInit, OnDestroy {
       message: message,
       idReceiver: this.id,
       seen: false,
-      date: new Date().getTime(),
-      token: localStorage.getItem('token'),
+      date: new Date(),
+      // token: localStorage.getItem('token'),
     };
     this.webSocketService.sendMessage(chatMessageDto);
-    console.log(chatMessageDto);
+
     this.message = null;
   }
 
@@ -72,5 +73,6 @@ export class MessengerComponent implements OnInit, OnDestroy {
     this.webSocketService.openWebSocket();
     this.getUserById();
     this.getMyConvWithId(this.id);
+    console.log(this.webSocketService.chatMessages);
   }
 }

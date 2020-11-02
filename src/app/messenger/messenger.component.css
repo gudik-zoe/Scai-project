@@ -1,45 +1,14 @@
-/* #friend:hover {
-  width: 300px;
-  color: blue;
-  background-color: white;
-}
-
-/* .inputfile { 
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 1;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
-}
-
-.inputfile2 {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 1;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
-} */
-
-body {
-  background-color: whitesmoke;
-  /* overflow-y:hidden;
-  /* overflow-x:hidden;   */
-}
-
-.sender {
+.receiver {
   background-color: greenyellow;
-  width: fit-content;
   margin-left: 100px;
   border-radius: 8px;
   list-style-type: none;
 }
 
-.receiver {
+.sender {
   background-color: whitesmoke;
-  width: fit-content;
-  margin-right: 50px;
+  background-size: auto;
+  margin-right: 100px;
   border-radius: 8px;
   list-style-type: none;
 }

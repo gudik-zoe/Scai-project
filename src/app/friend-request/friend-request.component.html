@@ -4,8 +4,8 @@
         <i class="fa fa-users" aria-hidden="true" style="color: darkslateblue;"></i>
         <span style="color:red; font-weight: bolder;" *ngIf="relations.length > 0">{{relations.length}} </span>
     </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <p *ngIf="relations.length == 0"> no new friend requests </p>
+    <div class="dropdown-menu" aria-labelledby=" dropdownMenuButton">
+        <p *ngIf=" relations.length==0" class="font-weight-bold"> no new friend requests </p>
         <div *ngFor="let relation of relations">
             <li *ngIf="relation.doneBy" class="dropdown-item " style="font-size: small; cursor: pointer;">
                 <img src="{{ imgUrl + relation.doneBy.profilePhoto}}" width="30px" style="border-radius: 50%">
@@ -24,3 +24,4 @@
             <hr>
         </div>
     </div>
+</div>

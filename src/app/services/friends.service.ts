@@ -55,7 +55,7 @@ export class FriendsService {
     return new Promise<Relationship[]>((resolve) => {
       this.http
         .get(this.rootUrl + 'relation/getFriendRequests/' + id)
-        .subscribe((data) => {
+        .subscribe((data: Relationship[]) => {
           this.relations = data;
           this.getFullRelationshipData(this.relations);
           resolve(this.relations);
@@ -63,9 +63,9 @@ export class FriendsService {
     });
   }
 
-  async getFullRelationshipData(relations) {
+  async getFullRelationshipData(relations: Relationship[]) {
     for (let relation of relations) {
-      relation.doneBy = this.accountService.getBasicAccountDetails(
+      relation.doneBy = await this.accountService.getBasicAccountDetails(
         relation.userOneId
       );
     }
