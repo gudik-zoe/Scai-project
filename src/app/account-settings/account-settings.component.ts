@@ -20,11 +20,10 @@ export class AccountSettingsComponent implements OnInit {
     private route: Router,
     private accountService: AccountService
   ) {}
-  coverPhoto;
-  profilePhoto;
   userData: Account;
   emailExistError: boolean = false;
   rootUrl: string = environment.rootUrl;
+  uploadImageError: boolean = false;
 
   goToHome() {
     this.route.navigate(['/user-profile']);
@@ -33,39 +32,36 @@ export class AccountSettingsComponent implements OnInit {
   newImage(event) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.profilePhoto = file;
-      const formData = new FormData();
-      formData.append('file', this.profilePhoto);
-      this.http.post(this.rootUrl + 'upload', formData).subscribe((data) => {
-        // console.log(data);
-      });
-      this.http
-        .put(
-          this.rootUrl +
-            'api/accounts/profilePhoto/accountId/' +
-            this.profilePhoto.name,
-          {}
-        )
-        .subscribe(() => {
-          this.getUserData();
-          this.accountService.imageSubject.next(true);
-        });
+      console.log(file);
+      if (file.type.includes('image') && file.size <= 2000000) {
+        const formData = new FormData();
+        formData.append('file', file);
+        this.http.post(this.rootUrl + 'upload', formData).subscribe();
+
+        this.http
+          .put(
+            this.rootUrl + 'api/accounts/profilePhoto/accountId/' + file.name,
+            {}
+          )
+          .subscribe(() => {
+            this.getUserData();
+            this.accountService.imageSubject.next(true);
+          });
+      } else {
+        this.uploadImageError = true;
+      }
     }
   }
   changeCoverPhoto(event) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.coverPhoto = file;
+
       const formData = new FormData();
-      formData.append('file', this.coverPhoto);
-      this.http.post(this.rootUrl + 'upload', formData).subscribe((data) => {
-        console.log(data);
-      });
+      formData.append('file', file);
+      this.http.post(this.rootUrl + 'upload', formData).subscribe();
       this.http
         .put(
-          this.rootUrl +
-            'api/accounts/coverPhoto/accountId/' +
-            this.coverPhoto.name,
+          this.rootUrl + 'api/accounts/coverPhoto/accountId/' + file.name,
           {}
         )
         .subscribe(() => {

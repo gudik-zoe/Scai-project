@@ -36,19 +36,21 @@ export class AppComponent implements OnInit {
   }
 
   logOut() {
+    this.accountService.userData = null;
     localStorage.removeItem('token');
     this.route.navigate(['/auth']);
     this.loggedIn = false;
   }
 
   async getUserData() {
-    this.userData = await this.accountService.getUserData();
+    this.userData =
+      this.accountService.userData || (await this.accountService.getUserData());
   }
 
   getTheUpdatedImage() {
-    this.accountService.imageSubject.subscribe((data: boolean) => {
+    this.accountService.imageSubject.subscribe(async (data: boolean) => {
       if (data) {
-        this.getUserData();
+        this.userData = await this.accountService.getUserData();
       }
     });
   }

@@ -18,9 +18,9 @@ export class SideBarComponent implements OnInit {
   }
 
   getTheUpdatedImage() {
-    this.accountService.imageSubject.subscribe((data: boolean) => {
+    this.accountService.imageSubject.subscribe(async (data: boolean) => {
       if (data) {
-        this.getUserData();
+        this.userData = await this.accountService.getUserData();
       }
     });
   }
