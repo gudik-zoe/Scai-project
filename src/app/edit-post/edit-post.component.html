@@ -20,7 +20,7 @@
 
 
             <p class="text-center">{{ inputData }}</p>
-            <p class="text-danger" *ngIf="uploadImageError">{{errorPhrase}}</p>
+            <p class="text-danger">{{errorPhrase}}</p>
             <div class="container">
                 <img *ngIf="post.image && showImage" src="http://localhost:8080/files/{{ post?.image }}" width="80%"
                     height="80%;" style="margin-left: 50px;" />

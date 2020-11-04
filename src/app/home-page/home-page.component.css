@@ -56,11 +56,23 @@ body {
   background: rgba(0, 0, 0, 0.61);
 }
 .whatSInYourMind {
-  width: 500px;
+  width: 400px;
   background-color: white;
-  margin-left: 50px;
+  margin-left: 100px;
   border-radius: 10px;
   border: 1px solid;
   padding: 10px;
-  box-shadow: 3px 3px 4px 2px #888888;
+  box-shadow: 1px 1px 1px 1px #888888;
+}
+
+.whatsInput {
+  margin-left: 5px;
+  cursor: pointer;
+  width: 300px;
+  border-radius: 10px;
+  background-color: lightgray;
+  border-style: none;
+}
+.whatsInput:hover {
+  background-color: lightcyan;
 }

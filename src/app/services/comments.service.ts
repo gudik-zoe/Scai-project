@@ -49,10 +49,9 @@ export class CommentsService {
     return this.http.get(this.rootUrl + 'commentLikes/likers/' + commentId);
   }
   updateComment(commentId: number, newComment: String) {
-    console.log(newComment);
     return this.http.put(
       this.rootUrl + 'comments/idAccount/' + commentId + '/' + newComment,
-      newComment
+      {}
     );
   }
 }

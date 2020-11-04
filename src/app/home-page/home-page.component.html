@@ -6,17 +6,13 @@
   <div id="second-div" class="col-md-6">
     <div class="whatSInYourMind">
       <span *ngIf="userData">
-        <img src="http://localhost:8080/files/{{userData.profilePhoto}}" width="50px" style="border-radius: 50%" />
-        <input (click)="openDiv()" class="ml-2" [(ngModel)]="input" placeholder="what's in your mind, {{
+        <img src="http://localhost:8080/files/{{userData.profilePhoto}}" width="50px" height="50px"
+          style="border-radius: 50%" />
+        <input (click)="openDiv()" class="whatsInput" [(ngModel)]="input" placeholder="what's in your mind, {{
               userData.firstName
-            }} " style="
-              width: 300px;
-              border-radius: 10px;
-              background-color: lightgray;
-              border-style: none;
-            " />
+            }} " />
       </span>
-      <app-alert></app-alert>
+      <app-create-post></app-create-post>
 
       <hr />
       <span style="color: red" class="font-weight-bold ml-4">

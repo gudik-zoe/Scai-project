@@ -12,7 +12,7 @@
       <span class="font-weight-bold">
         {{ userData?.firstName + " " + userData?.lastName }} shared:
       </span>
-      <p *ngIf="uploadImageError" class="text-danger">{{errorPhrase}}</p>
+      <p class="text-danger">{{errorPhrase}}</p>
       <div class="md-form">
         <p>{{ inputData }}</p>
         <img *ngIf="postImage" [src]="postImage" width="150" height="100px" style="margin-left: 100px" />
@@ -27,7 +27,7 @@
       </div>
 
       <br />
-      <button [disabled]="!inputData || inputData == ' '" type="button" (click)="sharePost(inputData)"
+      <button [disabled]="!inputData && !postImage" type="button" (click)="sharePost(inputData)"
         class="btn btn-primary btn-block">
         Post
       </button>

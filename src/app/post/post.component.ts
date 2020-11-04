@@ -20,7 +20,6 @@ export class PostComponent implements OnInit {
   imgUrl: string = environment.rootUrl + '/files/';
   @Input() post: Post;
   @Input() userData: Account;
-
   @Input() commentText: string;
 
   @Output() testOutput = new EventEmitter<Post>();
@@ -32,6 +31,7 @@ export class PostComponent implements OnInit {
   openCommentsList: boolean = false;
   editCommentOn: boolean;
   commentId: number;
+
   editCommentValue: string;
   editMode: boolean = false;
   postEditText: string;
@@ -39,6 +39,7 @@ export class PostComponent implements OnInit {
   myImage;
   postImage;
   imageString: string;
+  errorPhrase: string = '';
 
   constructor(
     private postsService: PostsService,
@@ -54,7 +55,13 @@ export class PostComponent implements OnInit {
   }
 
   comment(post: Post, commentText: string) {
-    this.commentPostEvent.emit({ post, commentText });
+    if (commentText == undefined || !commentText.trim()) {
+      this.errorPhrase = 'cannot add an empty comment';
+      commentText = '';
+    } else {
+      this.errorPhrase = '';
+      this.commentPostEvent.emit({ post, commentText });
+    }
   }
 
   toDescription(id: number) {
@@ -75,9 +82,7 @@ export class PostComponent implements OnInit {
   }
 
   deletePost(id: number) {
-    this.postsService.deletePost(id).subscribe((data) => {
-      this.deletePostEvent.emit(id);
-    });
+    this.deletePostEvent.emit(id);
   }
 
   getLike() {
@@ -114,12 +119,17 @@ export class PostComponent implements OnInit {
   }
 
   confirmEditComment(comment: Comment, newComment: string) {
-    this.commentService
-      .updateComment(comment.idComment, newComment)
-      .subscribe((data: Comment) => {
-        this.editCommentOn = false;
-        comment.text = data.text;
-      });
+    if (newComment == undefined || !newComment.trim()) {
+      this.errorPhrase = 'cannot add an empty comment';
+    } else {
+      this.commentService
+        .updateComment(comment.idComment, newComment.trim())
+        .subscribe((data: Comment) => {
+          this.editCommentOn = false;
+          comment.text = data.text;
+          this.errorPhrase = '';
+        });
+    }
   }
 
   deleteComment(id: number) {

@@ -20,6 +20,7 @@ export class SharePostComponent implements OnInit {
   post: Post;
   inputData: string;
   postDoneBy: AccountBasicData;
+  errorPhrase: string = '';
 
   getRequestedData() {
     this.postService.sharePostComponent.subscribe((data) => {
@@ -34,16 +35,15 @@ export class SharePostComponent implements OnInit {
     this.sharePostComponent = false;
   }
 
-  confirmShare(theOriginalPost: Post) {
-    const post = {
-      extraText: this.inputData,
-      postOriginalId: theOriginalPost.idPost,
-      date: new Date().getTime(),
-      postCreatorId: theOriginalPost.postCreatorId,
-    };
-    this.postService.addPost(post).subscribe((data) => {
-      this.sharePostComponent = false;
-    });
+  confirmShare(idPost: number, extraText: string) {
+    const text = extraText.trim();
+    if (!text || text == undefined) {
+      this.errorPhrase = 'add ur own text';
+    } else {
+      this.postService.resharePost(idPost, text).subscribe((data) => {
+        this.sharePostComponent = false;
+      });
+    }
   }
   ngOnInit() {
     this.getRequestedData();

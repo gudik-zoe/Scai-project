@@ -1,4 +1,4 @@
-<div *ngIf="userData" class="container" class="post-container" style="background-color: white;">
+<div *ngIf="userData" class="post-container" style="background-color: white;">
 
   <ng-container *ngIf="post.doneBy && userData">
     <img src="http://localhost:8080/files/{{ post.doneBy.profilePhoto }}" width="50px"
@@ -106,6 +106,7 @@
           margin-left: 10px;
           outline: none;
         " />
+    <p class="text-danger">{{errorPhrase}}</p>
   </div>
 
 </div>

@@ -26,8 +26,7 @@ export class EditPostComponent implements OnInit {
   myImage;
   postImage: string | ArrayBuffer;
   imageChanged: boolean = false;
-  uploadImageError: boolean = false;
-  errorPhrase: string;
+  errorPhrase: string = '';
 
   async getUserData() {
     this.userData = await this.accountService.getUserData();
@@ -37,7 +36,7 @@ export class EditPostComponent implements OnInit {
     this.editPostComponent = false;
     this.showImage = true;
     this.postImage = null;
-    this.uploadImageError = false;
+    this.errorPhrase = '';
   }
 
   deleteImage() {
@@ -59,12 +58,11 @@ export class EditPostComponent implements OnInit {
           reader.onload = (event) => {
             this.postImage = event.target.result;
             this.showImage = false;
-            this.uploadImageError = false;
+            this.errorPhrase = '';
           };
         },
         (error) => {
           this.errorPhrase = error.error.message;
-          this.uploadImageError = true;
         }
       );
     }

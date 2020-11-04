@@ -27,8 +27,9 @@
                         style="margin-left: 84px; margin-bottom: 5px;" />
                 </div>
             </div>
+            <p class="text-danger">{{errorPhrase}}</p>
             <button [disabled]="!inputData || inputData == ' '" type="button"
-                class="btn btn-primary btn-block mb-1 mt-1" (click)="confirmShare(post)">
+                class="btn btn-primary btn-block mb-1 mt-1" (click)="confirmShare(post.idPost ,inputData )">
                 Share
             </button>
         </div>

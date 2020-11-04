@@ -30,27 +30,20 @@ export class PostsContainerComponent implements OnInit {
     private notificationService: NotificationService
   ) {}
   @Input() posts;
-  commentText: string;
+
   userImage;
   userData: Account;
   usersDetails = [];
+  commentText: string;
 
   async getUserData() {
     this.userData = await this.accountService.getUserData();
   }
 
-  deletePostInParent(id) {
-    this.posts = this.posts.filter((item) => item.idPost !== id);
-  }
-
-  sendNotification(notification) {
-    if (notification.notCreator !== notification.notReceiver) {
-      this.notificationService
-        .addNotification(notification)
-        .subscribe((data) => {
-          console.log(data);
-        });
-    }
+  deletePostInParent(id: number) {
+    this.postsService.deletePost(id).subscribe((data) => {
+      this.posts = this.posts.filter((item: Post) => item.idPost !== id);
+    });
   }
 
   likePostInParent(post: Post) {
@@ -65,20 +58,25 @@ export class PostsContainerComponent implements OnInit {
 
   commentPostInParent(data) {
     this.commentService
-      .addCommment(data.post, data.commentText)
-      .subscribe((comment: Comment) => {
-        comment.doneBy = {
-          idAccount: this.userData.idAccount,
-          firstName: this.userData.firstName,
-          lastName: this.userData.lastName,
-          profilePhoto: this.userData.profilePhoto,
-        };
-        data.post.comments.push(comment);
-        this.commentText = null;
-      });
+      .addCommment(data.post, data.commentText.trim())
+      .subscribe(
+        (comment: Comment) => {
+          comment.doneBy = {
+            idAccount: this.userData.idAccount,
+            firstName: this.userData.firstName,
+            lastName: this.userData.lastName,
+            profilePhoto: this.userData.profilePhoto,
+          };
+          data.post.comments.push(comment);
+          this.commentText = null;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 
-  editPostInParent(data) {
+  editPostInParent(data: Post) {
     this.postsService.editPostComponent.next({
       post: data,
       openComponent: true,

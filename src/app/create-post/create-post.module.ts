@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertComponent } from './alert.component';
+import { CreatePostComponent } from './create-post.component';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AlertComponent],
+  declarations: [CreatePostComponent],
   imports: [CommonModule, FormsModule],
-  exports: [AlertComponent],
+  exports: [CreatePostComponent],
 })
-export class AlertModule {}
+export class CreatePostModule {}

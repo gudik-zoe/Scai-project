@@ -165,6 +165,20 @@ export class PostsService {
     return this.http.post(this.rootUrl + 'posts/accountId', post);
   }
 
+  resharePost(idPost: number, extraText: string) {
+    return this.http.post(
+      this.rootUrl +
+        'post/resharePost/' +
+        '/' +
+        idPost +
+        '/' +
+        this.date +
+        '/' +
+        extraText,
+      {}
+    );
+  }
+
   updatePost(post: Post) {
     return this.http.put(this.rootUrl + 'posts/update/idAccount', post);
   }

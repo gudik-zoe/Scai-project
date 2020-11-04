@@ -11,10 +11,12 @@ import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AccountService } from './services/account.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MyInterceptor implements HttpInterceptor {
   constructor(private route: Router, private accountService: AccountService) {}
-
+  errorMessage: string;
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -29,22 +31,25 @@ export class MyInterceptor implements HttpInterceptor {
 
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        let errorMsg = '';
-        if (error.error instanceof ErrorEvent) {
-          console.log('this is client side error');
-          errorMsg = `Error: ${error.error.message}`;
-        } else {
-          console.log('this is server side error');
-          errorMsg = `Error Code: ${error.status},  Message: ${error.error.message}`;
-          const tokenErrorPhrase = error.error.message;
-          if (tokenErrorPhrase.startsWith('JWT expired')) {
+        this.errorMessage = '';
+        if (!(error.error instanceof ErrorEvent)) {
+          //   console.log('this is client side error');
+          //   this.errorMessage = `Error: ${error.error.message}`;
+          // } else {
+          //   console.log('this is server side error');
+          //   this.errorMessage = `Error Code: ${error.status},  Message: ${error.error.message}`;
+          //   const tokenErrorPhrase = error.error.message;
+          if (error.status == 500) {
+            console.log('scaduto');
             this.route.navigate(['/auth']);
             localStorage.removeItem('token');
             this.accountService.loggedIn.next(false);
+          } else {
+            console.log(error.error.message);
           }
         }
-        console.log(errorMsg);
-        return throwError(errorMsg);
+
+        return throwError(error);
       })
     );
   }
