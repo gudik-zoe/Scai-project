@@ -24,6 +24,7 @@ export class AccountSettingsComponent implements OnInit {
   emailExistError: boolean = false;
   rootUrl: string = environment.rootUrl;
   uploadImageError: boolean = false;
+  errorPhrase: string;
 
   goToHome() {
     this.route.navigate(['/user-profile']);
@@ -32,24 +33,26 @@ export class AccountSettingsComponent implements OnInit {
   newImage(event) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      console.log(file);
-      if (file.type.includes('image') && file.size <= 2000000) {
-        const formData = new FormData();
-        formData.append('file', file);
-        this.http.post(this.rootUrl + 'upload', formData).subscribe();
-
-        this.http
-          .put(
-            this.rootUrl + 'api/accounts/profilePhoto/accountId/' + file.name,
-            {}
-          )
-          .subscribe(() => {
-            this.getUserData();
-            this.accountService.imageSubject.next(true);
-          });
-      } else {
-        this.uploadImageError = true;
-      }
+      const formData = new FormData();
+      formData.append('file', file);
+      this.http.post(this.rootUrl + 'upload', formData).subscribe(
+        (data) => {
+          this.uploadImageError = false;
+          this.http
+            .put(
+              this.rootUrl + 'api/accounts/profilePhoto/accountId/' + file.name,
+              {}
+            )
+            .subscribe(() => {
+              this.getUserData();
+              this.accountService.imageSubject.next(true);
+            });
+        },
+        (error) => {
+          this.uploadImageError = true;
+          this.errorPhrase = error.error.message;
+        }
+      );
     }
   }
   changeCoverPhoto(event) {
@@ -58,15 +61,23 @@ export class AccountSettingsComponent implements OnInit {
 
       const formData = new FormData();
       formData.append('file', file);
-      this.http.post(this.rootUrl + 'upload', formData).subscribe();
-      this.http
-        .put(
-          this.rootUrl + 'api/accounts/coverPhoto/accountId/' + file.name,
-          {}
-        )
-        .subscribe(() => {
-          this.getUserData();
-        });
+      this.http.post(this.rootUrl + 'upload', formData).subscribe(
+        (data) => {
+          this.uploadImageError = false;
+          this.http
+            .put(
+              this.rootUrl + 'api/accounts/coverPhoto/accountId/' + file.name,
+              {}
+            )
+            .subscribe(() => {
+              this.getUserData();
+            });
+        },
+        (error) => {
+          this.uploadImageError = true;
+          this.errorPhrase = error.error.message;
+        }
+      );
     }
   }
 

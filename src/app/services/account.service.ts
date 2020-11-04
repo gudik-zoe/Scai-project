@@ -14,6 +14,7 @@ export class AccountService {
   userData: Account;
   imageSubject = new Subject<boolean>();
   loggedIn = new Subject<boolean>();
+  errorSubject = new Subject<any>();
   rootUrl: string = environment.rootUrl;
   accountBasicData: AccountBasicData[] = [];
   constructor(private http: HttpClient) {}

@@ -6,6 +6,8 @@ import { Post } from '../models/post';
 import { Account } from '../models/account';
 import { AccountService } from '../services/account.service';
 import { PostsService } from '../services/posts.service';
+import { catchError } from 'rxjs/operators';
+import { MyInterceptor } from '../my-interceptor';
 
 @Component({
   selector: 'app-alert',
@@ -17,16 +19,18 @@ export class AlertComponent implements OnInit, OnDestroy {
     private postsService: PostsService,
     private accountService: AccountService,
     private route: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private inter: MyInterceptor
   ) {}
   ngOnDestroy() {}
   foto: Blob;
   alertComponent: boolean = false;
   inputData: string;
   userData: Account;
-  userImage: Blob;
+  uploadImageError: boolean = false;
   myImage;
   postImage;
+  errorPhrase: string = '';
 
   close() {
     this.alertComponent = false;
@@ -38,16 +42,22 @@ export class AlertComponent implements OnInit, OnDestroy {
       this.myImage = file;
       const formData = new FormData();
       formData.append('file', this.myImage);
-      this.http
-        .post('http://localhost:8080/upload', formData)
-        .subscribe((data) => {
-          console.log(data);
-        });
-      let reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (event) => {
-        this.postImage = event.target.result;
-      };
+      this.http.post('http://localhost:8080/upload', formData).subscribe(
+        (data) => {
+          this.uploadImageError = false;
+          let reader = new FileReader();
+          reader.readAsDataURL(event.target.files[0]);
+          reader.onload = (event) => {
+            this.postImage = event.target.result;
+          };
+        },
+        (error: Error) => {
+          this.accountService.errorSubject.subscribe((data) => {
+            this.uploadImageError = data.boolean;
+            this.errorPhrase = data.errorMessage;
+          });
+        }
+      );
     }
   }
 

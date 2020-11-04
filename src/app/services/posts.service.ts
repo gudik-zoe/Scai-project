@@ -21,6 +21,7 @@ export class PostsService {
   close = new Subject<any>();
   editPostComponent = new Subject<any>();
   sharePostComponent = new Subject<any>();
+  errorSubject = new Subject<boolean>();
   alertComponent = new Subject<any>();
   dbPosts: Post[];
   comment: Comment;

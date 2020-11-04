@@ -140,15 +140,22 @@
               ">
                 this field is required
               </small>
+              <small class="text-danger" *ngIf="
+              signInForm.get('password').errors?.minlength &&
+              signInForm.get('password').touched
+            ">
+                password should be longer than 6 characters
+              </small>
 
               <small class="text-danger" *ngIf="
                 invalidCredentialsError
               ">
-                invalid credentials
+                {{errorPhrase}}
               </small>
 
             </div>
-            <button style="margin-top:65px;" [disabled]="!signInForm.valid" class="btn btn-outline-primary btn-block"
+            <button style="margin-top:65px;" [disabled]="!signInForm.valid"
+              [class]="!signInForm.valid ? 'btn btn-outline-danger btn-block': 'btn btn-outline-primary btn-block'"
               (click)="
               signIn(
                 signInForm.get('email').value,

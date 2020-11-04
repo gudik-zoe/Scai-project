@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ErrorHandler, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Custome } from './validator';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { PostsService } from '../services/posts.service';
 import { AccountService } from '../services/account.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Account } from '../models/account';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 @Component({
   selector: 'app-log-in',
@@ -22,11 +23,12 @@ export class LogInComponent implements OnInit {
     private accountService: AccountService,
     private http: HttpClient
   ) {}
-  signUp: boolean = true;
+  signUp: boolean = false;
   // dataSaved: boolean = false;
   error: boolean = false;
   emailExistError: boolean = false;
   invalidCredentialsError: boolean = false;
+  errorPhrase: string;
 
   signUpfunc(account: Account): void {
     if (account.gender == 'male') {
@@ -54,7 +56,6 @@ export class LogInComponent implements OnInit {
   signIn(email: string, password: string) {
     this.auth.signIn(email, password).subscribe(
       (data) => {
-        console.log(data.statusText);
         this.invalidCredentialsError = false;
         localStorage.setItem('token', data.headers.get('Authorization'));
         this.accountService.loggedIn.next(true);
@@ -62,6 +63,7 @@ export class LogInComponent implements OnInit {
       },
       (error) => {
         this.invalidCredentialsError = true;
+        this.errorPhrase = error.error.message;
       }
     );
   }
@@ -93,7 +95,7 @@ export class LogInComponent implements OnInit {
     );
     this.signInForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 }
