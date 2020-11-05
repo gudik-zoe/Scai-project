@@ -22,7 +22,7 @@
             <p class="text-center">{{ inputData }}</p>
             <p class="text-danger">{{errorPhrase}}</p>
             <div class="container">
-                <img *ngIf="post.image && showImage" src="http://localhost:8080/files/{{ post?.image }}" width="80%"
+                <img *ngIf="post.image && showImage" src="http://localhost:8080/files/{{ post.image }}" width="80%"
                     height="80%;" style="margin-left: 50px;" />
                 <img *ngIf=" postImage" [src]="postImage" width="150" height="100px" style="margin-left: 50px" />
                 <i *ngIf="showImage && post?.image" style="color: lightskyblue; cursor: pointer;"
@@ -38,11 +38,7 @@
                         width="25px" height="25px" style="border-radius: 50%; color: blue" />
                 </label>
             </div>
-
-
-
-
-            <button [disabled]="!inputData || inputData == ' '" type="button" class="btn btn-primary btn-block"
+            <button [disabled]="!inputData && !showImage && !postImage" type="button" class="btn btn-primary btn-block"
                 (click)="confirmEdit()">
                 Edit
             </button>

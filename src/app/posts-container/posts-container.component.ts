@@ -47,13 +47,18 @@ export class PostsContainerComponent implements OnInit {
   }
 
   likePostInParent(post: Post) {
-    this.postsService.likePost(post).subscribe((data: PostLike) => {
-      if (data) {
-        post.postLikes.push({ ...data });
-      } else {
-        post.postLikes.pop();
+    this.postsService.likePost(post).subscribe(
+      (data: PostLike) => {
+        if (data) {
+          post.postLikes.push({ ...data });
+        } else {
+          post.postLikes.pop();
+        }
+      },
+      (error) => {
+        console.log(error.error.message);
       }
-    });
+    );
   }
 
   commentPostInParent(data) {

@@ -27,7 +27,6 @@ export class CreatePostComponent implements OnInit {
   alertComponent: boolean = false;
   inputData: string = '';
   userData: Account;
-  uploadImageError: boolean = false;
   myImage;
   postImage;
   errorPhrase: string = '';
@@ -47,7 +46,7 @@ export class CreatePostComponent implements OnInit {
       formData.append('file', this.myImage);
       this.http.post('http://localhost:8080/upload', formData).subscribe(
         (data) => {
-          this.uploadImageError = false;
+          this.errorPhrase = '';
           let reader = new FileReader();
           reader.readAsDataURL(event.target.files[0]);
           reader.onload = (event) => {
@@ -63,7 +62,6 @@ export class CreatePostComponent implements OnInit {
 
   sharePost(text: string) {
     if (!text.trim()) {
-      this.uploadImageError = true;
       this.errorPhrase = 'cannot enter an empty text';
     } else {
       const post = {
@@ -74,7 +72,8 @@ export class CreatePostComponent implements OnInit {
         date: new Date().getTime(),
       };
       this.postsService.addPost(post).subscribe((data: Post) => {
-        this.uploadImageError = this.alertComponent = false;
+        this.errorPhrase = '';
+        this.alertComponent = false;
         (data.postLikes = []), (data.comments = []);
         data.doneBy = {
           idAccount: this.userData.idAccount,

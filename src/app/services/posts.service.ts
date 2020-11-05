@@ -169,7 +169,6 @@ export class PostsService {
     return this.http.post(
       this.rootUrl +
         'post/resharePost/' +
-        '/' +
         idPost +
         '/' +
         this.date +
@@ -179,8 +178,17 @@ export class PostsService {
     );
   }
 
-  updatePost(post: Post) {
-    return this.http.put(this.rootUrl + 'posts/update/idAccount', post);
+  updatePost(postId: number, newText: string, newImage: string) {
+    return this.http.put(
+      this.rootUrl +
+        'posts/update/idAccount/' +
+        postId +
+        '/' +
+        newText +
+        '/' +
+        newImage,
+      {}
+    );
   }
 
   deletePost(postId: number) {

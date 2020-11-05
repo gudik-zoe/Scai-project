@@ -35,13 +35,7 @@ export class EditPostComponent implements OnInit {
   public closeEditPostComponent(): void {
     this.editPostComponent = false;
     this.showImage = true;
-    this.postImage = null;
     this.errorPhrase = '';
-  }
-
-  deleteImage() {
-    this.showImage = false;
-    this.imageChanged = true;
   }
 
   uploadImage(event): void {
@@ -68,21 +62,42 @@ export class EditPostComponent implements OnInit {
     }
   }
 
+  deleteImage() {
+    this.showImage = false;
+    this.imageChanged = true;
+  }
+
   confirmEdit() {
     if (this.imageChanged && this.myImage) {
       this.post.image = this.myImage.name;
     } else if (this.imageChanged && !this.myImage) {
       this.post.image = null;
     }
-    this.post.text = this.inputData;
-    this.postService.updatePost(this.post).subscribe((data) => {
-      this.editPostComponent = false;
-    });
+    if (this.inputData) {
+      this.post.text = this.inputData.trim();
+    } else {
+      this.post.text = null;
+    }
+    if (!this.post.text && !this.post.image) {
+      this.errorPhrase = 'cannot add an empty post';
+      this.post.text = this.post.text;
+      this.post.image = this.post.image;
+    } else {
+      this.postService
+        .updatePost(this.post.idPost, this.post.text, this.post.image)
+        .subscribe(
+          (data) => {
+            this.editPostComponent = false;
+          },
+          (error) => {
+            this.errorPhrase = error.error.message;
+          }
+        );
+    }
   }
 
   getPostData() {
     this.postService.editPostComponent.subscribe((data) => {
-      console.log(data.post.text);
       this.post = data.post;
       this.userData = data.userData;
       this.editPostComponent = data.openComponent;
