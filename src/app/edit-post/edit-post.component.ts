@@ -28,10 +28,6 @@ export class EditPostComponent implements OnInit {
   imageChanged: boolean = false;
   errorPhrase: string = '';
 
-  async getUserData() {
-    this.userData = await this.accountService.getUserData();
-  }
-
   public closeEditPostComponent(): void {
     this.editPostComponent = false;
     this.showImage = true;

@@ -37,7 +37,9 @@ export class PostsContainerComponent implements OnInit {
   commentText: string;
 
   async getUserData() {
-    this.userData = await this.accountService.getUserData();
+    this.userData =
+      this.accountService.userData ||
+      (await this.accountService.getTheLoggedInUserData());
   }
 
   deletePostInParent(id: number) {

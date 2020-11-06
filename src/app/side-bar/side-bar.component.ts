@@ -14,13 +14,14 @@ export class SideBarComponent implements OnInit {
 
   async getUserData() {
     this.userData =
-      this.accountService.userData || (await this.accountService.getUserData());
+      this.accountService.userData ||
+      (await this.accountService.getTheLoggedInUserData());
   }
 
   getTheUpdatedImage() {
     this.accountService.imageSubject.subscribe(async (data: boolean) => {
       if (data) {
-        this.userData = await this.accountService.getUserData();
+        this.userData = await this.accountService.getTheLoggedInUserData();
       }
     });
   }

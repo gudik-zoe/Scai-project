@@ -65,7 +65,8 @@ export class MessengerComponent implements OnInit, OnDestroy {
 
   async getUserData() {
     this.userData =
-      this.accountService.userData || (await this.accountService.getUserData());
+      this.accountService.userData ||
+      (await this.accountService.getTheLoggedInUserData());
   }
   ngOnInit() {
     this.getUserData();

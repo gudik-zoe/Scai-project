@@ -28,15 +28,14 @@ export class AccountService {
     return this.http.get(this.rootUrl + 'api/accounts');
   }
 
-  getData() {
-    return this.http.get(this.rootUrl + 'api/accounts/accountId');
+  getARandomUserData(accountId: number) {
+    return this.http.get(this.rootUrl + 'api/accounts/' + accountId);
   }
 
-  async getUserData() {
-    const id = this.getId();
+  async getTheLoggedInUserData() {
     return new Promise<Account>((resolve) => {
       this.http
-        .get(this.rootUrl + 'api/accounts/' + id)
+        .get(this.rootUrl + 'api/accounts/idAccount/getLoggedInUser')
         .subscribe((data: Account) => {
           this.userData = data;
           resolve(this.userData);
@@ -75,8 +74,6 @@ export class AccountService {
   }
 
   updateAccount(account: Account) {
-    account.idAccount = this.getId();
-
     return this.http.put(this.rootUrl + 'api/accounts/updateAccount', account);
   }
 

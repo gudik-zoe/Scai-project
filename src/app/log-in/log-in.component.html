@@ -57,10 +57,7 @@
               ">
                 invalid mail
               </small>
-              <small *ngIf="emailExistError">this email already exist
-                <button style="font-size: smaller;" class="btn btn-danger btn-sm" (click)="signUpAgain()">
-                  ok
-                </button></small>
+            
             </div>
             <div class="form-group mt-2">
               <input class="form-control" type="password" placeholder="Password" style="width: 240px"
@@ -104,6 +101,10 @@
               <input type="radio" formControlName="gender" value="other" />
               <label>other</label>
             </div>
+             <p class="text-danger"
+              >
+                {{errorPhrase}}
+              </p>
             <button [disabled]="!signUpForm.valid" class="btn btn-outline-success btn-block  mb-2"
               (click)="signUpfunc(signUpForm.value)">
               Sign Up
@@ -147,11 +148,10 @@
                 password should be longer than 6 characters
               </small>
 
-              <small class="text-danger" *ngIf="
-                invalidCredentialsError
-              ">
+              <p class="text-danger"
+              >
                 {{errorPhrase}}
-              </small>
+              </p>
 
             </div>
             <button style="margin-top:65px;" [disabled]="!signInForm.valid"

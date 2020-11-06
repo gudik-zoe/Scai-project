@@ -55,7 +55,8 @@ export class HomePageComponent implements OnInit {
   }
   async getUserData() {
     this.userData =
-      this.accountService.userData || (await this.accountService.getUserData());
+      this.accountService.userData ||
+      (await this.accountService.getTheLoggedInUserData());
   }
 
   async getPosts() {

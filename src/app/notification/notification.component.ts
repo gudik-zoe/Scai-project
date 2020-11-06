@@ -61,7 +61,9 @@ export class NotificationComponent implements OnInit {
   }
 
   async getUserData() {
-    this.userData = await this.accountService.getUserData();
+    this.userData =
+      this.accountService.userData ||
+      (await this.accountService.getTheLoggedInUserData());
   }
 
   goToDescription(postId) {

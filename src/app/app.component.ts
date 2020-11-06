@@ -13,62 +13,12 @@ import { NotificationService } from './services/notification.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(private accountService: AccountService, private route: Router) {}
-  title = 'scai-project';
-  loggedInSubscription: Subscription;
-  message: string;
-  loggedIn: boolean = localStorage.getItem('token') ? true : false;
-  userData: Account;
-  errorPhrase: string = 'JWT expired';
-  notificationObject;
-  editPost: boolean = false;
-
-  deactivate() {
-    this.accountService.deleteAccount().subscribe(
-      (data) => {
-        localStorage.removeItem('token');
-        this.route.navigate(['/auth']);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
-  logOut() {
-    this.accountService.userData = null;
-    localStorage.removeItem('token');
-    this.route.navigate(['/auth']);
-    this.loggedIn = false;
-  }
-
-  async getUserData() {
-    this.userData =
-      this.accountService.userData || (await this.accountService.getUserData());
-  }
-
-  getTheUpdatedImage() {
-    this.accountService.imageSubject.subscribe(async (data: boolean) => {
-      if (data) {
-        this.userData = await this.accountService.getUserData();
-      }
-    });
-  }
-  navBarController() {
-    this.accountService.loggedIn.subscribe((data: boolean) => {
-      this.loggedIn = data;
-      this.getUserData();
-    });
-  }
-
-  // ngOnDestroy{
-  //   this.subscription.
-
-  // }
+  constructor(private AccountService: AccountService) {}
+  open: boolean;
 
   ngOnInit() {
-    this.getUserData();
-    this.getTheUpdatedImage();
-    this.navBarController();
+    this.AccountService.loggedIn.subscribe((data) => {
+      this.open = data;
+    });
   }
 }

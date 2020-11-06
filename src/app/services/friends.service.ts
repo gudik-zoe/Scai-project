@@ -23,13 +23,7 @@ export class FriendsService {
   getRelationStatusBetweenMeAnd(userId: number) {
     return new Promise<string>((resolve) => {
       this.http
-        .get(
-          this.rootUrl +
-            'relation/getRelation/' +
-            this.accountService.getId() +
-            '/' +
-            userId
-        )
+        .get(this.rootUrl + 'relation/getRelation/accountId/' + userId)
         .subscribe((data: Relationship) => {
           if (!data) {
             this.status = 'add friend';
@@ -43,18 +37,20 @@ export class FriendsService {
             data.userTwoId !== this.accountService.getId()
           ) {
             this.status = 'pending..cancel friend request';
-          } else {
+          } else if (data.status == 1) {
             this.status = 'chat';
+          } else {
+            this.status = 'add friend';
           }
           resolve(this.status);
         });
     });
   }
 
-  getFriendRequests(id) {
+  getFriendRequests() {
     return new Promise<Relationship[]>((resolve) => {
       this.http
-        .get(this.rootUrl + 'relation/getFriendRequests/' + id)
+        .get(this.rootUrl + 'relation/getFriendRequests/accountId')
         .subscribe((data: Relationship[]) => {
           this.relations = data;
           this.getFullRelationshipData(this.relations);
@@ -71,11 +67,8 @@ export class FriendsService {
     }
   }
 
-  sendFriendRequest(userId) {
-    return this.http.post(
-      this.rootUrl + 'relation/' + this.accountService.getId() + '/' + userId,
-      {}
-    );
+  sendFriendRequest(userId: number) {
+    return this.http.post(this.rootUrl + 'relation/accountId/' + userId, {});
   }
 
   acceptFriendRequest(relationshipId, status) {
@@ -85,9 +78,9 @@ export class FriendsService {
     );
   }
 
-  deleteOrCancelFriendRequest(user1Id, user2Id) {
+  deleteOrCancelFriendRequest(user2Id: number) {
     return this.http.delete(
-      this.rootUrl + 'relation/deleteRequest/' + user1Id + '/' + user2Id
+      this.rootUrl + 'relation/deleteRequest/accountId' + user2Id
     );
   }
 }

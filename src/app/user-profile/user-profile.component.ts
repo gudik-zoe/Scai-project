@@ -49,7 +49,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   async getUserData() {
-    this.loggedInUserData = await this.accountService.getUserData();
+    this.loggedInUserData =
+      this.accountService.userData ||
+      (await this.accountService.getTheLoggedInUserData());
   }
 
   goToMessengerOrAddFriend(id: number) {
@@ -63,7 +65,7 @@ export class UserProfileComponent implements OnInit {
       return null;
     } else {
       this.friendService
-        .deleteOrCancelFriendRequest(this.loggedInUserData.idAccount, this.id)
+        .deleteOrCancelFriendRequest(this.id)
         .subscribe((data) => {
           this.status = 'add friend';
         });

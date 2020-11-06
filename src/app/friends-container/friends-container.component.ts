@@ -28,7 +28,9 @@ export class FriendsContainerComponent implements OnInit {
     });
   }
   async getUserData() {
-    this.userData = await this.accountService.getUserData();
+    this.userData =
+      this.accountService.userData ||
+      (await this.accountService.getTheLoggedInUserData());
   }
   goToFriendsCharRoom(id: number): void {
     this.route.navigate(['/messenger', id]);

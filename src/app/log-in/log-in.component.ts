@@ -27,8 +27,8 @@ export class LogInComponent implements OnInit {
   // dataSaved: boolean = false;
   error: boolean = false;
   emailExistError: boolean = false;
-  invalidCredentialsError: boolean = false;
-  errorPhrase: string;
+
+  errorPhrase: string = "";
 
   signUpfunc(account: Account): void {
     if (account.gender == 'male') {
@@ -38,14 +38,9 @@ export class LogInComponent implements OnInit {
     }
     account.coverPhoto = 'nature-design.jpg';
     this.auth.signUp(account).subscribe((data) => {
-      if (data) {
+         this.errorPhrase = "";
         this.signUp = false;
-        this.emailExistError = true;
-        console.log('registered');
-      } else {
-        this.emailExistError = true;
-      }
-    });
+    },(error) => this.errorPhrase=error.error.message);
   }
 
   signUpAgain(): void {
@@ -54,15 +49,13 @@ export class LogInComponent implements OnInit {
   }
 
   signIn(email: string, password: string) {
-    this.auth.signIn(email, password).subscribe(
-      (data) => {
-        this.invalidCredentialsError = false;
+    this.auth.signIn(email, password).subscribe(data => {
+        this.errorPhrase = "";
         localStorage.setItem('token', data.headers.get('Authorization'));
         this.accountService.loggedIn.next(true);
-        this.route.navigate(['/home-page']);
-      },
+        this.route.navigate(['/home-page']);  
+    },
       (error) => {
-        this.invalidCredentialsError = true;
         this.errorPhrase = error.error.message;
       }
     );
@@ -75,6 +68,7 @@ export class LogInComponent implements OnInit {
   switch(): void {
     this.signUp = !this.signUp;
     this.signUpForm.reset();
+    this.errorPhrase = ""
   }
 
   signUpForm: FormGroup;

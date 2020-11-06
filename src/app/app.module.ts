@@ -15,20 +15,23 @@ import { AuthenticationGuard } from './authentication.guard';
 import { NotificationComponent } from './notification/notification.component';
 import { FriendRequestComponent } from './friend-request/friend-request.component';
 import { EditPostComponent } from './edit-post/edit-post.component';
+import { NavBarModule } from './nav-bar/nav-bar.module';
+import { EditPostModule } from './edit-post/edit-post.module';
+import { FriendRequestModule } from './friend-request/friend-request.module';
+import { NotificationModule } from './notification/notification.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NotificationComponent,
-    FriendRequestComponent,
-    EditPostComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    NavBarModule,
+    FriendRequestModule,
+    NotificationModule,
+    EditPostModule,
   ],
   providers: [
     AuthenticationGuard,

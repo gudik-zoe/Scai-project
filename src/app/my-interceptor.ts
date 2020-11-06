@@ -39,14 +39,16 @@ export class MyInterceptor implements HttpInterceptor {
           //   console.log('this is server side error');
           //   this.errorMessage = `Error Code: ${error.status},  Message: ${error.error.message}`;
           //   const tokenErrorPhrase = error.error.message;
-          if (error.status == 500) {
-            console.log('scaduto');
+          if (error.error.message == 'token expired') {
             this.route.navigate(['/auth']);
             localStorage.removeItem('token');
             this.accountService.loggedIn.next(false);
-          } else {
-            console.log(error.error.message);
           }
+          //   console.log('scaduto');
+
+          // } else {
+          console.log(error.error.message);
+          // }
         }
 
         return throwError(error);

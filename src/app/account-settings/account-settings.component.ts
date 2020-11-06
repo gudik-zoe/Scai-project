@@ -63,7 +63,7 @@ export class AccountSettingsComponent implements OnInit {
       formData.append('file', file);
       this.http.post(this.rootUrl + 'upload', formData).subscribe(
         (data) => {
-          this.uploadImageError = false;
+          this.errorPhrase = '';
           this.http
             .put(
               this.rootUrl + 'api/accounts/coverPhoto/accountId/' + file.name,
@@ -74,7 +74,6 @@ export class AccountSettingsComponent implements OnInit {
             });
         },
         (error) => {
-          this.uploadImageError = true;
           this.errorPhrase = error.error.message;
         }
       );
@@ -82,20 +81,20 @@ export class AccountSettingsComponent implements OnInit {
   }
 
   confirm() {
-    this.accountService
-      .updateAccount(this.changeEssentialData.value)
-      .subscribe((data) => {
-        console.log(data);
-        if (data) {
-          this.changeEssentialData.reset();
-        } else {
-          this.emailExistError = true;
-        }
-      });
+    this.accountService.updateAccount(this.changeEssentialData.value).subscribe(
+      (data) => {
+        this.errorPhrase = '';
+        this.changeEssentialData.reset();
+        this.accountService.getTheLoggedInUserData();
+      },
+      (error) => (this.errorPhrase = error.error.message)
+    );
   }
 
   async getUserData() {
-    this.userData = await this.accountService.getUserData();
+    this.userData =
+      this.accountService.userData ||
+      (await this.accountService.getTheLoggedInUserData());
     this.fillFormValues();
   }
 
@@ -104,16 +103,16 @@ export class AccountSettingsComponent implements OnInit {
       {
         firstName: [this.userData.firstName, Validators.required],
         lastName: [this.userData.lastName, Validators.required],
-        email: [this.userData.email, [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        confirmNewPassword: ['', Validators.required],
+        // email: [this.userData.email, [Validators.required, Validators.email]],
+        // password: ['', [Validators.required, Validators.minLength(6)]],
+        // confirmNewPassword: ['', Validators.required],
         study: [this.userData.study],
         wentTo: [this.userData.wentTo],
         livesIn: [this.userData.livesIn],
         profilePhoto: [this.userData.profilePhoto],
         coverPhoto: [this.userData.coverPhoto],
-      },
-      { validator: [Custome.changePassword] }
+      }
+      // { validator: [Custome.changePassword] }
     );
   }
   ngOnInit() {

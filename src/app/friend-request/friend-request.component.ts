@@ -11,7 +11,7 @@ import { FriendsService } from '../services/friends.service';
 })
 export class FriendRequestComponent implements OnInit {
   relations: Relationship[];
-  id: number;
+
   imgUrl: string = environment.rootUrl + 'files/';
   constructor(
     private friendService: FriendsService,
@@ -19,7 +19,7 @@ export class FriendRequestComponent implements OnInit {
   ) {}
 
   async getFriendRequests() {
-    this.relations = await this.friendService.getFriendRequests(this.id);
+    this.relations = await this.friendService.getFriendRequests();
   }
 
   respondFriendRequest(id: number, status: number) {
@@ -32,7 +32,6 @@ export class FriendRequestComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.id = this.accountService.getId();
     this.getFriendRequests();
   }
 }

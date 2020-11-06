@@ -69,6 +69,11 @@ const routes: Routes = [
         (m) => m.AccountSettingsModule
       ),
   },
+  {
+    path: 'nav-bar',
+    loadChildren: () =>
+      import('./nav-bar/nav-bar.module').then((m) => m.NavBarModule),
+  },
 ];
 
 @NgModule({

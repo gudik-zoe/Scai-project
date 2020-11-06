@@ -1,0 +1,33 @@
+<nav *ngIf="userData" class="navbar navbar-expand-md navbar-dark sticky-top shadow-lg"
+    style="height: 72px; background-color: darkslateblue;">
+    <div class="imageAndName">
+        <img src="http://localhost:8080/files/{{ userData.profilePhoto }}" width="50px" height="50px"
+            style="border-radius: 50%; " />
+
+        {{userData.firstName + " " +userData.lastName}}
+    </div>
+
+    <a style="margin-left:430px; color: silver; " (click)="goToHomePage()">
+        <i routerLinkActive="active-class" style="cursor: pointer;   font-size: 2rem;" class="fa fa-home"
+            aria-hidden="true"></i>
+
+    </a>
+
+
+    <a style="margin-left: 100px; outline: none; color: silver;" (click)="goToProfile(userData.idAccount)">
+        <i routerLinkActive="active-class" style="cursor: pointer;  font-size: 2rem;" class="fa fa-user"
+            aria-hidden=" true">
+        </i>
+    </a>
+
+
+    <app-friend-request style="margin-left: 200px;"></app-friend-request>
+
+    <app-notification style="margin-left: 10px;"></app-notification>
+    <h6>
+        <button type="button" style="margin-top: 10px; margin-left: 30px; color: white;"
+            class="btn btn-outline-dark btn-sm" (click)="logOut()">
+            log Out
+        </button>
+    </h6>
+</nav>
