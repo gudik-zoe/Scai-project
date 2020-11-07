@@ -1,27 +1,27 @@
-body {
-  background-color: blue;
-}
 li {
   margin-top: 20px;
   outline: none;
+  list-style-type: none;
 }
 li:hover {
   text-decoration: underline;
-  color: blue;
   cursor: pointer;
+  background-color: white;
 }
 
-small:hover {
-  text-decoration: underline;
-}
-
-span {
+.bibi {
+  margin-top: 20px;
   outline: none;
+  list-style-type: none;
+  border-radius: 8px;
+  height: 35px;
 }
 
-body {
-  background-color: whitesmoke;
+.bibi:hover {
+  cursor: pointer;
+  background-color: white;
 }
+
 .main {
   border: 1px solid;
   border-radius: 9px;

@@ -1,4 +1,4 @@
-<div *ngIf="user" id="span" class="container" (click)="goToProfile(user.idAccount)">
+<div *ngIf="user" id="div-container" class="container" (click)="goToProfile(user.idAccount)">
   <span *ngIf="user.idAccount !== userData.idAccount">
     <img src="http://localhost:8080/files/{{user.profilePhoto}}" width="50px" style="border-radius: 50%"
       height="50px" />

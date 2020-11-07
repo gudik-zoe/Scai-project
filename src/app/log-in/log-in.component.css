@@ -16,4 +16,23 @@
   width: fit-content;
   padding-top: 160px;
   margin-right: 30px;
+  position: relative;
+  overflow: hidden;
+  animation-name: example;
+  animation-duration: 3s;
+}
+
+@keyframes example {
+  0% {
+    right: 0px;
+    top: 150px;
+  }
+  25% {
+    top: 0px;
+    bottom: 100px;
+  }
+  75% {
+    right: 0px;
+    top: 0px;
+  }
 }

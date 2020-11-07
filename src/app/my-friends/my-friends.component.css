@@ -14,7 +14,8 @@
   }
 }
 
-#span:hover {
+#div-container:hover {
+  cursor: pointer;
   background-color: white;
   border-radius: 8px;
 }
