@@ -1,0 +1,28 @@
+.active-class {
+  color: black;
+}
+
+#messenger:hover {
+  text-decoration: underline;
+}
+
+p {
+  animation-name: example;
+  animation-duration: 4s;
+}
+i:hover {
+  color: black;
+}
+
+@keyframes example {
+  from {
+    opacity: 1.5;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.imageAndName {
+  width: 150px;
+  color: silver;
+}

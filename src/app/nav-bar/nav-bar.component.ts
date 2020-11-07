@@ -50,12 +50,13 @@ export class NavBarComponent implements OnInit {
   }
 
   logOut() {
-    this.userData = undefined;
+    this.accountService.userData = undefined;
     this.accountService.loggedIn.next(false);
     localStorage.removeItem('token');
     this.route.navigate(['/auth']);
   }
   ngOnInit() {
     this.navBarController();
+    this.getTheUpdatedImage();
   }
 }

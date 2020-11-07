@@ -26,11 +26,7 @@ export class NotificationService {
   getNotification() {
     return new Promise<Notification[]>((resolve) => {
       this.http
-        .get(
-          this.rootUrl +
-            'notification/getNotification/' +
-            this.accountService.getId()
-        )
+        .get(this.rootUrl + 'notification/getNotification/accountId')
         .subscribe((data: Notification[]) => {
           this.notificationObject = data;
           this.getBasicData(this.notificationObject);
@@ -47,9 +43,9 @@ export class NotificationService {
     }
   }
 
-  notHasBeenSeen(id: number) {
+  notHasBeenSeen() {
     this.http
-      .put(this.rootUrl + 'notification/notificationSeen/' + id, {})
+      .put(this.rootUrl + 'notification/notificationSeen/accountId', {})
       .subscribe();
   }
 }

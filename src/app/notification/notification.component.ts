@@ -56,7 +56,7 @@ export class NotificationComponent implements OnInit {
   }
 
   notificationSeen() {
-    this.notificationService.notHasBeenSeen(this.userData.idAccount);
+    this.notificationService.notHasBeenSeen();
     this.unseenNots = [];
   }
 

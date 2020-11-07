@@ -18,11 +18,7 @@ export class ChatService {
 
   getMyConvWithId(senderId: number) {
     return this.http.get(
-      this.rootUrl +
-        'messages/receivedFrom/' +
-        this.accountService.getId() +
-        '/' +
-        senderId
+      this.rootUrl + 'messages/receivedFrom/accountId/' + senderId
     );
   }
 

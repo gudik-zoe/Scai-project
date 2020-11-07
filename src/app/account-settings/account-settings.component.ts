@@ -82,19 +82,20 @@ export class AccountSettingsComponent implements OnInit {
 
   confirm() {
     this.accountService.updateAccount(this.changeEssentialData.value).subscribe(
-      (data) => {
+      async (data) => {
+        this.userData = undefined;
+        this.accountService.userData = undefined;
+        this.userData = await this.accountService.getTheLoggedInUserData();
         this.errorPhrase = '';
         this.changeEssentialData.reset();
-        this.accountService.getTheLoggedInUserData();
+        this.fillFormValues();
       },
       (error) => (this.errorPhrase = error.error.message)
     );
   }
 
   async getUserData() {
-    this.userData =
-      this.accountService.userData ||
-      (await this.accountService.getTheLoggedInUserData());
+    this.userData = await this.accountService.getTheLoggedInUserData();
     this.fillFormValues();
   }
 

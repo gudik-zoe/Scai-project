@@ -154,7 +154,6 @@ export class PostsService {
   }
 
   likePost(post: Post) {
-    console.log(post);
     return this.http.post(
       this.rootUrl + 'postLikes/accountId/' + this.date,
       post

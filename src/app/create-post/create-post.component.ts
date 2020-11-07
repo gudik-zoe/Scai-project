@@ -66,26 +66,29 @@ export class CreatePostComponent implements OnInit {
     } else {
       const post = {
         text: text,
-        image: this.myImage?.name,
+        image: this.myImage?.name || 'null',
         description: null,
         postOriginalId: null,
         date: new Date().getTime(),
       };
-      this.postsService.addPost(post).subscribe((data: Post) => {
-        this.errorPhrase = '';
-        this.alertComponent = false;
-        (data.postLikes = []), (data.comments = []);
-        data.doneBy = {
-          idAccount: this.userData.idAccount,
-          profilePhoto: this.userData.profilePhoto,
-          firstName: this.userData.firstName,
-          lastName: this.userData.lastName,
-        };
-        this.postsService.dbPosts.push(data);
-        this.userData = null;
-        this.postImage = null;
-        this.inputData = null;
-      });
+      this.postsService.addPost(post).subscribe(
+        (data: Post) => {
+          this.errorPhrase = '';
+          this.alertComponent = false;
+          (data.postLikes = []), (data.comments = []);
+          data.doneBy = {
+            idAccount: this.userData.idAccount,
+            profilePhoto: this.userData.profilePhoto,
+            firstName: this.userData.firstName,
+            lastName: this.userData.lastName,
+          };
+          this.postsService.dbPosts.push(data);
+          this.userData = null;
+          this.postImage = null;
+          this.inputData = null;
+        },
+        (error) => (this.errorPhrase = error.error.message)
+      );
     }
   }
 

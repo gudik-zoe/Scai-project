@@ -1,5 +1,9 @@
-<h3>Friends</h3>
-<hr>
-<div *ngFor="let user of users">
-    <app-my-friends [user]="user" [userData]="userData"></app-my-friends>
+<div class="main" style="margin-right: 5px;">
+    <div class="container-fluid" style="background-color: #0070ba;">
+        <h3 style="color: white;">Friends</h3>
+    </div>
+    <hr>
+    <div *ngFor="let user of users">
+        <app-my-friends [user]="user" [userData]="userData"></app-my-friends>
+    </div>
 </div>

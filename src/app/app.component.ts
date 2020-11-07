@@ -20,5 +20,6 @@ export class AppComponent implements OnInit {
     this.AccountService.loggedIn.subscribe((data) => {
       this.open = data;
     });
+    this.open = localStorage.getItem('token') ? true : false;
   }
 }
