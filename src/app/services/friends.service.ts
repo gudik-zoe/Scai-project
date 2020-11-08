@@ -83,4 +83,32 @@ export class FriendsService {
       this.rootUrl + 'relation/deleteRequest/accountId' + user2Id
     );
   }
+
+  async getMyFriendsData(relationships: Relationship[]) {
+    for (let relation of relationships) {
+      if (relation.userOneId != this.accountService.getId()) {
+        relation.doneBy = await this.accountService.getBasicAccountDetails(
+          relation.userOneId
+        );
+      } else {
+        relation.doneBy = await this.accountService.getBasicAccountDetails(
+          relation.userTwoId
+        );
+      }
+    }
+  }
+
+  getMyFriends() {
+    let relationships;
+    return new Promise<Relationship[]>((resolve, reject) => {
+      this.http
+        .get(this.rootUrl + 'relation/getMyFriends')
+        .subscribe((data) => {
+          relationships = data;
+          this.getMyFriendsData(relationships);
+          resolve(relationships);
+          reject('promise error');
+        });
+    });
+  }
 }

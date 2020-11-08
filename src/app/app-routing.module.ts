@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthenticationGuard } from './authentication.guard';
+
 import { LoggedUserGuard } from './logged-user.guard';
-// import { SocketComponent } from './socket/socket.component';
 
 const routes: Routes = [
   {
@@ -11,6 +11,7 @@ const routes: Routes = [
     redirectTo: 'auth',
     pathMatch: 'full',
   },
+
   {
     path: 'auth',
     loadChildren: () =>

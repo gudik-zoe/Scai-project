@@ -56,10 +56,8 @@ export class MessengerComponent implements OnInit, OnDestroy {
       idReceiver: this.id,
       seen: false,
       date: new Date(),
-      // token: localStorage.getItem('token'),
     };
     this.webSocketService.sendMessage(chatMessageDto);
-
     this.message = null;
   }
 
