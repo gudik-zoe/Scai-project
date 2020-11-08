@@ -77,6 +77,20 @@ export class AccountService {
     return this.http.put(this.rootUrl + 'api/accounts/updateAccount', account);
   }
 
+  updateEmail(email: string) {
+    return this.http.put(
+      this.rootUrl + 'api/accounts/updateEmail/' + email,
+      {}
+    );
+  }
+
+  updatePassword(password: string) {
+    return this.http.put(
+      this.rootUrl + 'api/accounts/updatePassword/' + password,
+      {}
+    );
+  }
+
   deleteAccount() {
     return this.http.delete(this.rootUrl + 'api/accounts/accountId');
   }

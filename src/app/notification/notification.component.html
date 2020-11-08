@@ -1,9 +1,10 @@
 <div style="float: right; margin-left: 10px;" class="dropdown">
-    <button (click)="notificationSeen()" class="btn btn-light btn-sm dropdown-toggle" type="button"
-        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fa fa-bell" style="color:#0070ba;" aria-hidden="true"></i>
-        <span style="color:red; font-weight: bolder;" *ngIf="unseenNots.length > 0">{{unseenNots.length}} </span>
-    </button>
+
+    <i (click)="notificationSeen()" class="fa fa-bell-o" style="color:white;" aria-hidden="true" type="button"
+        id=" dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+    <span style="color:white; font-weight: bolder; margin-bottom: 20px;"
+        *ngIf="unseenNots.length > 0">{{unseenNots.length}} </span>
+
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <p *ngIf="!haveNotification"> no notification </p>
         <div *ngFor="let not of notificationObject; let i = index">

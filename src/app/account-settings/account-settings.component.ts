@@ -25,6 +25,7 @@ export class AccountSettingsComponent implements OnInit {
   rootUrl: string = environment.rootUrl;
   uploadImageError: boolean = false;
   errorPhrase: string;
+  changeEssentialDataChanged: boolean = false;
 
   goToHome() {
     this.route.navigate(['/user-profile']);
@@ -82,13 +83,17 @@ export class AccountSettingsComponent implements OnInit {
 
   confirm() {
     this.accountService.updateAccount(this.changeEssentialData.value).subscribe(
-      async (data) => {
-        this.userData = undefined;
-        this.accountService.userData = undefined;
-        this.userData = await this.accountService.getTheLoggedInUserData();
-        this.errorPhrase = '';
-        this.changeEssentialData.reset();
-        this.fillFormValues();
+      (data) => {
+        this.changeEssentialDataChanged = true;
+        setTimeout(async () => {
+          this.userData = undefined;
+          this.accountService.userData = undefined;
+          this.userData = await this.accountService.getTheLoggedInUserData();
+          this.errorPhrase = '';
+          this.changeEssentialData.reset();
+          this.changeEssentialDataChanged = false;
+          this.fillFormValues();
+        }, 2000);
       },
       (error) => (this.errorPhrase = error.error.message)
     );

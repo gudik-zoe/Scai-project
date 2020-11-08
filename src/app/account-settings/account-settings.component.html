@@ -1,8 +1,8 @@
 <div *ngIf="userData" class="row mt-2">
-  <div class="col-3 ml-3">
+  <div class="col-3 ml-1">
     <app-side-bar></app-side-bar>
   </div>
-  <div class="cold-md-4 ml-3" style="background-color: lightgrey; height: fit-content; border-radius: 9px">
+  <div class="cold-md-3 ml-3" style="background-color: lightgrey; height: fit-content; border-radius: 9px">
     <div class="container-fluid">
       <div class="container"
         style="width: 550px; height: 140px; border-radius: 10px; background-image: url(http://localhost:8080/files/{{userData.coverPhoto}}); background-size:cover ;">
@@ -29,7 +29,8 @@
           width="30px" height="30px" class="mt-4" style="border-radius: 50%; margin-left: 20px" />
       </label>
       <p class="text-danger">{{errorPhrase}}</p>
-      <div *ngIf="changeEssentialData">
+      <p *ngIf="changeEssentialDataChanged"> your date have been successfully updated</p>
+      <div *ngIf="!changeEssentialDataChanged">
         <form [formGroup]="changeEssentialData">
           <div class="row">
             <div class="col-md-4 mt-3 ml-5">
@@ -61,32 +62,6 @@
 
           </div>
 
-          <!-- <div class="row">
-            <div class="col-md-4 mt-2 ml-5">
-              <label>email</label>
-              <input type="email" formControlName="email" placeholder="insert new email " class="form-control"
-                [class.is-invalid]="
-            changeEssentialData.get('email').invalid &&
-            changeEssentialData.get('email').touched
-            " />
-              <small class="text-danger" *ngIf="emailExistError">
-                email already exist
-              </small>
-              <small class="text-danger" *ngIf="
-              changeEssentialData.get('email').errors?.required &&
-              changeEssentialData.get('email').touched
-            ">
-                this.field is required
-              </small>
-              <small class="text-danger" *ngIf="
-              changeEssentialData.get('email').errors?.email &&
-              changeEssentialData.get('email').touched
-            ">
-                invalid email
-              </small>
-            </div>
-          </div> -->
-
           <div class="row">
             <div class="col-md-4 mt-2 ml-5">
               <label>studied at <i class="fa fa-graduation-cap" aria-hidden="true"></i>
@@ -103,59 +78,15 @@
               <label>lives in <i class="fa fa-home" aria-hidden="true"></i></label>
               <input type="text" formControlName="livesIn" placeholder="Ex: Turin, Italy" class="form-control" />
             </div>
-            <div class="col-md-4 mt-2 ml-5">
-              <!-- <label>from <i class="fa fa-map-marker" aria-hidden="true"></i></label>
-              <input type="text" formControlName="from" placeholder="Ex: Syria" class="form-control" /> -->
-            </div>
           </div>
-          <!-- <div class="row">
-            <div class="col-md-4 mt-3 ml-5">
-              <label>password</label>
-              <input type="password" formControlName="password" placeholder="insert new password " class="form-control"
-                [class.is-invalid]="
-                 changeEssentialData.get('password').invalid &&
-                 changeEssentialData.get('password').touched
-                " />
-
-              <small class="text-danger" *ngIf="
-                   changeEssentialData.get('password').errors?.required &&
-                   changeEssentialData.get('password').touched
-                   ">
-                this.field is required
-              </small>
-              <small class="text-danger" *ngIf="
-                changeEssentialData.get('password').errors?.minlength &&
-                changeEssentialData.get('password').touched
-                ">
-                password should be longer than 6 characters</small>
-            </div>
-            <div class="col-md-4 mt-3 ml-5">
-              <label>confirm password</label>
-              <input type="password" formControlName="confirmNewPassword" class="form-control"
-                placeholder="confirm new password" [class.is-invalid]="
-                changeEssentialData.get('confirmNewPassword').invalid &&
-                changeEssentialData.get('confirmNewPassword').touched
-              " />
-              <small class="text-danger" *ngIf="
-                    changeEssentialData.get('confirmNewPassword').errors?.required &&
-                     changeEssentialData.get('confirmNewPassword').touched
-                   ">
-                this.field is required
-              </small>
-              <small class="text-danger" *ngIf="
-               changeEssentialData.get('confirmNewPassword').errors
-                ?.changePasswordError &&
-                changeEssentialData.get('confirmNewPassword').touched
-                ">
-                not identical to the new password
-              </small>
-            </div>
-          </div> -->
         </form>
-        <button [disabled]="!changeEssentialData.valid" class="btn btn-primary btn-block mt-4" (click)="confirm()">
+        <button [disabled]="!changeEssentialData.valid" class="btn btn-primary btn-block mt-3 mb-2" (click)="confirm()">
           confirm
         </button>
       </div>
     </div>
+  </div>
+  <div class="col-3 ml-1">
+    <app-change-email-pass></app-change-email-pass>
   </div>
 </div>

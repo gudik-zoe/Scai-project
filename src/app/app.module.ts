@@ -12,9 +12,7 @@ import {
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { MyInterceptor } from './my-interceptor';
 import { AuthenticationGuard } from './authentication.guard';
-import { NotificationComponent } from './notification/notification.component';
-import { FriendRequestComponent } from './friend-request/friend-request.component';
-import { EditPostComponent } from './edit-post/edit-post.component';
+
 import { NavBarModule } from './nav-bar/nav-bar.module';
 import { EditPostModule } from './edit-post/edit-post.module';
 import { FriendRequestModule } from './friend-request/friend-request.module';

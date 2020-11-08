@@ -60,8 +60,6 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages-co/pages-co.module').then((m) => m.PagesCoModule),
   },
-  // { path: 'socket', component: SocketComponent },
-
   {
     path: 'account-settings',
     loadChildren: () =>
@@ -73,6 +71,10 @@ const routes: Routes = [
     path: 'nav-bar',
     loadChildren: () =>
       import('./nav-bar/nav-bar.module').then((m) => m.NavBarModule),
+  },
+  {
+    path: 'chat',
+    loadChildren: () => import('./chat/chat.module').then((m) => m.ChatModule),
   },
 ];
 

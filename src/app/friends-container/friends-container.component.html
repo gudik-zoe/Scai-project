@@ -1,9 +1,8 @@
 <div class="main" style="margin-right: 5px;">
-    <div class="container-fluid" style="background-color: #0070ba;">
-        <h3 style="color: white;">Friends</h3>
+    <div class="header">
+        <h3 style="color: white; padding: 6px;">Friends</h3>
     </div>
-    <hr>
-    <div *ngFor="let user of users">
+    <div *ngFor="let user of users" class="mt-2">
         <app-my-friends [user]="user" [userData]="userData"></app-my-friends>
     </div>
 </div>

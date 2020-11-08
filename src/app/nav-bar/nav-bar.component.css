@@ -14,31 +14,7 @@ i:hover {
   color: black;
 }
 
-/* @keyframes example {
-  from {
-    opacity: 1.5;
-  }
-  to {
-    opacity: 0;
-  }
-} */
 .imageAndName {
   width: 150px;
   color: silver;
-}
-
-a {
-  animation-duration: 0.25s;
-  animation-name: createBox;
-}
-
-@keyframes createBox {
-  from {
-    height: 0px;
-    width: 0px;
-  }
-  to {
-    height: 98px;
-    width: 98px;
-  }
 }

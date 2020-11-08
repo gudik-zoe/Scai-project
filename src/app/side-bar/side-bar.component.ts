@@ -9,7 +9,7 @@ import { AccountService } from '../services/account.service';
   styleUrls: ['./side-bar.component.css'],
 })
 export class SideBarComponent implements OnInit {
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService, private route: Router) {}
   userData: Account;
 
   async getUserData() {
@@ -24,6 +24,11 @@ export class SideBarComponent implements OnInit {
         this.userData = await this.accountService.getTheLoggedInUserData();
       }
     });
+  }
+
+  goToChat() {
+    console.log('go to chat');
+    this.route.navigate(['/chat']);
   }
 
   ngOnInit() {

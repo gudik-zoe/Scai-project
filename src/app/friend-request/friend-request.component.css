@@ -19,3 +19,10 @@
 ::-webkit-scrollbar-thumb:vertical:active {
   background: rgba(0, 0, 0, 0.61);
 }
+
+i {
+  margin-top: 3px;
+  color: white;
+  font-size: large;
+  align-items: center;
+}
