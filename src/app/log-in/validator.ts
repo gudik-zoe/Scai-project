@@ -23,7 +23,6 @@ export class Custome {
   }
   static passwordPattern(control: AbstractControl) {
     let password = control.get('password').value;
-    let confirmPassword = control.get('confirmNewPassword').value;
     let passPattern = new RegExp(
       '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[ -/:-@[-`{-~]).{6,64}$'
     );

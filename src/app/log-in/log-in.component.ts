@@ -28,7 +28,7 @@ export class LogInComponent implements OnInit {
   error: boolean = false;
   emailExistError: boolean = false;
 
-  errorPhrase: string = "";
+  errorPhrase: string = '';
 
   signUpfunc(account: Account): void {
     if (account.gender == 'male') {
@@ -37,10 +37,13 @@ export class LogInComponent implements OnInit {
       account.profilePhoto = 'Unknown-Girl.jpg';
     }
     account.coverPhoto = 'nature-design.jpg';
-    this.auth.signUp(account).subscribe((data) => {
-         this.errorPhrase = "";
+    this.auth.signUp(account).subscribe(
+      (data) => {
+        this.errorPhrase = '';
         this.signUp = false;
-    },(error) => this.errorPhrase=error.error.message);
+      },
+      (error) => (this.errorPhrase = error.error.message)
+    );
   }
 
   signUpAgain(): void {
@@ -49,12 +52,13 @@ export class LogInComponent implements OnInit {
   }
 
   signIn(email: string, password: string) {
-    this.auth.signIn(email, password).subscribe(data => {
-        this.errorPhrase = "";
+    this.auth.signIn(email, password).subscribe(
+      (data) => {
+        this.errorPhrase = '';
         localStorage.setItem('token', data.headers.get('Authorization'));
         this.accountService.loggedIn.next(true);
-        this.route.navigate(['/home-page']);  
-    },
+        this.route.navigate(['/home-page']);
+      },
       (error) => {
         this.errorPhrase = error.error.message;
       }
@@ -68,7 +72,7 @@ export class LogInComponent implements OnInit {
   switch(): void {
     this.signUp = !this.signUp;
     this.signUpForm.reset();
-    this.errorPhrase = ""
+    this.errorPhrase = '';
   }
 
   signUpForm: FormGroup;
@@ -81,15 +85,15 @@ export class LogInComponent implements OnInit {
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
+        password: ['', [Validators.required, Validators.minLength(8)]],
         confirmPassword: ['', Validators.required],
         gender: ['', Validators.required],
       },
-      { validator: [Custome.PasswordConfirmation] }
+      { validator: [Custome.PasswordConfirmation, Custome.passwordPattern] }
     );
     this.signInForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 }

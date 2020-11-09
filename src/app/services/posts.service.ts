@@ -23,6 +23,7 @@ export class PostsService {
   sharePostComponent = new Subject<any>();
   errorSubject = new Subject<boolean>();
   alertComponent = new Subject<any>();
+  leavePostComponent = new Subject<any>();
   dbPosts: Post[];
   comment: Comment;
   post: Post;
@@ -82,6 +83,12 @@ export class PostsService {
         post.postCreatorId
       );
       post.doneBy = this.userBasicData;
+      if (post.postedOn) {
+        this.userBasicData = await this.accountService.getBasicAccountDetails(
+          post.postedOn
+        );
+        post.postedOnData = this.userBasicData;
+      }
       for (let comment of post.comments) {
         this.userBasicData = await this.accountService.getBasicAccountDetails(
           comment.commentCreatorId

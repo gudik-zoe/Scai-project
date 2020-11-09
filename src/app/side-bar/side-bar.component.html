@@ -1,10 +1,13 @@
 <div *ngIf="userData" class="main">
-  <div class="header" style=" color:white;;">
-    <img src="http://localhost:8080/files/{{ userData.profilePhoto }}" width="50px" style="border-radius: 50%" />
+  <div class="header" style=" color:black;">
+    <img src="http://localhost:8080/files/{{ userData.profilePhoto }}" width="50px"
+      style="border-radius: 50%; padding: 5px;" />
     welcome {{ userData.firstName }}
   </div>
-  <div style="padding: 20px;">
+
+  <div style="padding: 10px;">
     <div class="bibi" (click)="goToChat()">
+      <img src="../../assets/iconfinder_1_Messenger_colored_svg_5296502.png" width="25px" style="border-radius: 50%" />
       <span class="ml-2">Messenger </span>
     </div>
 
@@ -18,9 +21,6 @@
       <img src="https://image.shutterstock.com/image-vector/calendar-icon-vector-filled-flat-260nw-1007540575.jpg"
         width="25px" style="border-radius: 50%" />
       <span class="ml-2">Events </span>
-    </div>
-    <div class="bibi">
-      <span class="ml-2">Groups </span>
     </div>
     <div class="bibi">
       <img

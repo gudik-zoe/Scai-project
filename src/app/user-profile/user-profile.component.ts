@@ -46,6 +46,7 @@ export class UserProfileComponent implements OnInit {
 
   async getPostsByAccountId(id: number) {
     this.requestedAccountPosts = await this.postService.getPostsByAccountId(id);
+    console.log(this.requestedAccountPosts);
   }
 
   async getUserData() {
@@ -60,7 +61,7 @@ export class UserProfileComponent implements OnInit {
         this.status = 'pending..cancel friend request';
       });
     } else if (this.status == 'chat') {
-      this.route.navigate(['/messenger', id]);
+      this.route.navigate(['/chat']);
     } else if (this.status == 'sent you a friend request') {
       return null;
     } else {
@@ -72,6 +73,13 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  openLeavePostComponent() {
+    this.postService.leavePostComponent.next({
+      leavePostComponent: true,
+      userData: this.loggedInUserData,
+      requestedUserData: this.requestedUserData,
+    });
+  }
   getIdFromUrl() {
     return new Promise<number>((resolve) => {
       this.id = parseInt(this.aroute.snapshot.paramMap.get('id'));

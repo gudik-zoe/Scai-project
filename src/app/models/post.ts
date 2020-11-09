@@ -16,5 +16,7 @@ export class Post {
   postLikes?: PostLike[];
   commentsNumber?: number;
   likesNumber?: number;
+  postedOn?: number;
   date?: number;
+  postedOnData?: AccountBasicData;
 }

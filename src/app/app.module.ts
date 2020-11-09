@@ -17,6 +17,7 @@ import { NavBarModule } from './nav-bar/nav-bar.module';
 import { EditPostModule } from './edit-post/edit-post.module';
 import { FriendRequestModule } from './friend-request/friend-request.module';
 import { NotificationModule } from './notification/notification.module';
+import { CreatePostModule } from './create-post/create-post.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +31,7 @@ import { NotificationModule } from './notification/notification.module';
     FriendRequestModule,
     NotificationModule,
     EditPostModule,
+    CreatePostModule,
   ],
   providers: [
     AuthenticationGuard,

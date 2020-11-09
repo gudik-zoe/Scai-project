@@ -69,6 +69,7 @@ export class CreatePostComponent implements OnInit {
         image: this.myImage?.name || 'null',
         description: null,
         postOriginalId: null,
+        postedOn: null,
         date: new Date().getTime(),
       };
       this.postsService.addPost(post).subscribe(

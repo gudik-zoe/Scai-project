@@ -23,14 +23,15 @@
       Edit profile</button>
 
   </div>
-  <hr />
 
 
-  <div class="row">
-    <div class="col-4" style="margin-left: 5em;">
-      <div class="container" style="
+
+  <div class="row" style="background-color: whitesmoke;">
+    <div class="col-3" style="margin-left: 5em;">
+      <div class="main mt-2" style="
           height: fit-content;
-          background-color: lightgrey;
+          background-color: whitesmoke;
+          padding: 10px;
           border-radius: 10px;
         ">
         <h3>intro</h3>
@@ -50,16 +51,19 @@
       </div>
 
     </div>
-    <div class="col-6" style="background-color: lightgrey; border-radius: 10px">
-      <div class="mt-2 ml-3" style="width: 550px; background-color: white; border-radius: 10px">
+    <div class="col-6 mt-1" style="background-color: white; border-radius: 10px">
+      <div *ngIf="loggedInUserData.idAccount !== requestedUserData.idAccount" class="mt-2 ml-4"
+        style="width: 90%; background-color: whitesmoke; border-radius: 10px">
         <span>
           <img src="{{ imgUrl + loggedInUserData.profilePhoto}}" width="50px" style="border-radius: 50%" />
-          <input class="ml-2" placeholder="leave a post for {{requestedUserData.firstName}}" style="
+          <input (click)="openLeavePostComponent()" class="ml-2"
+            placeholder="leave a post for {{requestedUserData.firstName}}" style="
               width: 300px;
               border-radius: 10px;
               background-color: lightcyan;
               border-style: none;
             " />
+
         </span>
         <hr />
         <span style="color: red" class="font-weight-bold ml-4">
@@ -69,9 +73,11 @@
           class="font-weight-bold ml-5">
           <i class="fa fa-calendar" aria-hidden="true"></i> events</span>
       </div>
+      <app-leave-post></app-leave-post>
 
-      <div class="container-fluid">
-        <h3 class="font-weight-bold">posts</h3>
+      <div class="container-fluid mt-4" class="scrollable-element"
+        style="overflow-y: scroll; overflow-x: hidden; height: 450px;">
+        <h3>posts</h3>
         <hr />
         <app-posts-container [posts]="requestedAccountPosts"> </app-posts-container>
       </div>
