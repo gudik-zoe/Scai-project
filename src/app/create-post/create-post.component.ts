@@ -8,6 +8,7 @@ import { AccountService } from '../services/account.service';
 import { PostsService } from '../services/posts.service';
 import { catchError } from 'rxjs/operators';
 import { MyInterceptor } from '../my-interceptor';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-create-post',
@@ -30,6 +31,7 @@ export class CreatePostComponent implements OnInit {
   myImage;
   postImage;
   errorPhrase: string = '';
+  imgUrl: string = environment.rootUrl + 'files/';
   close() {
     this.alertComponent = false;
     this.userData = null;

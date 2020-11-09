@@ -3,6 +3,7 @@ import { AccountService } from '../services/account.service';
 import { Account } from '../models/account';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Custome } from '../log-in/validator';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-change-email-pass',
@@ -21,6 +22,7 @@ export class ChangeEmailPassComponent implements OnInit {
   changePassword: FormGroup;
   emailHasBeenChanged: boolean = false;
   passwordHasBeenChanged: boolean = false;
+  imgUrl: string = environment.rootUrl + 'files/';
   async getUserData() {
     this.userData =
       this.accountService.userData ||

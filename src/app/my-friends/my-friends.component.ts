@@ -9,6 +9,7 @@ import { ChatService } from '../services/chat.service';
 import { FriendsService } from '../services/friends.service';
 import { PostsService } from '../services/posts.service';
 import { Account } from '../models/account';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-my-friends',
@@ -25,6 +26,7 @@ export class MyFriendsComponent implements OnInit {
   ) {}
   @Input() user: Account;
   @Input() userData: Account;
+  imgUrl: string = environment.rootUrl + 'files/';
 
   goToFriendsCharRoom(id: number): void {
     this.route.navigate(['/messenger', id]);

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../services/account.service';
 import { Account } from '../models/account';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-nav-bar',
@@ -12,6 +13,7 @@ export class NavBarComponent implements OnInit {
   constructor(private accountService: AccountService, private route: Router) {}
   loggedIn: boolean;
   userData: Account;
+  imgUrl: string = environment.rootUrl + 'files/';
 
   async getUserData() {
     this.userData =

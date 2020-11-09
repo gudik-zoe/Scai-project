@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
 import { AccountService } from '../services/account.service';
 
@@ -11,7 +12,7 @@ import { AccountService } from '../services/account.service';
 export class SideBarComponent implements OnInit {
   constructor(private accountService: AccountService, private route: Router) {}
   userData: Account;
-
+  imgUrl: string = environment.rootUrl + 'files/';
   async getUserData() {
     this.userData =
       this.accountService.userData ||

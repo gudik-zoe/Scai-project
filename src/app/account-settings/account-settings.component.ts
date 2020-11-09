@@ -26,7 +26,7 @@ export class AccountSettingsComponent implements OnInit {
   uploadImageError: boolean = false;
   errorPhrase: string;
   changeEssentialDataChanged: boolean = false;
-
+  imgUrl: string = environment.rootUrl + 'files/';
   goToHome() {
     this.route.navigate(['/user-profile']);
   }

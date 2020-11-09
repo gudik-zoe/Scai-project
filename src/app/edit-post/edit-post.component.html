@@ -8,8 +8,7 @@
         </span>
         <hr class="m-0" />
         <div>
-            <img src="http://localhost:8080/files/{{ userData.profilePhoto}}" width="60px" height="60px"
-                style="border-radius: 50%" />
+            <img src="{{ imgUrl + userData.profilePhoto}}" width="60px" height="60px" style="border-radius: 50%" />
             <span class="font-weight-bold">
                 {{ userData.firstName + " " + userData.lastName }} shared:
             </span>
@@ -22,8 +21,8 @@
             <p class="text-center">{{ inputData }}</p>
             <p class="text-danger">{{errorPhrase}}</p>
             <div class="container">
-                <img *ngIf="post.image && showImage" src="http://localhost:8080/files/{{ post.image }}" width="80%"
-                    height="80%;" style="margin-left: 50px;" />
+                <img *ngIf="post.image && showImage" src="{{ imgUrl + post.image }}" width="80%" height="80%;"
+                    style="margin-left: 50px;" />
                 <img *ngIf=" postImage" [src]="postImage" width="150" height="100px" style="margin-left: 50px" />
                 <i *ngIf="showImage && post?.image" style="color: lightskyblue; cursor: pointer;"
                     class="fa fa-trash fa-lg" aria-hidden="true" (click)="deleteImage()"></i>

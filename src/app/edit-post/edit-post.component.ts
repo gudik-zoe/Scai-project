@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
 import { EditPost } from '../models/editPostInt';
 import { Post } from '../models/post';
@@ -27,6 +28,7 @@ export class EditPostComponent implements OnInit {
   postImage: string | ArrayBuffer;
   imageChanged: boolean = false;
   errorPhrase: string = '';
+  imgUrl: string = environment.rootUrl + 'files/';
 
   public closeEditPostComponent(): void {
     this.editPostComponent = false;

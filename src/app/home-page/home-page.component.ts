@@ -4,6 +4,7 @@ import { PostsService } from '../services/posts.service';
 import { Component, OnInit, Sanitizer } from '@angular/core';
 import { PostLike } from '../models/postLike';
 import { Account } from '../models/account';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home-page',
@@ -33,6 +34,7 @@ export class HomePageComponent implements OnInit {
   myImage;
   postImage;
   dbPosts;
+  imgUrl: string = environment.rootUrl + 'files/';
 
   image() {
     return this.userData?.profilePhoto;

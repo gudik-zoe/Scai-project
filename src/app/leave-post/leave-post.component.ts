@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostsService } from '../services/posts.service';
 import { Account } from '../models/account';
 import { Post } from '../models/post';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-leave-post',
@@ -17,6 +18,7 @@ export class LeavePostComponent implements OnInit {
   inputData: string;
   userData: Account;
   requestedUserData: Account;
+  imgUrl: string = environment.rootUrl + 'files/';
   constructor(private http: HttpClient, private postSerice: PostsService) {}
 
   uploadImage(event): void {
@@ -50,10 +52,13 @@ export class LeavePostComponent implements OnInit {
         image: this.myImage?.name || 'null',
         postedOn: this.requestedUserData.idAccount,
       };
-      this.postSerice.addPost(post).subscribe((data) => {
-        console.log(data);
-        this.leavePostComponent = false;
-      });
+      this.postSerice.addPost(post).subscribe(
+        (data) => {
+          console.log(data);
+          this.leavePostComponent = false;
+        },
+        (error) => (this.errorPhrase = error.error.message)
+      );
     }
   }
   close() {

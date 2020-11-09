@@ -17,7 +17,7 @@ import { Account } from '../models/account';
   styleUrls: ['./post.component.css'],
 })
 export class PostComponent implements OnInit {
-  imgUrl: string = environment.rootUrl + '/files/';
+  imgUrl: string = environment.rootUrl + 'files/';
   @Input() post: Post;
   @Input() userData: Account;
   @Input() commentText: string;

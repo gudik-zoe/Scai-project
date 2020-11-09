@@ -149,17 +149,9 @@
               ">
                   this field is required
                 </small>
-                <small class="text-danger" *ngIf="
-              signInForm.get('password').errors?.minlength &&
-              signInForm.get('password').touched
-            ">
-                  password should be longer than 8 characters
-                </small>
-
                 <p class="text-danger">
                   {{errorPhrase}}
                 </p>
-
               </div>
               <button style="margin-top:65px;" [disabled]="!signInForm.valid"
                 [class]="!signInForm.valid ? 'btn btn-outline-danger btn-block': 'btn btn-outline-primary btn-block'"

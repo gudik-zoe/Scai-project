@@ -6,6 +6,7 @@ import { Account } from '../models/account';
 import { AccountBasicData } from '../models/accountBasicData';
 import { ChatService } from '../services/chat.service';
 import { WebSocketService } from '../services/web-socket.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-chat',
@@ -20,6 +21,7 @@ export class ChatComponent implements OnInit {
     public webSocketService: WebSocketService
   ) {}
   myRelationships: Relationship[];
+  imgUrl: string = environment.rootUrl + 'files/';
   userData: Account;
   wantedUser: AccountBasicData;
   myConvWith;

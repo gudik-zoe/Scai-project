@@ -8,6 +8,7 @@ import { AccountService } from '../services/account.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Account } from '../models/account';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-log-in',
@@ -27,6 +28,7 @@ export class LogInComponent implements OnInit {
   // dataSaved: boolean = false;
   error: boolean = false;
   emailExistError: boolean = false;
+  imgUrl: string = environment.rootUrl + 'files/';
 
   errorPhrase: string = '';
 

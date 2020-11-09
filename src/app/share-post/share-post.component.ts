@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Post } from '../models/post';
@@ -21,6 +22,7 @@ export class SharePostComponent implements OnInit {
   inputData: string;
   postDoneBy: AccountBasicData;
   errorPhrase: string = '';
+  imgUrl: string = environment.rootUrl + 'files/';
 
   getRequestedData() {
     this.postService.sharePostComponent.subscribe((data) => {
