@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  rootUrl:"http://localhost:8080/"
+  rootUrl: 'https://morning-plains-23511.herokuapp.com/',
 };
