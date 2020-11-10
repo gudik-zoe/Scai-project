@@ -29,7 +29,7 @@ export class EditPostComponent implements OnInit {
   imageChanged: boolean = false;
   errorPhrase: string = '';
   imgUrl: string = environment.rootUrl + 'files/';
-
+  rootUrl: string = environment.rootUrl;
   public closeEditPostComponent(): void {
     this.editPostComponent = false;
     this.showImage = true;
@@ -42,7 +42,7 @@ export class EditPostComponent implements OnInit {
       this.myImage = file;
       const formData = new FormData();
       formData.append('file', this.myImage);
-      this.http.post('http://localhost:8080/upload', formData).subscribe(
+      this.http.post(this.rootUrl + 'upload', formData).subscribe(
         (data) => {
           this.imageChanged = true;
           let reader = new FileReader();

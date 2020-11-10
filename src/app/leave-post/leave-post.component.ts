@@ -19,6 +19,7 @@ export class LeavePostComponent implements OnInit {
   userData: Account;
   requestedUserData: Account;
   imgUrl: string = environment.rootUrl + 'files/';
+  rootUrl: string = environment.rootUrl;
   constructor(private http: HttpClient, private postSerice: PostsService) {}
 
   uploadImage(event): void {
@@ -27,7 +28,7 @@ export class LeavePostComponent implements OnInit {
       this.myImage = file;
       const formData = new FormData();
       formData.append('file', this.myImage);
-      this.http.post('http://localhost:8080/upload', formData).subscribe(
+      this.http.post(this.rootUrl + 'upload', formData).subscribe(
         (data) => {
           this.errorPhrase = '';
           let reader = new FileReader();
@@ -53,8 +54,23 @@ export class LeavePostComponent implements OnInit {
         postedOn: this.requestedUserData.idAccount,
       };
       this.postSerice.addPost(post).subscribe(
-        (data) => {
+        (data: Post) => {
           console.log(data);
+          this.errorPhrase = '';
+          (data.postLikes = []), (data.comments = []);
+          data.doneBy = {
+            idAccount: this.userData.idAccount,
+            profilePhoto: this.userData.profilePhoto,
+            firstName: this.userData.firstName,
+            lastName: this.userData.lastName,
+          };
+          data.postedOnData = {
+            idAccount: this.requestedUserData.idAccount,
+            profilePhoto: this.requestedUserData.profilePhoto,
+            firstName: this.requestedUserData.firstName,
+            lastName: this.requestedUserData.lastName,
+          };
+          this.postSerice.accountPosts.push(data);
           this.leavePostComponent = false;
         },
         (error) => (this.errorPhrase = error.error.message)

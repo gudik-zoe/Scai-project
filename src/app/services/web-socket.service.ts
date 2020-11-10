@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { ChatMessageDto } from '../models/chatMessageDto';
 import { AccountService } from './account.service';
@@ -10,23 +11,24 @@ export class WebSocketService {
   webSocket: WebSocket;
   chatMessages: ChatMessageDto[] = [];
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService, private route: Router) {}
 
   public openWebSocket() {
-    this.webSocket = new WebSocket('ws://localhost:8080/chat');
+    this.webSocket = new WebSocket(
+      'ws://morning-plains-23511.herokuapp.com/chat'
+    );
     this.webSocket.onopen = (event) => {
       this.webSocket.send(localStorage.getItem('token'));
       console.log('open ', event);
     };
 
     this.webSocket.onmessage = (event) => {
-      console.log(event);
       const chatMessageDto = JSON.parse(event.data);
-      //  chatMessageDto.idSender = this.accountService.getId();
       this.chatMessages.push(chatMessageDto);
     };
 
     this.webSocket.onclose = (event) => {
+      this.route.navigate(['/home-page']);
       console.log('close ', event);
     };
   }

@@ -17,6 +17,7 @@ export class AccountService {
   errorSubject = new Subject<any>();
   rootUrl: string = environment.rootUrl;
   accountBasicData: AccountBasicData[] = [];
+  requestedUserData: Account;
   constructor(private http: HttpClient) {}
 
   getId() {
@@ -60,7 +61,15 @@ export class AccountService {
   }
 
   getAccountById(id: number) {
-    return this.http.get(this.rootUrl + 'api/accounts/' + id);
+    return new Promise<Account>((resolve, reject) => {
+      this.http
+        .get(this.rootUrl + 'api/accounts/' + id)
+        .subscribe((data: Account) => {
+          this.requestedUserData = data;
+          resolve(this.requestedUserData);
+          reject('unknown error occured');
+        });
+    });
   }
 
   getAccountIdByPostId(postId: number) {

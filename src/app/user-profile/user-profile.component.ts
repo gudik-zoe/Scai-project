@@ -35,18 +35,12 @@ export class UserProfileComponent implements OnInit {
     this.route.navigate(['/account-settings']);
   }
 
-  getUserById() {
-    return new Promise<Account>((resolve) => {
-      this.accountService.getAccountById(this.id).subscribe((data: Account) => {
-        this.requestedUserData = data;
-        resolve(this.requestedUserData);
-      });
-    });
+  async getUserById() {
+    this.requestedUserData = await this.accountService.getAccountById(this.id);
   }
 
   async getPostsByAccountId(id: number) {
     this.requestedAccountPosts = await this.postService.getPostsByAccountId(id);
-    console.log(this.requestedAccountPosts);
   }
 
   async getUserData() {

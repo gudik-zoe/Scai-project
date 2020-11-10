@@ -38,11 +38,6 @@ const routes: Routes = [
         (m) => m.DescriptionModule
       ),
   },
-  {
-    path: 'messenger',
-    loadChildren: () =>
-      import('./messenger/messenger.module').then((m) => m.MessengerModule),
-  },
 
   {
     path: 'user-profile',

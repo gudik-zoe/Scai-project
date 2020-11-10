@@ -28,7 +28,6 @@ export class ChatComponent implements OnInit {
   message: string;
   async getMyRelationships() {
     this.myRelationships = await this.friendsService.getMyFriends();
-    console.log(this.myRelationships);
   }
 
   async getUserData() {
@@ -40,7 +39,6 @@ export class ChatComponent implements OnInit {
   getMyConvWithId(id: number) {
     this.chatService.getMyConvWithId(id).subscribe((data) => {
       this.myConvWith = data;
-      console.log(this.myConvWith);
     });
   }
   ngOnDestroy() {
@@ -49,7 +47,6 @@ export class ChatComponent implements OnInit {
 
   chatWith(doneBy: AccountBasicData) {
     this.wantedUser = { ...doneBy };
-    console.log(this.wantedUser);
     this.getMyConvWithId(doneBy.idAccount);
   }
   sendMessage(message) {

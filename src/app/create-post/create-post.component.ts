@@ -23,7 +23,7 @@ export class CreatePostComponent implements OnInit {
     private http: HttpClient,
     private inter: MyInterceptor
   ) {}
-
+  rootUrl: string = environment.rootUrl;
   foto: Blob;
   alertComponent: boolean = false;
   inputData: string = '';
@@ -46,7 +46,7 @@ export class CreatePostComponent implements OnInit {
       this.myImage = file;
       const formData = new FormData();
       formData.append('file', this.myImage);
-      this.http.post('http://localhost:8080/upload', formData).subscribe(
+      this.http.post(this.rootUrl + 'upload', formData).subscribe(
         (data) => {
           this.errorPhrase = '';
           let reader = new FileReader();
