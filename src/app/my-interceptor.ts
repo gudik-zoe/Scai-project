@@ -47,9 +47,9 @@ export class MyInterceptor implements HttpInterceptor {
             this.route.navigate(['/auth']);
             localStorage.removeItem('token');
             this.accountService.loggedIn.next(false);
+            console.log('scaduto');
           }
-          //   console.log('scaduto');
-
+          console.log(error.error.message);
           // } else {
           console.log(error.error.message);
           // }

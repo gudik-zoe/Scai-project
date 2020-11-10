@@ -1,36 +1,80 @@
 <div *ngIf="userData" class="post-container" style="background-color: white;">
 
-  <ng-container *ngIf="post.doneBy && userData">
-    <img *ngIf="!post.postedOn" src="{{ imgUrl + post.doneBy.profilePhoto }}" width="50px"
-      style="border-radius: 50%; float: left;" height="50px" />
+  <!-- normal post -->
+  <ng-container *ngIf="post.doneBy && !post.postOriginalId && !post.postedOn">
+    <img src="{{ imgUrl + post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%; float: left;"
+      height="50px" />
     <span *ngIf="!post.postedOn" style="float: left;" class="font-weight-bold mt-3">
-      {{ post.doneBy.firstName + " " + post.doneBy.lastName }}
-      {{post.postOriginalId ? 'reshared' : 'shared'}}: </span>
-    <i *ngIf="post.postCreatorId == userData.idAccount && !post.postOriginalId" (click)="editPost(post)"
+      {{ post.doneBy.firstName + " " + post.doneBy.lastName }} shared </span>
+    <i *ngIf="post.postCreatorId == userData.idAccount" (click)="editPost(post)"
       style="float: right; margin-right: 20px; margin-top: 10px; font-size:large; cursor: pointer;"
       class=" fa fa-pencil" aria-hidden="true"></i>
     <i *ngIf="post.postCreatorId == userData.idAccount"
       style="float: right; color:red; margin-right: 20px; margin-top: 10px; font-size:large; cursor: pointer;"
       (click)=" deletePost(post.idPost)" class="fa fa-trash" aria-hidden="true"></i>
-    <p class="mt-5" *ngIf="post.extraText">{{post.extraText}}</p>
+    <p class="mt-5" *ngIf="post.text">{{post.text}}</p>
+    <img *ngIf="post.image" src="{{ imgUrl + post.image }}" style="width: 80%; height: 60%; border-radius: 10px;" />
   </ng-container>
 
-  <div *ngIf="post.postOriginalId  && post.originalPostDoneBy" (click)="toDescription(post.postOriginalId)"
-    style="margin-top: 30px; border: 1px solid black; cursor: pointer; ">
-    <div style="margin-top: 10px; float: left;">
-      <img src="{{ imgUrl + post.originalPostDoneBy.profilePhoto }}" width="50px" style="border-radius: 50%;"
-        height="50px" />
-      <span class="font-weight-bold">
-        {{ post.originalPostDoneBy.firstName + " " + post.originalPostDoneBy.lastName }}
-        shared: </span>
+  <!-- shared post -->
+  <ng-container *ngIf="post.doneBy && post.postOriginalId && post.originalPostDoneBy && !post.postedOn">
+    <img src="{{ imgUrl + post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%; float: left;"
+      height="50px" />
+    <span style="float: left;" class="font-weight-bold mt-3">
+      {{ post.doneBy.firstName + " " + post.doneBy.lastName }} reshared </span>
+    <!-- <i *ngIf="post.postCreatorId == userData.idAccount && !post.postOriginalId" (click)="editPost(post)"
+      style="float: right; margin-right: 20px; margin-top: 10px; font-size:large; cursor: pointer;"
+      class=" fa fa-pencil" aria-hidden="true"></i> -->
+    <i *ngIf="post.postCreatorId == userData.idAccount"
+      style="float: right; color:red; margin-right: 20px; margin-top: 10px; font-size:large; cursor: pointer;"
+      (click)=" deletePost(post.idPost)" class="fa fa-trash" aria-hidden="true"></i>
+    <p class="mt-5" *ngIf="post.extraText">{{post.extraText}}</p>
+    <div *ngIf="post.postOriginalId  && post.originalPostDoneBy" (click)="toDescription(post.postOriginalId)"
+      style="margin-top: 30px; border: 1px solid black; cursor: pointer; ">
+      <div style="margin-top: 10px; float: left;">
+        <img src="{{ imgUrl + post.originalPostDoneBy.profilePhoto }}" width="50px" style="border-radius: 50%;"
+          height="50px" />
+        <span class="font-weight-bold">
+          {{ post.originalPostDoneBy.firstName + " " + post.originalPostDoneBy.lastName }}
+          shared: </span>
+      </div>
+      <p style="padding-right: 220px; margin-top: 50px;"> {{ post.text }} </p>
+      <img *ngIf="post.image" src="{{ imgUrl + post.image }}" style="width: 80%; height: 60%; border-radius: 10px;" />
+      <p><i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue"> </i>{{post.likesNumber}}
+        <i class="fa fa-comments" aria-hidden="true" style="margin-left: 150px;"></i>{{post.commentsNumber}}</p>
     </div>
-    <p style="padding-right: 220px; margin-top: 50px;"> {{ post.text }} </p>
-    <img *ngIf="post.image && !post.postedOn" src="{{ imgUrl + post.image }}"
-      style="width: 80%; height: 60%; border-radius: 10px;" />
-    <p><i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue"> </i>{{post.likesNumber}}
-      <i class="fa fa-comments" aria-hidden="true" style="margin-left: 150px;"></i>{{post.commentsNumber}}</p>
+  </ng-container>
 
-  </div>
+
+  <!-- posted on a wall post -->
+  <ng-container *ngIf="post.postedOn && post.doneBy && post.postedOnData && !post.postOriginalId">
+    <i *ngIf="post.postCreatorId == userData.idAccount" (click)="editPost(post)"
+      style="float: right; margin-top: 10px; font-size:large; cursor: pointer;" class=" fa fa-pencil"
+      aria-hidden="true"></i>
+    <i *ngIf="post.postCreatorId == userData.idAccount"
+      style="float: right; color:red; margin-right: 20px; margin-top: 10px; font-size:large; cursor: pointer;"
+      (click)=" deletePost(post.idPost)" class="fa fa-trash" aria-hidden="true"></i>
+    <div style="display: flex;
+    padding: 10px;
+    margin-left: 40px;
+    align-items: center;
+    justify-content: first baseline">
+
+      <img src="{{ imgUrl + post.doneBy.profilePhoto }}" style="width: 60px; height: 60px; border-radius: 50%;" />
+      <span class="font-weight-bold ml-1">{{post.doneBy.firstName + " " + post.doneBy.lastName}}
+
+        <i style="padding: 10px;" class="fa fa-caret-right fa-lg" aria-hidden="true"></i>
+        <img src="{{ imgUrl + post.postedOnData.profilePhoto }}" width="60px" height="60px"
+          style="border-radius: 50%" />
+        {{post.postedOnData.firstName  + " " + post.postedOnData.lastName}}</span>
+
+    </div>
+
+    <p>{{post.text}}</p>
+    <img *ngIf="post.image" src="{{ imgUrl + post.image }}" style="width: 80%; height: 60%; border-radius: 10px;" />
+
+  </ng-container>
+
 
 
 
@@ -39,30 +83,15 @@
     content is unavailabe could be because of its setting was set on private or that it has been deleted
   </div>
 
-  <p class="mt-5" *ngIf="!post.postOriginalId && !post.postedOn"> {{ post.text }} </p>
-  <div class="container" *ngIf="!post.postOriginalId">
+
+  <!-- <p class="mt-5" *ngIf="!post.postOriginalId && !post.postedOn"> {{ post.text }} </p> -->
+  <!-- <div class="container" *ngIf="!post.postOriginalId">
     <img *ngIf="post.image && !post.postedOn" src="{{ imgUrl + post.image }}"
       style="width: 80%; height: 60%; border-radius: 10px;" />
-  </div>
+  </div> -->
 
 
 
-  <ng-container *ngIf="post.postedOn && post.doneBy && post.postedOnData">
-    <div style="display: flex;
-    padding: 10px;
-    align-items: center;
-    justify-content: first baseline">
-      <img src="{{ imgUrl + post.doneBy.profilePhoto }}" style="width: 60px; height: 60px; border-radius: 50%;" />
-      <span class="font-weight-bold ml-1">{{post.doneBy.firstName + " " + post.doneBy.lastName}}
-        <i style="padding: 10px;" class="fa fa-caret-right fa-lg" aria-hidden="true"></i>
-        <img src="{{ imgUrl + post.postedOnData.profilePhoto }}" width="60px" height="60px"
-          style="border-radius: 50%" />
-        {{post.postedOnData.firstName  + " " + post.postedOnData.lastName}}</span>
-    </div>
-    <p>{{post.text}}</p>
-    <img *ngIf="post.image" src="{{ imgUrl + post.image }}" style="width: 80%; height: 60%; border-radius: 10px;" />
-
-  </ng-container>
   <hr />
   <span><i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue"></i> {{ post.postLikes.length }} </span>
   <span (click)="openComments()" class="font-weight-bold"

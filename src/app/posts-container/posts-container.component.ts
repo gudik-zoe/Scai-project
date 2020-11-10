@@ -29,11 +29,8 @@ export class PostsContainerComponent implements OnInit {
     private friendService: FriendsService,
     private notificationService: NotificationService
   ) {}
-  @Input() posts;
-
-  userImage;
+  @Input() posts: Post[];
   userData: Account;
-  usersDetails = [];
   commentText: string;
 
   async getUserData() {
