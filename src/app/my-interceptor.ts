@@ -35,7 +35,6 @@ export class MyInterceptor implements HttpInterceptor {
 
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log(error);
         this.errorMessage = '';
         if (!(error.error instanceof ErrorEvent)) {
           //   console.log('this is client side error');
@@ -44,15 +43,13 @@ export class MyInterceptor implements HttpInterceptor {
           //   console.log('this is server side error');
           //   this.errorMessage = `Error Code: ${error.status},  Message: ${error.error.message}`;
           //   const tokenErrorPhrase = error.error.message;
-          if (error.error == 'Unauthorized') {
-            console.log('weila funziona ');
+          if (error.error.error == 'Unauthorized') {
             this.route.navigate(['/auth']);
             localStorage.removeItem('token');
             this.accountService.loggedIn.next(false);
-            console.log('scaduto');
+            console.log('token expired');
           }
           // } else {
-          console.log(error);
           // }
         }
 

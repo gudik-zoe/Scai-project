@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  rootUrl: 'https://shielded-river-91999.herokuapp.com/',
+  // rootUrl: 'https://shielded-river-91999.herokuapp.com/',
+  rootUrl: 'http://localhost:8080/',
 };
 
 /*

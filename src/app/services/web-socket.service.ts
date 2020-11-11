@@ -10,6 +10,7 @@ import { AccountService } from './account.service';
 export class WebSocketService {
   webSocket: WebSocket;
   chatMessages: ChatMessageDto[] = [];
+  userIn: boolean = true;
 
   constructor(private accountService: AccountService, private route: Router) {}
 
@@ -28,8 +29,12 @@ export class WebSocketService {
     };
 
     this.webSocket.onclose = (event) => {
-      this.route.navigate(['/home-page']);
-      console.log('close ', event);
+      if (this.userIn) {
+        this.openWebSocket();
+      } else {
+        this.route.navigate(['/home-page']);
+        console.log('close ', event);
+      }
     };
   }
 
@@ -38,6 +43,7 @@ export class WebSocketService {
   }
 
   public closeWebSocket() {
+    this.userIn = false;
     this.webSocket.close();
   }
 }
