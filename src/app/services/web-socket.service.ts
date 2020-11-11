@@ -15,7 +15,7 @@ export class WebSocketService {
 
   public openWebSocket() {
     this.webSocket = new WebSocket(
-      'ws://morning-plains-23511.herokuapp.com/chat'
+      'wss://shielded-river-91999.herokuapp.com/chat'
     );
     this.webSocket.onopen = (event) => {
       this.webSocket.send(localStorage.getItem('token'));

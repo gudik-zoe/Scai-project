@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  rootUrl: 'https://morning-plains-23511.herokuapp.com/',
+  rootUrl: 'https://shielded-river-91999.herokuapp.com/',
 };
