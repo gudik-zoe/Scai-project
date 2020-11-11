@@ -15,6 +15,6 @@ i:hover {
 }
 
 .imageAndName {
-  width: 150px;
+  width: fit-content;
   color: white;
 }
