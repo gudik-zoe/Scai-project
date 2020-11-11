@@ -35,6 +35,7 @@ export class MyInterceptor implements HttpInterceptor {
 
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
+        console.log(error.error.message);
         this.errorMessage = '';
         if (!(error.error instanceof ErrorEvent)) {
           //   console.log('this is client side error');
@@ -49,9 +50,8 @@ export class MyInterceptor implements HttpInterceptor {
             this.accountService.loggedIn.next(false);
             console.log('scaduto');
           }
-          console.log(error.error.message);
           // } else {
-          console.log(error.error.message);
+          console.log(error);
           // }
         }
 
