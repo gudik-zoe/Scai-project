@@ -9,6 +9,7 @@ import { PostsService } from '../services/posts.service';
 import { catchError } from 'rxjs/operators';
 import { MyInterceptor } from '../my-interceptor';
 import { environment } from 'src/environments/environment';
+import { ImgUrl } from '../models/imgUrl';
 
 @Component({
   selector: 'app-create-post',
@@ -40,26 +41,23 @@ export class CreatePostComponent implements OnInit {
     this.errorPhrase = '';
   }
 
-  uploadImage(event): void {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.myImage = file;
-      const formData = new FormData();
-      formData.append('file', this.myImage);
-      this.http.post(this.rootUrl + 'upload', formData).subscribe(
-        (data) => {
-          this.errorPhrase = '';
+  async uploadImage(event) {
+    this.http
+      .post(
+        this.rootUrl + 'addImage',
+        await this.accountService.uploadAnImage(event)
+      )
+      .subscribe(
+        (data: ImgUrl) => {
+          this.myImage = data.imageUrl;
           let reader = new FileReader();
           reader.readAsDataURL(event.target.files[0]);
           reader.onload = (event) => {
             this.postImage = event.target.result;
           };
         },
-        (error) => {
-          this.errorPhrase = error.error.message;
-        }
+        (error) => (this.errorPhrase = error.error.message)
       );
-    }
   }
 
   sharePost(text: string) {
@@ -68,7 +66,7 @@ export class CreatePostComponent implements OnInit {
     } else {
       const post = {
         text: text,
-        image: this.myImage?.name || 'null',
+        image: this.myImage || 'null',
         description: null,
         postOriginalId: null,
         postedOn: null,

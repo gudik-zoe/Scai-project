@@ -1,8 +1,8 @@
-<div *ngIf="user" id="div-container" class="container" (click)="goToProfile(user.idAccount)">
-  <span *ngIf="user.idAccount !== userData.idAccount">
-    <img src="{{ imgUrl +user.profilePhoto}}" width="50px" style="border-radius: 50%" height="50px" />
+<div *ngIf="userData && !user.doneBy" id="div-container" class="container" (click)="goToProfile(user.idAccount)">
+  <span *ngIf="user.idAccount !== userData.idAccount ">
+    <img src="{{ user.profilePhoto}}" width="50px" style="border-radius: 50%" height="50px" />
 
-    <span class="font-weight-bold ml-1 mt-4">{{ user.firstName + " " + user.lastName }}
+    <span class="font-weight-bold ml-1 mt-4">{{ user.firstName  + " " +   user.lastName }}
       <!-- <button class="btn btn-info btn-sm">info</button> -->
     </span>
     <hr />

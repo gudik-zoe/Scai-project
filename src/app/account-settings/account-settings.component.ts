@@ -6,6 +6,7 @@ import { AccountService } from '../services/account.service';
 import { HttpClient } from '@angular/common/http';
 import { Account } from '../models/account';
 import { environment } from 'src/environments/environment';
+import { ImgUrl } from '../models/imgUrl';
 
 @Component({
   selector: 'app-account-settings',
@@ -27,58 +28,68 @@ export class AccountSettingsComponent implements OnInit {
   errorPhrase: string;
   changeEssentialDataChanged: boolean = false;
   imgUrl: string = environment.rootUrl + 'files/';
+  image: string;
   goToHome() {
     this.route.navigate(['/user-profile']);
   }
 
-  newImage(event) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const formData = new FormData();
-      formData.append('file', file);
-      this.http.post(this.rootUrl + 'upload', formData).subscribe(
-        (data) => {
-          this.uploadImageError = false;
+  async newImage(event) {
+    this.http
+      .post(
+        this.rootUrl + 'addImage',
+        await this.accountService.uploadAnImage(event)
+      )
+      .subscribe(
+        (data: ImgUrl) => {
           this.http
             .put(
-              this.rootUrl + 'api/accounts/profilePhoto/accountId/' + file.name,
-              {}
+              this.rootUrl + 'api/accounts/profilePhoto/accountId/',
+              data.imageUrl
             )
-            .subscribe(() => {
-              this.getUserData();
-              this.accountService.imageSubject.next(true);
-            });
+            .subscribe(
+              () => {
+                this.getUserData();
+                this.accountService.imageSubject.next(true);
+              },
+              (error) => {
+                this.errorPhrase = error.error.message;
+              }
+            );
+          this.image = data.imageUrl;
         },
         (error) => {
-          this.uploadImageError = true;
           this.errorPhrase = error.error.message;
         }
       );
-    }
   }
-  changeCoverPhoto(event) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
 
-      const formData = new FormData();
-      formData.append('file', file);
-      this.http.post(this.rootUrl + 'upload', formData).subscribe(
-        (data) => {
-          this.errorPhrase = '';
+  async changeCoverPhoto(event) {
+    this.http
+      .post(
+        this.rootUrl + 'addImage',
+        await this.accountService.uploadAnImage(event)
+      )
+      .subscribe(
+        (data: ImgUrl) => {
           this.http
             .put(
-              this.rootUrl + 'api/accounts/coverPhoto/accountId/' + file.name,
+              this.rootUrl + 'api/accounts/coverPhoto/accountId',
+              data.imageUrl,
               {}
             )
-            .subscribe(() => {
-              this.getUserData();
-            });
+            .subscribe(
+              () => {
+                this.getUserData();
+              },
+              (error) => {
+                this.errorPhrase = error.error.message;
+              }
+            );
         },
         (error) => {
           this.errorPhrase = error.error.message;
         }
       );
-    }
   }
 
   confirm() {

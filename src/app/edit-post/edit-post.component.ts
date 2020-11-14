@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
 import { EditPost } from '../models/editPostInt';
+import { ImgUrl } from '../models/imgUrl';
 import { Post } from '../models/post';
 import { AccountService } from '../services/account.service';
 import { PostsService } from '../services/posts.service';
@@ -28,7 +29,6 @@ export class EditPostComponent implements OnInit {
   postImage: string | ArrayBuffer;
   imageChanged: boolean = false;
   errorPhrase: string = '';
-  imgUrl: string = environment.rootUrl + 'files/';
   rootUrl: string = environment.rootUrl;
   public closeEditPostComponent(): void {
     this.editPostComponent = false;
@@ -36,14 +36,15 @@ export class EditPostComponent implements OnInit {
     this.errorPhrase = '';
   }
 
-  uploadImage(event): void {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.myImage = file;
-      const formData = new FormData();
-      formData.append('file', this.myImage);
-      this.http.post(this.rootUrl + 'upload', formData).subscribe(
-        (data) => {
+  async uploadImage(event) {
+    this.http
+      .post(
+        this.rootUrl + 'addImage',
+        await this.accountService.uploadAnImage(event)
+      )
+      .subscribe(
+        (data: ImgUrl) => {
+          this.myImage = data.imageUrl;
           this.imageChanged = true;
           let reader = new FileReader();
           reader.readAsDataURL(event.target.files[0]);
@@ -57,7 +58,6 @@ export class EditPostComponent implements OnInit {
           this.errorPhrase = error.error.message;
         }
       );
-    }
   }
 
   deleteImage() {
@@ -67,7 +67,7 @@ export class EditPostComponent implements OnInit {
 
   confirmEdit() {
     if (this.imageChanged && this.myImage) {
-      this.post.image = this.myImage.name;
+      this.post.image = this.myImage;
     } else if (this.imageChanged && !this.myImage) {
       this.post.image = null;
     }
@@ -81,16 +81,14 @@ export class EditPostComponent implements OnInit {
       this.post.text = this.post.text;
       this.post.image = this.post.image;
     } else {
-      this.postService
-        .updatePost(this.post.idPost, this.post.text, this.post.image)
-        .subscribe(
-          (data) => {
-            this.editPostComponent = false;
-          },
-          (error) => {
-            this.errorPhrase = error.error.message;
-          }
-        );
+      this.postService.updatePost(this.post).subscribe(
+        (data) => {
+          this.editPostComponent = false;
+        },
+        (error) => {
+          this.errorPhrase = error.error.message;
+        }
+      );
     }
   }
 

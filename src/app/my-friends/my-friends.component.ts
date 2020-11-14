@@ -10,6 +10,7 @@ import { FriendsService } from '../services/friends.service';
 import { PostsService } from '../services/posts.service';
 import { Account } from '../models/account';
 import { environment } from 'src/environments/environment';
+import { Relationship } from '../models/relationship';
 
 @Component({
   selector: 'app-my-friends',
@@ -24,7 +25,7 @@ export class MyFriendsComponent implements OnInit {
     private http: HttpClient,
     private friendService: FriendsService
   ) {}
-  @Input() user: Account;
+  @Input() user;
   @Input() userData: Account;
   imgUrl: string = environment.rootUrl + 'files/';
 

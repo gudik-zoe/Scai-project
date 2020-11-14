@@ -4,6 +4,8 @@ import { PostsService } from '../services/posts.service';
 import { Account } from '../models/account';
 import { Post } from '../models/post';
 import { environment } from 'src/environments/environment';
+import { AccountService } from '../services/account.service';
+import { ImgUrl } from '../models/imgUrl';
 
 @Component({
   selector: 'app-leave-post',
@@ -11,25 +13,29 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./leave-post.component.css'],
 })
 export class LeavePostComponent implements OnInit {
-  myImage;
+  myImage: string; //image to push to server
   errorPhrase: string;
-  image;
+  image; // client image view
   leavePostComponent: boolean;
   inputData: string;
   userData: Account;
   requestedUserData: Account;
-  imgUrl: string = environment.rootUrl + 'files/';
   rootUrl: string = environment.rootUrl;
-  constructor(private http: HttpClient, private postSerice: PostsService) {}
+  constructor(
+    private http: HttpClient,
+    private postSerice: PostsService,
+    private accountService: AccountService
+  ) {}
 
-  uploadImage(event): void {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.myImage = file;
-      const formData = new FormData();
-      formData.append('file', this.myImage);
-      this.http.post(this.rootUrl + 'upload', formData).subscribe(
-        (data) => {
+  async uploadImage(event) {
+    this.http
+      .post(
+        this.rootUrl + 'addImage',
+        await this.accountService.uploadAnImage(event)
+      )
+      .subscribe(
+        (data: ImgUrl) => {
+          this.myImage = data.imageUrl;
           this.errorPhrase = '';
           let reader = new FileReader();
           reader.readAsDataURL(event.target.files[0]);
@@ -41,7 +47,6 @@ export class LeavePostComponent implements OnInit {
           this.errorPhrase = error.error.message;
         }
       );
-    }
   }
 
   post() {
@@ -50,12 +55,11 @@ export class LeavePostComponent implements OnInit {
     } else {
       const post = {
         text: this.inputData,
-        image: this.myImage?.name || 'null',
+        image: this.myImage || 'null',
         postedOn: this.requestedUserData.idAccount,
       };
       this.postSerice.addPost(post).subscribe(
         (data: Post) => {
-          console.log(data);
           this.errorPhrase = '';
           (data.postLikes = []), (data.comments = []);
           data.doneBy = {

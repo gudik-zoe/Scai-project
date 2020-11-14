@@ -168,6 +168,7 @@ export class PostsService {
   }
 
   addPost(post: Post) {
+    console.log(post);
     return this.http.post(this.rootUrl + 'posts/accountId', post);
   }
 
@@ -184,17 +185,20 @@ export class PostsService {
     );
   }
 
-  updatePost(postId: number, newText: string, newImage: string) {
-    return this.http.put(
-      this.rootUrl +
-        'posts/update/idAccount/' +
-        postId +
-        '/' +
-        newText +
-        '/' +
-        newImage,
-      {}
-    );
+  // updatePost(postId: number, newText: string, newImage: string) {
+  //   return this.http.put(
+  //     this.rootUrl +
+  //       'posts/update/idAccount/' +
+  //       postId +
+  //       '/' +
+  //       newText +
+  //       '/' +
+  //       newImage,
+  //     {}
+  //   );
+  // }
+  updatePost(post: Post) {
+    return this.http.put(this.rootUrl + 'posts/update/idAccount', post, {});
   }
 
   deletePost(postId: number) {

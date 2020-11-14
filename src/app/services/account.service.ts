@@ -6,12 +6,14 @@ import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
 import { AccountBasicData } from '../models/accountBasicData';
+import { ImgUrl } from '../models/imgUrl';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
   userData: Account;
+  users: Account[];
   imageSubject = new Subject<boolean>();
   loggedIn = new Subject<boolean>();
   errorSubject = new Subject<any>();
@@ -26,7 +28,15 @@ export class AccountService {
   }
 
   getUsers() {
-    return this.http.get(this.rootUrl + 'api/accounts');
+    return new Promise<Account[]>((resolve, reject) => {
+      this.http
+        .get(this.rootUrl + 'api/accounts')
+        .subscribe((data: Account[]) => {
+          this.users = data;
+          resolve(this.users);
+          reject('uknown error occured');
+        });
+    });
   }
 
   getARandomUserData(accountId: number) {
@@ -102,5 +112,17 @@ export class AccountService {
 
   deleteAccount() {
     return this.http.delete(this.rootUrl + 'api/accounts/accountId');
+  }
+
+  uploadAnImage(event) {
+    return new Promise<FormData>((resolve, reject) => {
+      if (event.target.files.length > 0) {
+        const file = event.target.files[0];
+        const formData = new FormData();
+        formData.append('file', file);
+        resolve(formData);
+        reject('unknown error happened');
+      }
+    });
   }
 }

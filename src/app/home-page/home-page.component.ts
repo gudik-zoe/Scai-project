@@ -5,6 +5,8 @@ import { Component, OnInit, Sanitizer } from '@angular/core';
 import { PostLike } from '../models/postLike';
 import { Account } from '../models/account';
 import { environment } from 'src/environments/environment';
+import { FriendsService } from '../services/friends.service';
+import { Relationship } from '../models/relationship';
 
 @Component({
   selector: 'app-home-page',
@@ -14,9 +16,9 @@ import { environment } from 'src/environments/environment';
 export class HomePageComponent implements OnInit {
   constructor(
     private postService: PostsService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private friendsService: FriendsService
   ) {}
-  likeBtn: boolean = false;
   input: string;
   foto: any;
   posted: boolean = false;
@@ -25,7 +27,7 @@ export class HomePageComponent implements OnInit {
   inputData: string;
   id: number;
   show: boolean = false;
-  users;
+  users: Account[];
   error: boolean = false;
   alertComponent: boolean = false;
   userData: Account;
@@ -34,6 +36,7 @@ export class HomePageComponent implements OnInit {
   myImage;
   postImage;
   dbPosts;
+  friends: Relationship[];
   imgUrl: string = environment.rootUrl + 'files/';
 
   image() {
@@ -50,11 +53,15 @@ export class HomePageComponent implements OnInit {
     console.log(this.userData.firstName);
   }
 
-  getUsers() {
-    this.accountService.getUsers().subscribe((data) => {
-      this.users = data;
-    });
+  async getUsers() {
+    this.users =
+      this.accountService.users || (await this.accountService.getUsers());
   }
+
+  async getFriends() {
+    this.friends = await this.friendsService.getMyFriends();
+  }
+
   async getUserData() {
     this.userData =
       this.accountService.userData ||
@@ -65,9 +72,11 @@ export class HomePageComponent implements OnInit {
     this.dbPosts = await this.postService.getPosts();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.getPosts();
     this.getUserData();
+    this.getUsers();
+    this.getFriends();
     this.postService.close.subscribe((data) => {
       this.alertComponent = data;
     });

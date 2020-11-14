@@ -2,8 +2,7 @@
 
   <!-- normal post -->
   <ng-container *ngIf="post.doneBy && !post.postOriginalId && !post.postedOn">
-    <img src="{{ imgUrl + post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%; float: left;"
-      height="50px" />
+    <img src="{{  post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%; float: left;" height="50px" />
     <span *ngIf="!post.postedOn" style="float: left;" class="font-weight-bold mt-3">
       {{ post.doneBy.firstName + " " + post.doneBy.lastName }} shared </span>
     <i *ngIf="post.postCreatorId == userData.idAccount" (click)="editPost(post)"
@@ -13,13 +12,12 @@
       style="float: right; color:red; margin-right: 20px; margin-top: 10px; font-size:large; cursor: pointer;"
       (click)=" deletePost(post.idPost)" class="fa fa-trash" aria-hidden="true"></i>
     <p class="mt-5" *ngIf="post.text">{{post.text}}</p>
-    <img *ngIf="post.image" src="{{ imgUrl + post.image }}" style="width: 80%; height: 60%; border-radius: 10px;" />
+    <img *ngIf="post.image" src="{{ post.image }}" style="width: 80%; height: 60%; border-radius: 10px;" />
   </ng-container>
 
   <!-- shared post -->
   <ng-container *ngIf="post.doneBy && post.postOriginalId && post.originalPostDoneBy && !post.postedOn">
-    <img src="{{ imgUrl + post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%; float: left;"
-      height="50px" />
+    <img src="{{  post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%; float: left;" height="50px" />
     <span style="float: left;" class="font-weight-bold mt-3">
       {{ post.doneBy.firstName + " " + post.doneBy.lastName }} reshared </span>
     <!-- <i *ngIf="post.postCreatorId == userData.idAccount && !post.postOriginalId" (click)="editPost(post)"
@@ -32,14 +30,13 @@
     <div *ngIf="post.postOriginalId  && post.originalPostDoneBy" (click)="toDescription(post.postOriginalId)"
       style="margin-top: 30px; border: 1px solid black; cursor: pointer; ">
       <div style="margin-top: 10px; float: left;">
-        <img src="{{ imgUrl + post.originalPostDoneBy.profilePhoto }}" width="50px" style="border-radius: 50%;"
-          height="50px" />
+        <img src="{{  post.originalPostDoneBy.profilePhoto }}" width="50px" style="border-radius: 50%;" height="50px" />
         <span class="font-weight-bold">
           {{ post.originalPostDoneBy.firstName + " " + post.originalPostDoneBy.lastName }}
           shared: </span>
       </div>
       <p style="padding-right: 220px; margin-top: 50px;"> {{ post.text }} </p>
-      <img *ngIf="post.image" src="{{ imgUrl + post.image }}" style="width: 80%; height: 60%; border-radius: 10px;" />
+      <img *ngIf="post.image" src="{{  post.image }}" style="width: 80%; height: 60%; border-radius: 10px;" />
       <p><i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue"> </i>{{post.likesNumber}}
         <i class="fa fa-comments" aria-hidden="true" style="margin-left: 150px;"></i>{{post.commentsNumber}}</p>
     </div>
@@ -60,18 +57,17 @@
     align-items: center;
     justify-content: first baseline">
 
-      <img src="{{ imgUrl + post.doneBy.profilePhoto }}" style="width: 60px; height: 60px; border-radius: 50%;" />
+      <img src="{{  post.doneBy.profilePhoto }}" style="width: 60px; height: 60px; border-radius: 50%;" />
       <span class="font-weight-bold ml-1">{{post.doneBy.firstName + " " + post.doneBy.lastName}}
 
         <i style="padding: 10px;" class="fa fa-caret-right fa-lg" aria-hidden="true"></i>
-        <img src="{{ imgUrl + post.postedOnData.profilePhoto }}" width="60px" height="60px"
-          style="border-radius: 50%" />
+        <img src="{{ post.postedOnData.profilePhoto }}" width="60px" height="60px" style="border-radius: 50%" />
         {{post.postedOnData.firstName  + " " + post.postedOnData.lastName}}</span>
 
     </div>
 
     <p>{{post.text}}</p>
-    <img *ngIf="post.image" src="{{ imgUrl + post.image }}" style="width: 80%; height: 60%; border-radius: 10px;" />
+    <img *ngIf="post.image" src="{{ post.image }}" style="width: 80%; height: 60%; border-radius: 10px;" />
 
   </ng-container>
 
@@ -126,8 +122,7 @@
       <div class="container mt-3"
         style="background-color: whitesmoke; width:350px; height:fit-content; border-radius: 7px;">
         <ng-container *ngIf="comment.doneBy">
-          <img src="{{ imgUrl + comment.doneBy.profilePhoto }}" width="20px" style="border-radius: 50%;"
-            height="20px" />
+          <img src="{{ comment.doneBy.profilePhoto }}" width="20px" style="border-radius: 50%;" height="20px" />
           <span class="font-weight-bold">{{comment.doneBy.firstName + " " + comment.doneBy.lastName }} </span>
           <span *ngIf="!editCommentOn || commentId != comment.idComment">{{comment.text}}</span>
           <input *ngIf="editCommentOn && commentId == comment.idComment" [(ngModel)]="editCommentValue" style="
@@ -149,7 +144,7 @@
     </div>
   </ng-container>
   <div style="margin-top: 10px;">
-    <img src="{{ imgUrl + userData.profilePhoto }}" width="40px" height="40px" style="border-radius: 50%" />
+    <img src="{{userData.profilePhoto }}" width="40px" height="40px" style="border-radius: 50%" />
     <input [(ngModel)]="commentText" placeholder="write a comment" style="
           width: 320px;
           border-radius: 8px;

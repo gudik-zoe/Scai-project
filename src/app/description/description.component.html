@@ -2,8 +2,8 @@
   <div class="container" *ngIf="id === post.idPost" style="border-radius: 10px; margin-top: 10px">
     <div class="row">
       <div class="col-md-8">
-        <img *ngIf="post.image" src="{{ imgUrl + post.image}}" style="width: 700px; height: 500px" />
-        <!-- <img src="{{ imgUrl + post.image}}" style="width: 80%; height: 80%" /> -->
+        <img *ngIf="post.image" src="{{post.image}}" style="width: 700px; height: 500px" />
+        <!-- <img src="{{    post.image}}" style="width: 80%; height: 80%" /> -->
       </div>
       <div class="col-md-3" style="
           background-color: white;
@@ -30,24 +30,15 @@
             <li>
               <div class="container-fluid" style="background-color: whitesmoke">
                 <span *ngIf=i.doneBy>
-                  <img src="{{ imgUrl +i.doneBy.profilePhoto }}" width="35px" style="border-radius: 50%" />
+                  <img src="{{   i.doneBy.profilePhoto }}" width="35px" style="border-radius: 50%" />
 
                   {{ i.doneBy.firstName + " " + i.doneBy.lastName }} :
                   {{ i.text }}
                 </span>
-                <!-- <span class="ml-5">
-                  <i
-                    class="fa fa-thumbs-up"
-                    aria-hidden="true"
-                    style="color: blue"
-                    >{{ i.likes }}</i
-                  >
-                </span> -->
               </div>
             </li>
           </ul>
         </div>
-
       </div>
     </div>
   </div>

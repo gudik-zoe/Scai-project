@@ -5,7 +5,7 @@
   <div class="cold-md-3 ml-3"
     style="background-color: lightgrey; height: fit-content; border-radius: 9px; padding: 10px;">
     <div class="text-center">
-      <img src="{{imgUrl +  userData.coverPhoto }}" width="540px" height="160px" style="border-radius: 10px;">
+      <img src="{{ userData.coverPhoto }}" width="540px" height="160px" style="border-radius: 10px;">
 
       <br>
       <input type="file" (change)="changeCoverPhoto($event)" name="cover" id="cover" class="inputfile" />
@@ -18,7 +18,7 @@
         change cover Photo
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
       </label>
-      <img src="{{ imgUrl + userData.profilePhoto}}" width="120px"
+      <img src="{{userData.profilePhoto}}" width="120px"
         style="border-radius: 50%; margin-top: -45px; margin-right:150px;" />
       <br>
       <input type="file" (change)="newImage($event)" name="file" id="file" class="inputfile"

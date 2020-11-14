@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
 import { FriendsService } from '../services/friends.service';
+import { Account } from '../models/account';
 
 @Component({
   selector: 'app-friends-container',
@@ -15,34 +16,20 @@ export class FriendsContainerComponent implements OnInit {
     private friendService: FriendsService
   ) {}
 
-  userData;
-  users;
-  notification;
+  @Input() users;
+  userData: Account;
 
-  getUsers() {
-    return new Promise((resolve) => {
-      this.accountService.getUsers().subscribe((data) => {
-        this.users = data;
-        resolve(this.users);
-      });
-    });
-  }
   async getUserData() {
     this.userData =
       this.accountService.userData ||
       (await this.accountService.getTheLoggedInUserData());
   }
+
   goToFriendsCharRoom(id: number): void {
     this.route.navigate(['/messenger', id]);
   }
 
-  async functions() {
-    await this.getUserData();
-    await this.getUsers();
-    // await this.relationChecker();
-  }
-
   ngOnInit() {
-    this.functions();
+    this.getUserData();
   }
 }

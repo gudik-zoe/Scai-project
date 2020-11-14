@@ -1,12 +1,12 @@
 <div class="row" *ngIf="userData && myRelationships">
     <div class="col-md-3" style="border-right: 1px solid black; height: 640px;">
-        <img src="{{ imgUrl + userData.profilePhoto}}" width="50px" height="50px" style="border-radius: 50%" /> <span
+        <img src="{{    userData.profilePhoto}}" width="50px" height="50px" style="border-radius: 50%" /> <span
             class="font-weight-bold"> Chats</span>
         <hr>
         <div *ngFor="let relation of myRelationships">
             <div (click)="chatWith(relation.doneBy)" class="friend" *ngIf="relation.doneBy">
-                <img src="{{ imgUrl + relation.doneBy.profilePhoto}}" width="55px" height="55px"
-                    style="border-radius: 50%" /> <span class="font-weight-bold">
+                <img src="{{    relation.doneBy.profilePhoto}}" width="55px" height="55px" style="border-radius: 50%" />
+                <span class="font-weight-bold">
                     {{relation.doneBy.firstName +" " + relation.doneBy.lastName }}</span>
             </div>
 
@@ -15,7 +15,7 @@
 
     <div *ngIf="wantedUser" style=" background-color: whitesmoke; height: max-content;">
         <div style="border-bottom: 1px solid black; height: 120px; width: 1050px;background-color: white;;">
-            <img src="{{ imgUrl + wantedUser.profilePhoto}}" width="95px" height="95px" style="border-radius: 50%;" />
+            <img src="{{    wantedUser.profilePhoto}}" width="95px" height="95px" style="border-radius: 50%;" />
             <span style="font-size: x-large; margin-left: 80px; font-weight:bolder; margin-top: 10px;">
                 {{wantedUser.firstName + " "+ wantedUser.lastName}}
             </span>
@@ -25,9 +25,9 @@
             style="overflow-y: scroll; overflow-x: hidden; height: 450px; border-bottom: 1px solid black;">
             <ul *ngFor="let conv of myConvWith">
                 <div [class]="(conv.idSender == wantedUser.idAccount )? 'receiver' :'sender' "><span>
-                        <img *ngIf="conv.idSender == wantedUser.idAccount" src="{{imgUrl + wantedUser.profilePhoto}}"
+                        <img *ngIf="conv.idSender == wantedUser.idAccount" src="{{   wantedUser.profilePhoto}}"
                             width="30px" height="30px" style="border-radius: 50%;" />
-                        <img *ngIf="conv.idSender != wantedUser.idAccount" src="{{ imgUrl + userData.profilePhoto}}"
+                        <img *ngIf="conv.idSender != wantedUser.idAccount" src="{{    userData.profilePhoto}}"
                             width="30px" height="30px" style="border-radius: 50%;" />{{conv.message}}</span>
                     <p style="color: grey; font-size: small; ">{{conv.date |  date:'dd/MM  hh:mm' : 'UTC'}} </p>
                 </div>
@@ -35,12 +35,10 @@
             <ul *ngFor="let chatMessage of webSocketService.chatMessages">
                 <div *ngIf="chatMessage.idSender == userData.idAccount || chatMessage.idSender == wantedUser.idAccount"
                     [class]="(chatMessage.idSender == wantedUser.idAccount )? 'receiver' :'sender' "><span>
-                        <img *ngIf="chatMessage.idSender == wantedUser.idAccount"
-                            src="{{ imgUrl +wantedUser.profilePhoto}}" width="30px" height="30px"
-                            style="border-radius: 50%;" />
-                        <img *ngIf="chatMessage.idSender != wantedUser.idAccount"
-                            src="{{ imgUrl +userData.profilePhoto}}" width="30px" height="30px"
-                            style="border-radius: 50%;" />
+                        <img *ngIf="chatMessage.idSender == wantedUser.idAccount" src="{{   wantedUser.profilePhoto}}"
+                            width="30px" height="30px" style="border-radius: 50%;" />
+                        <img *ngIf="chatMessage.idSender != wantedUser.idAccount" src="{{   userData.profilePhoto}}"
+                            width="30px" height="30px" style="border-radius: 50%;" />
                         {{chatMessage.message}}
                     </span>
                     <p style="color: grey; font-size: small; ">{{chatMessage.date |  date:'dd/MM  hh:mm' : 'UTC'}} </p>
@@ -51,7 +49,7 @@
         align-items: center;
         justify-content: left;
       ">
-            <img src="{{ imgUrl + userData.profilePhoto}}" width="50px" height="50px" style="border-radius: 50%;" />
+            <img src="{{    userData.profilePhoto}}" width="50px" height="50px" style="border-radius: 50%;" />
             <div class="col-md-8"> <input class="form-control" [(ngModel)]="message" type="text"> </div><button
                 class="btn btn-outline-success btn-xs ml-2" (click)="sendMessage(message)"><i class="fa fa-paper-plane"
                     style="font-size: medium;" aria-hidden="true"></i></button>

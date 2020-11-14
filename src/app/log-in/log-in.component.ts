@@ -34,11 +34,11 @@ export class LogInComponent implements OnInit {
 
   signUpfunc(account: Account): void {
     if (account.gender == 'male') {
-      account.profilePhoto = 'download (3).jpg';
+      account.profilePhoto = 'https://i.ibb.co/5F3tLbM/download-3.jpg';
     } else if (account.gender == 'female') {
-      account.profilePhoto = 'Unknown-Girl.jpg';
+      account.profilePhoto = 'https://i.ibb.co/1sT6gNp/Unknown-Girl.jpg';
     }
-    account.coverPhoto = 'nature-design.jpg';
+    account.coverPhoto = 'https://i.ibb.co/fHnGMrJ/nature-design.jpg';
     this.auth.signUp(account).subscribe(
       (data) => {
         this.errorPhrase = '';
