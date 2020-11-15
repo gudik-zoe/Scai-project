@@ -8,16 +8,15 @@
 
   </div>
 
-  <div class="container" style="margin-top: 100px; margin-left: 200px;">
+  <div class="container-fluid" style="margin-top: 100px; margin-left: 20%;">
     <span class="new" routerLink="/home-page">Home page</span>
     <span class="new">My Friends</span>
-    <span class="new">Photos</span>
-    <button (click)="goToMessengerOrAddFriend(requestedUserData.idAccount)" style="margin-left: 300px;"
+    <button (click)="goToMessengerOrAddFriend(requestedUserData.idAccount)" style="margin-left: 30%;"
       *ngIf="requestedUserData.idAccount !== loggedInUserData.idAccount"
       [class]="(status == 'add friend' || status == 'chat' )? 'btn btn-primary btn-sm' :'btn btn-danger btn-sm' ">{{status}}<i
         class="fa fa-user-plus ml-1" aria-hidden="true"></i> </button>
     <button *ngIf="requestedUserData.idAccount == loggedInUserData.idAccount" class="btn btn-info btn-sm "
-      style="margin-left: 400px;" (click)="goToEditing()">
+      style="margin-left: 40%;" (click)="goToEditing()">
       <i class="fa fa-pencil" aria-hidden="true"></i>
       Edit profile</button>
 
@@ -51,8 +50,11 @@
 
     </div>
     <div class="col-6 mt-1" style="background-color: white; border-radius: 10px">
-      <div *ngIf="loggedInUserData.idAccount !== requestedUserData.idAccount" class="mt-2 ml-4"
-        style="width: 90%; background-color: whitesmoke; border-radius: 10px">
+      <app-what-on-mind *ngIf="requestedUserData.idAccount != loggedInUserData.idAccount"
+        (createPost)="openLeavePostComponent($event)" [requestedUser]="requestedUserData">
+      </app-what-on-mind>
+      <!-- <div *ngIf="loggedInUserData.idAccount !== requestedUserData.idAccount"
+        style="width: 80%; background-color: whitesmoke; border-radius: 10px; margin: 5px  auto  0px auto;">
         <span>
           <img src="{{  loggedInUserData.profilePhoto}}" width="50px" style="border-radius: 50%" />
           <input (click)="openLeavePostComponent()" class="ml-2"
@@ -71,7 +73,7 @@
           <i class="fa fa-picture-o" aria-hidden="true"></i> photos</span><span style="color: blue"
           class="font-weight-bold ml-5">
           <i class="fa fa-calendar" aria-hidden="true"></i> events</span>
-      </div>
+      </div> -->
       <app-leave-post></app-leave-post>
 
       <div class="container-fluid mt-4" class="scrollable-element"

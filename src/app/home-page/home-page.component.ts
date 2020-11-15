@@ -31,6 +31,7 @@ export class HomePageComponent implements OnInit {
   error: boolean = false;
   alertComponent: boolean = false;
   userData: Account;
+  loggedInUserData;
   name: String;
   postLikes: PostLike;
   myImage;
@@ -41,12 +42,6 @@ export class HomePageComponent implements OnInit {
 
   image() {
     return this.userData?.profilePhoto;
-  }
-  openDiv() {
-    this.postService.alertComponent.next({
-      userData: this.userData,
-      openComponent: true,
-    });
   }
 
   get() {
@@ -66,6 +61,13 @@ export class HomePageComponent implements OnInit {
     this.userData =
       this.accountService.userData ||
       (await this.accountService.getTheLoggedInUserData());
+  }
+
+  openDiv(event: any) {
+    this.postService.alertComponent.next({
+      userData: this.userData,
+      openComponent: true,
+    });
   }
 
   async getPosts() {

@@ -1,0 +1,16 @@
+<div class="col-md-7">
+    <span *ngIf="userData ">
+        <img src="{{userData.profilePhoto}}" width="50px" height="50px" style="border-radius: 50%" />
+        <input *ngIf="requestedUser" (click)="openDiv()" class="whatsInput"
+            placeholder="leave a post for {{requestedUser.firstName}}" />
+        <input *ngIf="!requestedUser" (click)="openDiv()" class="whatsInput"
+            placeholder="what's on your mind {{userData.firstName}}" />
+    </span>
+    <hr />
+    <span style="color: red" class="font-weight-bold ml-4">
+        <i class="fa fa-video-camera" aria-hidden="true"></i> live video</span><span style="color: green"
+        class="font-weight-bold ml-5">
+        <i class="fa fa-picture-o" aria-hidden="true"></i> photos</span><span style="color: blue"
+        class="font-weight-bold ml-5">
+        <i class="fa fa-calendar" aria-hidden="true"></i> events</span>
+</div>

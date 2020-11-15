@@ -5,6 +5,7 @@ import { UserProfileComponent } from './user-profile.component';
 import { PostModule } from '../post/post.module';
 import { PostsContainerModule } from '../posts-container/posts-container.module';
 import { LeavePostModule } from '../leave-post/leave-post.module';
+import { WhatOnMindModule } from '../what-on-mind/what-on-mind.module';
 
 const routes: Routes = [{ path: ':id', component: UserProfileComponent }];
 
@@ -16,6 +17,7 @@ const routes: Routes = [{ path: ':id', component: UserProfileComponent }];
     PostModule,
     PostsContainerModule,
     LeavePostModule,
+    WhatOnMindModule,
   ],
 })
 export class UserProfileModule {}

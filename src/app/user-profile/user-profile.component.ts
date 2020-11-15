@@ -67,7 +67,7 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  openLeavePostComponent() {
+  openLeavePostComponent(event) {
     this.postService.leavePostComponent.next({
       leavePostComponent: true,
       userData: this.loggedInUserData,
