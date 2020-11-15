@@ -57,6 +57,7 @@ export class LeavePostComponent implements OnInit {
         text: this.inputData,
         image: this.myImage || 'null',
         postedOn: this.requestedUserData.idAccount,
+        date: new Date().getTime(),
       };
       this.postSerice.addPost(post).subscribe(
         (data: Post) => {
