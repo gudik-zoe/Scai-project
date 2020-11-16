@@ -10,8 +10,7 @@ import { Account } from '../models/account';
 export class AuthService {
   rootUrl: string = environment.rootUrl;
   error: boolean = false;
-
-  localStorageArray: any[] = JSON.parse(localStorage.getItem('user')) || [];
+  signUpSuccessful = new Subject<boolean>();
 
   loggedIn(): boolean {
     return !!localStorage.getItem('token');

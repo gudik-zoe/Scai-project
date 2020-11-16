@@ -1,0 +1,48 @@
+<div style="background-color: transparent; border-radius: 8px; width: 350px; height: 305px;">
+    <div class="container mt-3">
+        <form [formGroup]="signInForm">
+            <div class="form-group">
+                <input type="email" placeholder="Email" class="form-control" formControlName="email" [class.is-invalid]="
+          signInForm.get('email').invalid &&
+          signInForm.get('email').touched
+        " />
+                <small class="text-danger" *ngIf="
+          signInForm.get('email').errors?.required &&
+          signInForm.get('email').touched
+        ">
+                    this field is required
+                </small>
+                <small class="text-danger" *ngIf="
+          signInForm.get('email').errors?.email &&
+          signInForm.get('email').touched
+        ">
+                    invalid email
+                </small>
+            </div>
+            <div class="form-group">
+                <input type="password" placeholder="Password" class="form-control" formControlName="password" />
+                <small class="text-danger" *ngIf="
+          signInForm.get('password').errors?.required &&
+          signInForm.get('password').touched
+        ">
+                    this field is required
+                </small>
+                <p class="text-danger">
+                    {{errorPhrase}}
+                </p>
+            </div>
+            <p *ngIf="weila">your data has been registered sign in</p>
+            <img *ngIf="loading" src="../../assets/loading_spin_grey.gif_11ezlroiohbdwk2imlrjrbw2.gif" width="30"
+                height="30">
+            <button *ngIf="!loading" style="margin-top:65px;" [disabled]="!signInForm.valid"
+                [class]="!signInForm.valid ? 'btn btn-outline-danger btn-block': 'btn btn-outline-primary btn-block'"
+                (click)="
+        signIn(
+          signInForm.get('email').value,
+          signInForm.get('password').value
+        )
+      ">
+                Log In</button>
+        </form>
+    </div>
+</div>

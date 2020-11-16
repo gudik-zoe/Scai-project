@@ -120,9 +120,6 @@ export class AccountSettingsComponent implements OnInit {
       {
         firstName: [this.userData.firstName, Validators.required],
         lastName: [this.userData.lastName, Validators.required],
-        // email: [this.userData.email, [Validators.required, Validators.email]],
-        // password: ['', [Validators.required, Validators.minLength(6)]],
-        // confirmNewPassword: ['', Validators.required],
         study: [this.userData.study],
         wentTo: [this.userData.wentTo],
         livesIn: [this.userData.livesIn],

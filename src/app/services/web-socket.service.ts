@@ -32,7 +32,6 @@ export class WebSocketService {
       if (this.userIn) {
         this.openWebSocket();
       } else {
-        this.route.navigate(['/home-page']);
         console.log('close ', event);
       }
     };
