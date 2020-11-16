@@ -10,11 +10,16 @@ p {
   animation-name: example;
   animation-duration: 4s;
 }
+
+i {
+  transition: all 0.2s ease-in-out;
+}
 i:hover {
-  color: black;
+  transform: scale(1.4);
+  color: white;
 }
 
 .imageAndName {
   width: fit-content;
-  color: white;
+  color: whitesmoke;
 }

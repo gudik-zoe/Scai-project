@@ -17,3 +17,21 @@
   position: absolute;
   z-index: -1;
 }
+
+.icon {
+  float: right;
+  margin-right: 20px;
+  margin-top: 10px;
+  font-size: large;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  background-color: lightgray;
+  border-radius: 50%;
+  transition: all 0.1s ease-in-out;
+}
+
+.icon:hover {
+  background-color: whitesmoke;
+  transform: scale(1.5);
+}

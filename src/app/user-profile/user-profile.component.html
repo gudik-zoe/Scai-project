@@ -26,26 +26,22 @@
 
   <div class="row" style="background-color: whitesmoke;">
     <div class="col-3" style="margin-left: 5em;">
-      <div class="main mt-2" style="
-          height: fit-content;
-          background-color: whitesmoke;
-          padding: 10px;
-          border-radius: 10px;
-        ">
+      <div class="main mt-2">
         <h3>intro</h3>
         <hr />
         <li>
-          <i class="fa fa-graduation-cap" aria-hidden="true"></i> studied at
-          <span class="font-weight-bold">{{ requestedUserData?.study }}</span>
+          <i class="fa fa-graduation-cap" aria-hidden="true" style="color: gray;"></i> studied at
+          <span>{{ requestedUserData?.study }}</span>
         </li>
         <li>
-          <i class="fa fa-university" aria-hidden="true"></i> went to
-          <span class="font-weight-bold"> {{ requestedUserData.wentTo }}</span>
+          <i class="fa fa-university" aria-hidden="true" style="color: gray;"></i> went to
+          <span> {{ requestedUserData.wentTo }}</span>
         </li>
         <li>
-          <i class="fa fa-home" aria-hidden="true"></i> lives in
-          <span class="font-weight-bold"> {{ requestedUserData.livesIn }}</span>
+          <i class="fa fa-home" aria-hidden="true" style="color: gray;"></i> lives in
+          <span> {{ requestedUserData.livesIn }}</span>
         </li>
+        <button style="background-color: lightgrey;" class="btn btn-outline  btn-block mt-2"> edit details</button>
       </div>
 
     </div>

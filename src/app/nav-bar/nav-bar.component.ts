@@ -32,6 +32,12 @@ export class NavBarComponent implements OnInit {
     });
   }
 
+  delete() {
+    this.accountService.deleteAccount().subscribe((data) => {
+      console.log(data);
+    });
+  }
+
   deactivate() {
     this.accountService.deleteAccount().subscribe(
       (data) => {
