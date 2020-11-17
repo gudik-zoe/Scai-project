@@ -17,10 +17,12 @@
         <img *ngIf="postImage" [src]="postImage" width="150" height="100px" style="margin-left: 100px" />
         <input type="file" (change)="uploadImage($event)" name="file" id="file" class="inputfile" />
         <label style="float: right; cursor: pointer" for="file">
-          <i style="font-size: x-large; cursor: pointer;" class="fa fa-paperclip mr-2" aria-hidden="true"></i>
+          <div class="icon">
+            <i style="font-size: x-large;" class="fa fa-paperclip ml-1" aria-hidden="true"></i>
+          </div>
         </label>
         <textarea placeholder="what's in your mind {{ userData.firstName }}" [(ngModel)]="inputData"
-          class="md-textarea form-control" rows="3"></textarea>
+          class="md-textarea form-control" rows="3" style="background-color: transparent;"></textarea>
         <!-- <img
             src="https://png.pngtree.com/png-vector/20191129/ourmid/pngtree-image-upload-icon-photo-upload-icon-png-image_2047546.jpg"
             width="25px" height="25px" class="mt-4" style="border-radius: 50%; margin-left: 20px; color: blue" /> -->
@@ -29,7 +31,7 @@
 
       <br />
       <button [disabled]="!inputData && !postImage" type="button" (click)="sharePost(inputData)"
-        class="btn btn-primary btn-block">
+        class="btn btn-outline-primary btn-block">
         Post
       </button>
     </div>

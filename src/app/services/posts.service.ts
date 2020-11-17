@@ -24,6 +24,7 @@ export class PostsService {
   errorSubject = new Subject<boolean>();
   deletePostSubject = new Subject<any>();
   alertComponent = new Subject<any>();
+  confirmPostDeleting = new Subject<any>();
   leavePostComponent = new Subject<any>();
   dbPosts: Post[];
   comment: Comment;
@@ -169,7 +170,6 @@ export class PostsService {
   }
 
   addPost(post: Post) {
-    console.log(post);
     return this.http.post(this.rootUrl + 'posts/accountId', post);
   }
 
@@ -186,18 +186,6 @@ export class PostsService {
     );
   }
 
-  // updatePost(postId: number, newText: string, newImage: string) {
-  //   return this.http.put(
-  //     this.rootUrl +
-  //       'posts/update/idAccount/' +
-  //       postId +
-  //       '/' +
-  //       newText +
-  //       '/' +
-  //       newImage,
-  //     {}
-  //   );
-  // }
   updatePost(post: Post) {
     return this.http.put(this.rootUrl + 'posts/update/idAccount', post, {});
   }

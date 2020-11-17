@@ -32,6 +32,7 @@ export class PostsContainerComponent implements OnInit {
   @Input() posts: Post[];
   userData: Account;
   commentText: string;
+  errorPhrase: string;
 
   async getUserData() {
     this.userData =
@@ -41,12 +42,26 @@ export class PostsContainerComponent implements OnInit {
 
   deletePostInParent(id: number) {
     this.postsService.deletePostSubject.next({
-      openCompoenent: true,
+      openComponent: true,
       postId: id,
     });
-    // this.postsService.deletePost(id).subscribe((data) => {
-    //   this.posts = this.posts.filter((item: Post) => item.idPost !== id);
-    // });
+  }
+
+  confirmDeletePost() {
+    this.postsService.confirmPostDeleting.subscribe((data) => {
+      if (data.delete) {
+        this.postsService.deletePost(data.postId).subscribe(
+          () => {
+            this.posts = this.posts.filter(
+              (item: Post) => item.idPost !== data.postId
+            );
+          },
+          (error) => {
+            this.errorPhrase = error.error.message;
+          }
+        );
+      }
+    });
   }
 
   likePostInParent(post: Post) {
@@ -94,5 +109,6 @@ export class PostsContainerComponent implements OnInit {
 
   ngOnInit() {
     this.getUserData();
+    this.confirmDeletePost();
   }
 }

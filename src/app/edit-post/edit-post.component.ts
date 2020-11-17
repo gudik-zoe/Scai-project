@@ -34,6 +34,7 @@ export class EditPostComponent implements OnInit {
     this.editPostComponent = false;
     this.showImage = true;
     this.errorPhrase = '';
+    this.myImage = undefined;
   }
 
   async uploadImage(event) {
@@ -84,6 +85,7 @@ export class EditPostComponent implements OnInit {
       this.postService.updatePost(this.post).subscribe(
         (data) => {
           this.editPostComponent = false;
+          this.myImage = undefined;
         },
         (error) => {
           this.errorPhrase = error.error.message;

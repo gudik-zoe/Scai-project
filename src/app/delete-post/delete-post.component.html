@@ -2,25 +2,21 @@
     <div class="backdrop"></div>
     <div class="alert-box">
         <span>
-
             <h4 class="text-center">Delete post</h4>
         </span>
         <hr class="m-0" />
-
         <div class="alert-box-action">
-            are you sure you wanna delete this post {{ postId}}
 
+
+            <p style="padding: 10px;"> are you sure you wanna delete this post
+            </p>
+            <button type="button" class="btn btn-outline-danger btn-block " (click)=" delete()">
+                Delete
+            </button>
+            <button type="button" class="btn btn-outline-info btn-block " (click)="cancel()">
+                cancel
+            </button>
         </div>
-
-        <div class="container-fluid" style="margin: 10px 0 10px 0 ; display: flex;">
-
-        </div>
-        <button type="button" class="btn btn-danger btn-block">
-            Delete
-        </button>
-        <button type="button" class="btn btn-outline btn-block">
-            cancel
-        </button>
     </div>
 
 </ng-container>

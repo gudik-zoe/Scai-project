@@ -20,8 +20,24 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0, 0.26);
   border-radius: 8px;
 }
-.alert-box-adctoins {
-  text-align: right;
+.alert-box-action {
+  position: relative;
+  animation-name: example2;
+  animation-duration: 1s;
+}
+@keyframes example2 {
+  0% {
+    right: 300px;
+    bottom: 0px;
+  }
+  50% {
+    right: 200px;
+    bottom: 0px;
+  }
+  50% {
+    right: 0px;
+    bottom: 0px;
+  }
 }
 .inputfile {
   width: 0.1px;
@@ -30,4 +46,20 @@
   overflow: hidden;
   position: absolute;
   z-index: -1;
+}
+
+.icon {
+  padding: 4px;
+  font-size: large;
+  cursor: pointer;
+  width: 35px;
+  height: 35px;
+  background-color: lightgray;
+  border-radius: 50%;
+  transition: all 0.1s ease-in-out;
+}
+
+.icon:hover {
+  background-color: whitesmoke;
+  transform: scale(1.5);
 }

@@ -18,10 +18,14 @@
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0, 0.26);
   border-radius: 8px;
+}
+
+.alert-box-action {
   position: relative;
   animation-name: example2;
   animation-duration: 1s;
 }
+
 @keyframes example2 {
   0% {
     right: 0px;
@@ -35,9 +39,6 @@
     right: 0px;
     bottom: 0px;
   }
-}
-.alert-box-action {
-  text-align: right;
 }
 .inputfile {
   width: 0.1px;
