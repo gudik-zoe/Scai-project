@@ -18,9 +18,9 @@ export class SignUpComponent implements OnInit {
   signUpfunc(account: Account): void {
     this.loading = true;
     if (account.gender == 'male') {
-      account.profilePhoto = 'https://i.ibb.co/5F3tLbM/download-3.jpg';
+      account.profilePhoto = 'https://i.ibb.co/ZYz6p60/download-3.jpg';
     } else {
-      account.profilePhoto = 'https://i.ibb.co/1sT6gNp/Unknown-Girl.jpg';
+      account.profilePhoto = 'https://i.ibb.co/nCJRcYk/Unknown-Girl.jpg';
     }
     account.coverPhoto = 'https://i.ibb.co/fHnGMrJ/nature-design.jpg';
     this.auth.signUp(account).subscribe(

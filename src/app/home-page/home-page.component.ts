@@ -51,6 +51,7 @@ export class HomePageComponent implements OnInit {
   async getUsers() {
     this.users =
       this.accountService.users || (await this.accountService.getUsers());
+    console.log(this.users);
   }
 
   async getFriends() {
@@ -61,6 +62,7 @@ export class HomePageComponent implements OnInit {
     this.userData =
       this.accountService.userData ||
       (await this.accountService.getTheLoggedInUserData());
+    console.log(this.userData);
   }
 
   openDiv(event: any) {
