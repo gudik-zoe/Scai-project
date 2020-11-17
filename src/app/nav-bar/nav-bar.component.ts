@@ -54,7 +54,8 @@ export class NavBarComponent implements OnInit {
   }
 
   goToProfile(id: number) {
-    this.route.navigate(['/user-profile', id]);
+    console.log(id);
+    this.route.navigate(['/user-profile', this.userData.idAccount]);
   }
 
   logOut() {

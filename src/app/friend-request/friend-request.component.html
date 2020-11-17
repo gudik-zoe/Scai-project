@@ -1,16 +1,16 @@
 <div *ngIf="relations" style="float: right; margin-left: 10px;" class="dropdown">
+    <div class="icon" id=" dropdownMenuButton" data-toggle="dropdown">
+        <i class="fa fa-users" aria-hidden="true" type="button" aria-haspopup="true" aria-expanded="false">
 
-    <i class="fa fa-users" aria-hidden="true" type="button" id=" dropdownMenuButton" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
-
-    </i>
+        </i>
+    </div>
     <span style="color:white;padding-left: 2px;" *ngIf="relations.length > 0">{{relations.length}} </span>
 
     <div class="dropdown-menu" aria-labelledby=" dropdownMenuButton">
         <p *ngIf=" relations.length==0" class="font-weight-bold"> no new friend requests </p>
         <div *ngFor="let relation of relations">
             <li *ngIf="relation.doneBy" class="dropdown-item " style="font-size: small; cursor: pointer;">
-                <img src="{{    relation.doneBy.profilePhoto}}" width="30px" style="border-radius: 50%">
+                <img src="{{ relation.doneBy.profilePhoto}}" width="30px" style="border-radius: 50%">
                 <span class="font-weight-bold">
                     {{relation.doneBy.firstName + " " + relation.doneBy.lastName}}
                 </span>

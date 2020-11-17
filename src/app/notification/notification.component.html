@@ -1,7 +1,8 @@
 <div style="float: right; margin-left: 10px;" class="dropdown">
-
-    <i (click)="notificationSeen()" class="fa fa-bell-o" style="color:white;" aria-hidden="true" type="button"
-        id=" dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+    <div class="icon" id=" dropdownMenuButton" (click)="notificationSeen()" data-toggle="dropdown">
+        <i class="fa fa-bell-o" style="color:white;" aria-hidden="true" type="button" aria-haspopup="true"
+            aria-expanded="false"></i>
+    </div>
     <span style="color:white; font-weight: bolder; margin-bottom: 20px;"
         *ngIf="unseenNots.length > 0">{{unseenNots.length}} </span>
 

@@ -1,5 +1,6 @@
 .active-class {
   color: black;
+  opacity: 1;
 }
 
 #messenger:hover {
@@ -13,10 +14,14 @@ p {
 
 i {
   transition: all 0.2s ease-in-out;
+  color: #efe5ff;
+  opacity: 0.5;
+  outline: none;
 }
 i:hover {
   transform: scale(1.4);
   color: white;
+  opacity: 1;
 }
 
 .imageAndName {
