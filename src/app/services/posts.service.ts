@@ -22,6 +22,7 @@ export class PostsService {
   editPostComponent = new Subject<any>();
   sharePostComponent = new Subject<any>();
   errorSubject = new Subject<boolean>();
+  deletePostSubject = new Subject<any>();
   alertComponent = new Subject<any>();
   leavePostComponent = new Subject<any>();
   dbPosts: Post[];

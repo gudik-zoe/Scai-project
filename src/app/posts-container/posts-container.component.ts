@@ -40,9 +40,13 @@ export class PostsContainerComponent implements OnInit {
   }
 
   deletePostInParent(id: number) {
-    this.postsService.deletePost(id).subscribe((data) => {
-      this.posts = this.posts.filter((item: Post) => item.idPost !== id);
+    this.postsService.deletePostSubject.next({
+      openCompoenent: true,
+      postId: id,
     });
+    // this.postsService.deletePost(id).subscribe((data) => {
+    //   this.posts = this.posts.filter((item: Post) => item.idPost !== id);
+    // });
   }
 
   likePostInParent(post: Post) {

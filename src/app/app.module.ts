@@ -18,6 +18,7 @@ import { EditPostModule } from './edit-post/edit-post.module';
 import { FriendRequestModule } from './friend-request/friend-request.module';
 import { NotificationModule } from './notification/notification.module';
 import { CreatePostModule } from './create-post/create-post.module';
+import { DeletePostModule } from './delete-post/delete-post.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +33,7 @@ import { CreatePostModule } from './create-post/create-post.module';
     NotificationModule,
     EditPostModule,
     CreatePostModule,
+    DeletePostModule,
   ],
   providers: [
     AuthenticationGuard,
