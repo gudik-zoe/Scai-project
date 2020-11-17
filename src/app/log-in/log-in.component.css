@@ -18,21 +18,43 @@
   margin-right: 30px;
   position: relative;
   overflow: hidden;
+  /* animation-name: example;
+  animation-duration: 3s; */
+}
+
+h2,
+p,
+button {
+  position: relative;
   animation-name: example;
   animation-duration: 3s;
 }
 
-@keyframes example {
+.left-div {
+  background-color: blueviolet;
+  border-radius: 8px;
+  width: 350px;
+  height: 320px;
+  opacity: 0.5;
+  position: relative;
+  animation-name: example2;
+  animation-duration: 3s;
+}
+
+@keyframes example2 {
   0% {
+    background-color: transparent;
     right: 0px;
-    top: 150px;
+    bottom: 300px;
   }
   50% {
-    top: 0px;
+    background-color: lightblue;
+    right: 0px;
     bottom: 100px;
   }
-  75% {
+  50% {
+    background-color: blueviolet;
     right: 0px;
-    top: 0px;
+    bottom: 0px;
   }
 }

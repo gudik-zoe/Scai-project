@@ -1,0 +1,31 @@
+.background {
+  background-color: transparent;
+  border-radius: 8px;
+  width: 350px;
+  height: max-content;
+  position: relative;
+  animation-name: example;
+  animation-duration: 3s;
+}
+
+button,
+input {
+  position: relative;
+  animation-name: example;
+  animation-duration: 3s;
+}
+
+@keyframes example {
+  0% {
+    right: 0px;
+    top: 150px;
+  }
+  50% {
+    top: 0px;
+    bottom: 100px;
+  }
+  75% {
+    right: 0px;
+    top: 0px;
+  }
+}

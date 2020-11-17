@@ -1,0 +1,21 @@
+input,
+button {
+  position: relative;
+  animation-name: example;
+  animation-duration: 3s;
+}
+
+@keyframes example {
+  0% {
+    right: 0px;
+    top: 350px;
+  }
+  50% {
+    top: 0px;
+    bottom: 100px;
+  }
+  75% {
+    right: 0px;
+    top: 0px;
+  }
+}
