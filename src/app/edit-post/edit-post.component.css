@@ -22,11 +22,11 @@
 
 .alert-box-action {
   position: relative;
-  animation-name: example2;
+  animation-name: example3;
   animation-duration: 1s;
 }
 
-@keyframes example2 {
+@keyframes example3 {
   0% {
     right: 0px;
     bottom: 300px;
