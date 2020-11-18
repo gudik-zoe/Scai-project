@@ -26,7 +26,12 @@ h2,
 p,
 button {
   position: relative;
-  animation-name: example;
+  animation: bounceInUp;
+  animation-duration: 2s;
+}
+
+h1 {
+  animation: bounce;
   animation-duration: 3s;
 }
 
@@ -37,24 +42,6 @@ button {
   height: 320px;
   opacity: 0.5;
   position: relative;
-  animation-name: example2;
-  animation-duration: 3s;
-}
-
-@keyframes example2 {
-  0% {
-    background-color: transparent;
-    right: 0px;
-    bottom: 300px;
-  }
-  50% {
-    background-color: lightblue;
-    right: 0px;
-    bottom: 100px;
-  }
-  50% {
-    background-color: blueviolet;
-    right: 0px;
-    bottom: 0px;
-  }
+  animation: bounceInDown;
+  animation-duration: 2s;
 }

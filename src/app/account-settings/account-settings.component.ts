@@ -33,29 +33,45 @@ export class AccountSettingsComponent implements OnInit {
     this.route.navigate(['/user-profile']);
   }
 
+  // async newImage(event) {
+  //   this.http
+  //     .post(
+  //       this.rootUrl + 'addImage',
+  //       await this.accountService.uploadAnImage(event)
+  //     )
+  //     .subscribe(
+  //       (data: ImgUrl) => {
+  //         this.http
+  //           .put(
+  //             this.rootUrl + 'api/accounts/profilePhoto/accountId/',
+  //             data.imageUrl
+  //           )
+  //           .subscribe(
+  //             () => {
+  //               this.getUserData();
+  //               this.accountService.imageSubject.next(true);
+  //             },
+  //             (error) => {
+  //               this.errorPhrase = error.error.message;
+  //             }
+  //           );
+  //         this.image = data.imageUrl;
+  //       },
+  //       (error) => {
+  //         this.errorPhrase = error.error.message;
+  //       }
+  //     );
+  // }
   async newImage(event) {
     this.http
-      .post(
-        this.rootUrl + 'addImage',
+      .put(
+        this.rootUrl + 'api/accounts/profilePhoto/accountId',
         await this.accountService.uploadAnImage(event)
       )
       .subscribe(
-        (data: ImgUrl) => {
-          this.http
-            .put(
-              this.rootUrl + 'api/accounts/profilePhoto/accountId/',
-              data.imageUrl
-            )
-            .subscribe(
-              () => {
-                this.getUserData();
-                this.accountService.imageSubject.next(true);
-              },
-              (error) => {
-                this.errorPhrase = error.error.message;
-              }
-            );
-          this.image = data.imageUrl;
+        () => {
+          this.getUserData();
+          this.accountService.imageSubject.next(true);
         },
         (error) => {
           this.errorPhrase = error.error.message;
@@ -65,26 +81,13 @@ export class AccountSettingsComponent implements OnInit {
 
   async changeCoverPhoto(event) {
     this.http
-      .post(
-        this.rootUrl + 'addImage',
+      .put(
+        this.rootUrl + 'api/accounts/coverPhoto/accountId',
         await this.accountService.uploadAnImage(event)
       )
       .subscribe(
-        (data: ImgUrl) => {
-          this.http
-            .put(
-              this.rootUrl + 'api/accounts/coverPhoto/accountId',
-              data.imageUrl,
-              {}
-            )
-            .subscribe(
-              () => {
-                this.getUserData();
-              },
-              (error) => {
-                this.errorPhrase = error.error.message;
-              }
-            );
+        (data) => {
+          this.getUserData();
         },
         (error) => {
           this.errorPhrase = error.error.message;

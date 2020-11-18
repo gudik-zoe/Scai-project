@@ -1,21 +1,19 @@
-input,
-button {
-  position: relative;
-  animation-name: example;
-  animation-duration: 3s;
+.main {
+  background-color: transparent;
+  border-radius: 8px;
+  width: 350px;
+  height: 305px;
+  animation: bounceInDown;
+  animation-duration: 1s;
 }
 
-@keyframes example {
-  0% {
-    right: 0px;
-    top: 350px;
-  }
-  50% {
-    top: 0px;
-    bottom: 100px;
-  }
-  75% {
-    right: 0px;
-    top: 0px;
-  }
+input {
+  animation: bounceInDown;
+  animation-duration: 1s;
+}
+
+button {
+  position: relative;
+  animation-name: bounceInUp;
+  animation-duration: 2s;
 }
