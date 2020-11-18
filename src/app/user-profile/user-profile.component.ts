@@ -82,9 +82,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   respondFriendRequest(id: number, status: number) {
-    this.friendService.acceptFriendRequest(id, status).subscribe((data) => {
-      console.log(data);
-    });
+    this.friendService.acceptFriendRequest(id, status).subscribe((data) => {});
   }
 
   async getStatusWith() {

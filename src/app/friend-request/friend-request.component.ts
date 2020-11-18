@@ -27,7 +27,6 @@ export class FriendRequestComponent implements OnInit {
       this.relations = this.relations.filter(
         (item) => item.idRelationship !== id
       );
-      console.log(data);
     });
   }
 

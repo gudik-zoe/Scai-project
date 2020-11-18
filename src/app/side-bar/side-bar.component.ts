@@ -28,7 +28,6 @@ export class SideBarComponent implements OnInit {
   }
 
   goToChat() {
-    console.log('go to chat');
     this.route.navigate(['/chat']);
   }
 

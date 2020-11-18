@@ -84,6 +84,7 @@ export class LeavePostComponent implements OnInit {
   }
   close() {
     this.leavePostComponent = false;
+    this.errorPhrase = '';
   }
   getComponentData() {
     this.postSerice.leavePostComponent.subscribe((data) => {

@@ -21,7 +21,7 @@
   border-radius: 8px;
 }
 
-@keyframes example2 {
+@keyframes example3 {
   0% {
     right: 0px;
     bottom: 300px;
@@ -38,7 +38,7 @@
 .alert-box-action {
   text-align: right;
   position: relative;
-  animation-name: example2;
+  animation-name: example3;
   animation-duration: 1s;
 }
 .inputfile {

@@ -1,8 +1,9 @@
+<app-delete-post></app-delete-post>
+<app-edit-post></app-edit-post>
+<app-create-post></app-create-post>
 <div *ngFor="let post of posts; let i = index">
   <app-post [commentText]="commentText" [post]="post" [userData]="userData"
     (commentPostEvent)="commentPostInParent($event)" (likePostEvent)="likePostInParent($event)"
     (editPostEvent)="editPostInParent($event)" (deletePostEvent)="deletePostInParent($event)">
   </app-post>
 </div>
-<app-delete-post>
-</app-delete-post>

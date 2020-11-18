@@ -33,9 +33,7 @@ export class NavBarComponent implements OnInit {
   }
 
   delete() {
-    this.accountService.deleteAccount().subscribe((data) => {
-      console.log(data);
-    });
+    this.accountService.deleteAccount().subscribe((data) => {});
   }
 
   deactivate() {
@@ -54,7 +52,6 @@ export class NavBarComponent implements OnInit {
   }
 
   goToProfile(id: number) {
-    console.log(id);
     this.route.navigate(['/user-profile', this.userData.idAccount]);
   }
 

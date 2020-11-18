@@ -12,6 +12,7 @@
   position: fixed;
   left: 30vw;
   width: 35vw;
+  bottom: 5vw;
   height: max-content;
   padding: 16px;
   z-index: 100;
