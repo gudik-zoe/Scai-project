@@ -2,9 +2,10 @@
     <div class="icon" id=" dropdownMenuButton" data-toggle="dropdown">
         <i class="fa fa-users" aria-hidden="true" type="button" aria-haspopup="true" aria-expanded="false">
 
+            <span style="color:white;padding-left: 2px; font-size: medium;"
+                *ngIf="relations.length > 0">{{relations.length}} </span>
         </i>
     </div>
-    <span style="color:white;padding-left: 2px;" *ngIf="relations.length > 0">{{relations.length}} </span>
 
     <div class="dropdown-menu" aria-labelledby=" dropdownMenuButton">
         <p *ngIf=" relations.length==0" class="font-weight-bold"> no new friend requests </p>
