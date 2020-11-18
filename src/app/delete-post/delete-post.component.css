@@ -21,25 +21,11 @@
   border-radius: 8px;
 }
 
-@keyframes example3 {
-  0% {
-    right: 0px;
-    bottom: 300px;
-  }
-  50% {
-    right: 0px;
-    bottom: 100px;
-  }
-  50% {
-    right: 0px;
-    bottom: 0px;
-  }
-}
 .alert-box-action {
   text-align: right;
   position: relative;
-  animation-name: example3;
-  animation-duration: 1s;
+  animation-name: zoomIn;
+  animation-duration: 0.5s;
 }
 .inputfile {
   width: 0.1px;

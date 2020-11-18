@@ -23,24 +23,10 @@
 
 .alert-box-action {
   position: relative;
-  animation-name: example3;
+  animation: zoomIn;
   animation-duration: 1s;
 }
 
-@keyframes example3 {
-  0% {
-    right: 0px;
-    bottom: 300px;
-  }
-  50% {
-    right: 0px;
-    bottom: 100px;
-  }
-  50% {
-    right: 0px;
-    bottom: 0px;
-  }
-}
 .inputfile {
   width: 0.1px;
   height: 0.1px;
