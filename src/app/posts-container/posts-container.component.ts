@@ -30,7 +30,7 @@ export class PostsContainerComponent implements OnInit {
     private notificationService: NotificationService
   ) {}
   @Input() posts: Post[];
-  userData: Account;
+  userData: AccountBasicData;
   commentText: string;
   errorPhrase: string;
 

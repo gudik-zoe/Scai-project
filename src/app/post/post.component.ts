@@ -10,6 +10,7 @@ import { NotificationService } from '../services/notification.service';
 import { PostsService } from '../services/posts.service';
 import { Comment } from '../models/comment';
 import { Account } from '../models/account';
+import { AccountBasicData } from '../models/accountBasicData';
 
 @Component({
   selector: 'app-post',
@@ -19,7 +20,7 @@ import { Account } from '../models/account';
 export class PostComponent implements OnInit {
   imgUrl: string = environment.rootUrl + 'files/';
   @Input() post: Post;
-  @Input() userData: Account;
+  @Input() userData: AccountBasicData;
   @Input() commentText: string;
 
   @Output() testOutput = new EventEmitter<Post>();

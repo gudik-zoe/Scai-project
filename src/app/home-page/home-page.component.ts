@@ -7,6 +7,7 @@ import { Account } from '../models/account';
 import { environment } from 'src/environments/environment';
 import { FriendsService } from '../services/friends.service';
 import { Relationship } from '../models/relationship';
+import { AccountBasicData } from '../models/accountBasicData';
 
 @Component({
   selector: 'app-home-page',
@@ -30,7 +31,7 @@ export class HomePageComponent implements OnInit {
   users: Account[];
   error: boolean = false;
   alertComponent: boolean = false;
-  userData: Account;
+  userData: AccountBasicData;
   loggedInUserData;
   name: String;
   postLikes: PostLike;

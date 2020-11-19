@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
+import { AccountBasicData } from '../models/accountBasicData';
 import { EditPost } from '../models/editPostInt';
 import { ImgUrl } from '../models/imgUrl';
 import { Post } from '../models/post';
@@ -22,7 +23,7 @@ export class EditPostComponent implements OnInit {
 
   editPostComponent: boolean;
   post: Post;
-  userData: Account;
+  userData: AccountBasicData;
   inputData: string;
   showImage: boolean = true;
   image: object;

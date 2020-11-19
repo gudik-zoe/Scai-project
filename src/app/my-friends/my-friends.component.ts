@@ -11,6 +11,7 @@ import { PostsService } from '../services/posts.service';
 import { Account } from '../models/account';
 import { environment } from 'src/environments/environment';
 import { Relationship } from '../models/relationship';
+import { AccountBasicData } from '../models/accountBasicData';
 
 @Component({
   selector: 'app-my-friends',
@@ -26,7 +27,7 @@ export class MyFriendsComponent implements OnInit {
     private friendService: FriendsService
   ) {}
   @Input() user;
-  @Input() userData: Account;
+  @Input() userData: AccountBasicData;
   imgUrl: string = environment.rootUrl + 'files/';
 
   goToFriendsCharRoom(id: number): void {

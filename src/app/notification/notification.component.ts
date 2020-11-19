@@ -15,7 +15,7 @@ import { NotificationService } from '../services/notification.service';
 export class NotificationComponent implements OnInit {
   notificationObject: Notification[];
   unseenNots = [];
-  userData: Account;
+  userData: AccountBasicData;
   haveNotification: boolean;
   basicData: AccountBasicData[] = [];
   imgUrl: string = environment.rootUrl + 'files/';

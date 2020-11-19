@@ -22,7 +22,7 @@ export class ChatComponent implements OnInit {
   ) {}
   myRelationships: Relationship[];
   imgUrl: string = environment.rootUrl + 'files/';
-  userData: Account;
+  userData: AccountBasicData;
   wantedUser: AccountBasicData;
   myConvWith;
   message: string;

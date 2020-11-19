@@ -44,9 +44,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   async getUserData() {
-    this.loggedInUserData =
-      this.accountService.userData ||
-      (await this.accountService.getTheLoggedInUserData());
+    this.loggedInUserData = await this.accountService.getAccountById(
+      this.accountService.getId()
+    );
   }
 
   goToMessengerOrAddFriend(id: number) {

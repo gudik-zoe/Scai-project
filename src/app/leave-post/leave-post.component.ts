@@ -6,6 +6,7 @@ import { Post } from '../models/post';
 import { environment } from 'src/environments/environment';
 import { AccountService } from '../services/account.service';
 import { ImgUrl } from '../models/imgUrl';
+import { AccountBasicData } from '../models/accountBasicData';
 
 @Component({
   selector: 'app-leave-post',
@@ -18,7 +19,7 @@ export class LeavePostComponent implements OnInit {
   image; // client image view
   leavePostComponent: boolean;
   inputData: string;
-  userData: Account;
+  userData: AccountBasicData;
   requestedUserData: Account;
   rootUrl: string = environment.rootUrl;
   constructor(

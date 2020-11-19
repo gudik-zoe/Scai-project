@@ -3,4 +3,5 @@ export class AccountBasicData {
   lastName: string;
   profilePhoto: string;
   idAccount: number;
+  coverPhoto?: string;
 }

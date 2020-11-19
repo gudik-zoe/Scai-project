@@ -102,7 +102,9 @@ export class AccountSettingsComponent implements OnInit {
         setTimeout(async () => {
           this.userData = undefined;
           this.accountService.userData = undefined;
-          this.userData = await this.accountService.getTheLoggedInUserData();
+          this.userData = await this.accountService.getAccountById(
+            this.accountService.getId()
+          );
           this.errorPhrase = '';
           this.changeEssentialData.reset();
           this.changeEssentialDataChanged = false;

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AccountService } from '../services/account.service';
 import { Account } from '../models/account';
 import { PostsService } from '../services/posts.service';
+import { AccountBasicData } from '../models/accountBasicData';
 
 @Component({
   selector: 'app-what-on-mind',
@@ -13,7 +14,7 @@ export class WhatOnMindComponent implements OnInit {
     private accountService: AccountService,
     private postService: PostsService
   ) {}
-  userData: Account;
+  userData: AccountBasicData;
 
   @Output() createPost = new EventEmitter<any>();
 

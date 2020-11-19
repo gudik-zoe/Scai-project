@@ -12,7 +12,7 @@ import { ImgUrl } from '../models/imgUrl';
   providedIn: 'root',
 })
 export class AccountService {
-  userData: Account;
+  userData: AccountBasicData;
   users: Account[];
   imageSubject = new Subject<boolean>();
   loggedIn = new Subject<boolean>();
@@ -44,7 +44,7 @@ export class AccountService {
   }
 
   async getTheLoggedInUserData() {
-    return new Promise<Account>((resolve) => {
+    return new Promise<AccountBasicData>((resolve) => {
       this.http
         .get(this.rootUrl + 'api/accounts/idAccount/getLoggedInUser')
         .subscribe((data: Account) => {

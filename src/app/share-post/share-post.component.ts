@@ -16,7 +16,7 @@ export class SharePostComponent implements OnInit {
     private postService: PostsService,
     private notificationService: NotificationService
   ) {}
-  userData: Account;
+  userData: AccountBasicData;
   sharePostComponent: boolean;
   post: Post;
   inputData: string;

@@ -24,9 +24,12 @@ export class ChangeEmailPassComponent implements OnInit {
   passwordHasBeenChanged: boolean = false;
   imgUrl: string = environment.rootUrl + 'files/';
   async getUserData() {
-    this.userData =
-      this.accountService.userData ||
-      (await this.accountService.getTheLoggedInUserData());
+    this.userData = await this.accountService.getAccountById(
+      this.accountService.getId()
+    );
+    this.fillChangeEmailFormValue();
+    this.fillChangePasswordFormValue();
+    console.log(this.userData);
   }
 
   confirmUpdateEmail(email: string) {
@@ -71,7 +74,5 @@ export class ChangeEmailPassComponent implements OnInit {
   }
   ngOnInit() {
     this.getUserData();
-    this.fillChangeEmailFormValue();
-    this.fillChangePasswordFormValue();
   }
 }
