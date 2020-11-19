@@ -65,7 +65,7 @@ export class PostsContainerComponent implements OnInit {
   }
 
   likePostInParent(post: Post) {
-    this.postsService.likePost(post).subscribe(
+    this.postsService.likePost(post.idPost).subscribe(
       (data: PostLike) => {
         if (data) {
           post.postLikes.push({ ...data });

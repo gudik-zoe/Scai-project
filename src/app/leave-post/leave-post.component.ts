@@ -49,39 +49,39 @@ export class LeavePostComponent implements OnInit {
       );
   }
 
-  post() {
-    if (!this.inputData.trim() || !this.inputData) {
-      this.errorPhrase = 'you cannot add a post without a text';
-    } else {
-      const post = {
-        text: this.inputData,
-        image: this.myImage || 'null',
-        postedOn: this.requestedUserData.idAccount,
-        date: new Date().getTime(),
-      };
-      this.postSerice.addPost(post).subscribe(
-        (data: Post) => {
-          this.errorPhrase = '';
-          (data.postLikes = []), (data.comments = []);
-          data.doneBy = {
-            idAccount: this.userData.idAccount,
-            profilePhoto: this.userData.profilePhoto,
-            firstName: this.userData.firstName,
-            lastName: this.userData.lastName,
-          };
-          data.postedOnData = {
-            idAccount: this.requestedUserData.idAccount,
-            profilePhoto: this.requestedUserData.profilePhoto,
-            firstName: this.requestedUserData.firstName,
-            lastName: this.requestedUserData.lastName,
-          };
-          this.postSerice.accountPosts.push(data);
-          this.leavePostComponent = false;
-        },
-        (error) => (this.errorPhrase = error.error.message)
-      );
-    }
-  }
+  // post() {
+  //   if (!this.inputData.trim() || !this.inputData) {
+  //     this.errorPhrase = 'you cannot add a post without a text';
+  //   } else {
+  //     const post = {
+  //       text: this.inputData,
+  //       image: this.myImage || 'null',
+  //       postedOn: this.requestedUserData.idAccount,
+  //       date: new Date().getTime(),
+  //     };
+  //     this.postSerice.addPost(post).subscribe(
+  //       (data: Post) => {
+  //         this.errorPhrase = '';
+  //         (data.postLikes = []), (data.comments = []);
+  //         data.doneBy = {
+  //           idAccount: this.userData.idAccount,
+  //           profilePhoto: this.userData.profilePhoto,
+  //           firstName: this.userData.firstName,
+  //           lastName: this.userData.lastName,
+  //         };
+  //         data.postedOnData = {
+  //           idAccount: this.requestedUserData.idAccount,
+  //           profilePhoto: this.requestedUserData.profilePhoto,
+  //           firstName: this.requestedUserData.firstName,
+  //           lastName: this.requestedUserData.lastName,
+  //         };
+  //         this.postSerice.accountPosts.push(data);
+  //         this.leavePostComponent = false;
+  //       },
+  //       (error) => (this.errorPhrase = error.error.message)
+  //     );
+  //   }
+  // }
   close() {
     this.leavePostComponent = false;
     this.errorPhrase = '';

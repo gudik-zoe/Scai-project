@@ -25,40 +25,44 @@ export class EditPostComponent implements OnInit {
   userData: Account;
   inputData: string;
   showImage: boolean = true;
-  myImage;
+  image: object;
   postImage: string | ArrayBuffer;
   imageChanged: boolean = false;
   errorPhrase: string = '';
   rootUrl: string = environment.rootUrl;
+  allowEdit: boolean = false;
   public closeEditPostComponent(): void {
     this.editPostComponent = false;
     this.showImage = true;
     this.errorPhrase = '';
-    this.myImage = undefined;
+    this.image = undefined;
   }
 
   async uploadImage(event) {
-    this.http
-      .post(
-        this.rootUrl + 'addImage',
-        await this.accountService.uploadAnImage(event)
-      )
-      .subscribe(
-        (data: ImgUrl) => {
-          this.myImage = data.imageUrl;
-          this.imageChanged = true;
-          let reader = new FileReader();
-          reader.readAsDataURL(event.target.files[0]);
-          reader.onload = (event) => {
-            this.postImage = event.target.result;
-            this.showImage = false;
-            this.errorPhrase = '';
-          };
-        },
-        (error) => {
-          this.errorPhrase = error.error.message;
-        }
-      );
+    this.image = await this.accountService.uploadAnImage(event);
+    this.allowEdit = true;
+    this.imageChanged = true;
+    // this.http
+    //   .post(
+    //     this.rootUrl + 'addImage',
+    //     await this.accountService.uploadAnImage(event)
+    //   )
+    //   .subscribe(
+    //     (data: ImgUrl) => {
+    //       this.myImage = data.imageUrl;
+    //       this.imageChanged = true;
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (event) => {
+      this.postImage = event.target.result;
+      this.showImage = false;
+      this.errorPhrase = '';
+    };
+    //   },
+    //   (error) => {
+    //     this.errorPhrase = error.error.message;
+    //   }
+    // );
   }
 
   deleteImage() {
@@ -67,30 +71,34 @@ export class EditPostComponent implements OnInit {
   }
 
   confirmEdit() {
-    if (this.imageChanged && this.myImage) {
-      this.post.image = this.myImage;
-    } else if (this.imageChanged && !this.myImage) {
+    if (this.imageChanged && !this.image) {
       this.post.image = null;
+      this.image = null;
     }
-    if (this.inputData) {
-      this.post.text = this.inputData.trim();
-    } else {
-      this.post.text = null;
-    }
-    if (!this.post.text && !this.post.image) {
+    // if (this.inputData) {
+    //   this.post.text = this.inputData.trim();
+    // } else {
+    //   this.post.text = null;
+    // }
+    if (!this.inputData.trim() && !this.image && !this.post.image) {
       this.errorPhrase = 'cannot add an empty post';
       this.post.text = this.post.text;
       this.post.image = this.post.image;
     } else {
-      this.postService.updatePost(this.post).subscribe(
-        (data) => {
-          this.editPostComponent = false;
-          this.myImage = undefined;
-        },
-        (error) => {
-          this.errorPhrase = error.error.message;
-        }
-      );
+      this.postService
+        .updatePost(this.post.idPost, this.image, this.inputData)
+        .subscribe(
+          (data: Post) => {
+            this.post.image = data.image;
+            this.post.text = data.text;
+            this.editPostComponent = false;
+            this.image = undefined;
+            this.errorPhrase = '';
+          },
+          (error) => {
+            this.errorPhrase = error.error.message;
+          }
+        );
     }
   }
 

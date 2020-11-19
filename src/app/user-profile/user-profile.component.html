@@ -41,7 +41,8 @@
           <i class="fa fa-home" aria-hidden="true" style="color: gray;"></i> lives in
           <span> {{ requestedUserData.livesIn }}</span>
         </p>
-        <button style="background-color: lightgrey;" class="btn btn-outline  btn-block mt-2" (click)="goToEditing() ">
+        <button *ngIf="requestedUserData.idAccount == loggedInUserData.idAccount" style="background-color: lightgrey;"
+          class="btn btn-outline  btn-block mt-2" (click)="goToEditing() ">
           edit details</button>
       </div>
 

@@ -25,54 +25,34 @@ export class CreatePostComponent implements OnInit {
     private inter: MyInterceptor
   ) {}
   rootUrl: string = environment.rootUrl;
-  foto: Blob;
   alertComponent: boolean = false;
   inputData: string = '';
   userData: Account;
-  myImage;
   postImage;
   errorPhrase: string = '';
-  imgUrl: string = environment.rootUrl + 'files/';
+  image: object;
   close() {
     this.alertComponent = false;
-    this.userData = null;
-    this.postImage = null;
+    this.userData = undefined;
+    this.postImage = undefined;
     this.inputData = undefined;
     this.errorPhrase = '';
   }
 
   async uploadImage(event) {
-    this.http
-      .post(
-        this.rootUrl + 'addImage',
-        await this.accountService.uploadAnImage(event)
-      )
-      .subscribe(
-        (data: ImgUrl) => {
-          this.myImage = data.imageUrl;
-          let reader = new FileReader();
-          reader.readAsDataURL(event.target.files[0]);
-          reader.onload = (event) => {
-            this.postImage = event.target.result;
-          };
-        },
-        (error) => (this.errorPhrase = error.error.message)
-      );
+    this.image = await this.accountService.uploadAnImage(event);
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (event) => {
+      this.postImage = event.target.result;
+    };
   }
 
-  sharePost(text: string) {
+  async sharePost(text: string) {
     if (!text.trim()) {
       this.errorPhrase = 'cannot enter an empty text';
     } else {
-      const post = {
-        text: text,
-        image: this.myImage || 'null',
-        description: null,
-        postOriginalId: null,
-        postedOn: null,
-        date: new Date().getTime(),
-      };
-      this.postsService.addPost(post).subscribe(
+      this.postsService.addPost(text, this.image).subscribe(
         (data: Post) => {
           this.errorPhrase = '';
           this.alertComponent = false;
@@ -83,10 +63,10 @@ export class CreatePostComponent implements OnInit {
             firstName: this.userData.firstName,
             lastName: this.userData.lastName,
           };
-          this.postsService.dbPosts.push(data);
-          this.userData = null;
-          this.postImage = null;
-          this.inputData = null;
+          this.postsService.dbPosts.unshift(data);
+          this.userData = undefined;
+          this.postImage = undefined;
+          this.inputData = undefined;
         },
         (error) => (this.errorPhrase = error.error.message)
       );

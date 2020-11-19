@@ -44,8 +44,9 @@ export class MyInterceptor implements HttpInterceptor {
           //   this.errorMessage = `Error Code: ${error.status},  Message: ${error.error.message}`;
           //   const tokenErrorPhrase = error.error.message;
           if (error.error.error == 'Unauthorized') {
-            this.route.navigate(['/auth']);
             localStorage.removeItem('token');
+            this.route.navigate(['/auth']);
+            this.accountService.userData = undefined;
             this.accountService.loggedIn.next(false);
             console.log('token expired');
           }

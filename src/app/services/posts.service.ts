@@ -162,15 +162,18 @@ export class PostsService {
     return this.http.get(this.rootUrl + 'postLikes/likers/' + postId);
   }
 
-  likePost(post: Post) {
+  likePost(postId: number) {
     return this.http.post(
-      this.rootUrl + 'postLikes/accountId/' + this.date,
-      post
+      this.rootUrl + 'postLikes/accountId/' + this.date + '/' + postId,
+      {}
     );
   }
 
-  addPost(post: Post) {
-    return this.http.post(this.rootUrl + 'posts/accountId', post);
+  addPost(text: string, image: object) {
+    return this.http.post(
+      this.rootUrl + 'posts/accountId/' + text + '/' + this.date,
+      image
+    );
   }
 
   resharePost(idPost: number, extraText: string) {
@@ -186,8 +189,11 @@ export class PostsService {
     );
   }
 
-  updatePost(post: Post) {
-    return this.http.put(this.rootUrl + 'posts/update/idAccount', post, {});
+  updatePost(postId: number, newImage: object, newText: string) {
+    return this.http.put(
+      this.rootUrl + 'posts/update/idAccount/' + postId + '/' + newText,
+      newImage
+    );
   }
 
   deletePost(postId: number) {

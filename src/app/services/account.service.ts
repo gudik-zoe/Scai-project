@@ -49,6 +49,7 @@ export class AccountService {
         .get(this.rootUrl + 'api/accounts/idAccount/getLoggedInUser')
         .subscribe((data: Account) => {
           this.userData = data;
+          console.log(this.userData);
           resolve(this.userData);
         });
     });
@@ -119,7 +120,7 @@ export class AccountService {
       if (event.target.files.length > 0) {
         const file = event.target.files[0];
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('image', file);
         resolve(formData);
         reject('unknown error happened');
       }
