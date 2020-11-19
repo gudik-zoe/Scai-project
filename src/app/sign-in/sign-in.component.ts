@@ -13,7 +13,8 @@ import { AuthService } from '../services/auth.service';
 export class SignInComponent implements OnInit {
   errorPhrase: string;
   loading: boolean = false;
-  weila: boolean = false;
+  weila: boolean;
+  fieldError: boolean = false;
   constructor(
     private auth: AuthService,
     private accountService: AccountService,
@@ -41,8 +42,13 @@ export class SignInComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        this.errorPhrase = error.error.message;
         this.loading = false;
+        this.errorPhrase = error.error.message;
+        this.fieldError = true;
+        setTimeout(() => {
+          this.errorPhrase = '';
+          this.fieldError = false;
+        }, 2000);
       }
     );
   }

@@ -1,7 +1,7 @@
 <div class="main">
     <div class="container mt-3">
         <form [formGroup]="signInForm">
-            <div class="form-group">
+            <div [class]="fieldError ? 'field-error':'form-group'">
                 <input type="email" placeholder="Email" class="form-control" formControlName="email" [class.is-invalid]="
           signInForm.get('email').invalid &&
           signInForm.get('email').touched
@@ -19,7 +19,7 @@
                     invalid email
                 </small>
             </div>
-            <div class="form-group">
+            <div [class]="fieldError ? 'field-error':'form-group'">
                 <input type="password" placeholder="Password" class="form-control" formControlName="password" />
                 <small class="text-danger" *ngIf="
           signInForm.get('password').errors?.required &&

@@ -13,6 +13,8 @@ export class SignUpComponent implements OnInit {
   signUpForm: FormGroup;
   errorPhrase: string;
   loading: boolean = false;
+  emailError: boolean = false;
+  passwordError: boolean = false;
   constructor(private fb: FormBuilder, private auth: AuthService) {}
 
   signUpfunc(account: Account): void {
@@ -31,8 +33,20 @@ export class SignUpComponent implements OnInit {
         // this.signUp = false;
       },
       (error) => {
-        this.errorPhrase = error.error.message;
-        this.loading = false;
+        if (error.error.message.startsWith('email')) {
+          this.errorPhrase = error.error.message;
+          this.loading = false;
+          this.emailError = true;
+        } else if (error.error.message.startsWith('password')) {
+          this.errorPhrase = error.error.message;
+          this.passwordError = true;
+          this.loading = false;
+        }
+        setTimeout(() => {
+          this.errorPhrase = '';
+          this.passwordError = false;
+          this.emailError = false;
+        }, 2000);
       }
     );
   }

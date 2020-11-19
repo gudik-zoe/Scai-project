@@ -13,3 +13,9 @@ button {
   animation-name: bounceInUp;
   animation-duration: 2s;
 }
+
+.field-error {
+  margin-top: 5px;
+  animation: shakeX;
+  animation-duration: 1s;
+}

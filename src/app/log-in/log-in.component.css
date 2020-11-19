@@ -22,12 +22,18 @@
   animation-duration: 3s; */
 }
 
-h2,
+/* h2,
 p,
 button {
   position: relative;
   animation: bounceInUp;
   animation-duration: 2s;
+} */
+
+.pulse:hover {
+  position: relative;
+  animation: pulse;
+  animation-duration: 0.5s;
 }
 
 h1 {
