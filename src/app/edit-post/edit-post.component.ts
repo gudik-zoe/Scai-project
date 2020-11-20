@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
 import { AccountBasicData } from '../models/accountBasicData';
@@ -14,7 +15,7 @@ import { PostsService } from '../services/posts.service';
   templateUrl: './edit-post.component.html',
   styleUrls: ['./edit-post.component.css'],
 })
-export class EditPostComponent implements OnInit {
+export class EditPostComponent implements OnInit, OnDestroy {
   constructor(
     private postService: PostsService,
     private accountService: AccountService,
@@ -102,14 +103,18 @@ export class EditPostComponent implements OnInit {
         );
     }
   }
-
+  public subscribtion: Subscription;
   getPostData() {
-    this.postService.editPostComponent.subscribe((data) => {
+    this.subscribtion = this.postService.editPostComponent.subscribe((data) => {
       this.post = data.post;
       this.userData = data.userData;
       this.editPostComponent = data.openComponent;
       this.inputData = data.post.text;
     });
+  }
+
+  ngOnDestroy() {
+    this.subscribtion.unsubscribe();
   }
 
   ngOnInit() {

@@ -76,8 +76,5 @@ export class HomePageComponent implements OnInit {
     this.getUserData();
     this.getUsers();
     this.getFriends();
-    this.postService.close.subscribe((data) => {
-      this.alertComponent = data;
-    });
   }
 }

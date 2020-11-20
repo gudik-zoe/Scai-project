@@ -10,13 +10,14 @@ import { catchError } from 'rxjs/operators';
 import { MyInterceptor } from '../my-interceptor';
 import { environment } from 'src/environments/environment';
 import { ImgUrl } from '../models/imgUrl';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-post',
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.css'],
 })
-export class CreatePostComponent implements OnInit {
+export class CreatePostComponent implements OnInit, OnDestroy {
   constructor(
     private postsService: PostsService,
     private accountService: AccountService,
@@ -73,12 +74,17 @@ export class CreatePostComponent implements OnInit {
     }
   }
 
+  public subscribtion: Subscription;
   getComponentData() {
-    this.postsService.alertComponent.subscribe((data) => {
+    this.subscribtion = this.postsService.alertComponent.subscribe((data) => {
       (this.userData = data.userData),
         (this.alertComponent = data.openComponent);
     });
   }
+  ngOnDestroy() {
+    this.subscribtion.unsubscribe();
+  }
+
   ngOnInit() {
     this.getComponentData();
   }

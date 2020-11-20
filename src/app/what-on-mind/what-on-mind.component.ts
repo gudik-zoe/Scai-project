@@ -27,10 +27,6 @@ export class WhatOnMindComponent implements OnInit {
 
   openDiv() {
     this.createPost.emit(null);
-    // this.postService.alertComponent.next({
-    //   userData: this.userData,
-    //   openComponent: true,
-    // });
   }
 
   ngOnInit() {

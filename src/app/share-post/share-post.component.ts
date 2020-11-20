@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
 import { AccountBasicData } from '../models/accountBasicData';
@@ -11,11 +12,12 @@ import { PostsService } from '../services/posts.service';
   templateUrl: './share-post.component.html',
   styleUrls: ['./share-post.component.css'],
 })
-export class SharePostComponent implements OnInit {
+export class SharePostComponent implements OnInit, OnDestroy {
   constructor(
     private postService: PostsService,
     private notificationService: NotificationService
   ) {}
+
   userData: AccountBasicData;
   sharePostComponent: boolean;
   post: Post;
@@ -24,13 +26,16 @@ export class SharePostComponent implements OnInit {
   errorPhrase: string = '';
   imgUrl: string = environment.rootUrl + 'files/';
 
+  public subscribtion: Subscription;
   getRequestedData() {
-    this.postService.sharePostComponent.subscribe((data) => {
-      (this.userData = data.userData),
-        (this.post = data.post),
-        (this.sharePostComponent = data.openComponent);
-      this.postDoneBy = data.doneBy;
-    });
+    this.subscribtion = this.postService.sharePostComponent.subscribe(
+      (data) => {
+        (this.userData = data.userData),
+          (this.post = data.post),
+          (this.sharePostComponent = data.openComponent);
+        this.postDoneBy = data.doneBy;
+      }
+    );
   }
 
   closeSharePostComponent() {
@@ -46,6 +51,9 @@ export class SharePostComponent implements OnInit {
         this.sharePostComponent = false;
       });
     }
+  }
+  ngOnDestroy() {
+    this.subscribtion.unsubscribe();
   }
   ngOnInit() {
     this.getRequestedData();

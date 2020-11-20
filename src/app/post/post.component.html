@@ -72,7 +72,7 @@
   </ng-container>
 
 
-  <ng-container *ngIf="post.postOriginalId && !post.originalPostDoneBy">
+  <ng-container *ngIf="post.postOriginalId && !post.originalPostDoneBy && post.doneBy">
     <img src="{{  post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%; float: left;" height="50px" />
     <span *ngIf="!post.postedOn" style="float: left;" class="font-weight-bold mt-3">
       {{ post.doneBy.firstName + " " + post.doneBy.lastName }} shared </span>

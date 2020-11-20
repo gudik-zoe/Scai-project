@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PostsService } from '../services/posts.service';
 import { Account } from '../models/account';
 import { Post } from '../models/post';
@@ -7,14 +7,15 @@ import { environment } from 'src/environments/environment';
 import { AccountService } from '../services/account.service';
 import { ImgUrl } from '../models/imgUrl';
 import { AccountBasicData } from '../models/accountBasicData';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-leave-post',
   templateUrl: './leave-post.component.html',
   styleUrls: ['./leave-post.component.css'],
 })
-export class LeavePostComponent implements OnInit {
-  myImage: string; //image to push to server
+export class LeavePostComponent implements OnInit, OnDestroy {
+  myImage: object; //image to push to server
   errorPhrase: string;
   image; // client image view
   leavePostComponent: boolean;
@@ -29,70 +30,62 @@ export class LeavePostComponent implements OnInit {
   ) {}
 
   async uploadImage(event) {
-    this.http
-      .post(
-        this.rootUrl + 'addImage',
-        await this.accountService.uploadAnImage(event)
-      )
-      .subscribe(
-        (data: ImgUrl) => {
-          this.myImage = data.imageUrl;
-          this.errorPhrase = '';
-          let reader = new FileReader();
-          reader.readAsDataURL(event.target.files[0]);
-          reader.onload = (event) => {
-            this.image = event.target.result;
-          };
-        },
-        (error) => {
-          this.errorPhrase = error.error.message;
-        }
-      );
+    this.myImage = await this.accountService.uploadAnImage(event);
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (event) => {
+      this.image = event.target.result;
+    };
   }
 
-  // post() {
-  //   if (!this.inputData.trim() || !this.inputData) {
-  //     this.errorPhrase = 'you cannot add a post without a text';
-  //   } else {
-  //     const post = {
-  //       text: this.inputData,
-  //       image: this.myImage || 'null',
-  //       postedOn: this.requestedUserData.idAccount,
-  //       date: new Date().getTime(),
-  //     };
-  //     this.postSerice.addPost(post).subscribe(
-  //       (data: Post) => {
-  //         this.errorPhrase = '';
-  //         (data.postLikes = []), (data.comments = []);
-  //         data.doneBy = {
-  //           idAccount: this.userData.idAccount,
-  //           profilePhoto: this.userData.profilePhoto,
-  //           firstName: this.userData.firstName,
-  //           lastName: this.userData.lastName,
-  //         };
-  //         data.postedOnData = {
-  //           idAccount: this.requestedUserData.idAccount,
-  //           profilePhoto: this.requestedUserData.profilePhoto,
-  //           firstName: this.requestedUserData.firstName,
-  //           lastName: this.requestedUserData.lastName,
-  //         };
-  //         this.postSerice.accountPosts.push(data);
-  //         this.leavePostComponent = false;
-  //       },
-  //       (error) => (this.errorPhrase = error.error.message)
-  //     );
-  //   }
-  // }
+  post(text: string) {
+    if (!text.trim()) {
+      this.errorPhrase = 'you cannot add a post without a text';
+    } else {
+      this.postSerice
+        .postOnWall(this.requestedUserData.idAccount, text, this.myImage)
+        .subscribe(
+          (data: Post) => {
+            this.errorPhrase = '';
+            (data.postLikes = []), (data.comments = []);
+            data.doneBy = {
+              idAccount: this.userData.idAccount,
+              profilePhoto: this.userData.profilePhoto,
+              firstName: this.userData.firstName,
+              lastName: this.userData.lastName,
+            };
+            data.postedOnData = {
+              idAccount: this.requestedUserData.idAccount,
+              profilePhoto: this.requestedUserData.profilePhoto,
+              firstName: this.requestedUserData.firstName,
+              lastName: this.requestedUserData.lastName,
+            };
+            this.postSerice.accountPosts.unshift(data);
+            this.inputData = undefined;
+            this.myImage = null;
+            this.image = null;
+            this.userData = undefined;
+            this.leavePostComponent = false;
+          },
+          (error) => (this.errorPhrase = error.error.message)
+        );
+    }
+  }
   close() {
     this.leavePostComponent = false;
     this.errorPhrase = '';
   }
+  public subscribtion: Subscription;
   getComponentData() {
-    this.postSerice.leavePostComponent.subscribe((data) => {
+    this.subscribtion = this.postSerice.leavePostComponent.subscribe((data) => {
       this.leavePostComponent = data.leavePostComponent;
       (this.userData = data.userData),
         (this.requestedUserData = data.requestedUserData);
     });
+  }
+
+  ngOnDestroy() {
+    this.subscribtion.unsubscribe();
   }
   ngOnInit() {
     this.getComponentData();

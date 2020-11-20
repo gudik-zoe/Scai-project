@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Account } from '../models/account';
@@ -12,13 +12,14 @@ import { NotificationService } from '../services/notification.service';
 import { Comment } from '../models/comment';
 import { PostLike } from '../models/postLike';
 import { AccountBasicData } from '../models/accountBasicData';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-posts-container',
   templateUrl: './posts-container.component.html',
   styleUrls: ['./posts-container.component.css'],
 })
-export class PostsContainerComponent implements OnInit {
+export class PostsContainerComponent implements OnInit, OnDestroy {
   constructor(
     private http: HttpClient,
     private postsService: PostsService,
@@ -33,7 +34,7 @@ export class PostsContainerComponent implements OnInit {
   userData: AccountBasicData;
   commentText: string;
   errorPhrase: string;
-
+  public subscribtion: Subscription;
   async getUserData() {
     this.userData =
       this.accountService.userData ||
@@ -48,20 +49,22 @@ export class PostsContainerComponent implements OnInit {
   }
 
   confirmDeletePost() {
-    this.postsService.confirmPostDeleting.subscribe((data) => {
-      if (data.delete) {
-        this.postsService.deletePost(data.postId).subscribe(
-          () => {
-            this.posts = this.posts.filter(
-              (item: Post) => item.idPost !== data.postId
-            );
-          },
-          (error) => {
-            this.errorPhrase = error.error.message;
-          }
-        );
+    this.subscribtion = this.postsService.confirmPostDeleting.subscribe(
+      (data) => {
+        if (data.delete) {
+          this.postsService.deletePost(data.postId).subscribe(
+            () => {
+              this.posts = this.posts.filter(
+                (item: Post) => item.idPost !== data.postId
+              );
+            },
+            (error) => {
+              this.errorPhrase = error.error.message;
+            }
+          );
+        }
       }
-    });
+    );
   }
 
   likePostInParent(post: Post) {
@@ -105,6 +108,9 @@ export class PostsContainerComponent implements OnInit {
       openComponent: true,
       userData: this.userData,
     });
+  }
+  ngOnDestroy() {
+    this.subscribtion.unsubscribe();
   }
 
   ngOnInit() {

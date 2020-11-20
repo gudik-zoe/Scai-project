@@ -176,6 +176,19 @@ export class PostsService {
     );
   }
 
+  postOnWall(postedOn: number, text: string, image: object) {
+    return this.http.post(
+      this.rootUrl +
+        'posts/postOnWall/' +
+        postedOn +
+        '/' +
+        text +
+        '/' +
+        this.date,
+      image
+    );
+  }
+
   resharePost(idPost: number, extraText: string) {
     return this.http.post(
       this.rootUrl +
@@ -197,6 +210,7 @@ export class PostsService {
   }
 
   deletePost(postId: number) {
+    console.log(postId);
     return this.http.delete(this.rootUrl + 'posts/' + postId);
   }
 }

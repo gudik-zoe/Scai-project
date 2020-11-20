@@ -1,20 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PostsService } from '../services/posts.service';
 import { Post } from '../models/post';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-delete-post',
   templateUrl: './delete-post.component.html',
   styleUrls: ['./delete-post.component.css'],
 })
-export class DeletePostComponent implements OnInit {
+export class DeletePostComponent implements OnInit, OnDestroy {
   constructor(private postService: PostsService) {}
   openComponent: boolean;
   postId: number;
 
   getSubject() {
-    this.postService.deletePostSubject.subscribe((data) => {
-      // console.log(data);
+    this.subscribtion = this.postService.deletePostSubject.subscribe((data) => {
       this.openComponent = data.openComponent;
       this.postId = data.postId;
     });
@@ -29,6 +29,10 @@ export class DeletePostComponent implements OnInit {
       postId: this.postId,
     });
     this.openComponent = false;
+  }
+  public subscribtion: Subscription;
+  ngOnDestroy() {
+    this.subscribtion.unsubscribe();
   }
   ngOnInit() {
     this.getSubject();
