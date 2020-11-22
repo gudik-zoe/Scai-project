@@ -36,7 +36,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   async getUserById() {
-    this.requestedUserData = await this.accountService.getAccountById(this.id);
+    this.requestedUserData = await this.accountService.getAccountById(
+      this.getIdFromUrl()
+    );
   }
 
   async getPostsByAccountId(id: number) {
@@ -44,9 +46,10 @@ export class UserProfileComponent implements OnInit {
   }
 
   async getUserData() {
-    this.loggedInUserData = await this.accountService.getAccountById(
-      this.accountService.getId()
-    );
+    console.log('weila');
+    this.loggedInUserData =
+      this.accountService.userData ||
+      (await this.accountService.getTheLoggedInUserDataFullData());
   }
 
   goToMessengerOrAddFriend(id: number) {
@@ -74,11 +77,9 @@ export class UserProfileComponent implements OnInit {
       requestedUserData: this.requestedUserData,
     });
   }
-  getIdFromUrl() {
-    return new Promise<number>((resolve) => {
-      this.id = parseInt(this.aroute.snapshot.paramMap.get('id'));
-      resolve(this.id);
-    });
+  getIdFromUrl(): number {
+    this.id = parseInt(this.aroute.snapshot.paramMap.get('id'));
+    return this.id;
   }
 
   respondFriendRequest(id: number, status: number) {
@@ -92,10 +93,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   async userProfileSetFunctions() {
-    await this.getIdFromUrl();
+    await this.getUserData();
     await this.getUserById();
     await this.getPostsByAccountId(this.id);
-    await this.getUserData();
     await this.getStatusWith();
   }
 

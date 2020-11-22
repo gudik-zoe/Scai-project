@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Relationship } from '../models/relationship';
 import { AccountService } from './account.service';
+import { Account } from '../models/account';
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +18,7 @@ export class FriendsService {
   relations;
   rootUrl: string = environment.rootUrl;
   status: string;
-  notifier = new Subject<boolean>();
-  basicData = [];
+  navigator = new Subject<Account>();
 
   getRelationStatusBetweenMeAnd(userId: number) {
     return new Promise<string>((resolve) => {

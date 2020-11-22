@@ -61,11 +61,8 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.route.navigate(['/home-page']);
   }
 
-  async goToProfile() {
-    this.route.navigate([
-      '/user-profile',
-      await this.friendService.getIdFromUtl(),
-    ]);
+  goToProfile() {
+    this.route.navigate(['/user-profile', this.userData.idAccount]);
   }
 
   logOut() {

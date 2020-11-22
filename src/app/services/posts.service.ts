@@ -202,9 +202,20 @@ export class PostsService {
     );
   }
 
-  updatePost(postId: number, newImage: object, newText: string) {
+  updatePost(
+    postId: number,
+    newImage: object,
+    newText: string,
+    postWithImage: boolean
+  ) {
     return this.http.put(
-      this.rootUrl + 'posts/update/idAccount/' + postId + '/' + newText,
+      this.rootUrl +
+        'posts/update/idAccount/' +
+        postId +
+        '/' +
+        newText +
+        '/' +
+        postWithImage,
       newImage
     );
   }

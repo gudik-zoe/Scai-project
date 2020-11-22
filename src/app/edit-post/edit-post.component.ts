@@ -33,26 +33,20 @@ export class EditPostComponent implements OnInit, OnDestroy {
   errorPhrase: string = '';
   rootUrl: string = environment.rootUrl;
   allowEdit: boolean = false;
+  postWithImage: boolean = true;
   public closeEditPostComponent(): void {
     this.editPostComponent = false;
     this.showImage = true;
     this.errorPhrase = '';
     this.image = undefined;
+    this.imageChanged = false;
   }
 
   async uploadImage(event) {
     this.image = await this.accountService.uploadAnImage(event);
+    this.postWithImage = true;
     this.allowEdit = true;
     this.imageChanged = true;
-    // this.http
-    //   .post(
-    //     this.rootUrl + 'addImage',
-    //     await this.accountService.uploadAnImage(event)
-    //   )
-    //   .subscribe(
-    //     (data: ImgUrl) => {
-    //       this.myImage = data.imageUrl;
-    //       this.imageChanged = true;
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
     reader.onload = (event) => {
@@ -60,41 +54,46 @@ export class EditPostComponent implements OnInit, OnDestroy {
       this.showImage = false;
       this.errorPhrase = '';
     };
-    //   },
-    //   (error) => {
-    //     this.errorPhrase = error.error.message;
-    //   }
-    // );
   }
 
   deleteImage() {
     this.showImage = false;
     this.imageChanged = true;
+    this.postWithImage = false;
   }
 
   confirmEdit() {
+    console.log(this.imageChanged);
     if (this.imageChanged && !this.image) {
       this.post.image = null;
       this.image = null;
     }
-    // if (this.inputData) {
-    //   this.post.text = this.inputData.trim();
-    // } else {
-    //   this.post.text = null;
-    // }
     if (!this.inputData.trim() && !this.image && !this.post.image) {
       this.errorPhrase = 'cannot add an empty post';
       this.post.text = this.post.text;
       this.post.image = this.post.image;
+    } else if (this.post.text == this.inputData.trim() && !this.imageChanged) {
+      this.errorPhrase = "post wasn't change";
+    } else if (!this.inputData.trim()) {
+      this.errorPhrase = "canno't add an empty text";
     } else {
       this.postService
-        .updatePost(this.post.idPost, this.image, this.inputData)
+        .updatePost(
+          this.post.idPost,
+          this.image,
+          this.inputData,
+          this.postWithImage
+        )
         .subscribe(
           (data: Post) => {
             this.post.image = data.image;
             this.post.text = data.text;
             this.editPostComponent = false;
             this.image = undefined;
+            this.imageChanged = false;
+            this.showImage = true;
+            this.postWithImage = true;
+            this.postImage = undefined;
             this.errorPhrase = '';
           },
           (error) => {

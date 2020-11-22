@@ -72,8 +72,11 @@ export class LeavePostComponent implements OnInit, OnDestroy {
     }
   }
   close() {
-    this.leavePostComponent = false;
+    this.inputData = undefined;
+    this.image = undefined;
     this.errorPhrase = '';
+    this.myImage = undefined;
+    this.leavePostComponent = false;
   }
   public subscribtion: Subscription;
   getComponentData() {

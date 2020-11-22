@@ -20,6 +20,7 @@ export class AccountService {
   rootUrl: string = environment.rootUrl;
   accountBasicData: AccountBasicData[] = [];
   requestedUserData: Account;
+
   constructor(private http: HttpClient) {}
 
   getId() {
@@ -46,11 +47,22 @@ export class AccountService {
   async getTheLoggedInUserData() {
     return new Promise<AccountBasicData>((resolve) => {
       this.http
-        .get(this.rootUrl + 'api/accounts/idAccount/getLoggedInUser')
-        .subscribe((data: Account) => {
+        .get(this.rootUrl + 'api/accounts/idAccount/getLoggedInUserBasicData')
+        .subscribe((data: AccountBasicData) => {
           this.userData = data;
-          console.log(this.userData);
           resolve(this.userData);
+        });
+    });
+  }
+
+  userFullData: Account;
+  async getTheLoggedInUserDataFullData() {
+    return new Promise<Account>((resolve) => {
+      this.http
+        .get(this.rootUrl + 'api/accounts/idAccount/getLoggedInUserFullData')
+        .subscribe((data: Account) => {
+          this.userFullData = data;
+          resolve(this.userFullData);
         });
     });
   }

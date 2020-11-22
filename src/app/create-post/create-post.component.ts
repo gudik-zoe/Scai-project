@@ -33,11 +33,12 @@ export class CreatePostComponent implements OnInit, OnDestroy {
   errorPhrase: string = '';
   image: object;
   close() {
-    this.alertComponent = false;
     this.userData = undefined;
     this.postImage = undefined;
     this.inputData = undefined;
+    this.image = undefined;
     this.errorPhrase = '';
+    this.alertComponent = false;
   }
 
   async uploadImage(event) {
