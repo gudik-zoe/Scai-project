@@ -30,23 +30,23 @@ export class SignUpComponent implements OnInit {
         this.auth.signUpSuccessful.next(false);
         this.loading = false;
         this.errorPhrase = '';
-        // this.signUp = false;
       },
       (error) => {
-        if (error.error.message.startsWith('email')) {
+        if (error.error.message.startsWith('this')) {
           this.errorPhrase = error.error.message;
           this.loading = false;
           this.emailError = true;
-        } else if (error.error.message.startsWith('password')) {
+        } else if (error.error.message.startsWith('a valid')) {
           this.errorPhrase = error.error.message;
           this.passwordError = true;
           this.loading = false;
         }
         setTimeout(() => {
+          this.loading = false;
           this.errorPhrase = '';
           this.passwordError = false;
           this.emailError = false;
-        }, 2000);
+        }, 3000);
       }
     );
   }

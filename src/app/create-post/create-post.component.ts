@@ -32,6 +32,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
   postImage;
   errorPhrase: string = '';
   image: object;
+  hideButton: boolean = false;
   close() {
     this.userData = undefined;
     this.postImage = undefined;
@@ -51,11 +52,15 @@ export class CreatePostComponent implements OnInit, OnDestroy {
   }
 
   async sharePost(text: string) {
+    this.hideButton = true;
     if (!text.trim()) {
       this.errorPhrase = 'cannot enter an empty text';
+      this.hideButton = false;
     } else {
+      this.hideButton = true;
       this.postsService.addPost(text, this.image).subscribe(
         (data: Post) => {
+          this.hideButton = false;
           this.errorPhrase = '';
           this.alertComponent = false;
           (data.postLikes = []), (data.comments = []);
@@ -65,12 +70,15 @@ export class CreatePostComponent implements OnInit, OnDestroy {
             firstName: this.userData.firstName,
             lastName: this.userData.lastName,
           };
-          this.postsService.dbPosts.unshift(data);
+          this.postsService.homePagePosts.unshift(data);
           this.userData = undefined;
           this.postImage = undefined;
           this.inputData = undefined;
         },
-        (error) => (this.errorPhrase = error.error.message)
+        (error) => {
+          this.errorPhrase = error.error.message;
+          this.hideButton = false;
+        }
       );
     }
   }

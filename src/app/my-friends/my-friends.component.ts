@@ -39,6 +39,5 @@ export class MyFriendsComponent implements OnInit {
   goToProfile(id: number) {
     this.route.navigate(['/user-profile', id]);
   }
-
   ngOnInit() {}
 }

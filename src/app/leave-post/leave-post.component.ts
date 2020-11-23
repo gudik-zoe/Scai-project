@@ -23,6 +23,7 @@ export class LeavePostComponent implements OnInit, OnDestroy {
   userData: AccountBasicData;
   requestedUserData: Account;
   rootUrl: string = environment.rootUrl;
+  hideButton: boolean = false;
   constructor(
     private http: HttpClient,
     private postSerice: PostsService,
@@ -39,13 +40,16 @@ export class LeavePostComponent implements OnInit, OnDestroy {
   }
 
   post(text: string) {
+    this.hideButton = true;
     if (!text.trim()) {
+      this.hideButton = false;
       this.errorPhrase = 'you cannot add a post without a text';
     } else {
       this.postSerice
         .postOnWall(this.requestedUserData.idAccount, text, this.myImage)
         .subscribe(
           (data: Post) => {
+            this.hideButton = false;
             this.errorPhrase = '';
             (data.postLikes = []), (data.comments = []);
             data.doneBy = {
@@ -67,7 +71,10 @@ export class LeavePostComponent implements OnInit, OnDestroy {
             this.userData = undefined;
             this.leavePostComponent = false;
           },
-          (error) => (this.errorPhrase = error.error.message)
+          (error) => {
+            this.errorPhrase = error.error.message;
+            this.hideButton = false;
+          }
         );
     }
   }

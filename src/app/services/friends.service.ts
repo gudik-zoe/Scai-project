@@ -18,7 +18,8 @@ export class FriendsService {
   relations;
   rootUrl: string = environment.rootUrl;
   status: string;
-  navigator = new Subject<Account>();
+  navigator = new Subject<any>();
+  dataLoaded = new Subject<boolean>();
 
   getRelationStatusBetweenMeAnd(userId: number) {
     return new Promise<string>((resolve) => {

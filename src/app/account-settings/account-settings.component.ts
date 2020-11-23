@@ -33,66 +33,27 @@ export class AccountSettingsComponent implements OnInit {
     this.route.navigate(['/user-profile']);
   }
 
-  // async newImage(event) {
-  //   this.http
-  //     .post(
-  //       this.rootUrl + 'addImage',
-  //       await this.accountService.uploadAnImage(event)
-  //     )
-  //     .subscribe(
-  //       (data: ImgUrl) => {
-  //         this.http
-  //           .put(
-  //             this.rootUrl + 'api/accounts/profilePhoto/accountId/',
-  //             data.imageUrl
-  //           )
-  //           .subscribe(
-  //             () => {
-  //               this.getUserData();
-  //               this.accountService.imageSubject.next(true);
-  //             },
-  //             (error) => {
-  //               this.errorPhrase = error.error.message;
-  //             }
-  //           );
-  //         this.image = data.imageUrl;
-  //       },
-  //       (error) => {
-  //         this.errorPhrase = error.error.message;
-  //       }
-  //     );
-  // }
   async newImage(event) {
-    this.http
-      .put(
-        this.rootUrl + 'api/accounts/profilePhoto/accountId',
-        await this.accountService.uploadAnImage(event)
-      )
-      .subscribe(
-        () => {
-          this.getUserData();
-          this.accountService.imageSubject.next(true);
-        },
-        (error) => {
-          this.errorPhrase = error.error.message;
-        }
-      );
+    this.accountService.updateProfilePhoto(event).subscribe(
+      (data: ImgUrl) => {
+        this.userData.profilePhoto = data.imageUrl;
+        this.accountService.imageSubject.next(data.imageUrl);
+      },
+      (error) => {
+        this.errorPhrase = error.error.message;
+      }
+    );
   }
 
   async changeCoverPhoto(event) {
-    this.http
-      .put(
-        this.rootUrl + 'api/accounts/coverPhoto/accountId',
-        await this.accountService.uploadAnImage(event)
-      )
-      .subscribe(
-        (data) => {
-          this.getUserData();
-        },
-        (error) => {
-          this.errorPhrase = error.error.message;
-        }
-      );
+    this.accountService.updateCoverPhoto(event).subscribe(
+      (data: ImgUrl) => {
+        this.userData.coverPhoto = data.imageUrl;
+      },
+      (error) => {
+        this.errorPhrase = error.error.message;
+      }
+    );
   }
 
   confirm() {

@@ -25,7 +25,7 @@
         <textarea placeholder="what's in your mind {{ userData.firstName }}" [(ngModel)]="inputData"
           class="md-textarea form-control" rows="2" style="background-color: transparent;"></textarea>
       </div>
-      <button [disabled]="!inputData && !postImage" type="button" (click)="sharePost(inputData)"
+      <button *ngIf="!hideButton" [disabled]="!inputData && !postImage" type="button" (click)="sharePost(inputData)"
         class="btn btn-outline-primary btn-block mt-1">
         Post
       </button>

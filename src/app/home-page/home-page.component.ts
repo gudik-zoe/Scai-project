@@ -68,7 +68,7 @@ export class HomePageComponent implements OnInit {
   }
 
   async getPosts() {
-    this.dbPosts = await this.postService.getPosts();
+    this.dbPosts = await this.postService.getHomePagePosts();
   }
 
   ngOnInit() {

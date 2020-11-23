@@ -26,7 +26,8 @@ export class PostsService {
   alertComponent = new Subject<any>();
   confirmPostDeleting = new Subject<any>();
   leavePostComponent = new Subject<any>();
-  dbPosts: Post[];
+  homePagePosts: Post[];
+  allPosts: Post[];
   comment: Comment;
   post: Post;
   postsData = [];
@@ -107,13 +108,27 @@ export class PostsService {
     this.getPostOriginalUserData(posts);
   }
 
-  getPosts() {
+  getHomePagePosts() {
     return new Promise<Post[]>((resolve) => {
-      this.http.get(this.rootUrl + 'posts').subscribe((data: Post[]) => {
-        this.dbPosts = data;
-        this.getUserDetails(this.dbPosts);
-        resolve(this.dbPosts);
-      });
+      this.http
+        .get(this.rootUrl + 'homePage/posts')
+        .subscribe((data: Post[]) => {
+          this.homePagePosts = data;
+          this.getUserDetails(this.homePagePosts);
+          resolve(this.homePagePosts);
+        });
+    });
+  }
+
+  getAllPosts() {
+    return new Promise<Post[]>((resolve) => {
+      this.http
+        .get(this.rootUrl + 'posts/allPosts')
+        .subscribe((data: Post[]) => {
+          this.allPosts = data;
+          this.getUserDetails(this.allPosts);
+          resolve(this.allPosts);
+        });
     });
   }
 

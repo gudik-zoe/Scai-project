@@ -122,6 +122,8 @@ export class PostComponent implements OnInit {
   confirmEditComment(comment: Comment, newComment: string) {
     if (newComment == undefined || !newComment.trim()) {
       this.errorPhrase = 'cannot add an empty comment';
+    } else if (newComment.trim() == comment.text) {
+      this.editCommentOn = false;
     } else {
       this.commentService
         .updateComment(comment.idComment, newComment.trim())

@@ -13,10 +13,7 @@ import { PostsService } from '../services/posts.service';
   styleUrls: ['./share-post.component.css'],
 })
 export class SharePostComponent implements OnInit, OnDestroy {
-  constructor(
-    private postService: PostsService,
-    private notificationService: NotificationService
-  ) {}
+  constructor(private postService: PostsService) {}
 
   userData: AccountBasicData;
   sharePostComponent: boolean;
@@ -42,14 +39,35 @@ export class SharePostComponent implements OnInit, OnDestroy {
     this.sharePostComponent = false;
   }
 
-  confirmShare(idPost: number, extraText: string) {
+  confirmShare(post: Post, extraText: string) {
     const text = extraText.trim();
     if (!text || text == undefined) {
       this.errorPhrase = 'add ur own text';
     } else {
-      this.postService.resharePost(idPost, text).subscribe((data) => {
-        this.sharePostComponent = false;
-      });
+      this.postService
+        .resharePost(post.idPost, text)
+        .subscribe((data: Post) => {
+          console.log(data);
+          // post.doneBy && post.postOriginalId && post.originalPostDoneBy
+          (data.postLikes = []), (data.comments = []);
+          data.doneBy = {
+            idAccount: this.userData.idAccount,
+            profilePhoto: this.userData.profilePhoto,
+            firstName: this.userData.firstName,
+            lastName: this.userData.lastName,
+          };
+          data.image = post.image;
+          data.text = post.text;
+          data.originalPostDoneBy = {
+            firstName: post.doneBy.firstName,
+            lastName: post.doneBy.lastName,
+            idAccount: post.postCreatorId,
+            profilePhoto: post.doneBy.profilePhoto,
+          };
+          this.postService.homePagePosts.unshift(data);
+          this.inputData = undefined;
+          this.sharePostComponent = false;
+        });
     }
   }
   ngOnDestroy() {

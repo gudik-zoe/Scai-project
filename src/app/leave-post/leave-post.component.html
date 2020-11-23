@@ -30,7 +30,7 @@
             </div>
 
             <br />
-            <button type="button" (click)="post(inputData)" class="btn btn-primary btn-block">
+            <button *ngIf="!hideButton" type="button" (click)="post(inputData)" class="btn btn-primary btn-block">
                 Post
             </button>
         </div>

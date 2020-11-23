@@ -24,7 +24,7 @@ export class DescriptionComponent implements OnInit {
   ) {}
 
   async getPosts() {
-    this.dbPosts = await this.postsService.getPosts();
+    this.dbPosts = await this.postsService.getAllPosts();
   }
 
   ngOnInit() {

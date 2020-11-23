@@ -29,7 +29,6 @@ export class ChangeEmailPassComponent implements OnInit {
     );
     this.fillChangeEmailFormValue();
     this.fillChangePasswordFormValue();
-    console.log(this.userData);
   }
 
   confirmUpdateEmail(email: string) {

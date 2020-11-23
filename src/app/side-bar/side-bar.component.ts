@@ -25,10 +25,8 @@ export class SideBarComponent implements OnInit, OnDestroy {
   public subscribtion: Subscription;
   getTheUpdatedImage() {
     this.subscribtion = this.accountService.imageSubject.subscribe(
-      async (data: boolean) => {
-        if (data) {
-          this.userData = await this.accountService.getTheLoggedInUserData();
-        }
+      (data: string) => {
+        this.userData.profilePhoto = data;
       }
     );
   }

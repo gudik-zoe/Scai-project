@@ -14,7 +14,7 @@ import { ImgUrl } from '../models/imgUrl';
 export class AccountService {
   userData: AccountBasicData;
   users: Account[];
-  imageSubject = new Subject<boolean>();
+  imageSubject = new Subject<string>();
   loggedIn = new Subject<boolean>();
   errorSubject = new Subject<any>();
   rootUrl: string = environment.rootUrl;
@@ -109,6 +109,20 @@ export class AccountService {
     return this.http.put(this.rootUrl + 'api/accounts/updateAccount', account);
   }
 
+  updateProfilePhoto(event) {
+    return this.http.put(
+      this.rootUrl + 'api/accounts/profilePhoto/accountId',
+      this.uploadAnImage(event)
+    );
+  }
+
+  updateCoverPhoto(event) {
+    return this.http.put(
+      this.rootUrl + 'api/accounts/coverPhoto/accountId',
+      this.uploadAnImage(event)
+    );
+  }
+
   updateEmail(email: string) {
     return this.http.put(
       this.rootUrl + 'api/accounts/updateEmail/' + email,
@@ -128,14 +142,16 @@ export class AccountService {
   }
 
   uploadAnImage(event) {
-    return new Promise<FormData>((resolve, reject) => {
-      if (event.target.files.length > 0) {
-        const file = event.target.files[0];
-        const formData = new FormData();
-        formData.append('image', file);
-        resolve(formData);
-        reject('unknown error happened');
-      }
-    });
+    // return new Promise<FormData>((resolve, reject) => {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append('image', file);
+      return formData;
+      //     resolve(formData);
+      //     reject('unknown error happened');
+      //   }
+      // });
+    }
   }
 }

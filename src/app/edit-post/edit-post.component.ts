@@ -34,6 +34,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
   rootUrl: string = environment.rootUrl;
   allowEdit: boolean = false;
   postWithImage: boolean = true;
+  hideButton: boolean = false;
   public closeEditPostComponent(): void {
     this.editPostComponent = false;
     this.showImage = true;
@@ -63,18 +64,22 @@ export class EditPostComponent implements OnInit, OnDestroy {
   }
 
   confirmEdit() {
-    console.log(this.imageChanged);
+    this.hideButton = true;
     if (this.imageChanged && !this.image) {
+      this.hideButton = false;
       this.post.image = null;
       this.image = null;
     }
     if (!this.inputData.trim() && !this.image && !this.post.image) {
+      this.hideButton = false;
       this.errorPhrase = 'cannot add an empty post';
       this.post.text = this.post.text;
       this.post.image = this.post.image;
     } else if (this.post.text == this.inputData.trim() && !this.imageChanged) {
+      this.hideButton = false;
       this.errorPhrase = "post wasn't change";
     } else if (!this.inputData.trim()) {
+      this.hideButton = false;
       this.errorPhrase = "canno't add an empty text";
     } else {
       this.postService
@@ -86,6 +91,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
         )
         .subscribe(
           (data: Post) => {
+            this.hideButton = false;
             this.post.image = data.image;
             this.post.text = data.text;
             this.editPostComponent = false;
@@ -98,6 +104,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
           },
           (error) => {
             this.errorPhrase = error.error.message;
+            this.hideButton = false;
           }
         );
     }
