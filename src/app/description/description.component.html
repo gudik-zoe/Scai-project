@@ -2,8 +2,9 @@
   <div *ngIf="id === post.idPost" class="row mt-3"
     style="height: max-content; background-color: lightgray; padding: 10px;">
     <div class="col-md-8">
-      <img src="{{post.doneBy.profilePhoto}}" width="40px" height="40px"
-        style="border-radius: 50%;"><span>{{post.doneBy.firstName + " " + post.doneBy.lastName}}</span>
+      <img *ngIf="post.doneBy" src="{{post.doneBy.profilePhoto}}" width="40px" height="40px"
+        style="border-radius: 50%;"><span
+        *ngIf="post.doneBy">{{post.doneBy.firstName + " " + post.doneBy.lastName}}</span>
       <span *ngIf="post.postedOn">
         <i style="padding: 10px;" class="fa fa-caret-right fa-lg" aria-hidden="true"></i>
         <img src="{{  post.postedOnData.profilePhoto }}" width="40px" height="40px" style="border-radius: 50%" />
