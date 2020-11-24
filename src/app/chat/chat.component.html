@@ -33,7 +33,7 @@
                 </div>
             </ul>
             <ul *ngFor="let chatMessage of webSocketService.chatMessages">
-                <div *ngIf="chatMessage.idSender == userData.idAccount && chatMessage.idReceiver == wantedUser.idAccount"
+                <div *ngIf="chatMessage.idSender == userData.idAccount && chatMessage.idReceiver == wantedUser.idAccount || chatMessage.idReceiver == userData.idAccount && chatMessage.idSender == wantedUser.idAccount"
                     [class]="(chatMessage.idSender == wantedUser.idAccount )? 'receiver' :'sender' "><span>
                         <img *ngIf="chatMessage.idSender == wantedUser.idAccount" src="{{   wantedUser.profilePhoto}}"
                             width="30px" height="30px" style="border-radius: 50%;" />
