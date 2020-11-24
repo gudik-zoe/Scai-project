@@ -32,7 +32,6 @@ export class EditPostComponent implements OnInit, OnDestroy {
   imageChanged: boolean = false;
   errorPhrase: string = '';
   rootUrl: string = environment.rootUrl;
-  allowEdit: boolean = false;
   postWithImage: boolean = true;
   hideButton: boolean = false;
   public closeEditPostComponent(): void {
@@ -41,12 +40,12 @@ export class EditPostComponent implements OnInit, OnDestroy {
     this.errorPhrase = '';
     this.image = undefined;
     this.imageChanged = false;
+    this.postImage = undefined;
   }
 
   async uploadImage(event) {
-    this.image = await this.accountService.uploadAnImage(event);
+    this.image = this.accountService.uploadAnImage(event);
     this.postWithImage = true;
-    this.allowEdit = true;
     this.imageChanged = true;
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
@@ -94,13 +93,13 @@ export class EditPostComponent implements OnInit, OnDestroy {
             this.hideButton = false;
             this.post.image = data.image;
             this.post.text = data.text;
-            this.editPostComponent = false;
             this.image = undefined;
             this.imageChanged = false;
             this.showImage = true;
             this.postWithImage = true;
             this.postImage = undefined;
             this.errorPhrase = '';
+            this.editPostComponent = false;
           },
           (error) => {
             this.errorPhrase = error.error.message;
