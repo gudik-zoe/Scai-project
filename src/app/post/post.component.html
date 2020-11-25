@@ -119,7 +119,7 @@
   <ng-container *ngIf="openCommentsList">
     <div class="container" *ngFor="let comment of post.comments">
       <div class="container mt-3"
-        style="background-color: whitesmoke; width:350px; height:fit-content; border-radius: 7px;">
+        style="background-color: whitesmoke; width:fit-content; height:fit-content; border-radius: 7px;">
         <ng-container *ngIf="comment.doneBy">
           <img src="{{ comment.doneBy.profilePhoto }}" width="20px" style="border-radius: 50%;" height="20px" />
           <span class="font-weight-bold">{{comment.doneBy.firstName + " " + comment.doneBy.lastName }} </span>
