@@ -46,7 +46,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   async getUserData() {
-    console.log('weila');
     this.loggedInUserData =
       this.accountService.userData ||
       (await this.accountService.getTheLoggedInUserDataFullData());

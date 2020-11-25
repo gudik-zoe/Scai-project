@@ -49,7 +49,6 @@ export class HomePageComponent implements OnInit {
     this.friends =
       this.accountService.myFriends ||
       (await this.accountService.getAccountFriends());
-    console.log(this.friends);
   }
   async getPeopleyouMayKnow() {
     this.peopleYouMayKnow =
