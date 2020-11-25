@@ -15,15 +15,15 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./leave-post.component.css'],
 })
 export class LeavePostComponent implements OnInit, OnDestroy {
-  myImage: object; //image to push to server
   errorPhrase: string;
-  image; // client image view
+  postTemporaryImage; // client image view
   leavePostComponent: boolean;
   inputData: string;
   userData: AccountBasicData;
   requestedUserData: Account;
   rootUrl: string = environment.rootUrl;
   hideButton: boolean = false;
+  formData = new FormData();
   constructor(
     private http: HttpClient,
     private postSerice: PostsService,
@@ -31,12 +31,15 @@ export class LeavePostComponent implements OnInit, OnDestroy {
   ) {}
 
   async uploadImage(event) {
-    this.myImage = await this.accountService.uploadAnImage(event);
-    let reader = new FileReader();
-    reader.readAsDataURL(event.target.files[0]);
-    reader.onload = (event) => {
-      this.image = event.target.result;
-    };
+    if (event.target.files.length > 0) {
+      const image = event.target.files[0];
+      this.formData.append('image', image);
+      let reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (event) => {
+        this.postTemporaryImage = event.target.result;
+      };
+    }
   }
 
   post(text: string) {
@@ -45,8 +48,9 @@ export class LeavePostComponent implements OnInit, OnDestroy {
       this.hideButton = false;
       this.errorPhrase = 'you cannot add a post without a text';
     } else {
+      this.formData.append('text', text);
       this.postSerice
-        .postOnWall(this.requestedUserData.idAccount, text, this.myImage)
+        .postOnWall(this.requestedUserData.idAccount, this.formData)
         .subscribe(
           (data: Post) => {
             this.hideButton = false;
@@ -66,8 +70,8 @@ export class LeavePostComponent implements OnInit, OnDestroy {
             };
             this.postSerice.accountPosts.unshift(data);
             this.inputData = undefined;
-            this.myImage = null;
-            this.image = null;
+            this.postTemporaryImage = undefined;
+            this.formData = new FormData();
             this.userData = undefined;
             this.leavePostComponent = false;
           },
@@ -80,9 +84,9 @@ export class LeavePostComponent implements OnInit, OnDestroy {
   }
   close() {
     this.inputData = undefined;
-    this.image = undefined;
+    this.postTemporaryImage = undefined;
     this.errorPhrase = '';
-    this.myImage = undefined;
+    this.formData = new FormData();
     this.leavePostComponent = false;
   }
   public subscribtion: Subscription;

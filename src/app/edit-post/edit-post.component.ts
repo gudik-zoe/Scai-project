@@ -18,8 +18,7 @@ import { PostsService } from '../services/posts.service';
 export class EditPostComponent implements OnInit, OnDestroy {
   constructor(
     private postService: PostsService,
-    private accountService: AccountService,
-    private http: HttpClient
+    private accountService: AccountService
   ) {}
 
   editPostComponent: boolean;
@@ -34,6 +33,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
   rootUrl: string = environment.rootUrl;
   postWithImage: boolean = true;
   hideButton: boolean = false;
+  formData = new FormData();
   public closeEditPostComponent(): void {
     this.editPostComponent = false;
     this.showImage = true;
@@ -43,17 +43,20 @@ export class EditPostComponent implements OnInit, OnDestroy {
     this.postImage = undefined;
   }
 
-  async uploadImage(event) {
-    this.image = this.accountService.uploadAnImage(event);
-    this.postWithImage = true;
-    this.imageChanged = true;
-    let reader = new FileReader();
-    reader.readAsDataURL(event.target.files[0]);
-    reader.onload = (event) => {
-      this.postImage = event.target.result;
-      this.showImage = false;
-      this.errorPhrase = '';
-    };
+  uploadImage(event) {
+    if (event.target.files.length > 0) {
+      const image = event.target.files[0];
+      this.formData.append('image', image);
+      this.postWithImage = true;
+      this.imageChanged = true;
+      let reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (event) => {
+        this.postImage = event.target.result;
+        this.showImage = false;
+        this.errorPhrase = '';
+      };
+    }
   }
 
   deleteImage() {
@@ -62,14 +65,13 @@ export class EditPostComponent implements OnInit, OnDestroy {
     this.postWithImage = false;
   }
 
-  confirmEdit() {
+  confirmEdit(newtext: string) {
     this.hideButton = true;
-    if (this.imageChanged && !this.image) {
+    if (this.imageChanged && !this.formData.get('image')) {
       this.hideButton = false;
       this.post.image = null;
-      this.image = null;
     }
-    if (!this.inputData.trim() && !this.image && !this.post.image) {
+    if (!this.inputData.trim() && !this.post.image) {
       this.hideButton = false;
       this.errorPhrase = 'cannot add an empty post';
       this.post.text = this.post.text;
@@ -81,13 +83,9 @@ export class EditPostComponent implements OnInit, OnDestroy {
       this.hideButton = false;
       this.errorPhrase = "canno't add an empty text";
     } else {
+      this.formData.append('text', newtext);
       this.postService
-        .updatePost(
-          this.post.idPost,
-          this.image,
-          this.inputData,
-          this.postWithImage
-        )
+        .updatePost(this.post.idPost, this.formData, this.postWithImage)
         .subscribe(
           (data: Post) => {
             this.hideButton = false;

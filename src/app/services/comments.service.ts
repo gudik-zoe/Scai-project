@@ -22,9 +22,8 @@ export class CommentsService {
 
   addCommment(post: Post, commentText: string) {
     return this.http.post(
-      this.rootUrl + 'comments/idAccount/' + this.date + '/' + commentText,
-
-      post
+      this.rootUrl + 'comments/idAccount/' + post.idPost,
+      commentText
     );
   }
 
@@ -50,8 +49,8 @@ export class CommentsService {
   }
   updateComment(commentId: number, newComment: String) {
     return this.http.put(
-      this.rootUrl + 'comments/idAccount/' + commentId + '/' + newComment,
-      {}
+      this.rootUrl + 'comments/idAccount/' + commentId,
+      newComment
     );
   }
 }

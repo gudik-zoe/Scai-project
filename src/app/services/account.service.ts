@@ -137,16 +137,13 @@ export class AccountService {
   }
 
   updateEmail(email: string) {
-    return this.http.put(
-      this.rootUrl + 'api/accounts/updateEmail/' + email,
-      {}
-    );
+    return this.http.put(this.rootUrl + 'api/accounts/updateEmail', email);
   }
 
   updatePassword(password: string) {
     return this.http.put(
-      this.rootUrl + 'api/accounts/updatePassword/' + password,
-      {}
+      this.rootUrl + 'api/accounts/updatePassword',
+      password
     );
   }
 

@@ -163,19 +163,19 @@ export class PostsService {
     });
   }
 
-  getPostLikes(postId: number) {
-    return new Promise<number>((resolve) => {
-      this.http
-        .get(this.rootUrl + 'postLikes/likesNumber/' + postId)
-        .subscribe((data: number) => {
-          resolve(data);
-        });
-    });
-  }
+  // getPostLikes(postId: number) {
+  //   return new Promise<number>((resolve) => {
+  //     this.http
+  //       .get(this.rootUrl + 'postLikes/likesNumber/' + postId)
+  //       .subscribe((data: number) => {
+  //         resolve(data);
+  //       });
+  //   });
+  // }
 
-  getPostLikers(postId: number) {
-    return this.http.get(this.rootUrl + 'postLikes/likers/' + postId);
-  }
+  // getPostLikers(postId: number) {
+  //   return this.http.get(this.rootUrl + 'postLikes/likers/' + postId);
+  // }
 
   likePost(postId: number) {
     return this.http.post(
@@ -188,47 +188,24 @@ export class PostsService {
     return this.http.post(this.rootUrl + 'posts/accountId/', formData);
   }
 
-  postOnWall(postedOn: number, text: string, image: object) {
+  postOnWall(postedOn: number, formData: FormData) {
     return this.http.post(
-      this.rootUrl +
-        'posts/postOnWall/' +
-        postedOn +
-        '/' +
-        text +
-        '/' +
-        this.date,
-      image
+      this.rootUrl + 'posts/postOnWall/' + postedOn,
+      formData
     );
   }
 
   resharePost(idPost: number, extraText: string) {
     return this.http.post(
-      this.rootUrl +
-        'post/resharePost/' +
-        idPost +
-        '/' +
-        this.date +
-        '/' +
-        extraText,
-      {}
+      this.rootUrl + 'post/resharePost/' + idPost,
+      extraText
     );
   }
 
-  updatePost(
-    postId: number,
-    newImage: object,
-    newText: string,
-    postWithImage: boolean
-  ) {
+  updatePost(postId: number, formData: FormData, postWithImage: boolean) {
     return this.http.put(
-      this.rootUrl +
-        'posts/update/idAccount/' +
-        postId +
-        '/' +
-        newText +
-        '/' +
-        postWithImage,
-      newImage
+      this.rootUrl + 'posts/update/idAccount/' + postId + '/' + postWithImage,
+      formData
     );
   }
 
