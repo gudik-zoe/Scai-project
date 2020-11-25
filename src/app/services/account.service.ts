@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import jwt_decode from 'jwt-decode';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
 import { AccountBasicData } from '../models/accountBasicData';
@@ -13,13 +13,14 @@ import { ImgUrl } from '../models/imgUrl';
 })
 export class AccountService {
   userData: AccountBasicData;
-  users: Account[];
+  peopleYouMayKnow: AccountBasicData[];
   imageSubject = new Subject<string>();
   loggedIn = new Subject<boolean>();
   errorSubject = new Subject<any>();
   rootUrl: string = environment.rootUrl;
   accountBasicData: AccountBasicData[] = [];
   requestedUserData: Account;
+  myFriends: AccountBasicData[];
 
   constructor(private http: HttpClient) {}
 
@@ -28,14 +29,26 @@ export class AccountService {
     return decoded.userid;
   }
 
-  getUsers() {
-    return new Promise<Account[]>((resolve, reject) => {
+  getPeopleYouMayKnow() {
+    return new Promise<AccountBasicData[]>((resolve, reject) => {
       this.http
-        .get(this.rootUrl + 'api/accounts')
-        .subscribe((data: Account[]) => {
-          this.users = data;
-          resolve(this.users);
+        .get(this.rootUrl + 'api/account/peopleYouMayKnow')
+        .subscribe((data: AccountBasicData[]) => {
+          this.peopleYouMayKnow = data;
+          resolve(this.peopleYouMayKnow);
           reject('uknown error occured');
+        });
+    });
+  }
+
+  getAccountFriends() {
+    return new Promise<AccountBasicData[]>((resolve, reject) => {
+      this.http
+        .get(this.rootUrl + 'api/account/friends')
+        .subscribe((data: AccountBasicData[]) => {
+          this.myFriends = data;
+          resolve(this.myFriends);
+          reject('unknown error occured');
         });
     });
   }
@@ -147,6 +160,7 @@ export class AccountService {
       const file = event.target.files[0];
       const formData = new FormData();
       formData.append('image', file);
+      // formData.append('text', 'hello world');
       return formData;
       //     resolve(formData);
       //     reject('unknown error happened');

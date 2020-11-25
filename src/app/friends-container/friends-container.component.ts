@@ -17,7 +17,8 @@ export class FriendsContainerComponent implements OnInit {
     private friendService: FriendsService
   ) {}
 
-  @Input() users;
+  @Input() users: AccountBasicData[];
+  @Input() areFriends: boolean;
   userData: AccountBasicData;
 
   async getUserData() {

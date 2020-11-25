@@ -65,6 +65,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   logOut() {
     this.accountService.userData = undefined;
+    this.accountService.myFriends = undefined;
+    this.accountService.peopleYouMayKnow = undefined;
+    this.accountService.userData = undefined;
     this.accountService.loggedIn.next(false);
     localStorage.removeItem('token');
     this.route.navigate(['/auth']);

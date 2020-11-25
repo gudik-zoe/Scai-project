@@ -18,7 +18,7 @@
                 </span>
                 {{not.action}}
                 <small style="color: blue;">
-                    {{not.time}} {{not.timeUnit}} {{not.time ? 'ago' : ''}} </small></li>
+                    at {{not.date |date:'dd/MM  hh:mm' : 'UTC' }} </small></li>
             <hr>
         </div>
     </div>

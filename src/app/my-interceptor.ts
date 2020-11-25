@@ -47,6 +47,8 @@ export class MyInterceptor implements HttpInterceptor {
             localStorage.removeItem('token');
             this.route.navigate(['/auth']);
             this.accountService.userData = undefined;
+            this.accountService.myFriends = undefined;
+            this.accountService.peopleYouMayKnow = undefined;
             this.accountService.loggedIn.next(false);
             console.log('token expired');
           }

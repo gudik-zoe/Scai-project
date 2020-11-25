@@ -184,11 +184,8 @@ export class PostsService {
     );
   }
 
-  addPost(text: string, image: object) {
-    return this.http.post(
-      this.rootUrl + 'posts/accountId/' + text + '/' + this.date,
-      image
-    );
+  addPost(formData: FormData) {
+    return this.http.post(this.rootUrl + 'posts/accountId/', formData);
   }
 
   postOnWall(postedOn: number, text: string, image: object) {

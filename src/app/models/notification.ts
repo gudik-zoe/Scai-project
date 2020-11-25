@@ -5,7 +5,7 @@ export class Notification {
   notCreator: number;
   action: string;
   notReceiver: number;
-  date: number;
+  date: Date;
   relatedPostId: number;
   seen: boolean;
   doneBy?: AccountBasicData;

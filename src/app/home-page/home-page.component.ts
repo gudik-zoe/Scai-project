@@ -38,20 +38,23 @@ export class HomePageComponent implements OnInit {
   myImage;
   postImage;
   dbPosts;
-  friends: Relationship[];
+  friends: AccountBasicData[];
   imgUrl: string = environment.rootUrl + 'files/';
-
+  peopleYouMayKnow: AccountBasicData[];
   image() {
     return this.userData?.profilePhoto;
   }
 
-  async getUsers() {
-    this.users =
-      this.accountService.users || (await this.accountService.getUsers());
-  }
-
   async getFriends() {
-    this.friends = await this.friendsService.getMyFriends();
+    this.friends =
+      this.accountService.myFriends ||
+      (await this.accountService.getAccountFriends());
+    console.log(this.friends);
+  }
+  async getPeopleyouMayKnow() {
+    this.peopleYouMayKnow =
+      this.accountService.peopleYouMayKnow ||
+      (await this.accountService.getPeopleYouMayKnow());
   }
 
   async getUserData() {
@@ -74,7 +77,7 @@ export class HomePageComponent implements OnInit {
   ngOnInit() {
     this.getPosts();
     this.getUserData();
-    this.getUsers();
     this.getFriends();
+    this.getPeopleyouMayKnow();
   }
 }

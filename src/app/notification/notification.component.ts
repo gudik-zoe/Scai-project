@@ -34,25 +34,25 @@ export class NotificationComponent implements OnInit {
     } else {
       this.haveNotification = true;
     }
-    for (let not of this.notificationObject) {
-      if (!not.seen) {
-        this.unseenNots.push(not);
-      }
-      not.date = Math.floor((this.now - not.date) / (1000 * 60));
-      if (not.date * 60 < 1) {
-        not.time = null;
-        not.timeUnit = 'just now';
-      } else if (not.date < 60) {
-        not.time = not.date;
-        not.time > 1 ? (not.timeUnit = 'minutes') : (not.timeUnit = 'minute');
-      } else if (not.date > 60 && not.date / 60 < 24) {
-        not.time = Math.floor(not.date / 60);
-        not.time > 1 ? (not.timeUnit = 'hours') : (not.timeUnit = 'hour');
-      } else if (not.date / 60 > 24) {
-        not.time = Math.floor(not.date / 60 / 24);
-        not.time > 1 ? (not.timeUnit = 'days') : (not.timeUnit = 'day');
-      }
-    }
+    // for (let not of this.notificationObject) {
+    //   if (!not.seen) {
+    //     this.unseenNots.push(not);
+    //   }
+    //   not.date = Math.floor((this.now - not.date) / (1000 * 60));
+    //   if (not.date * 60 < 1) {
+    //     not.time = null;
+    //     not.timeUnit = 'just now';
+    //   } else if (not.date < 60) {
+    //     not.time = not.date;
+    //     not.time > 1 ? (not.timeUnit = 'minutes') : (not.timeUnit = 'minute');
+    //   } else if (not.date > 60 && not.date / 60 < 24) {
+    //     not.time = Math.floor(not.date / 60);
+    //     not.time > 1 ? (not.timeUnit = 'hours') : (not.timeUnit = 'hour');
+    //   } else if (not.date / 60 > 24) {
+    //     not.time = Math.floor(not.date / 60 / 24);
+    //     not.time > 1 ? (not.timeUnit = 'days') : (not.timeUnit = 'day');
+    //   }
+    // }
   }
 
   notificationSeen() {

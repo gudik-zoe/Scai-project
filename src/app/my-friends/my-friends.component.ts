@@ -28,7 +28,7 @@ export class MyFriendsComponent implements OnInit {
     private friendService: FriendsService
   ) {}
 
-  @Input() user;
+  @Input() user: AccountBasicData;
   @Input() userData: AccountBasicData;
   imgUrl: string = environment.rootUrl + 'files/';
 

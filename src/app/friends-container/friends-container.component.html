@@ -1,6 +1,6 @@
 <div class="main" style="margin-right: 5px;">
     <div class="header">
-        Friends
+        {{areFriends ? 'Friends' : 'people you may know'}}
     </div>
     <div *ngFor="let user of users" class="mt-2">
         <app-my-friends [user]="user" [userData]="userData"></app-my-friends>

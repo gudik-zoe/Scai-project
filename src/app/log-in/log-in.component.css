@@ -18,17 +18,7 @@
   margin-right: 30px;
   position: relative;
   overflow: hidden;
-  /* animation-name: example;
-  animation-duration: 3s; */
 }
-
-/* h2,
-p,
-button {
-  position: relative;
-  animation: bounceInUp;
-  animation-duration: 2s;
-} */
 
 .pulse:hover {
   position: relative;
