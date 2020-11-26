@@ -14,8 +14,24 @@
   }
 }
 
-#div-container:hover {
-  cursor: pointer;
+.the-friend {
+  padding: 10px;
+
   background-color: white;
+}
+
+.the-friend:hover {
+  background-color: whitesmoke;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.container-fluid {
+  cursor: pointer;
+  background-color: whitesmoke;
+  border-radius: 8px;
+}
+.container-fluid:hover {
+  cursor: pointer;
+  background-color: whitesmoke;
   border-radius: 8px;
 }

@@ -27,24 +27,28 @@
 
   <div class="row" style="background-color: whitesmoke;">
     <div class="col-3" style=" padding: 10px;">
+
       <div class="main">
-        <h3>intro</h3>
-        <hr />
-        <p>
-          <i class="fa fa-graduation-cap" aria-hidden="true" style="color: gray;"></i> studied at
-          <span>{{ requestedUserData?.study }}</span>
-        </p>
-        <p>
-          <i class="fa fa-university" aria-hidden="true" style="color: gray;"></i> went to
-          <span> {{ requestedUserData.wentTo }}</span>
-        </p>
-        <p>
-          <i class="fa fa-home" aria-hidden="true" style="color: gray;"></i> lives in
-          <span> {{ requestedUserData.livesIn }}</span>
-        </p>
-        <button *ngIf="requestedUserData.idAccount == loggedInUserData.idAccount" style="background-color: lightgrey;"
-          class="btn btn-outline  btn-block mt-2" (click)="goToEditing() ">
-          edit details</button>
+        <div class="header">
+          intro
+        </div>
+        <div class="content">
+          <p>
+            <i class="fa fa-graduation-cap" aria-hidden="true" style="color: gray;"></i> studied at
+            <span>{{ requestedUserData?.study }}</span>
+          </p>
+          <p>
+            <i class="fa fa-university" aria-hidden="true" style="color: gray;"></i> went to
+            <span> {{ requestedUserData.wentTo }}</span>
+          </p>
+          <p>
+            <i class="fa fa-home" aria-hidden="true" style="color: gray;"></i> lives in
+            <span> {{ requestedUserData.livesIn }}</span>
+          </p>
+          <button *ngIf="requestedUserData.idAccount == loggedInUserData.idAccount" style="background-color: lightgrey;"
+            class="btn btn-outline  btn-block mt-2" (click)="goToEditing() ">
+            edit details</button>
+        </div>
       </div>
 
     </div>
@@ -53,11 +57,14 @@
         (createPost)="openLeavePostComponent($event)" [requestedUser]="requestedUserData">
       </app-what-on-mind>
       <app-leave-post></app-leave-post>
-      <div class="container-fluid mt-4" class="scrollable-element"
-        style="overflow-y: scroll; overflow-x: hidden; height: 450px;">
-        <h3>posts</h3>
-        <hr />
-        <app-posts-container [posts]="requestedAccountPosts"> </app-posts-container>
+      <div class="mt-2">
+        <div class="header">
+          posts
+        </div>
+        <hr>
+        <div class="scrollable-element" style="overflow-y: scroll; overflow-x: hidden; height: 450px;">
+          <app-posts-container [posts]="requestedAccountPosts"> </app-posts-container>
+        </div>
       </div>
     </div>
     <div class="col-3 mt-2">

@@ -57,23 +57,32 @@ export class AccountSettingsComponent implements OnInit {
   }
 
   confirm() {
-    this.accountService.updateAccount(this.changeEssentialData.value).subscribe(
-      (data) => {
-        this.changeEssentialDataChanged = true;
-        setTimeout(async () => {
-          this.userData = undefined;
-          this.accountService.userData = undefined;
-          this.userData = await this.accountService.getAccountById(
-            this.accountService.getId()
-          );
-          this.errorPhrase = '';
-          this.changeEssentialData.reset();
-          this.changeEssentialDataChanged = false;
-          this.fillFormValues();
-        }, 2000);
-      },
-      (error) => (this.errorPhrase = error.error.message)
-    );
+    if (!this.changeEssentialData.dirty) {
+      this.errorPhrase = "u didn't change any value";
+      setTimeout(() => {
+        this.errorPhrase = '';
+      }, 2000);
+    } else {
+      this.accountService
+        .updateAccount(this.changeEssentialData.value)
+        .subscribe(
+          (data) => {
+            this.changeEssentialDataChanged = true;
+            setTimeout(async () => {
+              this.userData = undefined;
+              this.accountService.userData = undefined;
+              this.userData = await this.accountService.getAccountById(
+                this.accountService.getId()
+              );
+              this.errorPhrase = '';
+              this.changeEssentialData.reset();
+              this.changeEssentialDataChanged = false;
+              this.fillFormValues();
+            }, 2000);
+          },
+          (error) => (this.errorPhrase = error.error.message)
+        );
+    }
   }
 
   async getUserData() {

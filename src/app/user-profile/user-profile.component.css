@@ -34,10 +34,14 @@
 
 .header {
   width: 100%;
+  font-size: larger;
   border-top-left-radius: 9px;
   border-top-right-radius: 9px;
+  border-bottom: 1px solid black;
+  padding: 10px;
   height: 60px;
-  background-color: #0070ba;
+  color: white;
+  background-color: #926dde;
 }
 
 .col-6 {
@@ -47,14 +51,16 @@
   padding: 10px;
   box-shadow: 1px 1px 1px 1px #888888;
 }
+
 .main {
-  margin-left: 15px;
-  border-radius: 9px;
+  border: 1px solid;
+  border-radius: 8px;
   box-shadow: 1px 1px 1px 1px #888888;
-  height: fit-content;
   background-color: white;
+}
+
+.content {
   padding: 10px;
-  border-radius: 10px;
 }
 
 li {

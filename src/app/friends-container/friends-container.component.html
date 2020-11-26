@@ -1,8 +1,10 @@
-<div class="main" style="margin-right: 5px;">
+<div class="main">
     <div class="header">
         {{areFriends ? 'Friends' : 'people you may know'}}
     </div>
-    <div *ngFor="let user of users" class="mt-2">
+    <!-- <h4>{{areFriends ? 'Friends' : 'people you may know'}}</h4> -->
+    <!-- <hr /> -->
+    <div *ngFor="let user of users">
         <app-my-friends [user]="user" [userData]="userData"></app-my-friends>
     </div>
 </div>

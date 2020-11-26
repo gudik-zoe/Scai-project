@@ -1,90 +1,92 @@
-<div *ngIf="userData" class="row mt-2">
-  <div class="col-3 ml-1">
-    <app-side-bar></app-side-bar>
-  </div>
-  <div class="cold-md-3 ml-3"
-    style="background-color: lightgrey; height: fit-content; border-radius: 9px; padding: 10px;">
-    <div class="text-center">
-      <img src="{{ userData.coverPhoto }}" width="540px" height="160px" style="border-radius: 10px;">
+<div class="container-fluid">
+  <div *ngIf="userData" class="row mt-2">
+    <div class="col-3 ml-1">
+      <app-side-bar></app-side-bar>
+    </div>
+    <div class="cold-md-3 ml-3"
+      style="background-color: lightgray; height: fit-content; border-radius: 9px; padding: 10px;">
+      <div class="text-center">
+        <img src="{{ userData.coverPhoto }}" width="540px" height="160px" style="border-radius: 10px;">
 
-      <br>
-      <input type="file" (change)="changeCoverPhoto($event)" name="cover" id="cover" class="inputfile" />
-      <label style="
+        <br>
+        <input type="file" (change)="changeCoverPhoto($event)" name="cover" id="cover" class="inputfile" />
+        <label style="
             cursor: pointer;
             background-color: whitesmoke;
             border-radius: 8px;
             float: left;
           " for="cover">
-        change cover Photo
-        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-      </label>
-      <img src="{{userData.profilePhoto}}" width="120px" height="120px"
-        style="border-radius: 50%; margin-top: -45px; margin-right:150px;" />
-      <br>
-      <input type="file" (change)="newImage($event)" name="file" id="file" class="inputfile"
-        style="margin-left: 60px;" />
-      <label style="cursor: pointer;;" for="file">
-        <img src="../../assets/download.png" width="30px" height="30px" style="border-radius: 50%;" />
-      </label>
-    </div>
-    <p class="text-danger">{{errorPhrase}}</p>
-    <p *ngIf="changeEssentialDataChanged"> your date have been successfully updated</p>
-    <div *ngIf="!changeEssentialDataChanged">
-      <form [formGroup]="changeEssentialData">
-        <div class="row">
-          <div class="col-md-4 mt-3 ml-5">
-            <label>first name</label>
-            <input type="text" formControlName="firstName" class="form-control" [class.is-invalid]="
+          change cover Photo
+          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        </label>
+        <img src="{{userData.profilePhoto}}" width="120px" height="120px"
+          style="border-radius: 50%; margin-top: -55px; margin-right:150px;" />
+        <br>
+        <input type="file" (change)="newImage($event)" name="file" id="file" class="inputfile"
+          style="margin-left: 60px;" />
+        <label style="cursor: pointer;;" for="file">
+          <img src="../../assets/download.png" width="30px" height="30px" style="border-radius: 50%;" />
+        </label>
+      </div>
+      <p class="text-danger">{{errorPhrase}}</p>
+      <p *ngIf="changeEssentialDataChanged"> your date have been successfully updated</p>
+      <div *ngIf="!changeEssentialDataChanged">
+        <form [formGroup]="changeEssentialData">
+          <div class="row">
+            <div class="col-md-4  ml-5">
+              <label>first name</label>
+              <input type="text" formControlName="firstName" class="form-control" [class.is-invalid]="
                 changeEssentialData.get('firstName').errors?.required &&
                 changeEssentialData.get('firstName').touched
               " />
-            <small class="text-danger" *ngIf="
+              <small class="text-danger" *ngIf="
                 changeEssentialData.get('firstName').errors?.required &&
                 changeEssentialData.get('firstName').touched
               ">
-              this.field is required
-            </small>
-          </div>
-          <div class="col-md-4 mt-3 ml-5">
-            <label>last Name</label>
-            <input type="text" formControlName="lastName" class="form-control" [class.is-invalid]="
+                this.field is required
+              </small>
+            </div>
+            <div class="col-md-4 ml-5">
+              <label>last Name</label>
+              <input type="text" formControlName="lastName" class="form-control" [class.is-invalid]="
                 changeEssentialData.get('lastName').errors?.required &&
                 changeEssentialData.get('lastName').touched
               " />
-            <small class="text-danger" *ngIf="
+              <small class="text-danger" *ngIf="
                 changeEssentialData.get('lastName').errors?.required &&
                 changeEssentialData.get('lastName').touched
               ">
-              this.field is required
-            </small>
+                this.field is required
+              </small>
+            </div>
+
           </div>
 
-        </div>
-
-        <div class="row">
-          <div class="col-md-4 mt-2 ml-5">
-            <label>studied at <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-            </label>
-            <input type="text" formControlName="study" placeholder="Ex: University of Riot" class="form-control" />
+          <div class="row">
+            <div class="col-md-4 mt-2 ml-5">
+              <label>studied at <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+              </label>
+              <input type="text" formControlName="study" placeholder="Ex: University of Riot" class="form-control" />
+            </div>
+            <div class="col-md-4 mt-2 ml-5">
+              <label>went to <i class="fa fa-university" aria-hidden="true"></i></label>
+              <input type="text" formControlName="wentTo" placeholder="Ex: High School of Riot" class="form-control" />
+            </div>
           </div>
-          <div class="col-md-4 mt-2 ml-5">
-            <label>went to <i class="fa fa-university" aria-hidden="true"></i></label>
-            <input type="text" formControlName="wentTo" placeholder="Ex: High School of Riot" class="form-control" />
+          <div class="row">
+            <div class="col-md-4 mt-1 ml-5">
+              <label>lives in <i class="fa fa-home" aria-hidden="true"></i></label>
+              <input type="text" formControlName="livesIn" placeholder="Ex: Turin, Italy" class="form-control" />
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4 mt-2 ml-5">
-            <label>lives in <i class="fa fa-home" aria-hidden="true"></i></label>
-            <input type="text" formControlName="livesIn" placeholder="Ex: Turin, Italy" class="form-control" />
-          </div>
-        </div>
-      </form>
-      <button [disabled]="!changeEssentialData.valid" class="btn btn-primary btn-block mt-3 mb-2" (click)="confirm()">
-        confirm
-      </button>
+        </form>
+        <button [disabled]="!changeEssentialData.valid" class="btn btn-primary btn-block mt-2" (click)="confirm()">
+          confirm
+        </button>
+      </div>
     </div>
-  </div>
-  <div class="col-3 ml-1">
-    <app-change-email-pass></app-change-email-pass>
+    <div class="col-3 ml-1">
+      <app-change-email-pass></app-change-email-pass>
+    </div>
   </div>
 </div>
