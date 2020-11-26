@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
+import { AccountBasicData } from '../models/accountBasicData';
 import { Post } from '../models/post';
 import { AccountService } from '../services/account.service';
 import { FriendsService } from '../services/friends.service';
@@ -30,6 +31,7 @@ export class UserProfileComponent implements OnInit {
   status: string;
   requestedAccountPosts: Post[];
   btnDisable: boolean;
+  friends: AccountBasicData[];
 
   goToEditing() {
     this.route.navigate(['/account-settings']);
@@ -91,11 +93,18 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
+  async getFriends() {
+    this.friends =
+      this.accountService.myFriends ||
+      (await this.accountService.getAccountFriends());
+  }
+
   async userProfileSetFunctions() {
     await this.getUserData();
     await this.getUserById();
     await this.getPostsByAccountId(this.id);
     await this.getStatusWith();
+    await this.getFriends();
   }
 
   ngOnInit() {

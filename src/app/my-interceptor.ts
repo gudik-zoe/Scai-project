@@ -37,6 +37,7 @@ export class MyInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         this.errorMessage = '';
         if (!(error.error instanceof ErrorEvent)) {
+          console.log(error);
           //   console.log('this is client side error');
           //   this.errorMessage = `Error: ${error.error.message}`;
           // } else {
