@@ -49,7 +49,7 @@ export class ChatComponent implements OnInit {
     this.wantedUser = { ...doneBy };
     this.getMyConvWithId(doneBy.idAccount);
   }
-  sendMessage(message) {
+  sendMessage(message: string, el: HTMLElement) {
     const chatMessageDto = {
       message: message,
       idReceiver: this.wantedUser.idAccount,
@@ -57,6 +57,7 @@ export class ChatComponent implements OnInit {
       date: new Date(),
     };
     this.webSocketService.sendMessage(chatMessageDto);
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
     this.message = null;
   }
   ngOnInit() {
