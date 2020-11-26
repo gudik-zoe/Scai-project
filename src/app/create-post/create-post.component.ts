@@ -1,16 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Post } from '../models/post';
 import { Account } from '../models/account';
-import { AccountService } from '../services/account.service';
 import { PostsService } from '../services/posts.service';
-import { catchError } from 'rxjs/operators';
-import { MyInterceptor } from '../my-interceptor';
 import { environment } from 'src/environments/environment';
-import { ImgUrl } from '../models/imgUrl';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-post',
@@ -18,13 +11,7 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./create-post.component.css'],
 })
 export class CreatePostComponent implements OnInit, OnDestroy {
-  constructor(
-    private postsService: PostsService,
-    private accountService: AccountService,
-    private route: Router,
-    private http: HttpClient,
-    private inter: MyInterceptor
-  ) {}
+  constructor(private postsService: PostsService) {}
 
   rootUrl: string = environment.rootUrl;
   alertComponent: boolean = false;

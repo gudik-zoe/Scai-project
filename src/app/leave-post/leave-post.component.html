@@ -23,7 +23,7 @@
                         style="border-radius: 8px;" />
                 </div>
                 <input placeholder="leave a post for {{ requestedUserData.firstName }} " [(ngModel)]="inputData"
-                    class="form-control">
+                    class="form-control" appAutoFocus>
                 <input type="file" (change)="uploadImage($event)" name="file" id="file" class="inputfile" />
                 <label style="float: right; cursor: pointer" for="file">
                     <i style="font-size: x-large; cursor: pointer;" class="fa fa-paperclip" aria-hidden="true"></i>

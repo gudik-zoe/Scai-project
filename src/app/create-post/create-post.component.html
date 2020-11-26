@@ -23,8 +23,9 @@
             <i style="font-size: x-large;" class="fa fa-paperclip ml-1" aria-hidden="true"></i>
           </div>
         </label>
+
         <textarea placeholder="what's in your mind {{ userData.firstName }}" [(ngModel)]="inputData"
-          class="md-textarea form-control" rows="2" style="background-color: transparent;"></textarea>
+          class="md-textarea form-control" rows="2" style="background-color: transparent;" appAutoFocus></textarea>
       </div>
       <button *ngIf="!hideButton" [disabled]="!inputData && !postTemporaryImage" type="button"
         (click)="sharePost(inputData)" class="btn btn-outline-primary btn-block mt-1">

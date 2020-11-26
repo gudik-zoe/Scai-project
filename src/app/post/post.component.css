@@ -29,6 +29,7 @@
   background-color: lightgray;
   border-radius: 50%;
   transition: all 0.1s ease-in-out;
+  box-shadow: 1px 1px 1px 1px #888888;
 }
 
 .icon:hover {

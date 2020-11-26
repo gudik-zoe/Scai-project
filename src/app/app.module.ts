@@ -19,6 +19,7 @@ import { FriendRequestModule } from './friend-request/friend-request.module';
 import { NotificationModule } from './notification/notification.module';
 import { CreatePostModule } from './create-post/create-post.module';
 import { DeletePostModule } from './delete-post/delete-post.module';
+import { AutoFocusDirective } from './directives/auto-focus.directive';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,11 +30,6 @@ import { DeletePostModule } from './delete-post/delete-post.module';
     AppRoutingModule,
     HttpClientModule,
     NavBarModule,
-    FriendRequestModule,
-    NotificationModule,
-    EditPostModule,
-    CreatePostModule,
-    DeletePostModule,
   ],
   providers: [
     AuthenticationGuard,
