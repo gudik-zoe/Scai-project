@@ -1,6 +1,13 @@
 .main {
   border: 1px solid;
   border-radius: 9px;
+  margin-top: 10px;
+  background-color: white;
+}
+
+.main:hover {
+  border: 1px solid;
+  border-radius: 9px;
   box-shadow: 1px 1px 1px 1px #888888;
   background-color: white;
 }

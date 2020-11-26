@@ -16,12 +16,12 @@
 
         <div *ngIf="wantedUser" class="col-9" style=" background-color: whitesmoke; height: max-content; padding: 0px;">
             <div
-                style="border-bottom: 1px solid black; height: 120px; border-left: 1px solid black; background-color: white;">
-                <img src="{{wantedUser.profilePhoto}}" width="95px" height="95px" style="border-radius: 50%;" />
-                <span style="font-size: x-large; margin-left: 80px; font-weight:bolder; margin-top: 10px;">
+                style="border-bottom: 1px solid black; height: 120px; border-left: 1px solid black; background-color: white; padding: 10px;">
+                <img src="{{wantedUser.profilePhoto}}" width="80px" height="80px" style="border-radius: 50%;" />
+                <span style="font-size: x-large; margin-left: 20px; font-weight:bolder; margin-top: 10px;">
                     {{wantedUser.firstName + " "+ wantedUser.lastName}}
                 </span>
-                <p style="color: grey; margin-left: 180px;">1 hour ago</p>
+
             </div>
             <div class="scrollable-element">
                 <ul *ngFor="let conv of myConvWith">

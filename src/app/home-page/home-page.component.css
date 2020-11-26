@@ -1,20 +1,18 @@
 #second-div {
-  margin-top: 5px;
   height: 800px;
   overflow-y: scroll;
 
   background-color: white;
 }
 
-#last-div {
-  margin-top: 5px;
-  background-color: whitesmoke;
-}
-
 #first-div {
   background-color: whitesmoke;
 }
 
+#third-div {
+  background-color: whitesmoke;
+  background-color: #926dde;
+}
 li {
   margin-top: 20px;
   outline: none;

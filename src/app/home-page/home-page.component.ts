@@ -54,6 +54,9 @@ export class HomePageComponent implements OnInit {
     this.peopleYouMayKnow =
       this.accountService.peopleYouMayKnow ||
       (await this.accountService.getPeopleYouMayKnow());
+    this.peopleYouMayKnow = this.peopleYouMayKnow.filter(
+      (item: AccountBasicData) => item.idAccount !== this.userData.idAccount
+    );
   }
 
   async getUserData() {

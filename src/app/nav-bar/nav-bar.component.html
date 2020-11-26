@@ -1,34 +1,37 @@
 <nav *ngIf="userData" class="navbar navbar-expand-md navbar-dark sticky-top shadow-lg"
     style="height: 72px;  background: #926dde;">
-    <div class="imageAndName">
-        <img src="{{ userData.profilePhoto }}" width="50px" height="50px" style="border-radius: 50%; " />
+    <div class="container-fluid">
+        <div class="imageAndName">
+            <img src="{{ userData.profilePhoto }}" width="50px" height="50px" style="border-radius: 50%; " />
 
-        {{userData.firstName + " " +userData.lastName}}
+            {{userData.firstName + " " +userData.lastName}}
+        </div>
+
+        <a style="margin-left: 370px; margin-top: 20px;">
+            <i routerLinkActive="active-class" routerLink="/home-page" style="cursor: pointer;   font-size: 2rem;"
+                class="fa fa-home" aria-hidden="true">
+                <p style="color: white; font-size: small;">home</p>
+            </i>
+        </a>
+
+
+        <a style="margin-left: 105px; margin-top: 20px;" (click)="goToProfile()" routerLinkActive="active-class">
+            <i style="cursor: pointer;  font-size: 2rem;" class="fa fa-user" aria-hidden=" true">
+                <p style="color: white; font-size: small;">profile</p>
+            </i>
+        </a>
+
+
+        <app-friend-request style="margin-left: 200px;"></app-friend-request>
+
+        <app-notification style=" margin-left: 10px;">
+        </app-notification>
+        <h6>
+
+            <button type="button" style="margin-top: 10px; margin-left: 250px; color: white;"
+                class="btn btn-outline-dark btn-sm" (click)="logOut()">
+                log Out
+            </button>
+        </h6>
     </div>
-
-    <a style="margin-left: 370px; margin-top: 20px;">
-        <i routerLinkActive="active-class" routerLink="/home-page" style="cursor: pointer;   font-size: 2rem;"
-            class="fa fa-home" aria-hidden="true">
-            <p style="color: white; font-size: small;">home</p>
-        </i>
-    </a>
-
-
-    <a style="margin-left: 105px; margin-top: 20px;" (click)="goToProfile()" routerLinkActive="active-class">
-        <i style="cursor: pointer;  font-size: 2rem;" class="fa fa-user" aria-hidden=" true">
-            <p style="color: white; font-size: small;">profile</p>
-        </i>
-    </a>
-
-
-    <app-friend-request style="margin-left: 200px;"></app-friend-request>
-
-    <app-notification style=" margin-left: 10px;">
-    </app-notification>
-    <h6>
-        <button type="button" style="margin-top: 10px; margin-left: 250px; color: white;"
-            class="btn btn-outline-dark btn-sm" (click)="logOut()">
-            log Out
-        </button>
-    </h6>
 </nav>

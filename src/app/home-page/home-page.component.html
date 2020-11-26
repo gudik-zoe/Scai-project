@@ -15,11 +15,12 @@
       <app-posts-container [posts]="dbPosts"> </app-posts-container>
 
     </div>
-    <div id="last-div" class="col-md-3">
+    <div id="third-div" class="col-md-3" *ngIf="friends && peopleYouMayKnow">
 
-      <app-friends-container [users]="friends" [areFriends]="true"></app-friends-container>
+      <app-friends-container *ngIf="friends.length > 0" [users]="friends" [areFriends]="true"></app-friends-container>
       <br>
-      <app-friends-container [users]="peopleYouMayKnow" [areFriends]="false"></app-friends-container>
+      <app-friends-container *ngIf="peopleYouMayKnow.length > 0" [users]="peopleYouMayKnow" [areFriends]="false">
+      </app-friends-container>
       <br>
     </div>
   </div>

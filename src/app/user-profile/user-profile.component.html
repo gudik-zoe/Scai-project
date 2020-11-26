@@ -52,24 +52,21 @@
       </div>
 
     </div>
+
     <div class="col-6">
       <app-what-on-mind *ngIf="requestedUserData.idAccount != loggedInUserData.idAccount"
         (createPost)="openLeavePostComponent($event)" [requestedUser]="requestedUserData">
       </app-what-on-mind>
+
       <app-leave-post></app-leave-post>
-      <div class="mt-2">
-        <div class="header">
-          posts
-        </div>
-        <hr>
-        <div class="scrollable-element" style="overflow-y: scroll; overflow-x: hidden; height: 450px;">
-          <app-posts-container [posts]="requestedAccountPosts"> </app-posts-container>
-        </div>
+      <h3>posts</h3>
+      <hr>
+      <div class="scrollable-element" style="overflow-y: scroll; overflow-x: hidden; height: 450px;">
+        <app-posts-container [posts]="requestedAccountPosts"> </app-posts-container>
       </div>
     </div>
     <div class="col-3 mt-2">
-      <app-friends-container [users]="friends" [areFriends]="true"></app-friends-container>
+      <app-friends-container *ngIf="friends.length > 0" [users]="friends" [areFriends]="true"></app-friends-container>
     </div>
   </div>
-
 </div>
