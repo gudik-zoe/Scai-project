@@ -32,16 +32,17 @@ export class UserProfileComponent implements OnInit {
   requestedAccountPosts: Post[];
   btnDisable: boolean;
   friends: AccountBasicData[];
+  users: AccountBasicData[];
 
   goToEditing() {
     this.route.navigate(['/account-settings']);
   }
 
-  async getUserById() {
-    this.requestedUserData = await this.accountService.getAccountById(
-      this.getIdFromUrl()
-    );
-  }
+  // async getUserById() {
+  //   this.requestedUserData = await this.accountService.getAccountById(
+  //     this.getIdFromUrl()
+  //   );
+  // }
 
   async getPostsByAccountId(id: number) {
     this.requestedAccountPosts = await this.postService.getPostsByAccountId(id);
@@ -53,23 +54,23 @@ export class UserProfileComponent implements OnInit {
       (await this.accountService.getTheLoggedInUserDataFullData());
   }
 
-  goToMessengerOrAddFriend(id: number) {
-    if (this.status == 'add friend') {
-      this.friendService.sendFriendRequest(id).subscribe((data) => {
-        this.status = 'pending..cancel friend request';
-      });
-    } else if (this.status == 'chat') {
-      this.route.navigate(['/chat']);
-    } else if (this.status == 'sent you a friend request') {
-      return null;
-    } else {
-      this.friendService
-        .deleteOrCancelFriendRequest(this.id)
-        .subscribe((data) => {
-          this.status = 'add friend';
-        });
-    }
-  }
+  // goToMessengerOrAddFriend(id: number) {
+  //   if (this.status == 'add friend') {
+  //     this.friendService.sendFriendRequest(id).subscribe((data) => {
+  //       this.status = 'pending..cancel friend request';
+  //     });
+  //   } else if (this.status == 'chat') {
+  //     this.route.navigate(['/chat']);
+  //   } else if (this.status == 'sent you a friend request') {
+  //     return null;
+  //   } else {
+  //     this.friendService
+  //       .deleteOrCancelFriendRequest(this.id)
+  //       .subscribe((data) => {
+  //         this.status = 'add friend';
+  //       });
+  //   }
+  // }
 
   openLeavePostComponent(event) {
     this.postService.leavePostComponent.next({
@@ -78,20 +79,23 @@ export class UserProfileComponent implements OnInit {
       requestedUserData: this.requestedUserData,
     });
   }
-  getIdFromUrl(): number {
-    this.id = parseInt(this.aroute.snapshot.paramMap.get('id'));
-    return this.id;
+  getIdFromUrl() {
+    return new Promise<number>((resolve, reject) => {
+      this.id = parseInt(this.aroute.snapshot.paramMap.get('id'));
+      resolve(this.id);
+      reject('uknown error occured');
+    });
   }
 
   respondFriendRequest(id: number, status: number) {
     this.friendService.acceptFriendRequest(id, status).subscribe((data) => {});
   }
 
-  async getStatusWith() {
-    this.status = await this.friendService.getRelationStatusBetweenMeAnd(
-      this.id
-    );
-  }
+  // async getStatusWith() {
+  //   this.status = await this.friendService.getRelationStatusBetweenMeAnd(
+  //     this.id
+  //   );
+  // }
 
   async getFriends() {
     this.friends =
@@ -99,12 +103,19 @@ export class UserProfileComponent implements OnInit {
       (await this.accountService.getAccountFriends());
   }
 
+  async getUsers() {
+    this.users =
+      this.accountService.allUsers || (await this.accountService.getAllUsers());
+  }
+
   async userProfileSetFunctions() {
-    await this.getUserData();
-    await this.getUserById();
+    await this.getUsers();
+    await this.getIdFromUrl();
     await this.getPostsByAccountId(this.id);
-    await this.getStatusWith();
+    await this.getUserData();
+    // await this.getStatusWith();
     await this.getFriends();
+    // await this.getUserById();
   }
 
   ngOnInit() {

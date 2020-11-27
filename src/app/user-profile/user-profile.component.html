@@ -1,72 +1,77 @@
-<div class="container-fluid" *ngIf="requestedUserData && loggedInUserData">
-  <div class="container mt-1" style="width: 750px; height: 140px; border-radius: 10px; background-size:cover ;">
-    <div class="text-center mt-5">
-      <img src="{{ requestedUserData.coverPhoto }}" width="100%" height="160px" style="border-radius: 10px;">
-      <img src="{{ requestedUserData.profilePhoto}}" width="120px" height="120px"
-        style="border-radius: 50%; margin-top: -65px;" />
-      <p class="font-weight-bold">{{ requestedUserData.firstName + " " + requestedUserData.lastName }}</p>
-    </div>
-
-  </div>
-
-  <div class="container-fluid" style="margin-top: 100px; margin-left: 20%;">
-    <span class="new" routerLink="/home-page">Home page</span>
-    <span class="new">My Friends</span>
-    <button (click)="goToMessengerOrAddFriend(requestedUserData.idAccount)" style="margin-left: 30%;"
-      *ngIf="requestedUserData.idAccount !== loggedInUserData.idAccount"
-      [class]="(status == 'add friend' || status == 'chat' )? 'btn btn-primary btn-sm' :'btn btn-danger btn-sm' ">{{status}}<i
-        class="fa fa-user-plus ml-1" aria-hidden="true"></i> </button>
-    <button *ngIf="requestedUserData.idAccount == loggedInUserData.idAccount" class="btn btn-info btn-sm "
-      style="margin-left: 40%;" (click)="goToEditing()">
-      <i class="fa fa-pencil" aria-hidden="true"></i>
-      Edit profile</button>
-
-  </div>
-
-
-
-  <div class="row" style="background-color: whitesmoke;">
-    <div class="col-3" style=" padding: 10px;">
-
-      <div class="main">
-        <div class="header">
-          intro
-        </div>
-        <div class="content">
-          <p>
-            <i class="fa fa-graduation-cap" aria-hidden="true" style="color: gray;"></i> studied at
-            <span>{{ requestedUserData?.study }}</span>
-          </p>
-          <p>
-            <i class="fa fa-university" aria-hidden="true" style="color: gray;"></i> went to
-            <span> {{ requestedUserData.wentTo }}</span>
-          </p>
-          <p>
-            <i class="fa fa-home" aria-hidden="true" style="color: gray;"></i> lives in
-            <span> {{ requestedUserData.livesIn }}</span>
-          </p>
-          <button *ngIf="requestedUserData.idAccount == loggedInUserData.idAccount" style="background-color: lightgrey;"
-            class="btn btn-outline  btn-block mt-2" (click)="goToEditing() ">
-            edit details</button>
-        </div>
+<ng-container *ngFor="let requestedUserData of users ">
+  <div class="container-fluid" *ngIf="requestedUserData.idAccount == id"
+    [ngStyle]="{'background-image':'url('+ requestedUserData.coverPhoto + ')'}">
+    <!-- <img src="{{ requestedUserData.coverPhoto }}" width="100%" height="160px" style="border-radius: 10px;"> -->
+    <div class="container" style="width: 750px; height: 140px; border-radius: 10px; background-size:cover;">
+      <div class="text-center mt-5">
+        <img src="{{ requestedUserData.profilePhoto}}" width="120px" height="120px"
+          style="border-radius: 50%; margin-top: 20px;" />
       </div>
 
     </div>
+  </div>
 
-    <div class="col-6">
-      <app-what-on-mind *ngIf="requestedUserData.idAccount != loggedInUserData.idAccount"
-        (createPost)="openLeavePostComponent($event)" [requestedUser]="requestedUserData">
-      </app-what-on-mind>
+  <!-- <div class="container-fluid" style="margin-top: 100px; margin-left: 20%;">
+  <span class="new" routerLink="/home-page">Home page</span>
+  <span class="new">My Friends</span>
+  <button (click)="goToMessengerOrAddFriend(requestedUserData.idAccount)" style="margin-left: 30%;"
+  *ngIf="requestedUserData.idAccount !== loggedInUserData.idAccount"
+  [class]="(status == 'add friend' || status == 'chat' )? 'btn btn-primary btn-sm' :'btn btn-danger btn-sm' ">{{status}}<i
+  class="fa fa-user-plus ml-1" aria-hidden="true"></i> </button>
+  <button *ngIf="requestedUserData.idAccount == loggedInUserData.idAccount" class="btn btn-info btn-sm "
+  style="margin-left: 40%;" (click)="goToEditing()">
+  <i class="fa fa-pencil" aria-hidden="true"></i>
+  Edit profile</button>
+  
+</div> -->
 
-      <app-leave-post></app-leave-post>
-      <h3>posts</h3>
-      <hr>
-      <div class="scrollable-element" style="overflow-y: scroll; overflow-x: hidden; height: 450px;">
-        <app-posts-container [posts]="requestedAccountPosts"> </app-posts-container>
+
+
+  <div class="container-fluid" *ngIf="requestedUserData.idAccount == id && loggedInUserData">
+    <div class="row" style="background-color: whitesmoke;">
+      <div class="col-3" style=" padding: 10px;">
+
+        <div class="main">
+          <div class="header">
+            intro
+          </div>
+          <div class="content">
+            <p>
+              <i class="fa fa-graduation-cap" aria-hidden="true" style="color: gray;"></i> studied at
+              <span>{{ requestedUserData?.study }}</span>
+            </p>
+            <p>
+              <i class="fa fa-university" aria-hidden="true" style="color: gray;"></i> went to
+              <span> {{ requestedUserData.wentTo }}</span>
+            </p>
+            <p>
+              <i class="fa fa-home" aria-hidden="true" style="color: gray;"></i> lives in
+              <span> {{ requestedUserData.livesIn }}</span>
+            </p>
+            <button *ngIf="requestedUserData.idAccount == loggedInUserData.idAccount"
+              style="background-color: lightgrey;" class="btn btn-outline  btn-block mt-2" (click)="goToEditing() ">
+              edit details</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-6">
+        <app-what-on-mind *ngIf="requestedUserData.idAccount != loggedInUserData.idAccount"
+          (createPost)="openLeavePostComponent($event)" [requestedUser]="requestedUserData">
+        </app-what-on-mind>
+
+        <app-leave-post></app-leave-post>
+        <h3>posts</h3>
+        <hr>
+        <div class="scrollable-element" style="overflow-y: scroll; overflow-x: hidden; height: 450px;">
+          <app-posts-container [posts]="requestedAccountPosts"> </app-posts-container>
+        </div>
+      </div>
+      <div class="col-3 mt-2" *ngIf="friends">
+        <app-friends-container *ngIf="friends.length > 0 && requestedUserData.idAccount == loggedInUserData.idAccount"
+          [users]="friends" [areFriends]="true"></app-friends-container>
       </div>
     </div>
-    <div class="col-3 mt-2">
-      <app-friends-container *ngIf="friends.length > 0" [users]="friends" [areFriends]="true"></app-friends-container>
-    </div>
   </div>
-</div>
+</ng-container>

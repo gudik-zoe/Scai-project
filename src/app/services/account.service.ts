@@ -21,12 +21,25 @@ export class AccountService {
   accountBasicData: AccountBasicData[] = [];
   requestedUserData: Account;
   myFriends: AccountBasicData[];
+  allUsers: AccountBasicData[];
 
   constructor(private http: HttpClient) {}
 
   getId() {
     const decoded = jwt_decode(localStorage.getItem('token'));
     return decoded.userid;
+  }
+
+  getAllUsers() {
+    return new Promise<AccountBasicData[]>((resolve, reject) => {
+      this.http
+        .get(this.rootUrl + 'api/allUsers')
+        .subscribe((data: AccountBasicData[]) => {
+          this.allUsers = data;
+          resolve(this.allUsers);
+          reject('unknown error occured');
+        });
+    });
   }
 
   getPeopleYouMayKnow() {

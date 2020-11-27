@@ -1,6 +1,8 @@
-<div *ngIf="userData" (click)="goToProfile(user.idAccount)">
-  <div *ngIf="user.idAccount !== userData.idAccount" class="the-friend">
-    <img src="{{ user.profilePhoto}}" width="50px" style="border-radius: 50%" height="50px" />
-    {{ user.firstName  + " " +   user.lastName }}
-  </div>
+<div *ngIf="userData" class="the-friend">
+  <span (click)="goToProfile(user.idAccount)"> <img src="{{ user.profilePhoto}}" width="50px" style="border-radius: 50%"
+      height="50px" />
+    {{ user.firstName  + " " +   user.lastName }}</span> <button (click)="addFriend(user)" style="font-size: small;"
+    *ngIf="!areFriends"
+    [class]="(status == 'pending cancel request' )? 'btn btn-danger btn-sm ml-1' :'btn btn-primary btn-sm ml-1' ">{{status}}
+  </button>
 </div>

@@ -1,36 +1,39 @@
-<div *ngIf="userData" class="main">
-  <div class="header" style=" color:white;">
-    <img src="{{ userData.profilePhoto }}" width="50px" height="50px" style="border-radius: 50%; padding: 5px;" />
-    welcome {{ userData.firstName }}
+<div class="container-fluid ">
+  <div *ngIf="userData" class="main">
+    <div class="header" style=" color:white;">
+      <img src="{{ userData.profilePhoto }}" width="50px" height="50px" style="border-radius: 50%; padding: 5px;" />
+      welcome {{ userData.firstName }}
+    </div>
+
+    <div style="padding: 10px;">
+      <div class="bibi" (click)="goToChat()">
+        <img src="../../assets/iconfinder_1_Messenger_colored_svg_5296502.png" width="25px"
+          style="border-radius: 50%" />
+        <span class="ml-2">Messenger </span>
+      </div>
+
+      <div class="bibi">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTvf9r_040LuTCXNd2Hf3hqr_Q4nxmxp53tYOTQ1fwdjQQAu63X&usqp=CAU"
+          width="25px" style="border-radius: 50%" />
+        <span routerdivnk="/pages-co" class="ml-2">Pages </span>
+      </div>
+      <div class="bibi" routerdivnk="/event-com">
+        <img src="https://image.shutterstock.com/image-vector/calendar-icon-vector-filled-flat-260nw-1007540575.jpg"
+          width="25px" style="border-radius: 50%" />
+        <span class="ml-2">Events </span>
+      </div>
+      <div class="bibi">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRlm-DsBhHEFoNrSfONxEo_bAHNw-tkmvRcU4zlx_m8LpdUYErR&usqp=CAU"
+          width="25px" style="border-radius: 50%" />
+        <span class="ml-2">Videos </span>
+      </div>
+      <br />
+      <button style="background-color: divghtgray" class="btn btn-info btn-block">
+        See More
+      </button>
+    </div>
+
   </div>
-
-  <div style="padding: 10px;">
-    <div class="bibi" (click)="goToChat()">
-      <img src="../../assets/iconfinder_1_Messenger_colored_svg_5296502.png" width="25px" style="border-radius: 50%" />
-      <span class="ml-2">Messenger </span>
-    </div>
-
-    <div class="bibi">
-      <img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTvf9r_040LuTCXNd2Hf3hqr_Q4nxmxp53tYOTQ1fwdjQQAu63X&usqp=CAU"
-        width="25px" style="border-radius: 50%" />
-      <span routerdivnk="/pages-co" class="ml-2">Pages </span>
-    </div>
-    <div class="bibi" routerdivnk="/event-com">
-      <img src="https://image.shutterstock.com/image-vector/calendar-icon-vector-filled-flat-260nw-1007540575.jpg"
-        width="25px" style="border-radius: 50%" />
-      <span class="ml-2">Events </span>
-    </div>
-    <div class="bibi">
-      <img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRlm-DsBhHEFoNrSfONxEo_bAHNw-tkmvRcU4zlx_m8LpdUYErR&usqp=CAU"
-        width="25px" style="border-radius: 50%" />
-      <span class="ml-2">Videos </span>
-    </div>
-    <br />
-    <button style="background-color: divghtgray" class="btn btn-info btn-block">
-      See More
-    </button>
-  </div>
-
 </div>

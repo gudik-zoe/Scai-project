@@ -1,25 +1,29 @@
 import { Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
 import { PostsService } from '../services/posts.service';
-import { Component, OnInit, Sanitizer } from '@angular/core';
+import { Component, OnDestroy, OnInit, Sanitizer } from '@angular/core';
 import { PostLike } from '../models/postLike';
 import { Account } from '../models/account';
 import { environment } from 'src/environments/environment';
 import { FriendsService } from '../services/friends.service';
 import { Relationship } from '../models/relationship';
 import { AccountBasicData } from '../models/accountBasicData';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, OnDestroy {
   constructor(
     private postService: PostsService,
     private accountService: AccountService,
-    private friendsService: FriendsService
+    private friendService: FriendsService
   ) {}
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
   input: string;
   foto: any;
   posted: boolean = false;
@@ -41,6 +45,7 @@ export class HomePageComponent implements OnInit {
   friends: AccountBasicData[];
   imgUrl: string = environment.rootUrl + 'files/';
   peopleYouMayKnow: AccountBasicData[];
+  subscription: Subscription;
   image() {
     return this.userData?.profilePhoto;
   }
@@ -54,9 +59,6 @@ export class HomePageComponent implements OnInit {
     this.peopleYouMayKnow =
       this.accountService.peopleYouMayKnow ||
       (await this.accountService.getPeopleYouMayKnow());
-    this.peopleYouMayKnow = this.peopleYouMayKnow.filter(
-      (item: AccountBasicData) => item.idAccount !== this.userData.idAccount
-    );
   }
 
   async getUserData() {
@@ -76,10 +78,25 @@ export class HomePageComponent implements OnInit {
     this.dbPosts = await this.postService.getHomePagePosts();
   }
 
+  getRespondToRequestSubject() {
+    this.subscription = this.friendService.respondToRequest.subscribe(
+      (data) => {
+        if (data.status == 1) {
+          this.peopleYouMayKnow = this.peopleYouMayKnow.filter(
+            (item: AccountBasicData) =>
+              item.idAccount != data.userBasicData.idAccount
+          );
+          this.friends.push(data.userBasicData);
+        }
+      }
+    );
+  }
+
   ngOnInit() {
     this.getPosts();
     this.getUserData();
     this.getFriends();
     this.getPeopleyouMayKnow();
+    this.getRespondToRequestSubject();
   }
 }

@@ -15,16 +15,14 @@ export class FriendsService {
     private http: HttpClient,
     private accountService: AccountService
   ) {}
-  relations;
   rootUrl: string = environment.rootUrl;
+  relations: Relationship[];
   status: string;
-  navigator = new Subject<any>();
-  dataLoaded = new Subject<boolean>();
-
+  respondToRequest = new Subject<any>();
   getRelationStatusBetweenMeAnd(userId: number) {
     return new Promise<string>((resolve) => {
       this.http
-        .get(this.rootUrl + 'relation/getRelation/accountId/' + userId)
+        .get(this.rootUrl + 'relation/getStatus/' + userId)
         .subscribe((data: Relationship) => {
           if (!data) {
             this.status = 'add friend';
@@ -32,14 +30,12 @@ export class FriendsService {
             data.status == 0 &&
             data.userTwoId == this.accountService.getId()
           ) {
-            this.status = 'sent you a friend request';
+            this.status = 'sent u a friend request';
           } else if (
             data.status == 0 &&
             data.userTwoId !== this.accountService.getId()
           ) {
-            this.status = 'pending..cancel friend request';
-          } else if (data.status == 1) {
-            this.status = 'chat';
+            this.status = 'pending cancel request';
           } else {
             this.status = 'add friend';
           }
@@ -81,7 +77,7 @@ export class FriendsService {
 
   deleteOrCancelFriendRequest(user2Id: number) {
     return this.http.delete(
-      this.rootUrl + 'relation/deleteRequest/accountId' + user2Id
+      this.rootUrl + 'relation/deleteRequest/accountId/' + user2Id
     );
   }
 

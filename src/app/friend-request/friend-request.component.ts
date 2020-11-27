@@ -22,12 +22,18 @@ export class FriendRequestComponent implements OnInit {
     this.relations = await this.friendService.getFriendRequests();
   }
 
-  respondFriendRequest(id: number, status: number) {
-    this.friendService.acceptFriendRequest(id, status).subscribe((data) => {
-      this.relations = this.relations.filter(
-        (item) => item.idRelationship !== id
-      );
-    });
+  respondFriendRequest(relation: Relationship, status: number) {
+    this.friendService
+      .acceptFriendRequest(relation.idRelationship, status)
+      .subscribe((data: Relationship) => {
+        this.friendService.respondToRequest.next({
+          userBasicData: relation.doneBy,
+          status,
+        });
+        this.relations = this.relations.filter(
+          (item) => item.idRelationship !== relation.idRelationship
+        );
+      });
   }
 
   ngOnInit() {

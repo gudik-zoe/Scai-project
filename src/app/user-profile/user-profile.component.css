@@ -61,6 +61,16 @@
 .content {
   padding: 10px;
 }
+.container-fluid {
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* opacity: 0.7; */
+}
+.container-fluid:hover {
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* opacity: 1; */
+}
 
 li {
   list-style-type: none;

@@ -19,7 +19,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './my-friends.component.html',
   styleUrls: ['./my-friends.component.css'],
 })
-export class MyFriendsComponent implements OnInit {
+export class MyFriendsComponent implements OnInit, OnDestroy {
   constructor(
     private route: Router,
     private chatService: ChatService,
@@ -27,11 +27,15 @@ export class MyFriendsComponent implements OnInit {
     private http: HttpClient,
     private friendService: FriendsService
   ) {}
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
   @Input() user: AccountBasicData;
   @Input() userData: AccountBasicData;
-  imgUrl: string = environment.rootUrl + 'files/';
-
+  @Input() areFriends: boolean;
+  status: string;
+  subscription: Subscription;
   goToFriendsCharRoom(id: number): void {
     this.route.navigate(['/messenger', id]);
   }
@@ -39,5 +43,47 @@ export class MyFriendsComponent implements OnInit {
   goToProfile(id: number) {
     this.route.navigate(['/user-profile', id]);
   }
-  ngOnInit() {}
+  addFriend(user: AccountBasicData) {
+    if (this.status == 'add friend') {
+      this.friendService.sendFriendRequest(user.idAccount).subscribe((data) => {
+        this.status = 'pending cancel request';
+      });
+      // } else if (this.status == 'chat') {
+      //   this.route.navigate(['/chat']);
+      // }
+    } else if (this.status == 'sent u a friend request') {
+      return null;
+    } else {
+      this.friendService
+        .deleteOrCancelFriendRequest(user.idAccount)
+        .subscribe((data) => {
+          this.status = 'add friend';
+        });
+    }
+  }
+  getRespondToRequestSubject() {
+    this.subscription = this.friendService.respondToRequest.subscribe(
+      (data) => {
+        if (
+          data.status == 2 &&
+          data.userBasicData.idAccount == this.user.idAccount
+        ) {
+          this.status = 'add friend';
+        }
+      }
+    );
+  }
+
+  async getStatusWith() {
+    if (!this.areFriends) {
+      this.status = await this.friendService.getRelationStatusBetweenMeAnd(
+        this.user.idAccount
+      );
+    }
+  }
+
+  ngOnInit() {
+    this.getStatusWith();
+    this.getRespondToRequestSubject();
+  }
 }
