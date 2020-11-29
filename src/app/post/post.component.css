@@ -5,6 +5,7 @@
   border: 1px solid white;
   width: 550px;
   padding: 10px;
+  background-color: whitesmoke;
   transition: all 0.2s ease-in-out;
   box-shadow: 0px 0px 1px 0px #888888;
 }
@@ -17,6 +18,7 @@
   width: 560px;
   padding: 10px;
   box-shadow: 1px 10px 10px 1px #888888;
+  background-color: white;
   transform: scale(1);
 }
 

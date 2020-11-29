@@ -1,15 +1,18 @@
 <div class="container-fluid">
-  <div *ngIf="userData" class="post-container" style="background-color: white;">
+  <div *ngIf="userData" class="post-container">
     <ng-container *ngIf="post.doneBy && !post.postOriginalId && !post.postedOn">
       <img src="{{  post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%; float: left;" height="50px" />
       <span *ngIf="!post.postedOn" style="float: left;" class="font-weight-bold mt-3">
-        {{ post.doneBy.firstName + " " + post.doneBy.lastName }} shared </span>
+        {{ post.doneBy.firstName + " " + post.doneBy.lastName }} shared
+        <p style="color:gray ; font-size: x-small;">
+          {{post.date}}</p></span>
       <div *ngIf="post.postCreatorId == userData.idAccount" class="icon">
         <i (click)="editPost(post)" style="color: blueviolet;" class=" fa fa-pencil" aria-hidden="true"></i>
       </div>
       <div *ngIf="post.postCreatorId == userData.idAccount" class="icon">
         <i style="color: red;" (click)=" deletePost(post.idPost)" class="fa fa-trash" aria-hidden="true"></i>
       </div>
+      <br>
       <p class="mt-5" *ngIf="post.text">{{post.text}}</p>
       <img *ngIf="post.image" src="{{ post.image }}" style="width: 80%; height: 60%; border-radius: 10px;" />
     </ng-container>
@@ -18,11 +21,13 @@
     <ng-container *ngIf="post.doneBy && post.postOriginalId && post.originalPostDoneBy && !post.postedOn">
       <img src="{{  post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%; float: left;" height="50px" />
       <span style="float: left;" class="font-weight-bold mt-3">
-        {{ post.doneBy.firstName + " " + post.doneBy.lastName }} reshared </span>
+        {{ post.doneBy.firstName + " " + post.doneBy.lastName }} reshared
+        <p style="color:gray ; font-size: x-small;">{{post.date}} </p> </span>
       <div *ngIf="post.postCreatorId == userData.idAccount" class="icon">
         <i style=" color:red;  font-size:large; cursor: pointer;" (click)=" deletePost(post.idPost)" class="fa fa-trash"
           aria-hidden="true"></i>
       </div>
+      <br>
       <p class="mt-5" *ngIf="post.extraText">{{post.extraText}}</p>
       <div *ngIf="post.postOriginalId  && post.originalPostDoneBy" (click)="toDescription(post.postOriginalId)"
         style="margin-top: 30px; border: 1px solid black; cursor: pointer; ">
@@ -62,7 +67,9 @@
 
           <i style="padding: 10px;" class="fa fa-caret-right fa-lg" aria-hidden="true"></i>
           <img src="{{ post.postedOnData.profilePhoto }}" width="60px" height="60px" style="border-radius: 50%" />
-          {{post.postedOnData.firstName  + " " + post.postedOnData.lastName}}</span>
+          {{post.postedOnData.firstName  + " " + post.postedOnData.lastName}}
+          <p style="color:gray ; font-size: x-small;">
+            {{post.date}} </p></span>
 
       </div>
 

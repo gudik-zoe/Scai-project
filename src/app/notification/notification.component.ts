@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { notEqual } from 'assert';
 import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
 import { AccountBasicData } from '../models/accountBasicData';
@@ -13,8 +14,8 @@ import { NotificationService } from '../services/notification.service';
   styleUrls: ['./notification.component.css'],
 })
 export class NotificationComponent implements OnInit {
-  notificationObject: Notification[];
-  unseenNots = [];
+  notifications: Notification[];
+  unseenNots: Notification[] = [];
   userData: AccountBasicData;
   haveNotification: boolean;
   basicData: AccountBasicData[] = [];
@@ -28,37 +29,31 @@ export class NotificationComponent implements OnInit {
   ) {}
 
   async getNotifications() {
-    this.notificationObject = await this.notificationService.getNotification();
-    if (this.notificationObject.length == 0) {
+    this.notifications = await this.notificationService.getNotification();
+    if (this.notifications.length == 0) {
       this.haveNotification = false;
     } else {
       this.haveNotification = true;
     }
-    for (let not of this.notificationObject) {
+    for (let not of this.notifications) {
       if (!not.seen) {
         this.unseenNots.push(not);
       }
-      //   not.date = Math.floor((this.now - not.date) / (1000 * 60));
-      //   if (not.date * 60 < 1) {
-      //     not.time = null;
-      //     not.timeUnit = 'just now';
-      //   } else if (not.date < 60) {
-      //     not.time = not.date;
-      //     not.time > 1 ? (not.timeUnit = 'minutes') : (not.timeUnit = 'minute');
-      //   } else if (not.date > 60 && not.date / 60 < 24) {
-      //     not.time = Math.floor(not.date / 60);
-      //     not.time > 1 ? (not.timeUnit = 'hours') : (not.timeUnit = 'hour');
-      //   } else if (not.date / 60 > 24) {
-      //     not.time = Math.floor(not.date / 60 / 24);
-      //     not.time > 1 ? (not.timeUnit = 'days') : (not.timeUnit = 'day');
-      //   }
-      // }
+      not.timeUnit = await this.notificationService.timeCalculation(not);
     }
   }
 
-  notificationSeen() {
-    this.notificationService.notHasBeenSeen();
-    this.unseenNots = [];
+  notificationSeen(notificationId: number) {
+    this.notificationService
+      .notHasBeenSeen(notificationId)
+      .subscribe((data) => {
+        this.unseenNots.pop();
+        for (let not of this.notifications) {
+          if (not.idNotification == notificationId) {
+            not.seen = true;
+          }
+        }
+      });
   }
 
   async getUserData() {
@@ -67,8 +62,11 @@ export class NotificationComponent implements OnInit {
       (await this.accountService.getTheLoggedInUserData());
   }
 
-  goToDescription(postId) {
-    this.route.navigate(['/description', postId]);
+  goToDescription(not: Notification) {
+    this.route.navigate(['/description', not.relatedPostId]);
+    if (!not.seen) {
+      this.notificationSeen(not.idNotification);
+    }
   }
 
   ngOnInit(): void {

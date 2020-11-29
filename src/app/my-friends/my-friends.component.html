@@ -3,6 +3,6 @@
       height="50px" />
     {{ user.firstName  + " " +   user.lastName }}</span> <button (click)="addFriend(user)" style="font-size: small;"
     *ngIf="!areFriends"
-    [class]="(status == 'pending cancel request' )? 'btn btn-danger btn-sm ml-1' :'btn btn-primary btn-sm ml-1' ">{{status}}
+    [class]="(status == 'pending cancel request' )? 'btn btn-outline-danger btn-sm ml-1' :'btn btn-outline-primary btn-sm ml-2' ">{{status}}
   </button>
 </div>

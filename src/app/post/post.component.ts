@@ -143,5 +143,11 @@ export class PostComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  async getDate() {
+    this.post.date = await this.notificationService.timeCalculation(this.post);
+  }
+
+  ngOnInit() {
+    this.getDate();
+  }
 }

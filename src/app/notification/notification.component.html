@@ -1,5 +1,5 @@
-<div style="float: right; margin-left: 10px;" class="dropdown">
-    <div class="icon" id=" dropdownMenuButton" (click)="notificationSeen()" data-toggle="dropdown">
+<div class="dropdown">
+    <div class="icon" id=" dropdownMenuButton" data-toggle="dropdown">
         <i class="fa fa-bell-o" style="color:white;" aria-hidden="true" type="button" aria-haspopup="true"
             aria-expanded="false">
             <span style="color:white; font-size: medium; margin-left: 1px;"
@@ -10,15 +10,18 @@
 
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <p *ngIf="!haveNotification"> no notification </p>
-        <div *ngFor="let not of notificationObject; let i = index">
-            <li *ngIf="not.doneBy" (click)="goToDescription(not.relatedPostId)" class="dropdown-item "
-                style="font-size: small; cursor: pointer;">
-                <img src="{{    not.doneBy.profilePhoto}}" width="30px" height="30px" style="border-radius: 50%">
-                <span class="font-weight-bold"> {{ not.doneBy.firstName + " " + not.doneBy.lastName }}
+        <div *ngFor="let not of notifications; let i = index">
+            <div *ngIf="not.doneBy" (click)="goToDescription(not)"
+                style.background-color="{{ not.seen? 'white' : 'lightgray' }}" style="border-radius: 10px;"
+                class="dropdown-item">
+                <img src="{{not.doneBy.profilePhoto}}" width="40px" height="40px" style="border-radius: 50%">
+                {{ not.doneBy.firstName + " " + not.doneBy.lastName }}
+                <span class="font-weight-bold">
+                    {{not.action}}
                 </span>
-                {{not.action}}
                 <small style="color: blue;">
-                    at {{not.date |date:'dd/MM  hh:mm' : 'UTC' }} </small></li>
-            <hr>
+                    {{not.timeUnit}} </small></div>
+
         </div>
     </div>
+</div>

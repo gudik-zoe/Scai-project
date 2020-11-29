@@ -39,3 +39,23 @@ i {
   padding: 7px;
   background-color: violet;
 }
+
+/* .dropdown-item {
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: red;
+  border-radius: 10px;
+  cursor: pointer;
+} */
+
+.dropdown-item {
+  font-size: small;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.notification:hover {
+  background-color: whitesmoke;
+}

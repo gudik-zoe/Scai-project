@@ -4,22 +4,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {
-  HttpClient,
-  HttpClientModule,
-  HTTP_INTERCEPTORS,
-} from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import { MyInterceptor } from './my-interceptor';
 import { AuthenticationGuard } from './authentication.guard';
 
 import { NavBarModule } from './nav-bar/nav-bar.module';
-import { EditPostModule } from './edit-post/edit-post.module';
-import { FriendRequestModule } from './friend-request/friend-request.module';
-import { NotificationModule } from './notification/notification.module';
-import { CreatePostModule } from './create-post/create-post.module';
-import { DeletePostModule } from './delete-post/delete-post.module';
-import { AutoFocusDirective } from './directives/auto-focus.directive';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,6 +24,7 @@ import { AutoFocusDirective } from './directives/auto-focus.directive';
   ],
   providers: [
     AuthenticationGuard,
+    DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MyInterceptor,

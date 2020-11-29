@@ -1,36 +1,31 @@
 import { HttpClient } from '@angular/common/http';
-import { isNgTemplate } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AccountService } from './account.service';
 import { Notification } from '../models/notification';
+import { DatePipe } from '@angular/common';
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationService {
   constructor(
     private http: HttpClient,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private datePipe: DatePipe
   ) {}
   notificationObject: Notification[];
 
-  basicData = [];
   rootUrl: string = environment.rootUrl;
-  addNotification(notification: Notification) {
-    return this.http.post(
-      this.rootUrl + 'notification/addNotification',
-      notification
-    );
-  }
 
   getNotification() {
-    return new Promise<Notification[]>((resolve) => {
+    return new Promise<Notification[]>((resolve, reject) => {
       this.http
         .get(this.rootUrl + 'notification/getNotification/accountId')
         .subscribe((data: Notification[]) => {
           this.notificationObject = data;
           this.getBasicData(this.notificationObject);
           resolve(this.notificationObject);
+          reject('uknown error occured');
         });
     });
   }
@@ -43,9 +38,32 @@ export class NotificationService {
     }
   }
 
-  notHasBeenSeen() {
-    this.http
-      .put(this.rootUrl + 'notification/notificationSeen/accountId', {})
-      .subscribe();
+  notHasBeenSeen(notificationId: number) {
+    return this.http.put(
+      this.rootUrl + 'notification/notificationSeen/' + notificationId,
+      {}
+    );
+  }
+
+  timeCalculation(not) {
+    return new Promise<string>((resolve, reject) => {
+      const now = new Date().getTime();
+      let timeToCalculate = now - new Date(not.date).getTime();
+      let dateInSeconds = Math.floor(timeToCalculate / 1000);
+      let dateInMinutes = Math.floor(dateInSeconds / 60);
+      let dateInHours = Math.floor(dateInMinutes / 60);
+      let dateInDays = Math.floor(dateInHours / 24);
+      if (dateInMinutes < 1) {
+        resolve('just now');
+      } else if (dateInMinutes > 1 && dateInMinutes < 59) {
+        resolve(dateInMinutes.toString() + ' mins ago');
+      } else if (dateInMinutes > 59 && dateInHours < 24) {
+        resolve(dateInHours.toString() + ' hr ago');
+      } else if (dateInHours > 24 && dateInDays < 2) {
+        resolve(dateInDays.toString() + ' days ago');
+      } else {
+        resolve(this.datePipe.transform(not.date, 'short'));
+      }
+    });
   }
 }
