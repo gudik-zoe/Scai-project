@@ -26,7 +26,10 @@ export class WhatOnMindComponent implements OnInit {
   }
 
   openDiv() {
-    this.createPost.emit(null);
+    this.createPost.emit({
+      loggedInUserData: this.userData,
+      requestedUserData: this.requestedUser,
+    });
   }
 
   ngOnInit() {

@@ -56,24 +56,22 @@
         <i style="font-size:large; cursor: pointer; color: red" (click)=" deletePost(post.idPost)" class="fa fa-trash"
           aria-hidden="true"></i>
       </div>
-      <div style="display: flex;
-    padding: 10px;
-    margin-left: 40px;
-    align-items: center;
-    justify-content: first baseline">
 
-        <img src="{{  post.doneBy.profilePhoto }}" style="width: 60px; height: 60px; border-radius: 50%;" />
-        <span class="font-weight-bold ml-1">{{post.doneBy.firstName + " " + post.doneBy.lastName}}
 
-          <i style="padding: 10px;" class="fa fa-caret-right fa-lg" aria-hidden="true"></i>
-          <img src="{{ post.postedOnData.profilePhoto }}" width="60px" height="60px" style="border-radius: 50%" />
-          {{post.postedOnData.firstName  + " " + post.postedOnData.lastName}}
-          <p style="color:gray ; font-size: x-small;">
-            {{post.date}} </p></span>
+      <span class="font-weight-bold" style=" margin-left: -180px;">
+        <img src="{{  post.doneBy.profilePhoto }}" style="width: 45px; height: 45px; border-radius: 50%;" />
+        {{post.doneBy.firstName + " " + post.doneBy.lastName}}
 
-      </div>
+        <i style="padding: 10px;" class="fa fa-caret-right fa-lg" aria-hidden="true"></i>
+        <img src="{{ post.postedOnData.profilePhoto }}" style="width: 45px; height: 45px; border-radius: 50%;" />
+        {{post.postedOnData.firstName  + " " + post.postedOnData.lastName}}
+        <p style="color:gray ; font-size: x-small; margin-left: -350px;">
+          {{post.date}} </p>
+      </span>
 
-      <p>{{post.text}}</p>
+
+
+      <p style="margin-top: 10px;">{{post.text}}</p>
       <img *ngIf="post.image" src="{{ post.image }}" style="width: 80%; height: 60%; border-radius: 10px;" />
 
     </ng-container>
@@ -124,13 +122,22 @@
     </button>
     <hr>
     <ng-container *ngIf="openCommentsList">
-      <div class="container" *ngFor="let comment of post.comments">
-        <div class="container mt-3"
-          style="background-color: whitesmoke; width:fit-content; height:fit-content; border-radius: 7px;">
+      <div class="container-fluid" *ngFor="let comment of post.comments">
+        <div class="container-fluid mt-3"
+          style="background-color: lightgray; width:100%; height:max-content; border-radius: 7px;">
           <ng-container *ngIf="comment.doneBy">
-            <img src="{{ comment.doneBy.profilePhoto }}" width="20px" style="border-radius: 50%;" height="20px" />
-            <span class="font-weight-bold">{{comment.doneBy.firstName + " " + comment.doneBy.lastName }} </span>
-            <span *ngIf="!editCommentOn || commentId != comment.idComment">{{comment.text}}</span>
+            <div *ngIf="comment.commentCreatorId == userData.idAccount" class="icon">
+              <i (click)="editComment(comment.text ,comment.idComment)"
+                *ngIf="comment.commentCreatorId == userData.idAccount" style="color: blue; cursor: pointer;"
+                class="fa fa-pencil fa-xxs" aria-hidden="true"></i>
+            </div>
+            <div *ngIf="comment.commentCreatorId == userData.idAccount" class="icon">
+              <i (click)="deleteComment(comment.idComment)" *ngIf="comment.commentCreatorId == userData.idAccount"
+                style="color: red; cursor: pointer;" class="fa fa-trash" aria-hidden="true"></i>
+            </div>
+            <img src="{{ comment.doneBy.profilePhoto }}" width="35px" style="border-radius: 50%;" height="35px" />
+            <span class="font-weight-bold">{{comment.doneBy.firstName + " " + comment.doneBy.lastName }}: </span>
+            <span *ngIf="!editCommentOn || commentId != comment.idComment" class="ml-1">{{comment.text}}</span>
             <input *ngIf="editCommentOn && commentId == comment.idComment" [(ngModel)]="editCommentValue" style="
           width: 120px;
           border-radius: 8px;
@@ -140,11 +147,7 @@
           outline: none;" />
             <button [disabled]="!editCommentValue" (click)="confirmEditComment(comment , editCommentValue)"
               *ngIf="editCommentOn && commentId == comment.idComment" class="btn btn-info btn-sm">edit</button>
-            <i (click)="editComment(comment.text ,comment.idComment)"
-              *ngIf="comment.commentCreatorId == userData.idAccount" style="float: right; color: blue; cursor: pointer;"
-              class="fa fa-pencil fa-xxs" aria-hidden="true"></i>
-            <i (click)="deleteComment(comment.idComment)" *ngIf="comment.commentCreatorId == userData.idAccount"
-              style="float: right; color: red; cursor: pointer;" class="fa fa-trash mr-1" aria-hidden="true"></i>
+
           </ng-container>
         </div>
       </div>

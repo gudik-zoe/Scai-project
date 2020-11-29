@@ -34,7 +34,7 @@
 .icon {
   float: right;
   margin-right: 20px;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   font-size: large;
   cursor: pointer;
   width: 30px;

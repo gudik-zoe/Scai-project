@@ -38,12 +38,6 @@ export class UserProfileComponent implements OnInit {
     this.route.navigate(['/account-settings']);
   }
 
-  // async getUserById() {
-  //   this.requestedUserData = await this.accountService.getAccountById(
-  //     this.getIdFromUrl()
-  //   );
-  // }
-
   async getPostsByAccountId(id: number) {
     this.requestedAccountPosts = await this.postService.getPostsByAccountId(id);
   }
@@ -54,29 +48,11 @@ export class UserProfileComponent implements OnInit {
       (await this.accountService.getTheLoggedInUserDataFullData());
   }
 
-  // goToMessengerOrAddFriend(id: number) {
-  //   if (this.status == 'add friend') {
-  //     this.friendService.sendFriendRequest(id).subscribe((data) => {
-  //       this.status = 'pending..cancel friend request';
-  //     });
-  //   } else if (this.status == 'chat') {
-  //     this.route.navigate(['/chat']);
-  //   } else if (this.status == 'sent you a friend request') {
-  //     return null;
-  //   } else {
-  //     this.friendService
-  //       .deleteOrCancelFriendRequest(this.id)
-  //       .subscribe((data) => {
-  //         this.status = 'add friend';
-  //       });
-  //   }
-  // }
-
-  openLeavePostComponent(event) {
+  openLeavePostComponent(data) {
     this.postService.leavePostComponent.next({
       leavePostComponent: true,
-      userData: this.loggedInUserData,
-      requestedUserData: this.requestedUserData,
+      userData: data.loggedInUserData,
+      requestedUserData: data.requestedUserData,
     });
   }
   getIdFromUrl() {

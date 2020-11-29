@@ -93,7 +93,7 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
             lastName: this.userData.lastName,
             profilePhoto: this.userData.profilePhoto,
           };
-          data.post.comments.push(comment);
+          data.post.comments.unshift(comment);
           this.commentText = null;
         },
         (error) => {
