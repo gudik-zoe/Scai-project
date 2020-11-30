@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
 import { FriendsService } from '../services/friends.service';
 import { Account } from '../models/account';
 import { AccountBasicData } from '../models/accountBasicData';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-friends-container',

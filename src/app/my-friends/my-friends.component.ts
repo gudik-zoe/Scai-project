@@ -27,9 +27,6 @@ export class MyFriendsComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private friendService: FriendsService
   ) {}
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
 
   @Input() user: AccountBasicData;
   @Input() userData: AccountBasicData;
@@ -80,6 +77,17 @@ export class MyFriendsComponent implements OnInit, OnDestroy {
         this.user.idAccount
       );
     }
+  }
+
+  unfriend(user: AccountBasicData) {
+    this.friendService
+      .deleteOrCancelFriendRequest(user.idAccount)
+      .subscribe((data) => {
+        this.friendService.unfriendSubject.next(user);
+      });
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   ngOnInit() {

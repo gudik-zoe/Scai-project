@@ -4,5 +4,11 @@
     {{ user.firstName  + " " +   user.lastName }}</span> <button (click)="addFriend(user)" style="font-size: small;"
     *ngIf="!areFriends"
     [class]="(status == 'pending cancel request' )? 'btn btn-outline-danger btn-sm ml-1' :'btn btn-outline-primary btn-sm ml-2' ">{{status}}
+    <i class="fa fa-user-plus" *ngIf="status == 'add friend'" aria-hidden="true"></i>
+
+  </button>
+
+  <button (click)="unfriend(user)" style="font-size: small;" *ngIf="areFriends"
+    class="btn btn-outline-danger btn-sm ml-4"> unfriend <i class="fa fa-ban" aria-hidden="true"></i>
   </button>
 </div>

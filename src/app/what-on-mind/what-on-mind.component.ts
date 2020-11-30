@@ -3,6 +3,7 @@ import { AccountService } from '../services/account.service';
 import { Account } from '../models/account';
 import { PostsService } from '../services/posts.service';
 import { AccountBasicData } from '../models/accountBasicData';
+import { Post } from '../models/post';
 
 @Component({
   selector: 'app-what-on-mind',

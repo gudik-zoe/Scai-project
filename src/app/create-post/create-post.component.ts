@@ -62,7 +62,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
             firstName: this.userData.firstName,
             lastName: this.userData.lastName,
           };
-          this.postsService.homePagePosts.unshift(data);
+          this.postsService.confirmCreatePost.next(data);
           this.userData = undefined;
           this.postTemporaryImage = undefined;
           this.inputData = undefined;

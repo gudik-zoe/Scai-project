@@ -55,7 +55,7 @@ export class NotificationService {
       let dateInDays = Math.floor(dateInHours / 24);
       if (dateInMinutes < 1) {
         resolve('just now');
-      } else if (dateInMinutes > 1 && dateInMinutes < 59) {
+      } else if (dateInMinutes >= 1 && dateInMinutes < 59) {
         resolve(dateInMinutes.toString() + ' mins ago');
       } else if (dateInMinutes > 59 && dateInHours < 24) {
         resolve(dateInHours.toString() + ' hr ago');

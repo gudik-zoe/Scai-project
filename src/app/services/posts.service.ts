@@ -1,15 +1,10 @@
-import { Injectable, ɵisListLikeIterable } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-// import { CommentStmt } from '@angular/compiler';
 import { Subject } from 'rxjs';
-import { AuthService } from './auth.service';
 import { HttpClient } from '@angular/common/http';
 import { AccountService } from './account.service';
 import { environment } from 'src/environments/environment';
 import { Post } from '../models/post';
-import { EditPost } from '../models/editPostInt';
-import { Account } from '../models/account';
-import { PostLike } from '../models/postLike';
 import { Comment } from '../models/comment';
 import { AccountBasicData } from '../models/accountBasicData';
 
@@ -33,6 +28,7 @@ export class PostsService {
   postsData = [];
   userBasicData: AccountBasicData;
   accountPosts: Post[];
+  confirmCreatePost = new Subject<Post>();
   date: number = new Date().getTime();
 
   constructor(

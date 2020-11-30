@@ -11,22 +11,6 @@
     </div>
   </div>
 
-  <!-- <div class="container-fluid" style="margin-top: 100px; margin-left: 20%;">
-  <span class="new" routerLink="/home-page">Home page</span>
-  <span class="new">My Friends</span>
-  <button (click)="goToMessengerOrAddFriend(requestedUserData.idAccount)" style="margin-left: 30%;"
-  *ngIf="requestedUserData.idAccount !== loggedInUserData.idAccount"
-  [class]="(status == 'add friend' || status == 'chat' )? 'btn btn-primary btn-sm' :'btn btn-danger btn-sm' ">{{status}}<i
-  class="fa fa-user-plus ml-1" aria-hidden="true"></i> </button>
-  <button *ngIf="requestedUserData.idAccount == loggedInUserData.idAccount" class="btn btn-info btn-sm "
-  style="margin-left: 40%;" (click)="goToEditing()">
-  <i class="fa fa-pencil" aria-hidden="true"></i>
-  Edit profile</button>
-  
-</div> -->
-
-
-
   <div class="container-fluid" *ngIf="requestedUserData.idAccount == id && loggedInUserData">
     <div class="row" style="background-color: whitesmoke;">
       <div class="col-3" style=" padding: 10px;">
@@ -68,10 +52,10 @@
           <app-posts-container [posts]="requestedAccountPosts"> </app-posts-container>
         </div>
       </div>
-      <div class="col-3 mt-2" *ngIf="friends">
+      <!-- <div class="col-3 mt-2" *ngIf="friends">
         <app-friends-container *ngIf="friends.length > 0 && requestedUserData.idAccount == loggedInUserData.idAccount"
           [users]="friends" [areFriends]="true"></app-friends-container>
-      </div>
+      </div> -->
     </div>
   </div>
 </ng-container>

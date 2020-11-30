@@ -19,6 +19,7 @@ export class FriendsService {
   relations: Relationship[];
   status: string;
   respondToRequest = new Subject<any>();
+  unfriendSubject = new Subject<any>();
   getRelationStatusBetweenMeAnd(userId: number) {
     return new Promise<string>((resolve) => {
       this.http
@@ -37,7 +38,7 @@ export class FriendsService {
           ) {
             this.status = 'pending cancel request';
           } else {
-            this.status = 'add friend';
+            this.status = 'friend';
           }
           resolve(this.status);
         });

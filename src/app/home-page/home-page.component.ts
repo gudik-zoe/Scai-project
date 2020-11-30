@@ -21,9 +21,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private friendService: FriendsService
   ) {}
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+
   input: string;
   foto: any;
   posted: boolean = false;
@@ -45,20 +43,17 @@ export class HomePageComponent implements OnInit, OnDestroy {
   friends: AccountBasicData[];
   imgUrl: string = environment.rootUrl + 'files/';
   peopleYouMayKnow: AccountBasicData[];
-  subscription: Subscription;
+  RespondToRequestSubject: Subscription;
+  UnfriendSubject: Subscription;
   image() {
     return this.userData?.profilePhoto;
   }
 
   async getFriends() {
-    this.friends =
-      this.accountService.myFriends ||
-      (await this.accountService.getAccountFriends());
+    this.friends = await this.accountService.getAccountFriends();
   }
   async getPeopleyouMayKnow() {
-    this.peopleYouMayKnow =
-      this.accountService.peopleYouMayKnow ||
-      (await this.accountService.getPeopleYouMayKnow());
+    this.peopleYouMayKnow = await this.accountService.getPeopleYouMayKnow();
   }
 
   async getUserData() {
@@ -79,7 +74,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   getRespondToRequestSubject() {
-    this.subscription = this.friendService.respondToRequest.subscribe(
+    this.RespondToRequestSubject = this.friendService.respondToRequest.subscribe(
       (data) => {
         if (data.status == 1) {
           this.peopleYouMayKnow = this.peopleYouMayKnow.filter(
@@ -92,11 +87,28 @@ export class HomePageComponent implements OnInit, OnDestroy {
     );
   }
 
+  getUnfriendSubject() {
+    this.UnfriendSubject = this.friendService.unfriendSubject.subscribe(
+      (data) => {
+        this.friends = this.friends.filter((item: AccountBasicData) => {
+          item.idAccount != data.idAccount;
+          this.peopleYouMayKnow.push(data);
+        });
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.RespondToRequestSubject.unsubscribe();
+    this.UnfriendSubject.unsubscribe();
+  }
+
   ngOnInit() {
     this.getPosts();
     this.getUserData();
     this.getFriends();
     this.getPeopleyouMayKnow();
     this.getRespondToRequestSubject();
+    this.getUnfriendSubject();
   }
 }

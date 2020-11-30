@@ -67,21 +67,19 @@ export class UserProfileComponent implements OnInit {
     this.friendService.acceptFriendRequest(id, status).subscribe((data) => {});
   }
 
-  // async getStatusWith() {
-  //   this.status = await this.friendService.getRelationStatusBetweenMeAnd(
-  //     this.id
-  //   );
-  // }
+  async getStatusWith() {
+    this.status = await this.friendService.getRelationStatusBetweenMeAnd(
+      this.id
+    );
+    console.log(this.status);
+  }
 
   async getFriends() {
-    this.friends =
-      this.accountService.myFriends ||
-      (await this.accountService.getAccountFriends());
+    this.friends = await this.accountService.getAccountFriends();
   }
 
   async getUsers() {
-    this.users =
-      this.accountService.allUsers || (await this.accountService.getAllUsers());
+    this.users = await this.accountService.getAllUsers();
   }
 
   async userProfileSetFunctions() {
@@ -89,7 +87,7 @@ export class UserProfileComponent implements OnInit {
     await this.getIdFromUrl();
     await this.getPostsByAccountId(this.id);
     await this.getUserData();
-    // await this.getStatusWith();
+    await this.getStatusWith();
     await this.getFriends();
     // await this.getUserById();
   }

@@ -21,20 +21,16 @@ import { Subscription } from 'rxjs';
 })
 export class PostsContainerComponent implements OnInit, OnDestroy {
   constructor(
-    private http: HttpClient,
     private postsService: PostsService,
     private accountService: AccountService,
-    private commentService: CommentsService,
-    private _sanitizer: DomSanitizer,
-    private route: Router,
-    private friendService: FriendsService,
-    private notificationService: NotificationService
+    private commentService: CommentsService
   ) {}
   @Input() posts: Post[];
   userData: AccountBasicData;
   commentText: string;
   errorPhrase: string;
-  public subscribtion: Subscription;
+  public deleteSubscribtion: Subscription;
+  public createPostSubscribtion: Subscription;
   async getUserData() {
     this.userData =
       this.accountService.userData ||
@@ -49,7 +45,7 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
   }
 
   confirmDeletePost() {
-    this.subscribtion = this.postsService.confirmPostDeleting.subscribe(
+    this.deleteSubscribtion = this.postsService.confirmPostDeleting.subscribe(
       (data) => {
         if (data.delete) {
           this.postsService.deletePost(data.postId).subscribe(
@@ -63,6 +59,14 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
             }
           );
         }
+      }
+    );
+  }
+
+  confirmCreatePost() {
+    this.createPostSubscribtion = this.postsService.confirmCreatePost.subscribe(
+      (data: Post) => {
+        this.posts.unshift(data);
       }
     );
   }
@@ -110,11 +114,13 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
     });
   }
   ngOnDestroy() {
-    this.subscribtion.unsubscribe();
+    this.deleteSubscribtion.unsubscribe();
+    this.createPostSubscribtion.unsubscribe();
   }
 
   ngOnInit() {
     this.getUserData();
     this.confirmDeletePost();
+    this.confirmCreatePost();
   }
 }
