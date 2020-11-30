@@ -26,7 +26,7 @@ export class LeavePostComponent implements OnInit, OnDestroy {
   formData = new FormData();
   constructor(
     private http: HttpClient,
-    private postSerice: PostsService,
+    private postService: PostsService,
     private accountService: AccountService
   ) {}
 
@@ -49,7 +49,7 @@ export class LeavePostComponent implements OnInit, OnDestroy {
       this.errorPhrase = 'you cannot add a post without a text';
     } else {
       this.formData.append('text', text);
-      this.postSerice
+      this.postService
         .postOnWall(this.requestedUserData.idAccount, this.formData)
         .subscribe(
           (data: Post) => {
@@ -68,7 +68,7 @@ export class LeavePostComponent implements OnInit, OnDestroy {
               firstName: this.requestedUserData.firstName,
               lastName: this.requestedUserData.lastName,
             };
-            this.postSerice.accountPosts.unshift(data);
+            this.postService.confirmCreatePost.next(data);
             this.inputData = undefined;
             this.postTemporaryImage = undefined;
             this.formData = new FormData();
@@ -91,11 +91,13 @@ export class LeavePostComponent implements OnInit, OnDestroy {
   }
   public subscribtion: Subscription;
   getComponentData() {
-    this.subscribtion = this.postSerice.leavePostComponent.subscribe((data) => {
-      this.leavePostComponent = data.leavePostComponent;
-      (this.userData = data.userData),
-        (this.requestedUserData = data.requestedUserData);
-    });
+    this.subscribtion = this.postService.leavePostComponent.subscribe(
+      (data) => {
+        this.leavePostComponent = data.leavePostComponent;
+        (this.userData = data.userData),
+          (this.requestedUserData = data.requestedUserData);
+      }
+    );
   }
 
   ngOnDestroy() {
