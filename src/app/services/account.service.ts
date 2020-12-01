@@ -65,7 +65,6 @@ export class AccountService {
         });
     });
   }
-
   getARandomUserData(accountId: number) {
     return this.http.get(this.rootUrl + 'api/accounts/' + accountId);
   }

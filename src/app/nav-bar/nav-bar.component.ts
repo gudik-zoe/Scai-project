@@ -60,6 +60,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   }
 
   goToProfile() {
+    // this.friendService.uploadProfile.next(this.userData);
     this.route.navigate(['/user-profile', this.userData.idAccount]);
   }
 

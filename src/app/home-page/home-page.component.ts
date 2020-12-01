@@ -45,7 +45,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   peopleYouMayKnow: AccountBasicData[];
   RespondToRequestSubject: Subscription;
   UnfriendSubject: Subscription;
-  open: boolean = false;
+  open: boolean = true;
   image() {
     return this.userData?.profilePhoto;
   }

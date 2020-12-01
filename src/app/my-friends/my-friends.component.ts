@@ -1,16 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Button } from 'protractor';
-import { AccountService } from '../services/account.service';
-import { AuthService } from '../services/auth.service';
-import { ChatService } from '../services/chat.service';
 import { FriendsService } from '../services/friends.service';
-import { PostsService } from '../services/posts.service';
-import { Account } from '../models/account';
-import { environment } from 'src/environments/environment';
-import { Relationship } from '../models/relationship';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Subscription } from 'rxjs';
 
@@ -20,13 +10,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./my-friends.component.css'],
 })
 export class MyFriendsComponent implements OnInit, OnDestroy {
-  constructor(
-    private route: Router,
-    private chatService: ChatService,
-    private accountService: AccountService,
-    private http: HttpClient,
-    private friendService: FriendsService
-  ) {}
+  constructor(private route: Router, private friendService: FriendsService) {}
 
   @Input() user: AccountBasicData;
   @Input() userData: AccountBasicData;
@@ -45,9 +29,6 @@ export class MyFriendsComponent implements OnInit, OnDestroy {
       this.friendService.sendFriendRequest(user.idAccount).subscribe((data) => {
         this.status = 'pending cancel request';
       });
-      // } else if (this.status == 'chat') {
-      //   this.route.navigate(['/chat']);
-      // }
     } else if (this.status == 'sent u a friend request') {
       return null;
     } else {

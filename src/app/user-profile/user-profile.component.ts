@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
@@ -6,7 +6,6 @@ import { AccountBasicData } from '../models/accountBasicData';
 import { Post } from '../models/post';
 import { AccountService } from '../services/account.service';
 import { FriendsService } from '../services/friends.service';
-import { NotificationService } from '../services/notification.service';
 import { PostsService } from '../services/posts.service';
 
 @Component({
@@ -18,11 +17,9 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private route: Router,
-    private service: PostsService,
     private postService: PostsService,
     private aroute: ActivatedRoute,
-    private friendService: FriendsService,
-    private notificationService: NotificationService
+    private friendService: FriendsService
   ) {}
   imgUrl: string = environment.rootUrl + 'files/';
   requestedUserData: Account;
@@ -39,6 +36,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   async getPostsByAccountId(id: number) {
+    console.log(id);
     this.requestedAccountPosts = await this.postService.getPostsByAccountId(id);
   }
 
@@ -55,10 +53,14 @@ export class UserProfileComponent implements OnInit {
       requestedUserData: data.requestedUserData,
     });
   }
-  getIdFromUrl() {
-    return new Promise<number>((resolve, reject) => {
+  getUserFromUrl() {
+    return new Promise<Account>(async (resolve, reject) => {
       this.id = parseInt(this.aroute.snapshot.paramMap.get('id'));
-      resolve(this.id);
+      this.requestedUserData = await this.accountService.getAccountById(
+        this.id
+      );
+
+      resolve(this.requestedUserData);
       reject('uknown error occured');
     });
   }
@@ -67,10 +69,8 @@ export class UserProfileComponent implements OnInit {
     this.friendService.acceptFriendRequest(id, status).subscribe((data) => {});
   }
 
-  async getStatusWith() {
-    this.status = await this.friendService.getRelationStatusBetweenMeAnd(
-      this.id
-    );
+  async getStatusWith(id) {
+    this.status = await this.friendService.getRelationStatusBetweenMeAnd(id);
     console.log(this.status);
   }
 
@@ -78,21 +78,20 @@ export class UserProfileComponent implements OnInit {
     this.friends = await this.accountService.getAccountFriends();
   }
 
-  async getUsers() {
-    this.users = await this.accountService.getAllUsers();
-  }
-
   async userProfileSetFunctions() {
-    await this.getUsers();
-    await this.getIdFromUrl();
-    await this.getPostsByAccountId(this.id);
+    await this.getUserFromUrl();
+    await this.getPostsByAccountId(this.requestedUserData.idAccount);
     await this.getUserData();
-    await this.getStatusWith();
+    await this.getStatusWith(this.requestedUserData.idAccount);
     await this.getFriends();
-    // await this.getUserById();
   }
-
   ngOnInit() {
+    this.aroute.params.subscribe((params) => {
+      const id = params['id'];
+      if (id != this.id) {
+        this.userProfileSetFunctions();
+      }
+    });
     this.userProfileSetFunctions();
   }
 }
