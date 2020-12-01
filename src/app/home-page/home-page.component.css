@@ -11,8 +11,9 @@
 
 #third-div {
   background-color: whitesmoke;
-  background-color: #926dde;
+  /* background-color: #926dde; */
 }
+
 li {
   margin-top: 20px;
   outline: none;
@@ -21,6 +22,11 @@ li:hover {
   text-decoration: underline;
   color: blue;
   cursor: pointer;
+}
+
+.side-nav-open {
+  animation: fadeInRight;
+  animation-duration: 0.5s;
 }
 
 small:hover {

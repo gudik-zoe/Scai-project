@@ -1,7 +1,7 @@
-<div class="container-fluid" *ngFor="let post of dbPosts">
-  <div *ngIf="id === post.idPost" class="row mt-3"
+<div class="container-fluid mt-5" *ngFor="let post of dbPosts">
+  <div *ngIf="id == post.idPost" class="row mt-3"
     style="height: max-content; background-color: lightgray; padding: 10px;">
-    <div class="col-md-8">
+    <div class="col-md-8 mt-5">
       <img *ngIf="post.doneBy" src="{{post.doneBy.profilePhoto}}" width="40px" height="40px"
         style="border-radius: 50%;"><span
         *ngIf="post.doneBy">{{post.doneBy.firstName + " " + post.doneBy.lastName}}</span>
@@ -23,7 +23,7 @@
       </div>
       <!-- <img src="{{    post.image}}" style="width: 80%; height: 80%" /> -->
     </div>
-    <div class="col-md-3" style="
+    <div class="col-md-3 mt-5" style="
           background-color: white;
           border-right: 1px solid black;
           border-top: 1px solid black;

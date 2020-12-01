@@ -45,6 +45,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   peopleYouMayKnow: AccountBasicData[];
   RespondToRequestSubject: Subscription;
   UnfriendSubject: Subscription;
+  open: boolean = false;
   image() {
     return this.userData?.profilePhoto;
   }
@@ -54,6 +55,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
   async getPeopleyouMayKnow() {
     this.peopleYouMayKnow = await this.accountService.getPeopleYouMayKnow();
+  }
+
+  button() {
+    this.open = !this.open;
   }
 
   async getUserData() {
