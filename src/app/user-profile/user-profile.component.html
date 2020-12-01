@@ -1,17 +1,16 @@
-<ng-container *ngFor="let requestedUserData of users ">
-  <div class="container-fluid" *ngIf="requestedUserData.idAccount == id"
-    [ngStyle]="{'background-image':'url('+ requestedUserData.coverPhoto + ')'}">
-    <!-- <img src="{{ requestedUserData.coverPhoto }}" width="100%" height="160px" style="border-radius: 10px;"> -->
-    <div class="container" style="width: 750px; height: 140px; border-radius: 10px; background-size:cover;">
-      <div class="text-center mt-5">
-        <img src="{{ requestedUserData.profilePhoto}}" width="120px" height="120px"
-          style="border-radius: 50%; margin-top: 20px;" />
-      </div>
-
+<ng-container *ngFor="let requestedUserData of users" style="background-color: white;">
+  <div class="container" *ngIf="requestedUserData.idAccount == id">
+    <div style="width: 100%; height: 250px; margin-top: 100px;">
+      <img src="{{requestedUserData.coverPhoto}}" width="100%" height="100%">
+    </div>
+    <div
+      style="border-radius: 50%;  border: 5px solid white; width: 150px; ; height:150px ; margin-top: -100px; margin-left: 10px;">
+      <img src="{{ requestedUserData.profilePhoto}}" width="100%" height="100%"
+        style="border-radius: 50%; border: 2px solid white;" />
     </div>
   </div>
 
-  <div class="container-fluid" *ngIf="requestedUserData.idAccount == id && loggedInUserData">
+  <div class="container-fluid mt-5" *ngIf="requestedUserData.idAccount == id && loggedInUserData">
     <div class="row" style="background-color: whitesmoke;">
       <div class="col-3" style=" padding: 10px;">
 
@@ -52,10 +51,7 @@
           <app-posts-container [posts]="requestedAccountPosts"> </app-posts-container>
         </div>
       </div>
-      <!-- <div class="col-3 mt-2" *ngIf="friends">
-        <app-friends-container *ngIf="friends.length > 0 && requestedUserData.idAccount == loggedInUserData.idAccount"
-          [users]="friends" [areFriends]="true"></app-friends-container>
-      </div> -->
     </div>
   </div>
+
 </ng-container>
