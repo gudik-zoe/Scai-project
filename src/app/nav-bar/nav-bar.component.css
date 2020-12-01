@@ -1,5 +1,5 @@
 .active-class {
-  color: black;
+  color: white;
   opacity: 1;
 }
 
@@ -12,14 +12,25 @@ p {
   animation-duration: 4s;
 }
 
-i {
+/* i {
   transition: all 0.2s ease-in-out;
   color: #efe5ff;
   opacity: 0.5;
   outline: none;
+} */
+
+i {
+  color: #efe5ff;
 }
-i:hover {
-  transform: scale(1.4);
+a {
+  transition: all 0.3s ease-in-out;
+  color: #efe5ff;
+  opacity: 0.6;
+  outline: none;
+}
+
+a:hover {
+  transform: scale(1);
   color: white;
   opacity: 1;
 }

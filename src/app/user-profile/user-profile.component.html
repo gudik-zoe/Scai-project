@@ -41,7 +41,7 @@
       </div>
 
       <div class="col-6">
-        <app-what-on-mind *ngIf="requestedUserData.idAccount != loggedInUserData.idAccount"
+        <app-what-on-mind *ngIf="requestedUserData.idAccount != loggedInUserData.idAccount && status == 'friends' "
           (createPost)="openLeavePostComponent($event)" [requestedUser]="requestedUserData">
         </app-what-on-mind>
 

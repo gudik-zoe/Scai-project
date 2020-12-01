@@ -38,7 +38,7 @@ export class FriendsService {
           ) {
             this.status = 'pending cancel request';
           } else {
-            this.status = 'friend';
+            this.status = 'friends';
           }
           resolve(this.status);
         });
