@@ -10,8 +10,8 @@
 }
 
 #third-div {
-  background-color: whitesmoke;
-  /* background-color: #926dde; */
+  /* background-color: whitesmoke; */
+  background-color: #926dde;
 }
 
 li {
@@ -24,9 +24,24 @@ li:hover {
   cursor: pointer;
 }
 
-.side-nav-open {
-  animation: fadeInRight;
+.friends-close {
+  animation: fadeOutUpBig;
   animation-duration: 0.5s;
+}
+
+.friends-open {
+  animation: fadeInDownBig;
+  animation-duration: 0.5s;
+}
+
+.peolpeYouMayKnow-open {
+  animation: fadeInDownBig;
+  animation-duration: 0.7s;
+}
+
+.peolpeYouMayKnow-close {
+  animation: fadeOutUpBig;
+  animation-duration: 0.6s;
 }
 
 small:hover {

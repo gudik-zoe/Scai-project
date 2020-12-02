@@ -20,7 +20,7 @@ export class FriendsService {
   status: string;
   respondToRequest = new Subject<any>();
   unfriendSubject = new Subject<any>();
-  uploadProfile = new Subject<any>();
+  openFriendsTab = new Subject<boolean>();
   getRelationStatusBetweenMeAnd(userId: number) {
     return new Promise<string>((resolve) => {
       this.http

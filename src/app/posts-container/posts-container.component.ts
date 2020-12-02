@@ -26,6 +26,7 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
     private commentService: CommentsService
   ) {}
   @Input() posts: Post[];
+  @Input() status: string;
   userData: AccountBasicData;
   commentText: string;
   errorPhrase: string;
@@ -104,6 +105,15 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
           console.log(error);
         }
       );
+  }
+
+  sharePost(data: Post) {
+    this.postsService.sharePostComponent.next({
+      post: data,
+      openComponent: true,
+      userData: this.userData,
+      doneBy: data.doneBy,
+    });
   }
 
   editPostInParent(data: Post) {

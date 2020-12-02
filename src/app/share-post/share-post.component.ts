@@ -44,9 +44,8 @@ export class SharePostComponent implements OnInit, OnDestroy {
     if (!text || text == undefined) {
       this.errorPhrase = 'add ur own text';
     } else {
-      this.postService
-        .resharePost(post.idPost, text)
-        .subscribe((data: Post) => {
+      this.postService.resharePost(post.idPost, text).subscribe(
+        (data: Post) => {
           console.log(data);
           // post.doneBy && post.postOriginalId && post.originalPostDoneBy
           (data.postLikes = []), (data.comments = []);
@@ -64,10 +63,14 @@ export class SharePostComponent implements OnInit, OnDestroy {
             idAccount: post.postCreatorId,
             profilePhoto: post.doneBy.profilePhoto,
           };
-          this.postService.homePagePosts.unshift(data);
+          this.postService.confirmCreatePost.next(data);
           this.inputData = undefined;
           this.sharePostComponent = false;
-        });
+        },
+        (error) => {
+          this.errorPhrase = error.error.message;
+        }
+      );
     }
   }
   ngOnDestroy() {

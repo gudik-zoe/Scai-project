@@ -7,6 +7,7 @@ import { PostsContainerModule } from '../posts-container/posts-container.module'
 import { LeavePostModule } from '../leave-post/leave-post.module';
 import { WhatOnMindModule } from '../what-on-mind/what-on-mind.module';
 import { FriendsContainerModule } from '../friends-container/friends-container.module';
+import { SharePostModule } from '../share-post/share-post.module';
 
 const routes: Routes = [{ path: ':id', component: UserProfileComponent }];
 
@@ -20,6 +21,7 @@ const routes: Routes = [{ path: ':id', component: UserProfileComponent }];
     LeavePostModule,
     WhatOnMindModule,
     FriendsContainerModule,
+    SharePostModule,
   ],
 })
 export class UserProfileModule {}

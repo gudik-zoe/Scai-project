@@ -3,9 +3,9 @@
     <div id="first-div" class="col-md-3">
       <app-side-bar></app-side-bar>
     </div>
+    <!-- ngClass="{{ open ? 'col-md-6' : 'col-md-9' }}" -->
+    <div id="second-div" class="col-md-6">
 
-    <div id="second-div" ngClass="{{ open ? 'col-md-6' : 'col-md-9' }}">
-      <button (click)="button()"> click</button>
       <app-what-on-mind (createPost)="openDiv($event)"></app-what-on-mind>
 
 
@@ -13,18 +13,21 @@
       <h2 style="color: blue" class="font-weight-bold">News Feed</h2>
       <hr />
 
-      <app-posts-container [posts]="dbPosts"> </app-posts-container>
+      <app-posts-container [posts]="dbPosts" [status]="status"> </app-posts-container>
 
     </div>
-    <div id="third-div" class="col-md-3">
-      <div class="side-nav-open" *ngIf="friends && peopleYouMayKnow && open">
-        <app-friends-container *ngIf="friends.length > 0" [users]="friends" [areFriends]="true"></app-friends-container>
-        <br>
+    <div *ngIf="open" id="third-div" class="col-md-3">
+      <div ngClass="{{openFriends == 1 ? 'friends-open' : 'friends-close'}}">
+        <app-friends-container *ngIf="friends.length > 0" [users]="friends" [areFriends]="true">
+        </app-friends-container>
+      </div>
+      <br>
+      <div ngClass="{{openFriends == 1 ? 'peolpeYouMayKnow-open' : 'peolpeYouMayKnow-close'}}">
         <app-friends-container *ngIf="peopleYouMayKnow.length > 0" [users]="peopleYouMayKnow" [areFriends]="false">
         </app-friends-container>
-        <br>
       </div>
     </div>
+
   </div>
   <app-share-post></app-share-post>
 </div>

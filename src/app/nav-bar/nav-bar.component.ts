@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AccountService } from '../services/account.service';
-import { Account } from '../models/account';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Subscription } from 'rxjs';
@@ -16,8 +15,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   constructor(
     private accountService: AccountService,
     private route: Router,
-    private aroute: ActivatedRoute,
-    private friendService: FriendsService
+    private friendsService: FriendsService
   ) {}
 
   loggedIn: boolean;
@@ -42,6 +40,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   delete() {
     this.accountService.deleteAccount().subscribe((data) => {});
+  }
+  openFriendsTab() {
+    this.friendsService.openFriendsTab.next(true);
   }
 
   deactivate() {

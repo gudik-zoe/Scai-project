@@ -1,4 +1,5 @@
 <div class="container-fluid">
+  <!-- <div class="container"> -->
   <div *ngIf="userData" class="post-container">
     <ng-container *ngIf="post.doneBy && !post.postOriginalId && !post.postedOn">
       <img src="{{  post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%; float: left;" height="50px" />
@@ -100,14 +101,14 @@
       style="cursor: pointer; color: blue; font-weight: bold; margin-left: 130px">description</span>
     <hr />
 
-    <button [disabled]="post.postOriginalId && !post.originalPostDoneBy"
+    <button [disabled]="post.postOriginalId && !post.originalPostDoneBy || status != 'friends'"
       [ngClass]="getLike() ? 'btn btn-primary btn-md col-md-3' : 'btn btn-light btn-md col-md-3'" (click)="like(post)">
       <i class="fa fa-thumbs-up" aria-hidden="true"></i>
       like
     </button>
 
 
-    <button [disabled]="post.postOriginalId && !post.originalPostDoneBy"
+    <button [disabled]="post.postOriginalId && !post.originalPostDoneBy || status != 'friends'"
       [ngClass]="getComment() ? 'btn btn-primary btn-md col-md-3 ml-2' : 'btn btn-light btn-md col-md-3 ml-2'"
       (click)="comment(post , commentText)">
       <i class="fa fa-comments" aria-hidden="true"></i>
@@ -115,7 +116,8 @@
     </button>
 
 
-    <button [disabled]="post.postOriginalId && !post.originalPostDoneBy || post.postCreatorId == userData.idAccount"
+    <button
+      [disabled]="post.postOriginalId && !post.originalPostDoneBy || post.postCreatorId == userData.idAccount || post.postedOn || status != 'friends'"
       (click)="sharePost(post)" class="btn btn-light btn-md col-md-3 ml-2">
       <i class="fa fa-share-alt" aria-hidden="true"></i>
       share
@@ -145,7 +147,8 @@
           border-style: none;
           margin-left: 10px;
           outline: none;" />
-            <button [disabled]="!editCommentValue" (click)="confirmEditComment(comment , editCommentValue)"
+            <button [disabled]="!editCommentValue && status == 'friends'"
+              (click)="confirmEditComment(comment , editCommentValue)"
               *ngIf="editCommentOn && commentId == comment.idComment" class="btn btn-info btn-sm">edit</button>
 
           </ng-container>
@@ -165,4 +168,5 @@
       <p class="text-danger">{{errorPhrase}}</p>
     </div>
   </div>
+  <!-- </div> -->
 </div>

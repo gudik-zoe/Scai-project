@@ -1,14 +1,10 @@
-import { Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
 import { PostsService } from '../services/posts.service';
-import { Component, OnDestroy, OnInit, Sanitizer } from '@angular/core';
-import { PostLike } from '../models/postLike';
-import { Account } from '../models/account';
-import { environment } from 'src/environments/environment';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FriendsService } from '../services/friends.service';
-import { Relationship } from '../models/relationship';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Subscription } from 'rxjs';
+import { Post } from '../models/post';
 
 @Component({
   selector: 'app-home-page',
@@ -21,31 +17,16 @@ export class HomePageComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private friendService: FriendsService
   ) {}
-
-  input: string;
-  foto: any;
-  posted: boolean = false;
-  editedComment: string;
-  commentData: string = null;
-  inputData: string;
-  id: number;
-  show: boolean = false;
-  users: Account[];
-  error: boolean = false;
-  alertComponent: boolean = false;
   userData: AccountBasicData;
-  loggedInUserData;
-  name: String;
-  postLikes: PostLike;
-  myImage;
-  postImage;
-  dbPosts;
+  dbPosts: Post[];
   friends: AccountBasicData[];
-  imgUrl: string = environment.rootUrl + 'files/';
   peopleYouMayKnow: AccountBasicData[];
   RespondToRequestSubject: Subscription;
   UnfriendSubject: Subscription;
-  open: boolean = true;
+  open: boolean = false;
+  openFriends: number = 0;
+  openFriendsubscription: Subscription;
+  status: string = 'friends';
   image() {
     return this.userData?.profilePhoto;
   }
@@ -57,8 +38,20 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.peopleYouMayKnow = await this.accountService.getPeopleYouMayKnow();
   }
 
-  button() {
-    this.open = !this.open;
+  openFriendTab() {
+    this.openFriendsubscription = this.friendService.openFriendsTab.subscribe(
+      (data: Boolean) => {
+        if (!this.open) {
+          this.openFriends = 1;
+          this.open = true;
+        } else {
+          this.openFriends = 0;
+          setTimeout(() => {
+            this.open = false;
+          }, 500);
+        }
+      }
+    );
   }
 
   async getUserData() {
@@ -106,6 +99,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.RespondToRequestSubject.unsubscribe();
     this.UnfriendSubject.unsubscribe();
+    this.openFriendsubscription.unsubscribe();
   }
 
   ngOnInit() {
@@ -115,5 +109,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.getPeopleyouMayKnow();
     this.getRespondToRequestSubject();
     this.getUnfriendSubject();
+    this.openFriendTab();
   }
 }

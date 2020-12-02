@@ -36,7 +36,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   async getPostsByAccountId(id: number) {
-    console.log(id);
     this.requestedAccountPosts = await this.postService.getPostsByAccountId(id);
   }
 
@@ -69,13 +68,9 @@ export class UserProfileComponent implements OnInit {
     this.friendService.acceptFriendRequest(id, status).subscribe((data) => {});
   }
 
-  async getStatusWith(id) {
+  async getStatusWith(id: number) {
     this.status = await this.friendService.getRelationStatusBetweenMeAnd(id);
     console.log(this.status);
-  }
-
-  async getFriends() {
-    this.friends = await this.accountService.getAccountFriends();
   }
 
   async userProfileSetFunctions() {
@@ -83,7 +78,6 @@ export class UserProfileComponent implements OnInit {
     await this.getPostsByAccountId(this.requestedUserData.idAccount);
     await this.getUserData();
     await this.getStatusWith(this.requestedUserData.idAccount);
-    await this.getFriends();
   }
   ngOnInit() {
     this.aroute.params.subscribe((params) => {

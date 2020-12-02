@@ -22,12 +22,14 @@ export class PostComponent implements OnInit {
   @Input() post: Post;
   @Input() userData: AccountBasicData;
   @Input() commentText: string;
+  @Input() status: string;
 
   @Output() testOutput = new EventEmitter<Post>();
   @Output() deletePostEvent = new EventEmitter<number>();
   @Output() likePostEvent = new EventEmitter<Post>();
   @Output() commentPostEvent = new EventEmitter<any>();
   @Output() editPostEvent = new EventEmitter<any>();
+  @Output() sharePostEvent = new EventEmitter<any>();
 
   openCommentsList: boolean = false;
   editCommentOn: boolean;
@@ -43,12 +45,9 @@ export class PostComponent implements OnInit {
   errorPhrase: string = '';
 
   constructor(
-    private postsService: PostsService,
     private commentService: CommentsService,
     private route: Router,
-    private accountService: AccountService,
-    private notificationService: NotificationService,
-    private http: HttpClient
+    private notificationService: NotificationService
   ) {}
 
   like(post: Post) {
@@ -69,13 +68,17 @@ export class PostComponent implements OnInit {
     this.route.navigate(['/description', id]);
   }
 
-  sharePost(post) {
-    this.postsService.sharePostComponent.next({
-      post,
-      openComponent: true,
-      userData: this.userData,
-      doneBy: post.doneBy,
-    });
+  // sharePost(post) {
+  //   this.postsService.sharePostComponent.next({
+  //     post,
+  //     openComponent: true,
+  //     userData: this.userData,
+  //     doneBy: post.doneBy,
+  //   });
+  // }
+
+  sharePost(post: Post) {
+    this.sharePostEvent.emit(post);
   }
 
   editPost(post: Post) {
