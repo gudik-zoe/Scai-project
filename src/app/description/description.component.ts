@@ -3,6 +3,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Post } from '../models/post';
+import { CommentLike } from '../models/commentLike';
 import { AccountService } from '../services/account.service';
 import { PostsService } from '../services/posts.service';
 
@@ -14,6 +15,7 @@ import { PostsService } from '../services/posts.service';
 export class DescriptionComponent implements OnInit {
   imgUrl: string = environment.rootUrl + 'files/';
   dbPosts: Post[];
+  post: Post;
   id: number;
   postLikersList: object;
 
@@ -24,7 +26,21 @@ export class DescriptionComponent implements OnInit {
   ) {}
 
   async getPosts() {
-    this.dbPosts = await this.postsService.getAllPosts();
+    // this.dbPosts = await this.postsService.getAllPosts();
+    this.post = await this.postsService.getPostByPostId(this.id);
+    return new Promise(async (resolve) => {
+      for (let comment of this.post.comments) {
+        if (comment.commentLike.length > 0) {
+          for (let like of comment.commentLike) {
+            like.doneBy = await this.accountService.getBasicAccountDetails(
+              like.commentLikeCreatorId
+            );
+          }
+        }
+      }
+      console.log(this.post);
+      resolve(this.post);
+    });
   }
 
   ngOnInit() {

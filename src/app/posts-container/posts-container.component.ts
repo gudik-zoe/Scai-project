@@ -87,6 +87,7 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
       .addCommment(data.post, data.commentText.trim())
       .subscribe(
         (comment: Comment) => {
+          comment.commentLike = [];
           comment.doneBy = {
             idAccount: this.userData.idAccount,
             firstName: this.userData.firstName,

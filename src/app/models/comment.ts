@@ -8,4 +8,5 @@ export class Comment {
   relatedPostId: number;
   commentLike: CommentLike[];
   doneBy?: AccountBasicData;
+  date?: string;
 }

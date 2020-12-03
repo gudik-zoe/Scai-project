@@ -1,6 +1,5 @@
-<div class="container-fluid mt-5" *ngFor="let post of dbPosts">
-  <div *ngIf="id == post.idPost" class="row mt-3"
-    style="height: max-content; background-color: lightgray; padding: 10px;">
+<div class="container-fluid mt-5">
+  <div *ngIf="post" class="row mt-3" style="height: max-content; background-color: lightgray; padding: 10px;">
     <div class="col-md-8 mt-5">
       <img *ngIf="post.doneBy" src="{{post.doneBy.profilePhoto}}" width="40px" height="40px"
         style="border-radius: 50%;"><span
@@ -52,6 +51,15 @@
                 {{ comment.text }}
               </span>
             </div>
+            <span *ngIf="comment.commentLike.length > 0" style="background-color: lightgray; border-radius: 8px;"
+              class="comment-number">
+              <img src="../../assets/download (1).jpg" width="20px" height="20px" style="border-radius:50% ;">
+              {{comment.commentLike.length}}
+              <div class="comment-info" *ngIf="comment.commentLike">
+                <div *ngFor="let like of comment.commentLike">
+                  {{like.doneBy.firstName + " " + like.doneBy.lastName }}</div>
+              </div>
+            </span>
           </li>
         </ul>
       </div>

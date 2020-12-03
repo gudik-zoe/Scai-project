@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { Post } from '../models/post';
 import { Comment } from '../models/comment';
 import { AccountBasicData } from '../models/accountBasicData';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root',
@@ -32,100 +33,113 @@ export class PostsService {
 
   constructor(
     private accountService: AccountService,
-    private http: HttpClient
+    private http: HttpClient,
+    private notificationService: NotificationService
   ) {}
 
-  async getPostOriginalUserData(posts: Post[]) {
-    for (let post of posts) {
-      if (post.postOriginalId) {
-        const postData = posts.find(
-          (item) => item.idPost == post.postOriginalId
+  async getPostOriginalUserData(post: Post) {
+    const postData = this.homePagePosts.find(
+      (item) => item.idPost == post.postOriginalId
+    );
+    if (postData) {
+      post.text = postData.text;
+      post.image = postData.image;
+      post.likesNumber = postData.postLikes.length;
+      post.commentsNumber = postData.comments.length;
+      post.originalPostDoneBy = postData.doneBy;
+    } else {
+      const postData = await this.getPostByPostId(post.postOriginalId);
+      if (postData) {
+        const checkIfUserExistInBasicDataArray = this.accountService.accountBasicData.find(
+          (item) => item.idAccount == postData.postCreatorId
         );
-        if (postData) {
+        if (checkIfUserExistInBasicDataArray) {
           post.text = postData.text;
           post.image = postData.image;
           post.likesNumber = postData.postLikes.length;
           post.commentsNumber = postData.comments.length;
-          post.originalPostDoneBy = postData.doneBy;
+          post.originalPostDoneBy = checkIfUserExistInBasicDataArray;
         } else {
-          const postData = await this.getPostByPostId(post.postOriginalId);
-          if (postData) {
-            const checkIfUserExistInBasicDataArray = this.accountService.accountBasicData.find(
-              (item) => item.idAccount == postData.postCreatorId
-            );
-            if (checkIfUserExistInBasicDataArray) {
-              post.text = postData.text;
-              post.image = postData.image;
-              post.likesNumber = postData.postLikes.length;
-              post.commentsNumber = postData.comments.length;
-              post.originalPostDoneBy = checkIfUserExistInBasicDataArray;
-            } else {
-              this.userBasicData = await this.accountService.getBasicAccountDetails(
-                postData.postCreatorId
-              );
-              post.text = postData.text;
-              post.image = postData.image;
-              post.likesNumber = postData.postLikes.length;
-              post.commentsNumber = postData.comments.length;
-              post.originalPostDoneBy = this.userBasicData;
-            }
-          }
+          this.userBasicData = await this.accountService.getBasicAccountDetails(
+            postData.postCreatorId
+          );
+          post.text = postData.text;
+          post.image = postData.image;
+          post.likesNumber = postData.postLikes.length;
+          post.commentsNumber = postData.comments.length;
+          post.originalPostDoneBy = this.userBasicData;
         }
       }
     }
   }
 
-  async getUserDetails(posts: Post[]) {
-    for (let post of posts) {
+  async getUserDetails(post: Post) {
+    this.userBasicData = await this.accountService.getBasicAccountDetails(
+      post.postCreatorId
+    );
+    post.doneBy = this.userBasicData;
+    if (post.postedOn) {
       this.userBasicData = await this.accountService.getBasicAccountDetails(
-        post.postCreatorId
+        post.postedOn
       );
-      post.doneBy = this.userBasicData;
-      if (post.postedOn) {
-        this.userBasicData = await this.accountService.getBasicAccountDetails(
-          post.postedOn
-        );
-        post.postedOnData = this.userBasicData;
-      }
-      for (let comment of post.comments) {
-        this.userBasicData = await this.accountService.getBasicAccountDetails(
-          comment.commentCreatorId
-        );
-        comment.doneBy = this.userBasicData;
-      }
-      for (let like of post.postLikes) {
-        this.userBasicData = await this.accountService.getBasicAccountDetails(
-          like.postLikeCreatorId
-        );
-        like.doneBy = this.userBasicData;
+      post.postedOnData = this.userBasicData;
+    }
+    for (let comment of post.comments) {
+      this.userBasicData = await this.accountService.getBasicAccountDetails(
+        comment.commentCreatorId
+      );
+      comment.doneBy = this.userBasicData;
+      if (comment.date) {
+        comment.date = await this.notificationService.timeCalculation(comment);
       }
     }
-    this.getPostOriginalUserData(posts);
+    for (let like of post.postLikes) {
+      this.userBasicData = await this.accountService.getBasicAccountDetails(
+        like.postLikeCreatorId
+      );
+      like.doneBy = this.userBasicData;
+    }
+    post.date = await this.notificationService.timeCalculation(post);
   }
 
+  // async getDate() {
+  //   this.post.date = await this.notificationService.timeCalculation(this.post);
+  //   for (let comment of this.post.comments) {
+  //     if (comment.date) {
+  //       comment.date = await this.notificationService.timeCalculation(
+  //         comment.date
+  //       );
+  //     }
+  //   }
+  // }
   getHomePagePosts() {
     return new Promise<Post[]>((resolve) => {
       this.http
         .get(this.rootUrl + 'homePage/posts')
         .subscribe((data: Post[]) => {
           this.homePagePosts = data;
-          this.getUserDetails(this.homePagePosts);
+          for (let post of this.homePagePosts) {
+            this.getUserDetails(post);
+            if (post.postOriginalId) {
+              this.getPostOriginalUserData(post);
+            }
+          }
           resolve(this.homePagePosts);
         });
     });
   }
 
-  getAllPosts() {
-    return new Promise<Post[]>((resolve) => {
-      this.http
-        .get(this.rootUrl + 'posts/allPosts')
-        .subscribe((data: Post[]) => {
-          this.allPosts = data;
-          this.getUserDetails(this.allPosts);
-          resolve(this.allPosts);
-        });
-    });
-  }
+  // getAllPosts() {
+  //   return new Promise<Post[]>((resolve) => {
+  //     this.http
+  //       .get(this.rootUrl + 'posts/allPosts')
+  //       .subscribe((data: Post[]) => {
+  //         this.allPosts = data;
+  //         this.getUserDetails(this.allPosts);
+  //         resolve(this.allPosts);
+  //       });
+  //   });
+  // }
 
   getPostsByAccountId(id: number) {
     return new Promise<Post[]>((resolve) => {
@@ -133,7 +147,12 @@ export class PostsService {
         .get(this.rootUrl + 'posts/accountId/' + id)
         .subscribe((data: Post[]) => {
           this.accountPosts = data;
-          this.getUserDetails(this.accountPosts);
+          for (let post of this.accountPosts) {
+            this.getUserDetails(post);
+            if (post.postOriginalId) {
+              this.getPostOriginalUserData(post);
+            }
+          }
           resolve(this.accountPosts);
         });
     });
@@ -151,7 +170,10 @@ export class PostsService {
         .get(this.rootUrl + '/posts/postId/' + id)
         .subscribe((data: Post) => {
           this.post = data;
-          // this.getPostDetail(this.post);
+          this.getUserDetails(this.post);
+          if (this.post.postOriginalId) {
+            this.getPostOriginalUserData(this.post);
+          }
           resolve(this.post);
           reject('there is no post with this id');
         });
