@@ -22,6 +22,16 @@
   transform: scale(1);
 }
 
+.edit-comment-input {
+  width: fit-content;
+  border-radius: 8px;
+  background-color: white;
+  margin-bottom: 5px;
+  border-style: none;
+  margin-left: 10px;
+  outline: none;
+}
+
 .inputfile {
   width: 0.1px;
   height: 0.1px;
@@ -29,6 +39,44 @@
   overflow: hidden;
   position: absolute;
   z-index: -1;
+}
+
+.commentLike {
+  cursor: pointer;
+  color: blue;
+  float: right;
+}
+
+.commentUnLike {
+  cursor: pointer;
+  color: black;
+  float: right;
+}
+
+.comment-number:hover .comment-info {
+  visibility: visible;
+}
+
+.comment-info {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 5;
+}
+
+#commentLike {
+  transition: all 0.2s ease-in-out;
+}
+
+#commentLike:hover {
+  transform: scale(1.5);
 }
 
 .icon {

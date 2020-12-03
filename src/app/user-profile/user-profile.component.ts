@@ -58,7 +58,6 @@ export class UserProfileComponent implements OnInit {
       this.requestedUserData = await this.accountService.getAccountById(
         this.id
       );
-
       resolve(this.requestedUserData);
       reject('uknown error occured');
     });
@@ -69,8 +68,11 @@ export class UserProfileComponent implements OnInit {
   }
 
   async getStatusWith(id: number) {
-    this.status = await this.friendService.getRelationStatusBetweenMeAnd(id);
-    console.log(this.status);
+    if (id == this.loggedInUserData.idAccount) {
+      this.status = 'friends';
+    } else {
+      this.status = await this.friendService.getRelationStatusBetweenMeAnd(id);
+    }
   }
 
   async userProfileSetFunctions() {

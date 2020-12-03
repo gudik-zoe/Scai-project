@@ -48,7 +48,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
           this.openFriends = 0;
           setTimeout(() => {
             this.open = false;
-          }, 500);
+          }, 300);
         }
       }
     );

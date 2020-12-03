@@ -10,7 +10,6 @@ import { Post } from '../models/post';
 })
 export class CommentsService {
   rootUrl: string = environment.rootUrl;
-  date: number = new Date().getTime();
   constructor(
     private http: HttpClient,
     private accountService: AccountService
@@ -33,7 +32,7 @@ export class CommentsService {
 
   likeComment(commentId: number) {
     return this.http.post(
-      this.rootUrl + 'commentLikes/idAccount' + commentId,
+      this.rootUrl + 'commentLikes/idAccount/' + commentId,
       {}
     );
   }

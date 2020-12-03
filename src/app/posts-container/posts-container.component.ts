@@ -1,18 +1,13 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { Router } from '@angular/router';
-import { Account } from '../models/account';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Post } from '../models/post';
 import { AccountService } from '../services/account.service';
 import { CommentsService } from '../services/comments.service';
-import { FriendsService } from '../services/friends.service';
 import { PostsService } from '../services/posts.service';
-import { NotificationService } from '../services/notification.service';
 import { Comment } from '../models/comment';
 import { PostLike } from '../models/postLike';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Subscription } from 'rxjs';
+import { CommentLike } from '../models/commentLike';
 
 @Component({
   selector: 'app-posts-container',
@@ -105,6 +100,20 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
           console.log(error);
         }
       );
+  }
+  likeCommentInParent(comment: Comment) {
+    this.commentService.likeComment(comment.idComment).subscribe(
+      (data: CommentLike) => {
+        if (data) {
+          comment.commentLike.push(data);
+        } else {
+          comment.commentLike.pop();
+        }
+      },
+      (error) => {
+        this.errorPhrase = error.error.message;
+      }
+    );
   }
 
   sharePost(data: Post) {

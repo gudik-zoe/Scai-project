@@ -29,7 +29,6 @@ export class PostsService {
   userBasicData: AccountBasicData;
   accountPosts: Post[];
   confirmCreatePost = new Subject<Post>();
-  date: number = new Date().getTime();
 
   constructor(
     private accountService: AccountService,
@@ -174,10 +173,7 @@ export class PostsService {
   // }
 
   likePost(postId: number) {
-    return this.http.post(
-      this.rootUrl + 'postLikes/accountId/' + this.date + '/' + postId,
-      {}
-    );
+    return this.http.post(this.rootUrl + 'postLikes/accountId/' + postId, {});
   }
 
   addPost(formData: FormData) {

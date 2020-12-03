@@ -57,8 +57,6 @@
         <i style="font-size:large; cursor: pointer; color: red" (click)=" deletePost(post.idPost)" class="fa fa-trash"
           aria-hidden="true"></i>
       </div>
-
-
       <span class="font-weight-bold" style=" margin-left: -180px;">
         <img src="{{  post.doneBy.profilePhoto }}" style="width: 45px; height: 45px; border-radius: 50%;" />
         {{post.doneBy.firstName + " " + post.doneBy.lastName}}
@@ -69,12 +67,8 @@
         <p style="color:gray ; font-size: x-small; margin-left: -350px;">
           {{post.date}} </p>
       </span>
-
-
-
       <p style="margin-top: 10px;">{{post.text}}</p>
       <img *ngIf="post.image" src="{{ post.image }}" style="width: 80%; height: 60%; border-radius: 10px;" />
-
     </ng-container>
 
 
@@ -124,10 +118,13 @@
     </button>
     <hr>
     <ng-container *ngIf="openCommentsList">
-      <div class="container-fluid" *ngFor="let comment of post.comments">
-        <div class="container-fluid mt-3"
-          style="background-color: lightgray; width:100%; height:max-content; border-radius: 7px;">
-          <ng-container *ngIf="comment.doneBy">
+      <div class="container" *ngFor="let comment of post.comments">
+        <div *ngIf="comment.doneBy" class="container-fluid mt-3" style=" display: flex;
+        align-items: flex-start;
+        justify-content: left;
+         ">
+          <img src="{{ comment.doneBy.profilePhoto }}" width="35px" style="border-radius: 50%;" height="35px" />
+          <div class="container-fluid" style="background-color: whitesmoke; border-radius: 8px; padding: 5px;">
             <div *ngIf="comment.commentCreatorId == userData.idAccount" class="icon">
               <i (click)="editComment(comment.text ,comment.idComment)"
                 *ngIf="comment.commentCreatorId == userData.idAccount" style="color: blue; cursor: pointer;"
@@ -137,22 +134,31 @@
               <i (click)="deleteComment(comment.idComment)" *ngIf="comment.commentCreatorId == userData.idAccount"
                 style="color: red; cursor: pointer;" class="fa fa-trash" aria-hidden="true"></i>
             </div>
-            <img src="{{ comment.doneBy.profilePhoto }}" width="35px" style="border-radius: 50%;" height="35px" />
-            <span class="font-weight-bold">{{comment.doneBy.firstName + " " + comment.doneBy.lastName }}: </span>
-            <span *ngIf="!editCommentOn || commentId != comment.idComment" class="ml-1">{{comment.text}}</span>
-            <input *ngIf="editCommentOn && commentId == comment.idComment" [(ngModel)]="editCommentValue" style="
-          width: 120px;
-          border-radius: 8px;
-          background-color: white;
-          border-style: none;
-          margin-left: 10px;
-          outline: none;" />
+            <i [ngClass]=" getCommentLike(comment) ? 'commentLike' : 'commentUnLike' "
+              *ngIf="userData.idAccount != comment.commentCreatorId" (click)="likeComment(comment)"
+              class="fa fa-thumbs-up fa-lg" id="commentLike" aria-hidden="true"></i>
+            <span class="font-weight-bold" style="float: left;">
+              {{comment.doneBy.firstName + " " + comment.doneBy.lastName }}: </span>
+            <br>
+            <p *ngIf="!editCommentOn || commentId != comment.idComment" style="float: left;">{{comment.text}}
+            </p>
+
+            <input *ngIf="editCommentOn && commentId == comment.idComment" [(ngModel)]="editCommentValue"
+              class="edit-comment-input" />
             <button [disabled]="!editCommentValue && status == 'friends'"
               (click)="confirmEditComment(comment , editCommentValue)"
               *ngIf="editCommentOn && commentId == comment.idComment" class="btn btn-info btn-sm">edit</button>
+          </div>
 
-          </ng-container>
         </div>
+        <span *ngIf="comment.commentLike.length > 0" (mouseenter)="hoverFunction(comment)" class="comment-number"
+          style="background-color: lightgray; border-radius: 9px; padding: 5px;  margin-left:350px ; width: min-content; ">
+          <img src="../../assets/download (1).jpg" width="20px" height="20px"
+            style="border-radius:50% ;">{{comment.commentLike.length}} <span class="comment-info"
+            *ngFor="let liker of commentLikers ; let i = index">
+            {{ commentLikers[i].firstName + " " + commentLikers[i].lastName }}
+          </span></span>
+
       </div>
     </ng-container>
     <div style="margin-top: 10px;">

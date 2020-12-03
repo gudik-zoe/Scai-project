@@ -1,16 +1,12 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { Post } from '../models/post';
 import { PostLike } from '../models/postLike';
-import { AccountService } from '../services/account.service';
 import { CommentsService } from '../services/comments.service';
 import { NotificationService } from '../services/notification.service';
-import { PostsService } from '../services/posts.service';
 import { Comment } from '../models/comment';
-import { Account } from '../models/account';
 import { AccountBasicData } from '../models/accountBasicData';
+import { CommentLike } from '../models/commentLike';
 
 @Component({
   selector: 'app-post',
@@ -18,7 +14,6 @@ import { AccountBasicData } from '../models/accountBasicData';
   styleUrls: ['./post.component.css'],
 })
 export class PostComponent implements OnInit {
-  imgUrl: string = environment.rootUrl + 'files/';
   @Input() post: Post;
   @Input() userData: AccountBasicData;
   @Input() commentText: string;
@@ -28,21 +23,16 @@ export class PostComponent implements OnInit {
   @Output() deletePostEvent = new EventEmitter<number>();
   @Output() likePostEvent = new EventEmitter<Post>();
   @Output() commentPostEvent = new EventEmitter<any>();
-  @Output() editPostEvent = new EventEmitter<any>();
+  @Output() likeCommentEvent = new EventEmitter<Comment>();
+  @Output() editPostEvent = new EventEmitter<Post>();
   @Output() sharePostEvent = new EventEmitter<any>();
 
   openCommentsList: boolean = false;
   editCommentOn: boolean;
   commentId: number;
-
   editCommentValue: string;
-  editMode: boolean = false;
-  postEditText: string;
-  hideImage: boolean = false;
-  myImage;
-  postImage;
-  imageString: string;
   errorPhrase: string = '';
+  commentLikers: AccountBasicData[];
 
   constructor(
     private commentService: CommentsService,
@@ -64,18 +54,12 @@ export class PostComponent implements OnInit {
     }
   }
 
+  likeComment(comment: Comment) {
+    this.likeCommentEvent.emit(comment);
+  }
   toDescription(id: number) {
     this.route.navigate(['/description', id]);
   }
-
-  // sharePost(post) {
-  //   this.postsService.sharePostComponent.next({
-  //     post,
-  //     openComponent: true,
-  //     userData: this.userData,
-  //     doneBy: post.doneBy,
-  //   });
-  // }
 
   sharePost(post: Post) {
     this.sharePostEvent.emit(post);
@@ -106,6 +90,30 @@ export class PostComponent implements OnInit {
       return check;
     }
     return false;
+  }
+
+  getCommentLike(comment: Comment) {
+    if (this.userData) {
+      const check = comment.commentLike.find(
+        (item: CommentLike) =>
+          item.commentLikeCreatorId == this.userData.idAccount
+      );
+      return check;
+    }
+    return false;
+  }
+
+  hoverFunction(comment: Comment) {
+    if (comment.commentLike.length > 0) {
+      this.commentService
+        .getCommentLikers(comment.idComment)
+        .subscribe((data: AccountBasicData[]) => {
+          this.commentLikers = data;
+          console.log(this.commentLikers);
+        });
+    } else {
+      return null;
+    }
   }
 
   goToDescription(id: number): void {
