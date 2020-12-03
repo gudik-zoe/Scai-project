@@ -8,6 +8,7 @@ import { PostLike } from '../models/postLike';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Subscription } from 'rxjs';
 import { CommentLike } from '../models/commentLike';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-posts-container',
@@ -18,7 +19,8 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
   constructor(
     private postsService: PostsService,
     private accountService: AccountService,
-    private commentService: CommentsService
+    private commentService: CommentsService,
+    private notificationService: NotificationService
   ) {}
   @Input() posts: Post[];
   @Input() status: string;
@@ -61,7 +63,8 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
 
   confirmCreatePost() {
     this.createPostSubscribtion = this.postsService.confirmCreatePost.subscribe(
-      (data: Post) => {
+      async (data: Post) => {
+        data.date = await this.notificationService.timeCalculation(data);
         this.posts.unshift(data);
       }
     );
@@ -86,7 +89,7 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
     this.commentService
       .addCommment(data.post, data.commentText.trim())
       .subscribe(
-        (comment: Comment) => {
+        async (comment: Comment) => {
           comment.commentLike = [];
           comment.doneBy = {
             idAccount: this.userData.idAccount,
@@ -94,6 +97,10 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
             lastName: this.userData.lastName,
             profilePhoto: this.userData.profilePhoto,
           };
+          comment.date = await this.notificationService.timeCalculation(
+            comment
+          );
+
           data.post.comments.unshift(comment);
           this.commentText = null;
         },
