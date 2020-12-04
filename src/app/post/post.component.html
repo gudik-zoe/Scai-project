@@ -151,7 +151,8 @@
           </div>
 
         </div>
-        <small style="color: gray;">{{comment.date}}</small>
+        <small style="color: gray;   float: left;
+        margin-left: 80px;">{{comment.date}}</small>
         <span *ngIf="comment.commentLike.length > 0" (mouseenter)="hoverFunction(comment)" class="comment-number"
           style="background-color: lightgray; border-radius: 9px; padding: 5px;  margin-left:350px ; width: min-content; ">
           <img src="../../assets/download (1).jpg" width="20px" height="20px" style="border-radius:50% ;">
@@ -163,16 +164,10 @@
 
       </div>
     </ng-container>
+    <br>
     <div style="margin-top: 10px;">
       <img src="{{userData.profilePhoto }}" width="40px" height="40px" style="border-radius: 50%" />
-      <input [(ngModel)]="commentText" placeholder="write a comment" style="
-          width: 320px;
-          border-radius: 8px;
-          background-color: lightgray;
-          border-style: none;
-          margin-left: 10px;
-          outline: none;
-        " />
+      <input class="comment-input" [(ngModel)]="commentText" placeholder="write a comment" />
       <p class="text-danger">{{errorPhrase}}</p>
     </div>
   </div>

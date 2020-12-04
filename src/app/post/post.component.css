@@ -57,6 +57,14 @@
   visibility: visible;
 }
 
+.comment-input {
+  width: 320px;
+  border-radius: 8px;
+  background-color: lightgray;
+  border-style: none;
+  margin-left: 10px;
+  outline: none;
+}
 .comment-info {
   visibility: hidden;
   width: max-content;
