@@ -109,7 +109,6 @@ export class PostComponent implements OnInit {
         .getCommentLikers(comment.idComment)
         .subscribe((data: AccountBasicData[]) => {
           this.commentLikers = data;
-          console.log(this.commentLikers);
         });
     } else {
       return null;

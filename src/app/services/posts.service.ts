@@ -117,7 +117,6 @@ export class PostsService {
         .get(this.rootUrl + 'homePage/posts')
         .subscribe((data: Post[]) => {
           this.homePagePosts = data;
-          console.log(this.homePagePosts);
           this.homePagePosts.sort((a, b) => b.date.localeCompare(a.date));
           for (let post of this.homePagePosts) {
             this.getUserDetails(post);
@@ -226,7 +225,6 @@ export class PostsService {
   }
 
   deletePost(postId: number) {
-    console.log(postId);
     return this.http.delete(this.rootUrl + 'posts/' + postId);
   }
 }
