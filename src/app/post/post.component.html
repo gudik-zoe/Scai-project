@@ -111,7 +111,7 @@
 
 
     <button
-      [disabled]="post.postOriginalId && !post.originalPostDoneBy || post.postCreatorId == userData.idAccount || post.postedOn || status != 'friends'"
+      [disabled]="post.postOriginalId || post.postCreatorId == userData.idAccount || post.postedOn || status != 'friends'"
       (click)="sharePost(post)" class="btn btn-light btn-md col-md-3 ml-2">
       <i class="fa fa-share-alt" aria-hidden="true"></i>
       share
