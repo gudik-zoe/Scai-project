@@ -3,6 +3,7 @@
         {{areFriends ? 'Friends' : 'people you may know'}}
     </div>
     <div *ngFor="let user of users">
-        <app-my-friends [user]="user" [userData]="userData" [areFriends]="areFriends"></app-my-friends>
+        <app-my-friends [user]="user" [userData]="userData" [areFriends]="areFriends"
+            (unFriendEvent)="unFriendInParent($event)"></app-my-friends>
     </div>
 </div>

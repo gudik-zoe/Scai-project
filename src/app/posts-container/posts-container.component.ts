@@ -37,6 +37,7 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
 
   deletePostInParent(id: number) {
     this.postsService.deletePostSubject.next({
+      subject: 'post',
       openComponent: true,
       postId: id,
     });

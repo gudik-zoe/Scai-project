@@ -85,20 +85,21 @@ export class HomePageComponent implements OnInit, OnDestroy {
     );
   }
 
-  getUnfriendSubject() {
-    this.UnfriendSubject = this.friendService.unfriendSubject.subscribe(
-      (data) => {
-        this.friends = this.friends.filter((item: AccountBasicData) => {
-          item.idAccount != data.idAccount;
-          this.peopleYouMayKnow.push(data);
+  unFriend(data: AccountBasicData) {
+    this.friendService
+      .deleteOrCancelFriendRequest(data.idAccount)
+      .subscribe((u) => {
+        this.peopleYouMayKnow.push(data);
+        this.friends.forEach((element, index) => {
+          if (element.idAccount == data.idAccount) {
+            this.friends.splice(index, 1);
+          }
         });
-      }
-    );
+      });
   }
 
   ngOnDestroy() {
     this.RespondToRequestSubject.unsubscribe();
-    this.UnfriendSubject.unsubscribe();
     this.openFriendsubscription.unsubscribe();
   }
 
@@ -108,7 +109,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.getFriends();
     this.getPeopleyouMayKnow();
     this.getRespondToRequestSubject();
-    this.getUnfriendSubject();
     this.openFriendTab();
   }
 }

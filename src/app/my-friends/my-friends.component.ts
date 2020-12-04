@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { FriendsService } from '../services/friends.service';
 import { AccountBasicData } from '../models/accountBasicData';
@@ -15,6 +22,8 @@ export class MyFriendsComponent implements OnInit, OnDestroy {
   @Input() user: AccountBasicData;
   @Input() userData: AccountBasicData;
   @Input() areFriends: boolean;
+
+  @Output() unFriendEvent = new EventEmitter<any>();
   status: string;
   subscription: Subscription;
   goToFriendsCharRoom(id: number): void {
@@ -60,12 +69,8 @@ export class MyFriendsComponent implements OnInit, OnDestroy {
     }
   }
 
-  unfriend(user: AccountBasicData) {
-    this.friendService
-      .deleteOrCancelFriendRequest(user.idAccount)
-      .subscribe((data) => {
-        this.friendService.unfriendSubject.next(user);
-      });
+  unFriend(user: AccountBasicData) {
+    this.unFriendEvent.emit(user);
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();

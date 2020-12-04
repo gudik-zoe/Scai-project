@@ -38,37 +38,36 @@ export class PostsService {
   ) {}
 
   async getPostOriginalUserData(post: Post) {
-    const postData = this.homePagePosts.find(
-      (item) => item.idPost == post.postOriginalId
-    );
+    // const postData = this.homePagePosts.find(
+    //   (item) => item.idPost == post.postOriginalId
+    // );
+    // if (postData) {
+    //   post.text = postData.text;
+    //   post.image = postData.image;
+    //   post.likesNumber = postData.postLikes.length;
+    //   post.commentsNumber = postData.comments.length;
+    //   post.originalPostDoneBy = postData.doneBy;
+    // } else {
+    const postData = await this.getPostByPostId(post.postOriginalId);
     if (postData) {
-      post.text = postData.text;
-      post.image = postData.image;
-      post.likesNumber = postData.postLikes.length;
-      post.commentsNumber = postData.comments.length;
-      post.originalPostDoneBy = postData.doneBy;
-    } else {
-      const postData = await this.getPostByPostId(post.postOriginalId);
-      if (postData) {
-        const checkIfUserExistInBasicDataArray = this.accountService.accountBasicData.find(
-          (item) => item.idAccount == postData.postCreatorId
+      const checkIfUserExistInBasicDataArray = this.accountService.accountBasicData.find(
+        (item) => item.idAccount == postData.postCreatorId
+      );
+      if (checkIfUserExistInBasicDataArray) {
+        post.text = postData.text;
+        post.image = postData.image;
+        post.likesNumber = postData.postLikes.length;
+        post.commentsNumber = postData.comments.length;
+        post.originalPostDoneBy = checkIfUserExistInBasicDataArray;
+      } else {
+        this.userBasicData = await this.accountService.getBasicAccountDetails(
+          postData.postCreatorId
         );
-        if (checkIfUserExistInBasicDataArray) {
-          post.text = postData.text;
-          post.image = postData.image;
-          post.likesNumber = postData.postLikes.length;
-          post.commentsNumber = postData.comments.length;
-          post.originalPostDoneBy = checkIfUserExistInBasicDataArray;
-        } else {
-          this.userBasicData = await this.accountService.getBasicAccountDetails(
-            postData.postCreatorId
-          );
-          post.text = postData.text;
-          post.image = postData.image;
-          post.likesNumber = postData.postLikes.length;
-          post.commentsNumber = postData.comments.length;
-          post.originalPostDoneBy = this.userBasicData;
-        }
+        post.text = postData.text;
+        post.image = postData.image;
+        post.likesNumber = postData.postLikes.length;
+        post.commentsNumber = postData.comments.length;
+        post.originalPostDoneBy = this.userBasicData;
       }
     }
   }
@@ -118,12 +117,15 @@ export class PostsService {
         .get(this.rootUrl + 'homePage/posts')
         .subscribe((data: Post[]) => {
           this.homePagePosts = data;
+          console.log(this.homePagePosts);
+          this.homePagePosts.sort((a, b) => b.date.localeCompare(a.date));
           for (let post of this.homePagePosts) {
             this.getUserDetails(post);
             if (post.postOriginalId) {
               this.getPostOriginalUserData(post);
             }
           }
+
           resolve(this.homePagePosts);
         });
     });
@@ -167,7 +169,7 @@ export class PostsService {
   getPostByPostId(id: number) {
     return new Promise<Post>((resolve, reject) => {
       this.http
-        .get(this.rootUrl + '/posts/postId/' + id)
+        .get(this.rootUrl + 'posts/postId/' + id)
         .subscribe((data: Post) => {
           this.post = data;
           this.getUserDetails(this.post);

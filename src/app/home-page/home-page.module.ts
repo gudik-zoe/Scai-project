@@ -11,6 +11,7 @@ import { PostModule } from '../post/post.module';
 import { FriendsContainerModule } from '../friends-container/friends-container.module';
 import { SharePostModule } from '../share-post/share-post.module';
 import { WhatOnMindModule } from '../what-on-mind/what-on-mind.module';
+import { DeletePostModule } from '../delete-post/delete-post.module';
 
 const routes: Routes = [{ path: '', component: HomePageComponent }];
 
@@ -26,6 +27,7 @@ const routes: Routes = [{ path: '', component: HomePageComponent }];
     PostsContainerModule,
     SharePostModule,
     WhatOnMindModule,
+    DeletePostModule,
   ],
 })
 export class HomePageModule {}
