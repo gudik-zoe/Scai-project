@@ -46,7 +46,6 @@ export class SharePostComponent implements OnInit, OnDestroy {
     } else {
       this.postService.resharePost(post.idPost, text).subscribe(
         (data: Post) => {
-          console.log(data);
           // post.doneBy && post.postOriginalId && post.originalPostDoneBy
           (data.postLikes = []), (data.comments = []);
           data.doneBy = {

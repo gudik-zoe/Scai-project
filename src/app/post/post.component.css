@@ -89,19 +89,44 @@
 
 .icon {
   float: right;
-  margin-right: 20px;
+  margin-right: 10px;
   /* margin-top: 10px; */
   font-size: large;
   cursor: pointer;
   width: 30px;
   height: 30px;
-  background-color: lightgray;
+  /* background-color: lightgray;
+  border-radius: 50%; */
+  transition: all 0.2s ease-in-out;
+  /* box-shadow: 1px 1px 1px 1px #888888; */
+}
+
+.dropdown:hover {
+  padding-top: 1px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  transition: all 0.1s ease-in-out;
-  box-shadow: 1px 1px 1px 1px #888888;
+  background: lightgray;
+}
+
+.dropdown {
+  width: 30px;
+  height: 30px;
+}
+.dropdown-item {
+  margin-top: 5px;
+}
+.dropdown-item:hover {
+  cursor: pointer;
+  background: whitesmoke;
+  border-radius: 9px;
 }
 
 .icon:hover {
-  background-color: whitesmoke;
-  transform: scale(1.5);
+  width: 30px;
+  height: 30px;
+  background-color: lightgray;
+  border-radius: 50%;
+  transform: scale(1.4);
+  /* box-shadow: 1px 1px 1px 1px #888888; */
 }

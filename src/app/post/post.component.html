@@ -1,25 +1,67 @@
 <div class="container-fluid">
-  <!-- <div class="container"> -->
   <div *ngIf="userData" class="post-container">
-    <ng-container *ngIf="post.doneBy && !post.postOriginalId && !post.postedOn">
-      <img src="{{  post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%; float: left;" height="50px" />
-      <span *ngIf="!post.postedOn" style="float: left;" class="font-weight-bold mt-3">
-        {{ post.doneBy.firstName + " " + post.doneBy.lastName }} shared
-        <p style="color:gray ; font-size: x-small;">
-          {{post.date}}</p></span>
-      <div *ngIf="post.postCreatorId == userData.idAccount" class="icon">
-        <i (click)="editPost(post)" style="color: blueviolet;" class=" fa fa-pencil" aria-hidden="true"></i>
+    <ng-container *ngIf="post.doneBy">
+
+      <span class="font-weight-bold mt-1" style="float: left;">
+        <img src="{{  post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%;" height="50px" />
+        {{  post.doneBy.firstName + " " + post.doneBy.lastName }} {{ post.postedOn ? '':'shared'}}
+        <p style="color:gray ; font-size: x-small; margin-left: 24px; margin-top: -17px;">
+          {{post.date}}</p>
+      </span>
+      <span style="float: left;" *ngIf="post.postedOn && post.postedOnData">
+        <i style="padding: 10px; margin-top: 10px;" class="fa fa-caret-right fa-lg" aria-hidden="true"></i>
+        <img src="{{ post.postedOnData.profilePhoto }}" style="width: 45px; height: 45px; border-radius: 50%;" />
+        {{post.postedOnData.firstName  + " " + post.postedOnData.lastName}}
+      </span>
+
+
+
+      <div *ngIf="userData.idAccount == post.postCreatorId" class="dropdown" style="float: right; margin-right: 20px;">
+        <i class="fa fa-ellipsis-h fa-lg" aria-hidden="true" type="button" id="dropdownMenuButton"
+          data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"></i>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+          <a *ngIf="post.postCreatorId == userData.idAccount && !post.postOriginalId" class="dropdown-item"
+            (click)="editPost(post)"> <i class=" fa fa-pencil fa-lg" aria-hidden="true"></i><span class="ml-1"> Edit
+              post</span>
+          </a>
+
+          <a class="dropdown-item" (click)=" deletePost(post.idPost)"><i class="fa fa-trash fa-lg"
+              aria-hidden="true"></i><span class="ml-1">Delete post</span></a>
+        </div>
       </div>
-      <div *ngIf="post.postCreatorId == userData.idAccount" class="icon">
-        <i style="color: red;" (click)=" deletePost(post.idPost)" class="fa fa-trash" aria-hidden="true"></i>
+
+
+
+      <p *ngIf="post.text && !post.postOriginalId" style="margin:100px auto 10px auto; font-size: larger; ">
+        {{post.text}}</p>
+      <p *ngIf="post.extraText" style="margin:100px auto 10px auto ">{{post.extraText}}</p>
+      <div *ngIf="post.postOriginalId && !post.originalPostDoneBy && post.doneBy"
+        style="  border: 1px solid black; cursor: pointer;">
+        content is unavailabe could be because of its setting was set on private or that it has been deleted
       </div>
-      <br>
-      <p class="mt-5" *ngIf="post.text">{{post.text}}</p>
-      <img *ngIf="post.image" src="{{ post.image }}" style="width: 80%; height: 60%; border-radius: 10px;" />
+      <img *ngIf="post.image && !post.postOriginalId" src="{{ post.image }}"
+        style="width: 100%; height: 60%; border-radius: 10px;" />
+      <div *ngIf="post.postOriginalId  && post.originalPostDoneBy" (click)="toDescription(post.postOriginalId)"
+        style="margin-top: 30px; border: 1px solid black; cursor: pointer; ">
+        <div style="margin-top: 10px; float: left;">
+          <img src="{{  post.originalPostDoneBy.profilePhoto }}" width="50px" style="border-radius: 50%;"
+            height="50px" />
+          <span class="font-weight-bold">
+            {{ post.originalPostDoneBy.firstName + " " + post.originalPostDoneBy.lastName }}
+            shared: </span>
+        </div>
+        <p style="padding-right: 220px; margin-top: 50px; font-size: larger;"> {{ post.text }} </p>
+        <img *ngIf="post.image" src="{{  post.image }}" style="width: 100%; height: 60%; border-radius: 10px;" />
+        <p><i *ngIf="status== 'friends'" class="fa fa-thumbs-up" aria-hidden="true" style="color: blue">
+          </i>{{post.likesNumber}}
+          <i class="fa fa-comments" aria-hidden="true" style="margin-left: 150px;"></i>{{post.commentsNumber}}</p>
+      </div>
+
+
     </ng-container>
 
     <!-- shared post -->
-    <ng-container *ngIf="post.doneBy && post.postOriginalId && post.originalPostDoneBy && !post.postedOn">
+    <!-- <ng-container *ngIf="post.doneBy && post.postOriginalId && post.originalPostDoneBy && !post.postedOn">
       <img src="{{  post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%; float: left;" height="50px" />
       <span style="float: left;" class="font-weight-bold mt-3">
         {{ post.doneBy.firstName + " " + post.doneBy.lastName }} reshared
@@ -44,11 +86,11 @@
         <p><i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue"> </i>{{post.likesNumber}}
           <i class="fa fa-comments" aria-hidden="true" style="margin-left: 150px;"></i>{{post.commentsNumber}}</p>
       </div>
-    </ng-container>
+    </ng-container> -->
 
 
     <!-- posted on a wall post -->
-    <ng-container *ngIf="post.postedOn && post.doneBy && post.postedOnData && !post.postOriginalId">
+    <!-- <ng-container *ngIf="post.postedOn && post.doneBy && post.postedOnData && !post.postOriginalId">
       <div *ngIf="post.postCreatorId == userData.idAccount" class="icon">
         <i (click)="editPost(post)" style="font-size:large; cursor: pointer; color: blueviolet;" class=" fa fa-pencil"
           aria-hidden="true"></i>
@@ -69,10 +111,10 @@
       </span>
       <p style="margin-top: 10px;">{{post.text}}</p>
       <img *ngIf="post.image" src="{{ post.image }}" style="width: 80%; height: 60%; border-radius: 10px;" />
-    </ng-container>
+    </ng-container> -->
 
 
-    <ng-container *ngIf="post.postOriginalId && !post.originalPostDoneBy && post.doneBy">
+    <!-- <ng-container *ngIf="post.postOriginalId && !post.originalPostDoneBy && post.doneBy">
       <img src="{{  post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%; float: left;" height="50px" />
       <span *ngIf="!post.postedOn" style="float: left;" class="font-weight-bold mt-3">
         {{ post.doneBy.firstName + " " + post.doneBy.lastName }} shared </span>
@@ -81,11 +123,12 @@
         <i style="font-size:large; cursor: pointer; color: red" (click)=" deletePost(post.idPost)" class="fa fa-trash"
           aria-hidden="true"></i>
       </div>
-      <div style="margin-top: 50px; border: 1px solid black; cursor: pointer;">
+      <div *ngIf="post.postOriginalId && !post.originalPostDoneBy"
+        style="margin-top: 50px; border: 1px solid black; cursor: pointer;">
         content is unavailabe could be because of its setting was set on private or that it has been deleted
       </div>
 
-    </ng-container>
+    </ng-container> -->
 
     <hr />
     <span><i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue"></i> {{ post.postLikes.length }} </span>
@@ -171,5 +214,4 @@
       <p class="text-danger">{{errorPhrase}}</p>
     </div>
   </div>
-  <!-- </div> -->
 </div>

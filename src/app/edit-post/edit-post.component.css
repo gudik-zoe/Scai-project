@@ -12,18 +12,20 @@
   position: fixed;
   left: 30vw;
   width: 35vw;
-  bottom: 20vw;
+  bottom: 10vw;
   height: max-content;
   padding: 16px;
   z-index: 100;
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0, 0.26);
   border-radius: 8px;
+  animation: bounceInDown;
+  animation-duration: 1s;
 }
 
 .alert-box-action {
   position: relative;
-  animation: zoomIn;
+  animation: bounceInUp;
   animation-duration: 1s;
 }
 

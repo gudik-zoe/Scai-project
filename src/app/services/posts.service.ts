@@ -73,32 +73,36 @@ export class PostsService {
   }
 
   async getUserDetails(post: Post) {
-    this.userBasicData = await this.accountService.getBasicAccountDetails(
-      post.postCreatorId
-    );
-    post.doneBy = this.userBasicData;
-    if (post.postedOn) {
+    if (post) {
       this.userBasicData = await this.accountService.getBasicAccountDetails(
-        post.postedOn
+        post.postCreatorId
       );
-      post.postedOnData = this.userBasicData;
-    }
-    for (let comment of post.comments) {
-      this.userBasicData = await this.accountService.getBasicAccountDetails(
-        comment.commentCreatorId
-      );
-      comment.doneBy = this.userBasicData;
-      if (comment.date) {
-        comment.date = await this.notificationService.timeCalculation(comment);
+      post.doneBy = this.userBasicData;
+      if (post.postedOn) {
+        this.userBasicData = await this.accountService.getBasicAccountDetails(
+          post.postedOn
+        );
+        post.postedOnData = this.userBasicData;
       }
+      for (let comment of post.comments) {
+        this.userBasicData = await this.accountService.getBasicAccountDetails(
+          comment.commentCreatorId
+        );
+        comment.doneBy = this.userBasicData;
+        if (comment.date) {
+          comment.date = await this.notificationService.timeCalculation(
+            comment
+          );
+        }
+      }
+      for (let like of post.postLikes) {
+        this.userBasicData = await this.accountService.getBasicAccountDetails(
+          like.postLikeCreatorId
+        );
+        like.doneBy = this.userBasicData;
+      }
+      post.date = await this.notificationService.timeCalculation(post);
     }
-    for (let like of post.postLikes) {
-      this.userBasicData = await this.accountService.getBasicAccountDetails(
-        like.postLikeCreatorId
-      );
-      like.doneBy = this.userBasicData;
-    }
-    post.date = await this.notificationService.timeCalculation(post);
   }
 
   // async getDate() {
@@ -171,9 +175,11 @@ export class PostsService {
         .get(this.rootUrl + 'posts/postId/' + id)
         .subscribe((data: Post) => {
           this.post = data;
-          this.getUserDetails(this.post);
-          if (this.post.postOriginalId) {
-            this.getPostOriginalUserData(this.post);
+          if (this.post) {
+            this.getUserDetails(this.post);
+            if (this.post.postOriginalId) {
+              this.getPostOriginalUserData(this.post);
+            }
           }
           resolve(this.post);
           reject('there is no post with this id');
