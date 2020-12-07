@@ -10,6 +10,19 @@
       <img src="{{userData.profilePhoto}}" width="60px" height="60px" style="border-radius: 50%" />
       <span class="font-weight-bold">
         {{ userData.firstName + " " + userData.lastName }} shared:
+        <br>
+
+        <button type="button" class="btn btn-ourline btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false" style="margin: -40px 0px 0px 75px; font-size: small;  background-color:lightgray ;">
+          <i [ngClass]=" isPublic ? 'fa fa-globe' : 'fa fa-lock' " aria-hidden="true"></i>
+          {{isPublic ? 'public' : 'private'}}
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" style=" cursor: pointer;" (click)="private()"> <i
+              [ngClass]=" isPublic ? 'fa fa-lock' : 'fa fa-globe' " aria-hidden="true"></i>
+            {{isPublic ? 'private' : 'public'}} </a>
+        </div>
+
       </span>
       <p class="text-danger">{{errorPhrase}}</p>
       <div class="md-form">

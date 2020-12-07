@@ -5,7 +5,7 @@ import { PostLike } from './postLike';
 export class Post {
   idPost: number;
   text: string;
-  public: boolean;
+  isPublic: boolean;
   image: string;
   description: string;
   postCreatorId: number;

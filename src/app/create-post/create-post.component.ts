@@ -21,6 +21,12 @@ export class CreatePostComponent implements OnInit, OnDestroy {
   errorPhrase: string = '';
   formData = new FormData();
   hideButton: boolean = false;
+  isPublic: boolean = true;
+
+  private() {
+    this.isPublic = !this.isPublic;
+  }
+
   close() {
     this.userData = undefined;
     this.postTemporaryImage = undefined;
@@ -49,6 +55,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
       this.hideButton = false;
     } else {
       this.formData.append('text', text);
+      this.formData.append('isPublic', this.isPublic.toString());
       this.hideButton = true;
       this.postsService.addPost(this.formData).subscribe(
         (data: Post) => {
@@ -62,7 +69,9 @@ export class CreatePostComponent implements OnInit, OnDestroy {
             firstName: this.userData.firstName,
             lastName: this.userData.lastName,
           };
-          this.postsService.confirmCreatePost.next(data);
+          if (this.isPublic) {
+            this.postsService.confirmCreatePost.next(data);
+          }
           this.userData = undefined;
           this.postTemporaryImage = undefined;
           this.inputData = undefined;
