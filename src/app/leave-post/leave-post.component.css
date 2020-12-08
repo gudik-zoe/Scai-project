@@ -8,6 +8,17 @@
   z-index: 50;
 }
 
+.close {
+  width: 30px;
+  height: 30px;
+  color: black;
+  background-color: lightgray;
+  border-radius: 50%;
+  padding-left: 5px;
+  padding-top: 2px;
+  cursor: pointer;
+}
+
 .alert-box {
   position: fixed;
   top: 15vh;
@@ -19,6 +30,8 @@
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0, 0.26);
   border-radius: 8px;
+  animation: fadeInUp;
+  animation-duration: 1s;
 }
 .alert-box-adctoins {
   text-align: right;
@@ -30,4 +43,20 @@
   overflow: hidden;
   position: absolute;
   z-index: -1;
+}
+
+.icon {
+  padding: 4px;
+  font-size: large;
+  cursor: pointer;
+  width: 35px;
+  height: 35px;
+  background-color: lightgray;
+  border-radius: 50%;
+  transition: all 0.1s ease-in-out;
+}
+
+.icon:hover {
+  background-color: whitesmoke;
+  transform: scale(1.5);
 }

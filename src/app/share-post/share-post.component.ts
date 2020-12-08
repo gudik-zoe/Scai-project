@@ -22,7 +22,7 @@ export class SharePostComponent implements OnInit, OnDestroy {
   postDoneBy: AccountBasicData;
   errorPhrase: string = '';
   imgUrl: string = environment.rootUrl + 'files/';
-
+  isPublic: boolean = true;
   public subscribtion: Subscription;
   getRequestedData() {
     this.subscribtion = this.postService.sharePostComponent.subscribe(
@@ -35,6 +35,10 @@ export class SharePostComponent implements OnInit, OnDestroy {
     );
   }
 
+  private() {
+    this.isPublic = !this.isPublic;
+  }
+
   closeSharePostComponent() {
     this.sharePostComponent = false;
   }
@@ -44,7 +48,10 @@ export class SharePostComponent implements OnInit, OnDestroy {
     if (!text || text == undefined) {
       this.errorPhrase = 'add ur own text';
     } else {
-      this.postService.resharePost(post.idPost, text).subscribe(
+      const formData = new FormData();
+      formData.append('extraText', text);
+      formData.append('isPublic', this.isPublic.toString());
+      this.postService.resharePost(post.idPost, formData).subscribe(
         (data: Post) => {
           // post.doneBy && post.postOriginalId && post.originalPostDoneBy
           (data.postLikes = []), (data.comments = []);
@@ -62,7 +69,9 @@ export class SharePostComponent implements OnInit, OnDestroy {
             idAccount: post.postCreatorId,
             profilePhoto: post.doneBy.profilePhoto,
           };
-          this.postService.confirmCreatePost.next(data);
+          if (this.isPublic) {
+            this.postService.confirmCreatePost.next(data);
+          }
           this.inputData = undefined;
           this.sharePostComponent = false;
         },

@@ -216,10 +216,10 @@ export class PostsService {
     );
   }
 
-  resharePost(idPost: number, extraText: string) {
+  resharePost(idPost: number, formData: FormData) {
     return this.http.post(
       this.rootUrl + 'post/resharePost/' + idPost,
-      extraText
+      formData
     );
   }
 
