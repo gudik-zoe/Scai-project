@@ -16,7 +16,7 @@
       <app-posts-container [posts]="dbPosts" [status]="status"> </app-posts-container>
 
     </div>
-    <div *ngIf="open" id="third-div" class="col-md-3">
+    <div *ngIf="open && peopleYouMayKnow && friends" id="third-div" class="col-md-3">
       <div ngClass="{{openFriends == 1 ? 'friends-open' : 'friends-close'}}">
         <app-friends-container (unFriendInHomePage)="unFriend($event)" *ngIf="friends.length > 0" [users]="friends"
           [areFriends]="true">
