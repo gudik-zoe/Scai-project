@@ -2,7 +2,7 @@
     <div class="header">
         {{areFriends ? 'Friends' : 'people you may know'}}
     </div>
-    <div class="scrollable-element">
+    <div ngClass="{{users.length  > 2 ?  'scrollable-element' : '' }}">
         <div *ngFor="let user of users; let i = index">
             <app-my-friends [user]="user" [userData]="userData" [areFriends]="areFriends"
                 (unFriendEvent)="unFriendInParent($event)" [i]="i"></app-my-friends>
