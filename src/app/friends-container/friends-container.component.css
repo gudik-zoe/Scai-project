@@ -17,7 +17,6 @@
   overflow-x: hidden;
   height: 180px;
   border-bottom: 1px solid black;
-  padding: 10px;
 }
 
 ::-webkit-scrollbar {
