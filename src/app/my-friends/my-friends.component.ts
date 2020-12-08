@@ -22,6 +22,7 @@ export class MyFriendsComponent implements OnInit, OnDestroy {
   @Input() user: AccountBasicData;
   @Input() userData: AccountBasicData;
   @Input() areFriends: boolean;
+  @Input() i: number;
 
   @Output() unFriendEvent = new EventEmitter<any>();
   status: string;

@@ -2,8 +2,8 @@
     <div class="header">
         {{areFriends ? 'Friends' : 'people you may know'}}
     </div>
-    <div *ngFor="let user of users">
+    <div *ngFor="let user of users; let i = index">
         <app-my-friends [user]="user" [userData]="userData" [areFriends]="areFriends"
-            (unFriendEvent)="unFriendInParent($event)"></app-my-friends>
+            (unFriendEvent)="unFriendInParent($event)" [i]="i"></app-my-friends>
     </div>
 </div>
