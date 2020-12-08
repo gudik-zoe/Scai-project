@@ -12,6 +12,28 @@
   background-color: white;
 }
 
+.scrollable-element {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 180px;
+  border-bottom: 1px solid black;
+  padding: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: rgba(0, 0, 0, 0);
+}
+::-webkit-scrollbar:hover {
+  background-color: rgba(0, 0, 0, 0.09);
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  background: rgba(0, 0, 0, 0.61);
+}
+::-webkit-scrollbar-thumb:vertical:active {
+  background: rgba(0, 0, 0, 0.61);
+}
 .header {
   width: 100%;
   font-size: larger;
