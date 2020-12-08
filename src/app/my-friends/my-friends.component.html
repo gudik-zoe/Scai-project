@@ -1,5 +1,4 @@
-<div *ngIf="userData" class="the-friend"
-  [ngStyle]="{'background-color': user.idAccount % 2 == 0 ? 'lightgray' :'white'}">
+<div *ngIf="userData" ngClass="{{ user.idAccount % 2 == 0 ? 'the-friend-1' :'the-friend-2'}}">
   <span (click)="goToProfile(user.idAccount)"> <img src="{{ user.profilePhoto}}" width="50px" style="border-radius: 50%"
       height="50px" />
     {{ user.firstName  + " " +   user.lastName }}</span> <button (click)="addFriend(user)" style="font-size: small;"

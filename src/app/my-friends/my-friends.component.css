@@ -17,13 +17,12 @@ span:hover {
   cursor: pointer;
 }
 
-.the-friend {
+.the-friend-1 {
   padding: 10px;
-  border-radius: 10px;
   background-color: white;
 }
 
-.the-friend:hover {
-  background-color: whitesmoke;
-  border-radius: 10px;
+.the-friend-2 {
+  padding: 10px;
+  background-color: lightgray;
 }
