@@ -31,8 +31,11 @@ export class ChangeEmailPassComponent implements OnInit {
     this.fillChangePasswordFormValue();
   }
 
-  confirmUpdateEmail(email: string) {
-    this.accountService.updateEmail(email).subscribe(
+  confirmUpdateEmail(email: string, password: string) {
+    const formData = new FormData();
+    formData.append('newEmail', email);
+    formData.append('password', password);
+    this.accountService.updateEmail(formData).subscribe(
       (data) => {
         this.emailHasBeenChanged = true;
         setTimeout(() => {
@@ -44,8 +47,11 @@ export class ChangeEmailPassComponent implements OnInit {
     );
   }
 
-  confirmUpdatePassword(password: string) {
-    this.accountService.updatePassword(password).subscribe(
+  confirmUpdatePassword(oldPassword: string, newPassword: string) {
+    const formData = new FormData();
+    formData.append('oldPassword', oldPassword);
+    formData.append('newPassword', newPassword);
+    this.accountService.updatePassword(formData).subscribe(
       (data) => {
         this.passwordHasBeenChanged = true;
         setTimeout(() => {
@@ -59,14 +65,16 @@ export class ChangeEmailPassComponent implements OnInit {
 
   fillChangeEmailFormValue() {
     this.changeEmail = this.fb.group({
-      email: [this.userData.email, [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
   fillChangePasswordFormValue() {
     this.changePassword = this.fb.group(
       {
+        currentPassword: ['', [Validators.required, Validators.minLength(8)]],
         password: ['', [Validators.required, Validators.minLength(8)]],
-        confirmNewPassword: ['', Validators.required],
+        confirmPassword: ['', Validators.required],
       },
       { validator: [Custome.changePassword, Custome.passwordPattern] }
     );

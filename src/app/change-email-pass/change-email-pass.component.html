@@ -12,9 +12,7 @@
             changeEmail.get('email').invalid &&
             changeEmail.get('email').touched
             " />
-                <small class="text-danger">
-                    {{emailErrorPhrase}}
-                </small>
+
                 <small class="text-danger" *ngIf="
               changeEmail.get('email').errors?.required &&
               changeEmail.get('email').touched
@@ -28,8 +26,33 @@
                     invalid email
                 </small>
             </div>
-            <button [disabled]=" changeEmail.get('email').errors"
-                (click)="confirmUpdateEmail(changeEmail.get('email').value)" class="btn btn-outline-primary btn-block">
+            <div class="form-group">
+                <label>Password </label>
+                <input type="password" formControlName="password" placeholder="insert your password "
+                    class="form-control" [class.is-invalid]="
+            changeEmail.get('password').invalid &&
+            changeEmail.get('password').touched
+            " />
+
+                <small class="text-danger" *ngIf="
+              changeEmail.get('password').errors?.required &&
+              changeEmail.get('password').touched
+            ">
+                    this field is required
+                </small>
+                <small class="text-danger" *ngIf="
+              changeEmail.get('password').errors?.minlength &&
+              changeEmail.get('password').touched
+            ">
+                    password should be longer than 8 characters
+                </small>
+            </div>
+            <small class="text-danger">
+                {{emailErrorPhrase}}
+            </small>
+            <button [disabled]=" changeEmail.invalid"
+                (click)="confirmUpdateEmail(changeEmail.get('email').value , changeEmail.get('password').value)"
+                class="btn btn-outline-primary btn-block">
                 submit
             </button>
         </form>
@@ -44,10 +67,30 @@
     </div>
     <p *ngIf="passwordHasBeenChanged">your password has been changed successfully</p>
     <div *ngIf="!passwordHasBeenChanged" style="padding: 20px;">
-        <form [formGroup]="changePassword">
+        <form *ngIf="changePassword" [formGroup]="changePassword">
+            <div class="form-group">
+                <label>current password</label>
+                <input type="password" formControlName="currentPassword" placeholder="insert current password "
+                    class="form-control" [class.is-invalid]="
+                    changePassword.get('currentPassword').invalid &&
+                    changePassword.get('currentPassword').touched
+                " />
+
+                <small class="text-danger" *ngIf="
+                changePassword.get('currentPassword').errors?.required &&
+                changePassword.get('currentPassword').touched
+                   ">
+                    this.field is required
+                </small>
+                <small class="text-danger" *ngIf="
+                changePassword.get('currentPassword').errors?.minlength &&
+                changePassword.get('currentPassword').touched
+                ">
+                    password should be longer than 8 characters</small>
+            </div>
 
             <div class="form-group">
-                <label>password</label>
+                <label>new password</label>
                 <input type="password" formControlName="password" placeholder="insert new password "
                     class="form-control" [class.is-invalid]="
                     changePassword.get('password').invalid &&
@@ -67,22 +110,22 @@
                     password should be longer than 8 characters</small>
             </div>
             <div class="form-group">
-                <label>confirm password</label>
-                <input type="password" formControlName="confirmNewPassword" class="form-control"
+                <label>confirm new password</label>
+                <input type="password" formControlName="confirmPassword" class="form-control"
                     placeholder="confirm new password" [class.is-invalid]="
-                    changePassword.get('confirmNewPassword').invalid &&
-                    changePassword.get('confirmNewPassword').touched
+                    changePassword.get('confirmPassword').invalid &&
+                    changePassword.get('confirmPassword').touched
               " />
                 <small class="text-danger" *ngIf="
-                changePassword.get('confirmNewPassword').errors?.required &&
-                changePassword.get('confirmNewPassword').touched
+                changePassword.get('confirmPassword').errors?.required &&
+                changePassword.get('confirmPassword').touched
                    ">
                     this.field is required
                 </small>
                 <small class="text-danger" *ngIf="
-                changePassword.get('confirmNewPassword').errors
+                changePassword.get('confirmPassword').errors
                 ?.changePasswordError &&
-                changePassword.get('confirmNewPassword').touched
+                changePassword.get('confirmPassword').touched
                 ">
                     not identical to the new password
                 </small>
@@ -100,8 +143,8 @@
             </div>
 
         </form>
-        <button [disabled]="changePassword.get('confirmNewPassword').errors"
-            (click)="confirmUpdatePassword(changePassword.get('confirmNewPassword').value)"
+        <button *ngIf="changePassword" [disabled]="changePassword.get('confirmPassword').errors"
+            (click)="confirmUpdatePassword(changePassword.get('currentPassword').value , changePassword.get('confirmPassword').value)"
             class="btn btn-outline-primary btn-block">
             submit
         </button>

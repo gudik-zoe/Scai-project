@@ -1,17 +1,17 @@
 #second-div {
-  height: 800px;
+  height: 100vh;
   overflow-y: scroll;
-
   background-color: white;
 }
 
 #first-div {
   background-color: whitesmoke;
+  height: 100vh;
 }
 
 #third-div {
-  /* background-color: whitesmoke; */
   background-color: #926dde;
+  height: 100vh;
 }
 
 li {
@@ -52,8 +52,8 @@ span {
   outline: none;
 }
 
-body {
-  background-color: white;
+.container-fluid {
+  overflow-y: hidden;
 }
 
 .inputfile {

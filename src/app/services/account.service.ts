@@ -148,14 +148,14 @@ export class AccountService {
     );
   }
 
-  updateEmail(email: string) {
-    return this.http.put(this.rootUrl + 'api/accounts/updateEmail', email);
+  updateEmail(formData: FormData) {
+    return this.http.put(this.rootUrl + 'api/accounts/updateEmail', formData);
   }
 
-  updatePassword(password: string) {
+  updatePassword(formData: FormData) {
     return this.http.put(
       this.rootUrl + 'api/accounts/updatePassword',
-      password
+      formData
     );
   }
 

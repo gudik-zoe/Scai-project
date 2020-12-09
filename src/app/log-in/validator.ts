@@ -12,11 +12,9 @@ export class Custome {
   }
   static changePassword(control: AbstractControl) {
     let password = control.get('password').value;
-    let confirmPassword = control.get('confirmNewPassword').value;
+    let confirmPassword = control.get('confirmPassword').value;
     if (password !== confirmPassword) {
-      control
-        .get('confirmNewPassword')
-        .setErrors({ changePasswordError: true });
+      control.get('confirmPassword').setErrors({ changePasswordError: true });
     } else {
       return null;
     }

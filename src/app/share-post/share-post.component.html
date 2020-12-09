@@ -34,8 +34,9 @@
                         {{ postDoneBy.firstName + " " + postDoneBy.lastName }}
                         shared: </span>
                     <p class="text-center">{{post.text}}</p>
-                    <img style="padding-left: 20px;" *ngIf="post.image" src="{{  post.image }}" width="300"
-                        height="200px" style="margin-left: 84px; margin-bottom: 5px;" />
+                    <div class="text-center">
+                        <img *ngIf="post.image" src="{{  post.image }}" width="40%" height="40%" />
+                    </div>
                 </div>
             </div>
             <p class="text-danger">{{errorPhrase}}</p>
