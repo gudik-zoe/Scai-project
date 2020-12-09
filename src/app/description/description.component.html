@@ -1,69 +1,69 @@
-<div class="container-fluid mt-5">
-  <div *ngIf="post" class="row mt-3" style="height: max-content; background-color: lightgray; padding: 10px;">
-    <div class="col-md-8 mt-5">
-      <img *ngIf="post.doneBy" src="{{post.doneBy.profilePhoto}}" width="40px" height="40px"
-        style="border-radius: 50%;"><span
-        *ngIf="post.doneBy">{{post.doneBy.firstName + " " + post.doneBy.lastName}}</span>
-      <span *ngIf="post.postedOn">
-        <i style="padding: 10px;" class="fa fa-caret-right fa-lg" aria-hidden="true"></i>
-        <img src="{{  post.postedOnData.profilePhoto }}" width="40px" height="40px" style="border-radius: 50%" />
-        {{post.postedOnData.firstName  + " " + post.postedOnData.lastName}}
-      </span>
-      <p *ngIf="!post.postOriginalId" style="margin-left: 30%;">{{post.text}}</p>
-      <img *ngIf="post.image && !post.postOriginalId" src="{{post.image}}"
-        style="width: 80%; height: 80%; border-radius: 8px; margin: 0 auto 0 10%" />
-      <p *ngIf="post.extraText" style="margin-left: 50%;">{{post.extraText}} </p>
-      <div *ngIf="post.postOriginalId && post.originalPostDoneBy " style="border: 1px solid black; padding: 10px;">
-        <img src="{{post.originalPostDoneBy.profilePhoto}}" width="40px" height="40px" style="border-radius: 50%;">
-        <span>{{post.originalPostDoneBy.firstName + " " + post.originalPostDoneBy.lastName}}</span>
-        <p style="margin-left: 21%;">{{post.text}}</p>
-        <img *ngIf="post.image" src="{{post.image}}"
-          style="width: 80%; height: 80%; border-radius: 8px; margin: 0 auto 0 10%" />
-      </div>
-      <!-- <img src="{{    post.image}}" style="width: 80%; height: 80%" /> -->
-    </div>
-    <div class="col-md-3 mt-5" style="
-          background-color: white;
-          border-right: 1px solid black;
-          border-top: 1px solid black;
-          border-bottom: 1px solid black;
-          padding: 10px;
-        ">
-      <span class="font-weight-bold">
-        <i class="fa fa-thumbs-up" aria-hidden="true" style="font-size: large;"></i>
-        {{ post.postLikes.length }}
-      </span>
+<div class="backdrop" routerLink="/home-page"></div>
+<div class="alert-box" style="height: fit-content">
 
-      <div *ngFor="let user of post.postLikes">
-        <li class="ml-4" *ngIf="user.doneBy" style="list-style-type: none;">
-          {{ user.doneBy.firstName + " " + user.doneBy.lastName }}</li>
+  <div class="alert-box-action" style="background-color: lightgray;">
+    <div *ngIf="post" class="row" style="height: max-content; background-color: lightgray; padding: 10px;">
+      <div class="col-md-8">
+        <img *ngIf="post.doneBy" src="{{post.doneBy.profilePhoto}}" width="40px" height="40px"
+          style="border-radius: 50%;"><span
+          *ngIf="post.doneBy">{{post.doneBy.firstName + " " + post.doneBy.lastName}}</span>
+        <span *ngIf="post.postedOn">
+          <i style="padding: 10px;" class="fa fa-caret-right fa-lg" aria-hidden="true"></i>
+          <img src="{{  post.postedOnData.profilePhoto }}" width="40px" height="40px" style="border-radius: 50%" />
+          {{post.postedOnData.firstName  + " " + post.postedOnData.lastName}}
+        </span>
+        <p *ngIf="!post.postOriginalId" style="margin-left: 50px;">{{post.text}}</p>
+        <div class="text-center">
+          <img *ngIf="post.image && !post.postOriginalId" src="{{post.image}}"
+            style="width: 70%; height: 70%; border-radius: 8px;" />
+        </div>
+        <p *ngIf="post.extraText" style="margin-left: 50%;">{{post.extraText}} </p>
+        <div *ngIf="post.postOriginalId && post.originalPostDoneBy " style="border: 1px solid black; padding: 10px;">
+          <img src="{{post.originalPostDoneBy.profilePhoto}}" width="40px" height="40px" style="border-radius: 50%;">
+          <span>{{post.originalPostDoneBy.firstName + " " + post.originalPostDoneBy.lastName}}</span>
+          <p style="margin-left: 50px;">{{post.text}}</p>
+          <div class="text-center">
+            <img *ngIf="post.image" src="{{post.image}}" style="width: 70%; height: 70%; border-radius: 8px;" />
+          </div>
+        </div>
+
       </div>
-      <hr />
-      <p class="font-weight-bold"> <i class="fa fa-comments" aria-hidden="true"></i>
-        comments: </p>
-      <div *ngIf="post.comments.length > 0">
-        <ul *ngFor="let comment of post.comments">
-          <li style="list-style-type: none;">
-            <div class="container-fluid" style="background-color: whitesmoke ; border-radius: 8px;">
-              <span *ngIf=comment.doneBy>
-                <img src="{{ comment.doneBy.profilePhoto }}" width="35px" height="35px" style="border-radius: 50%" />
-                {{ comment.doneBy.firstName + " " + comment.doneBy.lastName }} :
-                {{ comment.text }}
-              </span>
-            </div>
-            <span *ngIf="comment.commentLike.length > 0" style="background-color: lightgray; border-radius: 8px;"
-              class="comment-number">
-              <img src="../../assets/download (1).jpg" width="20px" height="20px" style="border-radius:50% ;">
-              {{comment.commentLike.length}}
-              <div class="comment-info" *ngIf="comment.commentLike">
-                <div *ngFor="let like of comment.commentLike">
-                  {{like.doneBy.firstName + " " + like.doneBy.lastName }}</div>
+      <div class="col-md-4">
+        <span class="font-weight-bold">
+          <i class="fa fa-thumbs-up" aria-hidden="true" style="font-size: large;"></i>
+          {{ post.postLikes.length }}
+        </span>
+
+        <div *ngFor="let user of post.postLikes">
+          <li class="ml-4" *ngIf="user.doneBy" style="list-style-type: none;">
+            {{ user.doneBy.firstName + " " + user.doneBy.lastName }}</li>
+        </div>
+        <hr />
+        <p class="font-weight-bold"> <i class="fa fa-comments" aria-hidden="true"></i>
+          comments: </p>
+        <div *ngIf="post.comments.length > 0">
+          <ul *ngFor="let comment of post.comments">
+            <li style="list-style-type: none;">
+              <div class="container-fluid" style="background-color: whitesmoke ; border-radius: 8px;">
+                <span *ngIf=comment.doneBy>
+                  <img src="{{ comment.doneBy.profilePhoto }}" width="35px" height="35px" style="border-radius: 50%" />
+                  {{ comment.doneBy.firstName + " " + comment.doneBy.lastName }} :
+                  {{ comment.text }}
+                </span>
               </div>
-            </span>
-          </li>
-        </ul>
+              <span *ngIf="comment.commentLike.length > 0" style="background-color: lightgray; border-radius: 8px;"
+                class="comment-number">
+                <img src="../../assets/download (1).jpg" width="20px" height="20px" style="border-radius:50% ;">
+                {{comment.commentLike.length}}
+                <div class="comment-info" *ngIf="comment.commentLike">
+                  <div *ngFor="let like of comment.commentLike">
+                    {{like.doneBy.firstName + " " + like.doneBy.lastName }}</div>
+                </div>
+              </span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-
 </div>

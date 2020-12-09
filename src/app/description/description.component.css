@@ -14,8 +14,64 @@ body {
   text-align: center;
   border-radius: 6px;
   padding: 5px 0;
-
-  /* Position the tooltip */
   position: absolute;
   z-index: 5;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vw;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 50;
+  cursor: pointer;
+}
+
+.alert-box {
+  position: fixed;
+  top: 10%;
+  left: 16%;
+  right: auto;
+  width: 70vw;
+  height: fit-content;
+  padding: 16px;
+  z-index: 100;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0, 0.26);
+  border-radius: 8px;
+  animation: fadeInUp;
+  animation-duration: 1s;
+}
+
+.alert-box-action {
+  position: relative;
+}
+
+.col-md-4 {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 380px;
+  background-color: white;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 10px;
+  background-color: white;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: rgba(0, 0, 0, 0);
+}
+::-webkit-scrollbar:hover {
+  background-color: rgba(0, 0, 0, 0.09);
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  background: rgba(0, 0, 0, 0.61);
+}
+::-webkit-scrollbar-thumb:vertical:active {
+  background: rgba(0, 0, 0, 0.61);
 }
