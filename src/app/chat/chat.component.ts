@@ -54,9 +54,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       .subscribe(async (data: ChatMessageDto[]) => {
         this.myConvWith = data;
         for (let message of this.myConvWith) {
-          message.date = await this.notificationService.timeCalculation(
-            message.date
-          );
+          message.date = this.notificationService.timeCalculation(message.date);
         }
       });
   }
@@ -66,8 +64,23 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   chatWith(doneBy: AccountBasicData) {
-    this.wantedUser = { ...doneBy };
-    this.getMyConvWithId(doneBy.idAccount);
+    if (this.wantedUser && this.wantedUser.idAccount == doneBy.idAccount) {
+    } else {
+      this.wantedUser = { ...doneBy };
+      this.getMyConvWithId(doneBy.idAccount);
+      this.chatService
+        .messageHasBeenSeen(this.wantedUser.idAccount)
+        .subscribe((data) => {
+          for (let message of this.webSocketService.chatMessages) {
+            if (
+              message.idSender == this.wantedUser.idAccount &&
+              message.idReceiver == this.userData.idAccount
+            ) {
+              message.seen = true;
+            }
+          }
+        });
+    }
   }
   sendMessage(message: string, el: HTMLElement) {
     const textMessage = message.trim();
@@ -103,7 +116,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.webSocketService.openWebSocket();
     this.subscription = this.webSocketService.sendMessageSubject.subscribe(
       (data) => {
-        if (data) {
+        if (data && this.wantedUser) {
           document
             .getElementById('target')
             .scrollIntoView({ behavior: 'smooth', block: 'center' });

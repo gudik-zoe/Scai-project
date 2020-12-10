@@ -31,7 +31,6 @@ export class WebSocketService {
 
     this.webSocket.onmessage = (event) => {
       const chatMessageDto = JSON.parse(event.data);
-      console.log(JSON.parse(event.data).idReceiver);
       this.chatMessages.push(chatMessageDto);
       for (let message of this.chatMessages) {
         if (

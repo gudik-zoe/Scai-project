@@ -22,8 +22,7 @@ export class ChatService {
     return this.http.post(this.rootUrl + 'messages/sendMessage', message);
   }
 
-  messageHasBeenSeen(messageIds: Array<number>) {
-    console.log('jeasdqw');
-    return this.http.put(this.rootUrl + 'messages/seen', messageIds);
+  messageHasBeenSeen(userId: number) {
+    return this.http.put(this.rootUrl + 'messages/seen', userId);
   }
 }
