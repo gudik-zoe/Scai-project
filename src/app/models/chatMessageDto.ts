@@ -4,20 +4,5 @@ export class ChatMessageDto {
   idSender?: number;
   idReceiver: number;
   seen: boolean;
-  date?: Date;
-  token?: any;
-
-  // constructor(
-  //   message: string,
-  //   idSender: number,
-  //   idReceiver: number,
-  //   seen: boolean,
-  //   date: number
-  // ) {
-  //   this.idSender = idSender;
-  //   this.message = message;
-  //   this.idReceiver = idReceiver;
-  //   this.seen = seen;
-  //   this.date = date;
-  // }
+  date?: string;
 }

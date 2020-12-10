@@ -65,7 +65,7 @@
 .sender {
   margin-top: 10px;
   background-color: white;
-  width: 300px;
+  width: max-content;
   background-size: auto;
   border-radius: 8px;
   list-style-type: none;

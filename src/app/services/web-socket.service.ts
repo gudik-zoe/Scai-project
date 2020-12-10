@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { of, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AccountBasicData } from '../models/accountBasicData';
 import { ChatMessageDto } from '../models/chatMessageDto';
 import { AccountService } from './account.service';
 
@@ -14,8 +15,9 @@ export class WebSocketService {
   chatMessages: ChatMessageDto[] = [];
   userIn: boolean = true;
   rootUrl: string = environment.rootUrl;
-
   constructor(private accountService: AccountService, private route: Router) {}
+
+  userData: AccountBasicData = this.accountService.userData;
 
   public openWebSocket() {
     this.webSocket = new WebSocket(
@@ -29,7 +31,17 @@ export class WebSocketService {
 
     this.webSocket.onmessage = (event) => {
       const chatMessageDto = JSON.parse(event.data);
+      console.log(JSON.parse(event.data).idReceiver);
       this.chatMessages.push(chatMessageDto);
+      for (let message of this.chatMessages) {
+        if (
+          message.idReceiver == JSON.parse(event.data).idSender &&
+          message.idSender == JSON.parse(event.data).idReceiver &&
+          !message.seen
+        ) {
+          message.seen = true;
+        }
+      }
       this.sendMessageSubject.next(true);
     };
 
@@ -45,7 +57,6 @@ export class WebSocketService {
   public sendMessage(chatMessageDto: ChatMessageDto) {
     this.webSocket.send(JSON.stringify(chatMessageDto));
   }
-
   public closeWebSocket() {
     this.userIn = false;
     this.webSocket.close();

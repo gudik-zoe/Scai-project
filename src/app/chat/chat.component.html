@@ -30,7 +30,11 @@
                                 width="30px" height="30px" style="border-radius: 50%;" />
                             <img *ngIf="conv.idSender != wantedUser.idAccount" src="{{    userData.profilePhoto}}"
                                 width="30px" height="30px" style="border-radius: 50%;" />{{conv.message}}</span>
-                        <p style="color: grey; font-size: small; ">{{conv.date |  date:'dd/MM  hh:mm' : 'UTC'}} </p>
+                        <p style="color: grey; font-size: small; ">{{conv.date}}
+                            <span><i *ngIf="conv.idSender == userData.idAccount"
+                                    class="{{conv.seen ? 'fa fa-check-circle':'fa fa-check-circle-o'}}"
+                                    aria-hidden="true" style="margin-left: 150px;"></i></span>
+                        </p>
                     </div>
                 </ul>
                 <ul *ngFor="let chatMessage of webSocketService.chatMessages">
@@ -43,7 +47,10 @@
                                 width="30px" height="30px" style="border-radius: 50%;" />
                             {{chatMessage.message}}
                         </span>
-                        <p style="color: grey; font-size: small; ">{{chatMessage.date |  date:'dd/MM  hh:mm' : 'UTC'}}
+                        <p style="color: grey; font-size: small; ">{{chatMessage.date}}
+                            <i *ngIf="chatMessage.idSender == userData.idAccount"
+                                class="{{chatMessage.seen ? 'fa fa-check-circle':'fa fa-check-circle-o'}}"
+                                aria-hidden="true" style="margin-left: 150px;"></i>
                         </p>
                     </div>
                 </ul>

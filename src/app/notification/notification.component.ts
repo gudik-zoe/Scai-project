@@ -39,7 +39,7 @@ export class NotificationComponent implements OnInit {
       if (!not.seen) {
         this.unseenNots.push(not);
       }
-      not.timeUnit = await this.notificationService.timeCalculation(not);
+      not.date = this.notificationService.timeCalculation(not.date);
     }
   }
 

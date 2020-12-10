@@ -65,7 +65,7 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
   confirmCreatePost() {
     this.createPostSubscribtion = this.postsService.confirmCreatePost.subscribe(
       async (data: Post) => {
-        data.date = await this.notificationService.timeCalculation(data);
+        data.date = this.notificationService.timeCalculation(data.date);
         this.posts.unshift(data);
       }
     );
@@ -99,7 +99,7 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
             profilePhoto: this.userData.profilePhoto,
           };
           comment.date = await this.notificationService.timeCalculation(
-            comment
+            comment.date
           );
 
           data.post.comments.unshift(comment);

@@ -91,7 +91,7 @@ export class PostsService {
         comment.doneBy = this.userBasicData;
         if (comment.date) {
           comment.date = await this.notificationService.timeCalculation(
-            comment
+            comment.date
           );
         }
       }
@@ -101,7 +101,7 @@ export class PostsService {
         );
         like.doneBy = this.userBasicData;
       }
-      post.date = await this.notificationService.timeCalculation(post);
+      post.date = await this.notificationService.timeCalculation(post.date);
     }
   }
 

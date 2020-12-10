@@ -9,11 +9,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class ChatService {
-  constructor(
-    private auth: AuthService,
-    private accountService: AccountService,
-    private http: HttpClient
-  ) {}
+  constructor(private http: HttpClient) {}
   rootUrl: string = environment.rootUrl;
 
   getMyConvWithId(senderId: number) {
@@ -24,5 +20,10 @@ export class ChatService {
 
   sendAMessage(message: ChatMessageDto) {
     return this.http.post(this.rootUrl + 'messages/sendMessage', message);
+  }
+
+  messageHasBeenSeen(messageIds: Array<number>) {
+    console.log('jeasdqw');
+    return this.http.put(this.rootUrl + 'messages/seen', messageIds);
   }
 }

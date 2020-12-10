@@ -14,6 +14,8 @@ import { ChatService } from '../services/chat.service';
 import { WebSocketService } from '../services/web-socket.service';
 import { environment } from 'src/environments/environment';
 import { Subscription } from 'rxjs';
+import { ChatMessageDto } from '../models/chatMessageDto';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-chat',
@@ -25,15 +27,17 @@ export class ChatComponent implements OnInit, OnDestroy {
     private friendsService: FriendsService,
     private accountService: AccountService,
     private chatService: ChatService,
-    public webSocketService: WebSocketService
+    public webSocketService: WebSocketService,
+    private notificationService: NotificationService
   ) {}
   myRelationships: Relationship[];
   imgUrl: string = environment.rootUrl + 'files/';
   userData: AccountBasicData;
   wantedUser: AccountBasicData;
-  myConvWith;
+  myConvWith: ChatMessageDto[];
   subscription: Subscription;
   message: string;
+  messageIds: Array<number> = [];
   async getMyRelationships() {
     this.myRelationships = await this.friendsService.getMyFriends();
   }
@@ -45,9 +49,16 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   getMyConvWithId(id: number) {
-    this.chatService.getMyConvWithId(id).subscribe((data) => {
-      this.myConvWith = data;
-    });
+    this.chatService
+      .getMyConvWithId(id)
+      .subscribe(async (data: ChatMessageDto[]) => {
+        this.myConvWith = data;
+        for (let message of this.myConvWith) {
+          message.date = await this.notificationService.timeCalculation(
+            message.date
+          );
+        }
+      });
   }
   ngOnDestroy() {
     this.webSocketService.closeWebSocket();
@@ -59,15 +70,28 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.getMyConvWithId(doneBy.idAccount);
   }
   sendMessage(message: string, el: HTMLElement) {
-    const chatMessageDto = {
-      message: message,
-      idReceiver: this.wantedUser.idAccount,
-      seen: false,
-      date: new Date(),
-    };
-    this.webSocketService.sendMessage(chatMessageDto);
-    this.scroll(el);
-    this.message = null;
+    const textMessage = message.trim();
+    if (!textMessage || textMessage == undefined) {
+      return null;
+    } else {
+      const chatMessageDto = {
+        message: message,
+        idReceiver: this.wantedUser.idAccount,
+        seen: false,
+        date: this.notificationService.timeCalculation(new Date().toString()),
+      };
+      this.webSocketService.sendMessage(chatMessageDto);
+      this.scroll(el);
+      this.message = null;
+      // for (let message of this.webSocketService.chatMessages) {
+      //   if (
+      //     message.idSender == this.userData.idAccount &&
+      //     message.idReceiver == this.wantedUser.idAccount
+      //   ) {
+      //     message.seen = true;
+      //   }
+      // }
+    }
   }
 
   scroll(el: HTMLElement) {
