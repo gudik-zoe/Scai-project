@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { Relationship } from '../models/relationship';
 import { AccountService } from '../services/account.service';
 import { FriendsService } from '../services/friends.service';
@@ -7,13 +13,14 @@ import { AccountBasicData } from '../models/accountBasicData';
 import { ChatService } from '../services/chat.service';
 import { WebSocketService } from '../services/web-socket.service';
 import { environment } from 'src/environments/environment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
   constructor(
     private friendsService: FriendsService,
     private accountService: AccountService,
@@ -25,6 +32,7 @@ export class ChatComponent implements OnInit {
   userData: AccountBasicData;
   wantedUser: AccountBasicData;
   myConvWith;
+  subscription: Subscription;
   message: string;
   async getMyRelationships() {
     this.myRelationships = await this.friendsService.getMyFriends();
@@ -43,6 +51,7 @@ export class ChatComponent implements OnInit {
   }
   ngOnDestroy() {
     this.webSocketService.closeWebSocket();
+    this.subscription.unsubscribe();
   }
 
   chatWith(doneBy: AccountBasicData) {
@@ -57,12 +66,25 @@ export class ChatComponent implements OnInit {
       date: new Date(),
     };
     this.webSocketService.sendMessage(chatMessageDto);
-    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    this.scroll(el);
     this.message = null;
+  }
+
+  scroll(el: HTMLElement) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
   ngOnInit() {
     this.getMyRelationships();
     this.getUserData();
     this.webSocketService.openWebSocket();
+    this.subscription = this.webSocketService.sendMessageSubject.subscribe(
+      (data) => {
+        if (data) {
+          document
+            .getElementById('target')
+            .scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    );
   }
 }
