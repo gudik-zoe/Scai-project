@@ -1,4 +1,5 @@
 import { AccountBasicData } from './accountBasicData';
+import { ChatMessageDto } from './chatMessageDto';
 
 export class Relationship {
   idRelationship: number;
@@ -6,4 +7,5 @@ export class Relationship {
   userTwoId: number;
   status: number;
   doneBy?: AccountBasicData;
+  unSeenMessages: ChatMessageDto[];
 }

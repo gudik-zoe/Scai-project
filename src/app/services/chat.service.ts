@@ -13,9 +13,13 @@ export class ChatService {
   rootUrl: string = environment.rootUrl;
 
   getMyConvWithId(senderId: number) {
-    return this.http.get(
-      this.rootUrl + 'messages/receivedFrom/accountId/' + senderId
-    );
+    return new Promise<ChatMessageDto[]>((resolve, reject) => {
+      this.http
+        .get(this.rootUrl + 'messages/receivedFrom/accountId/' + senderId)
+        .subscribe((data: ChatMessageDto[]) => {
+          resolve(data);
+        });
+    });
   }
 
   sendAMessage(message: ChatMessageDto) {
@@ -24,5 +28,26 @@ export class ChatService {
 
   messageHasBeenSeen(userId: number) {
     return this.http.put(this.rootUrl + 'messages/seen', userId);
+  }
+
+  getMyMessages() {
+    return new Promise<ChatMessageDto[]>((resolve, reject) => {
+      return this.http
+        .get(this.rootUrl + 'messages/myMessages')
+        .subscribe((data: ChatMessageDto[]) => {
+          resolve(data);
+          reject('unknown error occured');
+        });
+    });
+  }
+
+  checkForUnseenMessagesForm(userId: number) {
+    return new Promise<ChatMessageDto[]>((resolve, reject) => {
+      this.http
+        .get(this.rootUrl + 'messages/unseenMessages/' + userId)
+        .subscribe((data: ChatMessageDto[]) => {
+          resolve(data);
+        });
+    });
   }
 }

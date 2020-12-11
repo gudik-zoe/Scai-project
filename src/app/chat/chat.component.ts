@@ -30,7 +30,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     public webSocketService: WebSocketService,
     private notificationService: NotificationService
   ) {}
-  myRelationships: Relationship[];
+  myFriends: AccountBasicData[];
   imgUrl: string = environment.rootUrl + 'files/';
   userData: AccountBasicData;
   wantedUser: AccountBasicData;
@@ -39,7 +39,13 @@ export class ChatComponent implements OnInit, OnDestroy {
   message: string;
   messageIds: Array<number> = [];
   async getMyRelationships() {
-    this.myRelationships = await this.friendsService.getMyFriends();
+    this.myFriends = await this.accountService.getAccountFriends();
+    for (let friend of this.myFriends) {
+      friend.unSeenMessages = await this.chatService.checkForUnseenMessagesForm(
+        friend.idAccount
+      );
+    }
+    console.log(this.myFriends);
   }
 
   async getUserData() {
@@ -48,27 +54,28 @@ export class ChatComponent implements OnInit, OnDestroy {
       (await this.accountService.getTheLoggedInUserData());
   }
 
-  getMyConvWithId(id: number) {
-    this.chatService
-      .getMyConvWithId(id)
-      .subscribe(async (data: ChatMessageDto[]) => {
-        this.myConvWith = data;
-        for (let message of this.myConvWith) {
-          message.date = this.notificationService.timeCalculation(message.date);
-        }
-      });
+  async getMyConvWithId(id: number) {
+    this.myConvWith = await this.chatService.getMyConvWithId(id);
+    for (let message of this.myConvWith) {
+      message.date = this.notificationService.timeCalculation(message.date);
+    }
+    for (let friend of this.myFriends) {
+      if (friend.idAccount == id) {
+        friend.unSeenMessages = [];
+      }
+    }
   }
   ngOnDestroy() {
     this.webSocketService.closeWebSocket();
     this.subscription.unsubscribe();
   }
 
-  chatWith(doneBy: AccountBasicData) {
+  chatWith(user: AccountBasicData) {
     this.webSocketService.openWebSocket();
-    if (this.wantedUser && this.wantedUser.idAccount == doneBy.idAccount) {
+    if (this.wantedUser && this.wantedUser.idAccount == user.idAccount) {
     } else {
-      this.wantedUser = { ...doneBy };
-      this.getMyConvWithId(doneBy.idAccount);
+      this.wantedUser = { ...user };
+      this.getMyConvWithId(user.idAccount);
       this.chatService
         .messageHasBeenSeen(this.wantedUser.idAccount)
         .subscribe((data) => {

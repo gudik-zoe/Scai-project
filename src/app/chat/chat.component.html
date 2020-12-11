@@ -1,14 +1,17 @@
 <div class="container-fluid">
-    <div class="row" style="margin-top:70px;" *ngIf="userData && myRelationships">
+    <div class="row" style="margin-top:70px;" *ngIf="userData && myFriends">
         <div class="col-md-3">
             <img src="{{ userData.profilePhoto}}" width="50px" height="50px" style="border-radius: 50%" /> <span
                 class="font-weight-bold"> Chats</span>
             <hr>
-            <div *ngFor="let relation of myRelationships">
-                <div (click)="chatWith(relation.doneBy)" class="friend" *ngIf="relation.doneBy">
-                    <img src="{{relation.doneBy.profilePhoto}}" width="55px" height="55px" style="border-radius: 50%" />
+            <div *ngFor="let friend of myFriends">
+                <div (click)="chatWith(friend)" class="friend" *ngIf="friend.idAccount">
+                    <img src="{{friend.profilePhoto}}" width="55px" height="55px" style="border-radius: 50%" />
                     <span class="font-weight-bold">
-                        {{relation.doneBy.firstName +" " + relation.doneBy.lastName }}</span>
+                        {{friend.firstName +" " + friend.lastName }}</span>
+                    <span
+                        style="width:20px; height: 20px; border-radius: 50%; background-color: lightgreen; color: white; float: right; padding-left:6px; "
+                        *ngIf="friend.unSeenMessages && friend.unSeenMessages.length > 0">{{friend.unSeenMessages.length}}</span>
                 </div>
 
             </div>
