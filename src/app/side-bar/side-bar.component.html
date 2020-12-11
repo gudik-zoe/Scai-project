@@ -7,10 +7,10 @@
     </div>
 
     <div style="padding: 10px;">
-      <div *ngIf="myMessages" class="item" routerLink="/chat">
+      <div class="item" routerLink="/chat">
         <img src="../../assets/iconfinder_1_Messenger_colored_svg_5296502.png" width="25px"
           style="border-radius: 50%" />
-        Messenger {{myMessages.length > 0 ? (myMessages.length) : '' }}
+        Messenger {{myMessages > 0 ? myMessages :'' }}
       </div>
 
       <div class="item" routerLink="/account-settings">

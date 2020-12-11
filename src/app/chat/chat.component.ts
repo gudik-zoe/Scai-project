@@ -60,12 +60,14 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
     for (let friend of this.myFriends) {
       if (friend.idAccount == id) {
-        friend.unSeenMessages = [];
+        friend.unSeenMessages = 0;
       }
     }
   }
   ngOnDestroy() {
-    this.webSocketService.closeWebSocket();
+    if (this.wantedUser) {
+      this.webSocketService.closeWebSocket();
+    }
     this.subscription.unsubscribe();
   }
 

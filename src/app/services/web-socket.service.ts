@@ -26,7 +26,7 @@ export class WebSocketService {
     );
     this.webSocket.onopen = (event) => {
       this.webSocket.send(localStorage.getItem('token'));
-      // console.log('open ', event);
+      console.log('open ', event);
     };
 
     this.webSocket.onmessage = (event) => {
@@ -48,7 +48,7 @@ export class WebSocketService {
       if (this.userIn) {
         this.openWebSocket();
       } else {
-        // console.log('close ', event);
+        console.log('close ', event);
       }
     };
   }

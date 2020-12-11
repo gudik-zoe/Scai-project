@@ -2,9 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Account } from '../models/account';
 import { AccountBasicData } from '../models/accountBasicData';
-import { ChatMessageDto } from '../models/chatMessageDto';
 import { AccountService } from '../services/account.service';
 import { ChatService } from '../services/chat.service';
 
@@ -22,7 +20,7 @@ export class SideBarComponent implements OnInit, OnDestroy {
 
   userData: AccountBasicData;
   imgUrl: string = environment.rootUrl + 'files/';
-  myMessages: ChatMessageDto[] = [];
+  myMessages: number;
   async getUserData() {
     this.userData =
       this.accountService.userData ||

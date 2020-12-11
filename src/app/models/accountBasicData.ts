@@ -6,5 +6,5 @@ export class AccountBasicData {
   profilePhoto: string;
   idAccount: number;
   coverPhoto?: string;
-  unSeenMessages?: ChatMessageDto[];
+  unSeenMessages?: number;
 }

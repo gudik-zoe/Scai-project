@@ -11,7 +11,7 @@
                         {{friend.firstName +" " + friend.lastName }}</span>
                     <span
                         style="width:20px; height: 20px; border-radius: 50%; background-color: lightgreen; color: white; float: right; padding-left:6px; "
-                        *ngIf="friend.unSeenMessages && friend.unSeenMessages.length > 0">{{friend.unSeenMessages.length}}</span>
+                        *ngIf="friend.unSeenMessages && friend.unSeenMessages > 0">{{friend.unSeenMessages}}</span>
                 </div>
 
             </div>

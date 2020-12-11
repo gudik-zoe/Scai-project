@@ -31,10 +31,10 @@ export class ChatService {
   }
 
   getMyMessages() {
-    return new Promise<ChatMessageDto[]>((resolve, reject) => {
+    return new Promise<number>((resolve, reject) => {
       return this.http
         .get(this.rootUrl + 'messages/myMessages')
-        .subscribe((data: ChatMessageDto[]) => {
+        .subscribe((data: number) => {
           resolve(data);
           reject('unknown error occured');
         });
@@ -42,10 +42,10 @@ export class ChatService {
   }
 
   checkForUnseenMessagesForm(userId: number) {
-    return new Promise<ChatMessageDto[]>((resolve, reject) => {
+    return new Promise<number>((resolve, reject) => {
       this.http
         .get(this.rootUrl + 'messages/unseenMessages/' + userId)
-        .subscribe((data: ChatMessageDto[]) => {
+        .subscribe((data: number) => {
           resolve(data);
         });
     });
