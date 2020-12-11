@@ -11,7 +11,7 @@ import { AccountService } from './account.service';
 })
 export class WebSocketService {
   webSocket: WebSocket;
-  sendMessageSubject = new Subject<boolean>();
+  sendMessageSubject = new Subject<any>();
   chatMessages: ChatMessageDto[] = [];
   userIn: boolean = true;
   rootUrl: string = environment.rootUrl;
@@ -41,7 +41,7 @@ export class WebSocketService {
           message.seen = true;
         }
       }
-      this.sendMessageSubject.next(true);
+      this.sendMessageSubject.next(JSON.parse(event.data));
     };
 
     this.webSocket.onclose = (event) => {

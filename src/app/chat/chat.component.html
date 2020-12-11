@@ -24,11 +24,12 @@
 
             </div>
             <div class="scrollable-element">
+                <i class="fa fa-arrow-down" id="scrollDown" aria-hidden="true" (click)="scrollBottom()"></i>
                 <ul *ngFor="let conv of myConvWith">
                     <div [class]="(conv.idSender == wantedUser.idAccount )? 'receiver' :'sender' "><span>
-                            <img *ngIf="conv.idSender == wantedUser.idAccount" src="{{   wantedUser.profilePhoto}}"
+                            <img *ngIf="conv.idSender == wantedUser.idAccount" src="{{ wantedUser.profilePhoto}}"
                                 width="30px" height="30px" style="border-radius: 50%;" />
-                            <img *ngIf="conv.idSender != wantedUser.idAccount" src="{{    userData.profilePhoto}}"
+                            <img *ngIf="conv.idSender != wantedUser.idAccount" src="{{ userData.profilePhoto}}"
                                 width="30px" height="30px" style="border-radius: 50%;" />{{conv.message}}</span>
                         <p style="color: grey; font-size: small; ">{{conv.date}}
                             <span><i *ngIf="conv.idSender == userData.idAccount"
@@ -54,7 +55,7 @@
                         </p>
                     </div>
                 </ul>
-                <hr id="target" #target style="margin-top: 70px; opacity:0.1;">
+                <hr id="target" style="margin-top: 70px; opacity:0.5;">
             </div>
             <div style="padding: 10px; background-color: white;  display: flex;
         align-items: center;
@@ -62,9 +63,9 @@
         border-left: 1px solid black;
          ">
                 <img src="{{ userData.profilePhoto}}" width="50px" height="50px" style="border-radius: 50%;" />
-                <div class="col-md-9"> <input class="form-control" (keydown.enter)="sendMessage(message , target)"
+                <div class="col-md-9"> <input class="form-control" (keydown.enter)="sendMessage(message)"
                         [(ngModel)]="message" type="text"> </div><button class="btn btn-outline-success btn-xs ml-2"
-                    (click)="sendMessage(message , target)"><i class="fa fa-paper-plane" style="font-size: medium;"
+                    (click)="sendMessage(message)"><i class="fa fa-paper-plane" style="font-size: medium;"
                         aria-hidden="true"></i></button>
             </div>
         </div>

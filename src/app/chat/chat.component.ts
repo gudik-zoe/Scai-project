@@ -64,6 +64,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   chatWith(doneBy: AccountBasicData) {
+    this.webSocketService.openWebSocket();
     if (this.wantedUser && this.wantedUser.idAccount == doneBy.idAccount) {
     } else {
       this.wantedUser = { ...doneBy };
@@ -82,7 +83,13 @@ export class ChatComponent implements OnInit, OnDestroy {
         });
     }
   }
-  sendMessage(message: string, el: HTMLElement) {
+
+  scrollBottom() {
+    document
+      .getElementById('target')
+      .scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  sendMessage(message: string) {
     const textMessage = message.trim();
     if (!textMessage || textMessage == undefined) {
       return null;
@@ -94,7 +101,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         date: this.notificationService.timeCalculation(new Date().toString()),
       };
       this.webSocketService.sendMessage(chatMessageDto);
-      this.scroll(el);
+      this.scroll();
       this.message = null;
       // for (let message of this.webSocketService.chatMessages) {
       //   if (
@@ -107,13 +114,15 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
   }
 
-  scroll(el: HTMLElement) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  scroll() {
+    document
+      .getElementById('target')
+      .scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
   ngOnInit() {
     this.getMyRelationships();
     this.getUserData();
-    this.webSocketService.openWebSocket();
+
     this.subscription = this.webSocketService.sendMessageSubject.subscribe(
       (data) => {
         if (data && this.wantedUser) {
