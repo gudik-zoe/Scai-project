@@ -45,7 +45,6 @@ export class ChatComponent implements OnInit, OnDestroy {
         friend.idAccount
       );
     }
-    console.log(this.myFriends);
   }
 
   async getUserData() {

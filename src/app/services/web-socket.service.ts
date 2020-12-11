@@ -48,7 +48,7 @@ export class WebSocketService {
       if (this.userIn) {
         this.openWebSocket();
       } else {
-        console.log('close ', event);
+        // console.log('close ', event);
       }
     };
   }
