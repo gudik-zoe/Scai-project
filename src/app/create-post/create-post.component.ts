@@ -4,6 +4,7 @@ import { Account } from '../models/account';
 import { PostsService } from '../services/posts.service';
 import { environment } from 'src/environments/environment';
 import { Subscription } from 'rxjs';
+import { PostOption } from '../models/postOption';
 
 @Component({
   selector: 'app-create-post',
@@ -21,10 +22,16 @@ export class CreatePostComponent implements OnInit, OnDestroy {
   errorPhrase: string = '';
   formData = new FormData();
   hideButton: boolean = false;
-  isPublic: boolean = true;
+  postOption: PostOption = { status: 'public', icon: 'fa fa-globe' };
 
-  private() {
-    this.isPublic = !this.isPublic;
+  postOptions: PostOption[] = [
+    { status: 'public', icon: 'fa fa-globe' },
+    { status: 'just-friends', icon: 'fa fa-users' },
+    { status: 'only-me', icon: 'fa fa-lock' },
+  ];
+
+  private(postOption: PostOption) {
+    this.postOption = postOption;
   }
 
   close() {
@@ -55,7 +62,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
       this.hideButton = false;
     } else {
       this.formData.append('text', text);
-      this.formData.append('isPublic', this.isPublic.toString());
+      this.formData.append('postOption', this.postOption.status.toString());
       this.hideButton = true;
       this.postsService.addPost(this.formData).subscribe(
         (data: Post) => {
@@ -69,7 +76,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
             firstName: this.userData.firstName,
             lastName: this.userData.lastName,
           };
-          if (this.isPublic) {
+          if (this.postOption.status != 'only-me') {
             this.postsService.confirmCreatePost.next(data);
           }
           this.userData = undefined;

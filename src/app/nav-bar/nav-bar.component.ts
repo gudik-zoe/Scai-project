@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Subscription } from 'rxjs';
 import { FriendsService } from '../services/friends.service';
+import { ChatService } from '../services/chat.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -15,12 +16,13 @@ export class NavBarComponent implements OnInit, OnDestroy {
   constructor(
     private accountService: AccountService,
     private route: Router,
-    private friendsService: FriendsService
+    private friendsService: FriendsService,
+    private chatService: ChatService
   ) {}
 
   loggedIn: boolean;
   userData: AccountBasicData;
-  imgUrl: string = environment.rootUrl + 'files/';
+  myMessages: number;
   async getUserData() {
     this.userData =
       this.accountService.userData ||
@@ -71,15 +73,39 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.accountService.peopleYouMayKnow = undefined;
     this.accountService.userData = undefined;
     this.accountService.loggedIn.next(false);
+    this.clearInterval();
     localStorage.removeItem('token');
     this.route.navigate(['/auth']);
   }
 
   ngOnDestroy() {
     this.subscribtion.unsubscribe();
+    this.clearInterval();
+  }
+
+  async getMyMessages() {
+    this.myMessages = await this.chatService.getMyMessages();
+  }
+
+  goToChat() {
+    this.myMessages = 0;
+    this.route.navigate(['/chat']);
   }
   ngOnInit() {
+    this.getMyMessages();
     this.navBarController();
     this.getTheUpdatedImage();
+    this.startInterval();
+  }
+  interval;
+
+  startInterval() {
+    this.interval = setInterval(() => {
+      this.getMyMessages();
+    }, 10000);
+  }
+
+  clearInterval() {
+    clearInterval(this.interval);
   }
 }

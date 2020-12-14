@@ -2,8 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ChatMessageDto } from '../models/chatMessageDto';
-import { AccountService } from './account.service';
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +9,7 @@ import { AuthService } from './auth.service';
 export class ChatService {
   constructor(private http: HttpClient) {}
   rootUrl: string = environment.rootUrl;
-
+  interval;
   getMyConvWithId(senderId: number) {
     return new Promise<ChatMessageDto[]>((resolve, reject) => {
       this.http
@@ -50,4 +48,15 @@ export class ChatService {
         });
     });
   }
+
+  // startInterval() {
+  //   this.interval = setInterval(() => {
+  //     console.log('hey');
+  //     this.getMyMessages();
+  //   }, 10000);
+  // }
+
+  // clearInterval() {
+  //   clearInterval(this.interval);
+  // }
 }

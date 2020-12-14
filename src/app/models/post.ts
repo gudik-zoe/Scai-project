@@ -7,7 +7,7 @@ export class Post {
   text: string;
   isPublic: boolean;
   image: string;
-  description: string;
+  status: number;
   postCreatorId: number;
   postOriginalId: number;
   extraText: string;

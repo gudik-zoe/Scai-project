@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Post } from '../models/post';
+import { PostOption } from '../models/postOption';
 import { NotificationService } from '../services/notification.service';
 import { PostsService } from '../services/posts.service';
 
@@ -24,6 +25,15 @@ export class SharePostComponent implements OnInit, OnDestroy {
   imgUrl: string = environment.rootUrl + 'files/';
   isPublic: boolean = true;
   public subscribtion: Subscription;
+
+  postOption: PostOption = { status: 'public', icon: 'fa fa-globe' };
+
+  postOptions: PostOption[] = [
+    { status: 'public', icon: 'fa fa-globe' },
+    { status: 'just-friends', icon: 'fa fa-users' },
+    { status: 'only-me', icon: 'fa fa-lock' },
+  ];
+
   getRequestedData() {
     this.subscribtion = this.postService.sharePostComponent.subscribe(
       (data) => {
@@ -35,8 +45,8 @@ export class SharePostComponent implements OnInit, OnDestroy {
     );
   }
 
-  private() {
-    this.isPublic = !this.isPublic;
+  private(postOption: PostOption) {
+    this.postOption = postOption;
   }
 
   closeSharePostComponent() {
@@ -50,7 +60,7 @@ export class SharePostComponent implements OnInit, OnDestroy {
     } else {
       const formData = new FormData();
       formData.append('extraText', text);
-      formData.append('isPublic', this.isPublic.toString());
+      formData.append('postOption', this.postOption.status.toString());
       this.postService.resharePost(post.idPost, formData).subscribe(
         (data: Post) => {
           // post.doneBy && post.postOriginalId && post.originalPostDoneBy
@@ -69,7 +79,7 @@ export class SharePostComponent implements OnInit, OnDestroy {
             idAccount: post.postCreatorId,
             profilePhoto: post.doneBy.profilePhoto,
           };
-          if (this.isPublic) {
+          if (this.postOption.status != 'only-me') {
             this.postService.confirmCreatePost.next(data);
           }
           this.inputData = undefined;

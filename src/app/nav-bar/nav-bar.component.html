@@ -31,12 +31,14 @@
                     </a>
                 </li>
 
-                <li class="nav-item ml-3" routerLink="/chat" style="cursor: pointer; outline: none;">
+                <li class="nav-item ml-3" (click)="goToChat()" style="cursor: pointer; outline: none;">
                     <a class="nav-link">
 
                         <i class="fa fa-comments" aria-hidden="true" style="font-size: 1.9rem;"></i>
-                        <span style="color: lightgray; margin-left: 3px">chat</span>
-                        <span class="sr-only"></span>
+                        <span style="color: lightgray; margin-left: 3px">chat
+                        </span>
+                        <small><i *ngIf="myMessages > 0" class="fa fa-circle"
+                                style="color: lightgreen; position: absolute;" aria-hidden="true"></i></small>
                     </a>
                 </li>
 

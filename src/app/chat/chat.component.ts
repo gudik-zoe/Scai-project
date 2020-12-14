@@ -74,21 +74,13 @@ export class ChatComponent implements OnInit, OnDestroy {
   chatWith(user: AccountBasicData) {
     this.webSocketService.openWebSocket();
     if (this.wantedUser && this.wantedUser.idAccount == user.idAccount) {
+      return null;
     } else {
       this.wantedUser = { ...user };
       this.getMyConvWithId(user.idAccount);
       this.chatService
         .messageHasBeenSeen(this.wantedUser.idAccount)
-        .subscribe((data) => {
-          for (let message of this.webSocketService.chatMessages) {
-            if (
-              message.idSender == this.wantedUser.idAccount &&
-              message.idReceiver == this.userData.idAccount
-            ) {
-              message.seen = true;
-            }
-          }
-        });
+        .subscribe();
     }
   }
 
@@ -111,14 +103,6 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.webSocketService.sendMessage(chatMessageDto);
       this.scroll();
       this.message = null;
-      // for (let message of this.webSocketService.chatMessages) {
-      //   if (
-      //     message.idSender == this.userData.idAccount &&
-      //     message.idReceiver == this.wantedUser.idAccount
-      //   ) {
-      //     message.seen = true;
-      //   }
-      // }
     }
   }
 

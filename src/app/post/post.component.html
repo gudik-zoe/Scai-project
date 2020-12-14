@@ -4,14 +4,18 @@
 
       <span class="font-weight-bold mt-1" style="float: left;">
         <img src="{{  post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%;" height="50px" />
-        {{  post.doneBy.firstName + " " + post.doneBy.lastName }} {{ post.postedOn ? '':'shared'}}
+        {{ post.doneBy.firstName + " " + post.doneBy.lastName }} {{ post.postedOn ? '':'shared'}}
         <p style="color:gray ; font-size: x-small; margin-left: 70px; margin-top: -17px;">
-          {{post.date}} . <i [ngClass]=" post.isPublic ? 'fa fa-globe' : 'fa fa-lock' " aria-hidden="true"></i></p>
+          {{post.date}} .
+          <i *ngIf="post.status == 0" class="fa fa-globe" aria-hidden="true"></i>
+          <i *ngIf="post.status == 1" class="fa fa-users" aria-hidden="true"></i>
+          <i *ngIf="post.status == 2" class="fa fa-lock" aria-hidden="true"></i>
+        </p>
       </span>
       <span style="float: left;" *ngIf="post.postedOn && post.postedOnData">
         <i style="padding: 10px; margin-top: 10px;" class="fa fa-caret-right fa-lg" aria-hidden="true"></i>
         <img src="{{ post.postedOnData.profilePhoto }}" style="width: 45px; height: 45px; border-radius: 50%;" />
-        {{post.postedOnData.firstName  + " " + post.postedOnData.lastName}}
+        {{post.postedOnData.firstName + " " + post.postedOnData.lastName}}
       </span>
 
 
@@ -54,14 +58,15 @@
         <img *ngIf="post.image" src="{{  post.image }}" style="width: 100%; height: 60%; border-radius: 10px;" />
         <p><i *ngIf="status== 'friends'" class="fa fa-thumbs-up" aria-hidden="true" style="color: blue">
           </i>{{post.likesNumber}}
-          <i class="fa fa-comments" aria-hidden="true" style="margin-left: 150px;"></i>{{post.commentsNumber}}</p>
+          <i class="fa fa-comments" aria-hidden="true" style="margin-left: 150px;"></i>{{post.commentsNumber}}
+        </p>
       </div>
     </ng-container>
 
     <hr />
     <span><i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue"></i> {{ post.postLikes.length }} </span>
-    <span (click)="openComments()" class="font-weight-bold"
-      style="margin-left: 140px; cursor: pointer;">{{ post.comments.length }}comments</span>
+    <span (click)="openComments()" class="font-weight-bold" style="margin-left: 140px; cursor: pointer;">{{
+      post.comments.length }}comments</span>
     <span (click)="goToDescription(post.idPost)"
       style="cursor: pointer; color: blue; font-weight: bold; margin-left: 130px">description</span>
     <hr />
