@@ -102,7 +102,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   startInterval() {
     this.interval = setInterval(() => {
       this.getMyMessages();
-    }, 10000);
+    }, 60000);
   }
 
   clearInterval() {

@@ -3,7 +3,7 @@
     <div id="first-div" class="col-md-3">
       <app-side-bar></app-side-bar>
       <br>
-      <app-account-photos></app-account-photos>
+      <app-account-photos [account]="userData"></app-account-photos>
     </div>
     <!-- ngClass="{{ open ? 'col-md-6' : 'col-md-9' }}" -->
     <div id="second-div" class="col-md-6">

@@ -8,6 +8,7 @@ import { LeavePostModule } from '../leave-post/leave-post.module';
 import { WhatOnMindModule } from '../what-on-mind/what-on-mind.module';
 import { FriendsContainerModule } from '../friends-container/friends-container.module';
 import { SharePostModule } from '../share-post/share-post.module';
+import { AccountPhotosModule } from '../account-photos/account-photos.module';
 
 const routes: Routes = [{ path: ':id', component: UserProfileComponent }];
 
@@ -22,6 +23,7 @@ const routes: Routes = [{ path: ':id', component: UserProfileComponent }];
     WhatOnMindModule,
     FriendsContainerModule,
     SharePostModule,
+    AccountPhotosModule,
   ],
 })
 export class UserProfileModule {}

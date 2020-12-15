@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { AccountBasicData } from '../models/accountBasicData';
 import { AccountService } from '../services/account.service';
 
 @Component({
@@ -8,13 +9,30 @@ import { AccountService } from '../services/account.service';
 })
 export class AccountPhotosComponent implements OnInit {
   photos: string[];
+  userData: AccountBasicData;
   constructor(private accountService: AccountService) {}
 
+  @Input() account: AccountBasicData;
+
   async getPhotos() {
-    this.photos = await this.accountService.getAccountPhotos();
+    if (this.account.idAccount == this.userData.idAccount) {
+      this.photos =
+        this.accountService.photos ||
+        (await this.accountService.getAccountPhotos(this.userData.idAccount));
+    } else {
+      console.log('doing the chiamata');
+      this.photos = await this.accountService.getAccountPhotos(
+        this.account.idAccount
+      );
+    }
+  }
+
+  getUserData() {
+    this.userData = this.accountService.userData;
   }
 
   ngOnInit() {
+    this.getUserData();
     this.getPhotos();
   }
 }

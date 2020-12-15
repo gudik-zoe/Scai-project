@@ -171,13 +171,14 @@ export class AccountService {
       return formData;
     }
   }
-
-  getAccountPhotos() {
+  photos: string[];
+  getAccountPhotos(accountId: number) {
     return new Promise<string[]>((resolve, reject) => {
       this.http
-        .get(this.rootUrl + 'api/account/photos')
+        .get(this.rootUrl + 'api/account/photos/' + accountId)
         .subscribe((data: string[]) => {
-          resolve(data);
+          this.photos = data;
+          resolve(this.photos);
           reject('unknown error occured');
         });
     });
