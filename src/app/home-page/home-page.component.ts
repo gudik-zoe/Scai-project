@@ -109,6 +109,5 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.getFriends();
     this.getPeopleyouMayKnow();
     this.getRespondToRequestSubject();
-    // this.openFriendTab();
   }
 }

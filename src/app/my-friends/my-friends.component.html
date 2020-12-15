@@ -12,8 +12,10 @@
   <button (click)="unFriend(user)" style="font-size: small;" *ngIf="areFriends"
     class="btn btn-outline-danger btn-sm ml-4"> unfriend <i class="fa fa-ban" aria-hidden="true"></i>
   </button>
-  <br>
-  <small *ngIf="mutualFriends && mutualFriends.length >0" style="margin-left: 50px;">{{mutualFriends.length}} mutual
-    friends </small>
+
+  <p *ngIf="mutualFriends && mutualFriends.length >0"
+    style="margin-left: 50px; margin-top: -15px; color: gray; font-size: smaller;">
+    {{mutualFriends.length}} mutual
+    friends </p>
 
 </div>

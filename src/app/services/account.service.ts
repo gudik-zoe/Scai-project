@@ -172,6 +172,17 @@ export class AccountService {
     }
   }
 
+  getAccountPhotos() {
+    return new Promise<string[]>((resolve, reject) => {
+      this.http
+        .get(this.rootUrl + 'api/account/photos')
+        .subscribe((data: string[]) => {
+          resolve(data);
+          reject('unknown error occured');
+        });
+    });
+  }
+
   getAnAccountFriend(otherAccountId: number) {
     return new Promise<AccountBasicData[]>((resolve, reject) => {
       this.http

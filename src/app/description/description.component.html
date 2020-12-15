@@ -5,19 +5,19 @@
     <div *ngIf="post" class="row" style="height: max-content; background-color: lightgray; padding: 10px;">
       <div class="col-md-8">
         <img *ngIf="post.doneBy" src="{{post.doneBy.profilePhoto}}" width="40px" height="40px"
-          style="border-radius: 50%;"><span
-          *ngIf="post.doneBy">{{post.doneBy.firstName + " " + post.doneBy.lastName}}</span>
+          style="border-radius: 50%;"><span *ngIf="post.doneBy">{{post.doneBy.firstName + " " +
+          post.doneBy.lastName}}</span>
         <span *ngIf="post.postedOn">
           <i style="padding: 10px;" class="fa fa-caret-right fa-lg" aria-hidden="true"></i>
           <img src="{{  post.postedOnData.profilePhoto }}" width="40px" height="40px" style="border-radius: 50%" />
-          {{post.postedOnData.firstName  + " " + post.postedOnData.lastName}}
+          {{post.postedOnData.firstName + " " + post.postedOnData.lastName}}
         </span>
         <p *ngIf="!post.postOriginalId" style="margin-left: 50px;">{{post.text}}</p>
         <div class="text-center">
           <img *ngIf="post.image && !post.postOriginalId" src="{{post.image}}"
             style="width: 70%; height: 70%; border-radius: 8px;" />
         </div>
-        <p *ngIf="post.extraText" style="margin-left: 50%;">{{post.extraText}} </p>
+        <p *ngIf="post.extraText" style="margin-left: 30%;">{{post.extraText}} </p>
         <div *ngIf="post.postOriginalId && post.originalPostDoneBy " style="border: 1px solid black; padding: 10px;">
           <img src="{{post.originalPostDoneBy.profilePhoto}}" width="40px" height="40px" style="border-radius: 50%;">
           <span>{{post.originalPostDoneBy.firstName + " " + post.originalPostDoneBy.lastName}}</span>

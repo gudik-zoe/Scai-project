@@ -20,7 +20,7 @@ export class SideBarComponent implements OnInit, OnDestroy {
 
   userData: AccountBasicData;
   imgUrl: string = environment.rootUrl + 'files/';
-  myMessages: number;
+
   async getUserData() {
     this.userData =
       this.accountService.userData ||
@@ -43,12 +43,8 @@ export class SideBarComponent implements OnInit, OnDestroy {
     this.subscribtion.unsubscribe();
   }
 
-  async getMyMessages() {
-    this.myMessages = await this.chatService.getMyMessages();
-  }
   ngOnInit() {
     this.getUserData();
     this.getTheUpdatedImage();
-    this.getMyMessages();
   }
 }

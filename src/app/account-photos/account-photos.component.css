@@ -1,0 +1,17 @@
+.header {
+  width: 100%;
+  border-top-left-radius: 9px;
+  border-top-right-radius: 9px;
+  border-bottom: 1px solid black;
+  height: 60px;
+  padding: 10px;
+  background-color: #926dde;
+}
+
+.main {
+  margin-top: 10px;
+  margin-left: 15px;
+  border: 1px solid;
+  border-radius: 9px;
+  box-shadow: 1px 1px 1px 1px #888888;
+}

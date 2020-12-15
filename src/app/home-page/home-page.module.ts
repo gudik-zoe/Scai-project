@@ -9,6 +9,7 @@ import { PostsContainerModule } from '../posts-container/posts-container.module'
 import { FriendsContainerModule } from '../friends-container/friends-container.module';
 import { SharePostModule } from '../share-post/share-post.module';
 import { WhatOnMindModule } from '../what-on-mind/what-on-mind.module';
+import { AccountPhotosModule } from '../account-photos/account-photos.module';
 
 const routes: Routes = [{ path: '', component: HomePageComponent }];
 
@@ -24,6 +25,7 @@ const routes: Routes = [{ path: '', component: HomePageComponent }];
     PostsContainerModule,
     SharePostModule,
     WhatOnMindModule,
+    AccountPhotosModule,
   ],
 })
 export class HomePageModule {}

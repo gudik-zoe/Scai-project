@@ -1,0 +1,12 @@
+<div class="main">
+    <div class="header">
+        <h4 style="color: white; padding: 6px;">Photos</h4>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="column" style="width: 100%;" *ngFor="let image of photos" style="padding: 10px;">
+                <img src="{{image}}" width="120px" height="120px">
+            </div>
+        </div>
+    </div>
+</div>
