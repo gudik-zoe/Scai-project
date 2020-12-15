@@ -28,6 +28,7 @@ export class FriendsContainerComponent implements OnInit {
 
   @Input() users: AccountBasicData[];
   @Input() areFriends: boolean;
+
   @Output() unFriendInHomePage = new EventEmitter<any>();
   userData: AccountBasicData;
 

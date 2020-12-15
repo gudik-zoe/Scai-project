@@ -172,7 +172,7 @@ export class AccountService {
     }
   }
 
-  getMutualFriends(otherAccountId: number) {
+  getAnAccountFriend(otherAccountId: number) {
     return new Promise<AccountBasicData[]>((resolve, reject) => {
       this.http
         .get(this.rootUrl + 'api/account/mutualFriends/' + otherAccountId)

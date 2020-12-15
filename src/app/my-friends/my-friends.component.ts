@@ -25,6 +25,7 @@ export class MyFriendsComponent implements OnInit, OnDestroy {
   ) {}
 
   @Input() user: AccountBasicData;
+  @Input() friends: AccountBasicData[];
   @Input() userData: AccountBasicData;
   @Input() areFriends: boolean;
   @Input() i: number;
@@ -32,6 +33,8 @@ export class MyFriendsComponent implements OnInit, OnDestroy {
   @Output() unFriendEvent = new EventEmitter<any>();
   status: string;
   subscription: Subscription;
+  userFriends: AccountBasicData[];
+  mutualFriends: AccountBasicData[] = [];
   goToFriendsCharRoom(id: number): void {
     this.route.navigate(['/messenger', id]);
   }
@@ -55,12 +58,6 @@ export class MyFriendsComponent implements OnInit, OnDestroy {
     }
   }
 
-  mutualFriends: AccountBasicData[];
-  async getMutualFriends() {
-    this.mutualFriends = await this.accountService.getMutualFriends(
-      this.user.idAccount
-    );
-  }
   getRespondToRequestSubject() {
     this.subscription = this.friendService.respondToRequest.subscribe(
       (data) => {
@@ -89,9 +86,22 @@ export class MyFriendsComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  async getUserFriend() {
+    this.userFriends = await this.accountService.getAnAccountFriend(
+      this.user.idAccount
+    );
+    for (let friend of this.userFriends) {
+      for (let friend2 of this.accountService.myFriends) {
+        if (friend.idAccount == friend2.idAccount) {
+          this.mutualFriends.push(friend);
+        }
+      }
+    }
+  }
+
   ngOnInit() {
     this.getStatusWith();
     this.getRespondToRequestSubject();
-    this.getMutualFriends();
+    this.getUserFriend();
   }
 }

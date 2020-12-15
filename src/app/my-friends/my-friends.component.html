@@ -1,18 +1,19 @@
 <div *ngIf="userData" ngClass="{{ i % 2 == 0 ? 'the-friend-1' :'the-friend-2'}}">
-  <span (click)="goToProfile(user.idAccount)"> <img src="{{ user.profilePhoto}}" width="50px" style="border-radius: 50%"
-      height="50px" />
-    {{ user.firstName + " " + user.lastName }}</span> <button (click)="addFriend(user)" style="font-size: small;"
-    *ngIf="!areFriends"
+  <img src="{{ user.profilePhoto}}" width="50px" style="border-radius: 50%" height="50px" />
+  <span (click)="goToProfile(user.idAccount)"> {{ user.firstName + " " + user.lastName }}
+  </span>
+  <button (click)="addFriend(user)" style="font-size: small;" *ngIf="!areFriends"
     [class]="(status == 'pending cancel request' )? 'btn btn-outline-danger btn-sm ml-1' :'btn btn-outline-primary btn-sm ml-2' ">{{status}}
     <i class="fa fa-user-plus" *ngIf="status == 'add friend'" aria-hidden="true"></i>
 
   </button>
 
+
   <button (click)="unFriend(user)" style="font-size: small;" *ngIf="areFriends"
     class="btn btn-outline-danger btn-sm ml-4"> unfriend <i class="fa fa-ban" aria-hidden="true"></i>
   </button>
   <br>
-  <small style="color: gray; margin-left: 50px;"
-    *ngIf="mutualFriends && mutualFriends.length > 0">{{mutualFriends.length}} mutual
-    friends</small>
+  <small *ngIf="mutualFriends && mutualFriends.length >0" style="margin-left: 50px;">{{mutualFriends.length}} mutual
+    friends </small>
+
 </div>

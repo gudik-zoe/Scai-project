@@ -7,4 +7,5 @@ export class AccountBasicData {
   idAccount: number;
   coverPhoto?: string;
   unSeenMessages?: number;
+  userFriends?: Array<AccountBasicData>;
 }

@@ -4,7 +4,7 @@
     </div>
     <div ngClass="{{users.length  > 2 ?  'scrollable-element' : '' }}">
         <div *ngFor="let user of users; let i = index">
-            <app-my-friends [user]="user" [userData]="userData" [areFriends]="areFriends"
+            <app-my-friends [user]="user" [friends]="users" [userData]="userData" [areFriends]="areFriends"
                 (unFriendEvent)="unFriendInParent($event)" [i]="i"></app-my-friends>
         </div>
     </div>

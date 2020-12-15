@@ -74,10 +74,21 @@ export class UserProfileComponent implements OnInit {
       this.status = await this.friendService.getRelationStatusBetweenMeAnd(id);
     }
   }
-  mutualFriends: AccountBasicData[];
+  mutualFriends: AccountBasicData[] = [];
+  userFriends: AccountBasicData[];
   async getMutualFriends() {
+    if (!this.accountService.myFriends) {
+      this.accountService.getAccountFriends();
+    }
     if (this.id != this.loggedInUserData.idAccount) {
-      this.mutualFriends = await this.accountService.getMutualFriends(this.id);
+      this.userFriends = await this.accountService.getAnAccountFriend(this.id);
+      for (let friend of this.accountService.myFriends) {
+        for (let friend2 of this.userFriends) {
+          if (friend.idAccount == friend2.idAccount) {
+            this.mutualFriends.push(friend);
+          }
+        }
+      }
     }
   }
 
