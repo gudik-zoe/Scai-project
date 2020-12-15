@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row" style="margin-top: 65px;">
-    <div id="first-div" class="col-md-3">
+    <div id="first-div" class="col-md-3" *ngIf="userData">
       <app-side-bar></app-side-bar>
       <br>
       <app-account-photos [account]="userData"></app-account-photos>

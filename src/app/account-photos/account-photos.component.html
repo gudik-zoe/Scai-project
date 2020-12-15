@@ -5,8 +5,9 @@
         </div>
         <div class="container-fluid">
             <div class="row">
-                <div class="column" style="width: 100%;" *ngFor="let image of photos" style="padding: 10px;">
-                    <img src="{{image}}" width="120px" height="120px">
+                <div class="column" style="width: 100%;" *ngFor="let image of photos; let i = index"
+                    style="padding: 10px;">
+                    <img *ngIf="image" src="{{image}}" width="120px" height="120px">
                 </div>
             </div>
         </div>

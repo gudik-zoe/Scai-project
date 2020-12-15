@@ -15,16 +15,9 @@ export class AccountPhotosComponent implements OnInit {
   @Input() account: AccountBasicData;
 
   async getPhotos() {
-    if (this.account.idAccount == this.userData.idAccount) {
-      this.photos =
-        this.accountService.photos ||
-        (await this.accountService.getAccountPhotos(this.userData.idAccount));
-    } else {
-      console.log('doing the chiamata');
-      this.photos = await this.accountService.getAccountPhotos(
-        this.account.idAccount
-      );
-    }
+    this.photos = await this.accountService.getAccountPhotos(
+      this.account.idAccount
+    );
   }
 
   getUserData() {
