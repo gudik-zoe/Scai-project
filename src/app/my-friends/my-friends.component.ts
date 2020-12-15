@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { FriendsService } from '../services/friends.service';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Subscription } from 'rxjs';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'app-my-friends',
@@ -17,7 +18,11 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./my-friends.component.css'],
 })
 export class MyFriendsComponent implements OnInit, OnDestroy {
-  constructor(private route: Router, private friendService: FriendsService) {}
+  constructor(
+    private route: Router,
+    private friendService: FriendsService,
+    private accountService: AccountService
+  ) {}
 
   @Input() user: AccountBasicData;
   @Input() userData: AccountBasicData;
@@ -48,6 +53,13 @@ export class MyFriendsComponent implements OnInit, OnDestroy {
           this.status = 'add friend';
         });
     }
+  }
+
+  mutualFriends: AccountBasicData[];
+  async getMutualFriends() {
+    this.mutualFriends = await this.accountService.getMutualFriends(
+      this.user.idAccount
+    );
   }
   getRespondToRequestSubject() {
     this.subscription = this.friendService.respondToRequest.subscribe(
@@ -80,5 +92,6 @@ export class MyFriendsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getStatusWith();
     this.getRespondToRequestSubject();
+    this.getMutualFriends();
   }
 }

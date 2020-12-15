@@ -24,7 +24,7 @@ li:hover {
   cursor: pointer;
 }
 
-.friends-close {
+/* .friends-close {
   animation: fadeOutUpBig;
   animation-duration: 0.8s;
 }
@@ -42,7 +42,7 @@ li:hover {
 .peolpeYouMayKnow-close {
   animation: fadeOutUpBig;
   animation-duration: 0.9s;
-}
+} */
 
 small:hover {
   text-decoration: underline;

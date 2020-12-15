@@ -38,21 +38,21 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.peopleYouMayKnow = await this.accountService.getPeopleYouMayKnow();
   }
 
-  openFriendTab() {
-    this.openFriendsubscription = this.friendService.openFriendsTab.subscribe(
-      (data: Boolean) => {
-        if (!this.open) {
-          this.openFriends = 1;
-          this.open = true;
-        } else {
-          this.openFriends = 0;
-          setTimeout(() => {
-            this.open = false;
-          }, 300);
-        }
-      }
-    );
-  }
+  // openFriendTab() {
+  //   this.openFriendsubscription = this.friendService.openFriendsTab.subscribe(
+  //     (data: Boolean) => {
+  //       if (!this.open) {
+  //         this.openFriends = 1;
+  //         this.open = true;
+  //       } else {
+  //         this.openFriends = 0;
+  //         setTimeout(() => {
+  //           this.open = false;
+  //         }, 300);
+  //       }
+  //     }
+  //   );
+  // }
 
   async getUserData() {
     this.userData =
@@ -100,7 +100,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.RespondToRequestSubject.unsubscribe();
-    this.openFriendsubscription.unsubscribe();
+    // this.openFriendsubscription.unsubscribe();
   }
 
   ngOnInit() {
@@ -109,6 +109,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.getFriends();
     this.getPeopleyouMayKnow();
     this.getRespondToRequestSubject();
-    this.openFriendTab();
+    // this.openFriendTab();
   }
 }

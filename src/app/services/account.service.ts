@@ -164,17 +164,21 @@ export class AccountService {
   }
 
   uploadAnImage(event) {
-    // return new Promise<FormData>((resolve, reject) => {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       const formData = new FormData();
       formData.append('image', file);
-      // formData.append('text', 'hello world');
       return formData;
-      //     resolve(formData);
-      //     reject('unknown error happened');
-      //   }
-      // });
     }
+  }
+
+  getMutualFriends(otherAccountId: number) {
+    return new Promise<AccountBasicData[]>((resolve, reject) => {
+      this.http
+        .get(this.rootUrl + 'api/account/mutualFriends/' + otherAccountId)
+        .subscribe((data: AccountBasicData[]) => {
+          resolve(data);
+        });
+    });
   }
 }

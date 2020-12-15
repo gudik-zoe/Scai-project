@@ -51,6 +51,20 @@
           <app-posts-container [posts]="requestedAccountPosts" [status]="status"> </app-posts-container>
         </div>
       </div>
+
+      <div class="col-3" style=" padding: 10px;" *ngIf=" mutualFriends && mutualFriends.length > 0">
+
+        <div class="main">
+          <div class="header">
+            mutual friends
+          </div>
+          <div class="content" *ngFor="let friend of mutualFriends">
+            <img src="{{friend.profilePhoto}}" width="40px" height="40px" style="border-radius: 50%;">
+            {{friend.firstName + " " + friend.lastName}}
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
   <app-share-post></app-share-post>

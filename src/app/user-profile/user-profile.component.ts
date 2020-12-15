@@ -74,12 +74,19 @@ export class UserProfileComponent implements OnInit {
       this.status = await this.friendService.getRelationStatusBetweenMeAnd(id);
     }
   }
+  mutualFriends: AccountBasicData[];
+  async getMutualFriends() {
+    if (this.id != this.loggedInUserData.idAccount) {
+      this.mutualFriends = await this.accountService.getMutualFriends(this.id);
+    }
+  }
 
   async userProfileSetFunctions() {
     await this.getUserFromUrl();
     await this.getPostsByAccountId(this.requestedUserData.idAccount);
     await this.getUserData();
     await this.getStatusWith(this.requestedUserData.idAccount);
+    await this.getMutualFriends();
   }
   ngOnInit() {
     this.aroute.params.subscribe((params) => {
@@ -88,6 +95,5 @@ export class UserProfileComponent implements OnInit {
         this.userProfileSetFunctions();
       }
     });
-    this.userProfileSetFunctions();
   }
 }
