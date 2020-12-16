@@ -1,0 +1,10 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { PhotoViewerComponent } from './photo-viewer.component';
+
+@NgModule({
+  declarations: [PhotoViewerComponent],
+  imports: [CommonModule],
+  exports: [PhotoViewerComponent],
+})
+export class PhotoViewerModule {}

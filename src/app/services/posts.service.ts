@@ -30,7 +30,6 @@ export class PostsService {
   userBasicData: AccountBasicData;
   accountPosts: Post[];
   confirmCreatePost = new Subject<Post>();
-
   constructor(
     private accountService: AccountService,
     private http: HttpClient,

@@ -47,7 +47,7 @@
                             <img *ngIf="chatMessage.idSender == wantedUser.idAccount"
                                 src="{{   wantedUser.profilePhoto}}" width="30px" height="30px"
                                 style="border-radius: 50%;" />
-                            <img *ngIf="chatMessage.idSender != wantedUser.idAccount" src="{{   userData.profilePhoto}}"
+                            <img *ngIf="chatMessage.idSender != wantedUser.idAccount" src="{{userData.profilePhoto}}"
                                 width="30px" height="30px" style="border-radius: 50%;" />
                             {{chatMessage.message}}
                         </span>

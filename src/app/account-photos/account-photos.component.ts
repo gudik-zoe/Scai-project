@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AccountBasicData } from '../models/accountBasicData';
 import { AccountService } from '../services/account.service';
+import { PostsService } from '../services/posts.service';
 
 @Component({
   selector: 'app-account-photos',
@@ -10,7 +11,11 @@ import { AccountService } from '../services/account.service';
 export class AccountPhotosComponent implements OnInit {
   photos: string[];
   userData: AccountBasicData;
-  constructor(private accountService: AccountService) {}
+  image: string = null;
+  constructor(
+    private accountService: AccountService,
+    private postService: PostsService
+  ) {}
 
   @Input() account: AccountBasicData;
 
@@ -18,6 +23,10 @@ export class AccountPhotosComponent implements OnInit {
     this.photos = await this.accountService.getAccountPhotos(
       this.account.idAccount
     );
+  }
+
+  openImage(image: string) {
+    this.image = image;
   }
 
   getUserData() {
