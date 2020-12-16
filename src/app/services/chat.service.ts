@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ChatMessageDto } from '../models/chatMessageDto';
+import { ImgUrl } from '../models/imgUrl';
 
 @Injectable({
   providedIn: 'root',
@@ -48,6 +49,17 @@ export class ChatService {
         });
     });
   }
+
+  // uploadImage(image: FormData) {
+  //   return new Promise<string>((resolve, reject) => {
+  //     this.http
+  //       .post(this.rootUrl + 'messages/uploadImage', image)
+  //       .subscribe((data: ImgUrl) => {
+  //         resolve(data.imageUrl);
+  //         reject('unknown error occured');
+  //       });
+  //   });
+  // }
 
   // startInterval() {
   //   this.interval = setInterval(() => {

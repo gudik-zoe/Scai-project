@@ -46,6 +46,11 @@
   transition: all 0.1s ease-in-out;
 }
 
+.icon:hover {
+  background-color: whitesmoke;
+  transform: scale(1.5);
+}
+
 .close {
   width: 30px;
   height: 30px;
@@ -55,8 +60,4 @@
   padding-left: 5px;
   padding-top: 2px;
   cursor: pointer;
-}
-.icon:hover {
-  background-color: whitesmoke;
-  transform: scale(1.5);
 }

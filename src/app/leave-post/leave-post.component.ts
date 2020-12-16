@@ -31,7 +31,10 @@ export class LeavePostComponent implements OnInit, OnDestroy {
   ) {}
 
   async uploadImage(event) {
-    if (event.target.files.length > 0) {
+    if (
+      event.target.files.length > 0 &&
+      event.target.files[0].type.includes('image')
+    ) {
       const image = event.target.files[0];
       this.formData.append('image', image);
       let reader = new FileReader();
@@ -39,6 +42,8 @@ export class LeavePostComponent implements OnInit, OnDestroy {
       reader.onload = (event) => {
         this.postTemporaryImage = event.target.result;
       };
+    } else {
+      this.errorPhrase = 'file type not supported';
     }
   }
 

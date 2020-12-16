@@ -55,6 +55,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   async getMyConvWithId(id: number) {
     this.myConvWith = await this.chatService.getMyConvWithId(id);
+    this.webSocketService.chatMessages = [];
     for (let message of this.myConvWith) {
       message.date = this.notificationService.timeCalculation(message.date);
     }

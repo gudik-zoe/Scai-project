@@ -5,4 +5,5 @@ export class ChatMessageDto {
   idReceiver: number;
   seen: boolean;
   date?: string;
+  image?: string;
 }

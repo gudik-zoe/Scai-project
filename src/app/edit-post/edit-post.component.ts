@@ -44,7 +44,10 @@ export class EditPostComponent implements OnInit, OnDestroy {
   }
 
   uploadImage(event) {
-    if (event.target.files.length > 0) {
+    if (
+      event.target.files.length > 0 &&
+      event.target.files[0].type.includes('image')
+    ) {
       const image = event.target.files[0];
       this.formData.append('image', image);
       this.postWithImage = true;
@@ -56,6 +59,8 @@ export class EditPostComponent implements OnInit, OnDestroy {
         this.showImage = false;
         this.errorPhrase = '';
       };
+    } else {
+      this.errorPhrase = 'file type not supported';
     }
   }
 

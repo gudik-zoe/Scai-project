@@ -27,7 +27,8 @@
 
             </div>
             <div class="scrollable-element">
-                <i class="fa fa-arrow-down" id="scrollDown" aria-hidden="true" (click)="scrollBottom()"></i>
+                <i class="fa fa-arrow-down" id="scrollDown" aria-hidden="true" style="position:fixed;"
+                    (click)="scrollBottom()"></i>
                 <ul *ngFor="let conv of myConvWith">
                     <div [class]="(conv.idSender == wantedUser.idAccount )? 'receiver' :'sender' "><span>
                             <img *ngIf="conv.idSender == wantedUser.idAccount" src="{{ wantedUser.profilePhoto}}"
@@ -72,8 +73,6 @@
                         aria-hidden="true"></i></button>
             </div>
         </div>
-
-
 
     </div>
 </div>
