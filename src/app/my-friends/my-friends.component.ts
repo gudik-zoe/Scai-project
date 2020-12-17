@@ -87,13 +87,15 @@ export class MyFriendsComponent implements OnInit, OnDestroy {
   }
 
   async getUserFriend() {
-    this.userFriends = await this.accountService.getAnAccountFriend(
-      this.user.idAccount
-    );
-    for (let friend of this.userFriends) {
-      for (let friend2 of this.accountService.myFriends) {
-        if (friend.idAccount == friend2.idAccount) {
-          this.mutualFriends.push(friend);
+    if (this.areFriends) {
+      this.userFriends = await this.accountService.getAnAccountFriend(
+        this.user.idAccount
+      );
+      for (let friend of this.userFriends) {
+        for (let friend2 of this.accountService.myFriends) {
+          if (friend.idAccount == friend2.idAccount) {
+            this.mutualFriends.push(friend);
+          }
         }
       }
     }
