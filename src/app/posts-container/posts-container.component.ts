@@ -112,6 +112,12 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
     this.commentService.likeComment(comment.idComment).subscribe(
       (data: CommentLike) => {
         if (data) {
+          data.doneBy = {
+            idAccount: this.userData.idAccount,
+            firstName: this.userData.firstName,
+            lastName: this.userData.lastName,
+            profilePhoto: this.userData.profilePhoto,
+          };
           comment.commentLike.push(data);
         } else {
           comment.commentLike.pop();

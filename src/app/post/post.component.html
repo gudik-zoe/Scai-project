@@ -130,12 +130,17 @@
         </div>
         <small style="color: gray;   float: left;
         margin-left: 80px;">{{comment.date}}</small>
-        <span *ngIf="comment.commentLike.length > 0" (mouseenter)="hoverFunction(comment)" class="comment-number"
+        <!-- <span *ngIf="comment.commentLike.length > 0" 
+          (mouseenter)="hoverFunction(comment)"
+           class="comment-number"
+          style="background-color: lightgray; border-radius: 9px; padding: 5px; width: min-content; "> -->
+        <span *ngIf="comment.commentLike.length > 0" class="comment-number"
           style="background-color: lightgray; border-radius: 9px; padding: 5px; width: min-content; ">
           <img src="../../assets/download (1).jpg" width="20px" height="20px" style="border-radius:50% ;">
           {{comment.commentLike.length}}
           <span class="comment-info">
-            <div *ngFor="let liker of commentLikers ;"> {{ liker.firstName + " " + liker.lastName }}</div>
+            <div *ngFor="let like of comment.commentLike ;"> {{ like.doneBy.firstName + " " + like.doneBy.lastName }}
+            </div>
           </span>
         </span>
 
