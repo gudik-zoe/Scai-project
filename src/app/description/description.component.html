@@ -57,7 +57,9 @@
                 {{comment.commentLike.length}}
                 <div class="comment-info" *ngIf="comment.commentLike">
                   <div *ngFor="let like of comment.commentLike">
-                    {{like.doneBy.firstName + " " + like.doneBy.lastName }}</div>
+                    <span *ngIf="like.doneBy"> {{like.doneBy.firstName + " " + like.doneBy.lastName }}
+                    </span>
+                  </div>
                 </div>
               </span>
             </li>

@@ -25,20 +25,42 @@ export class DescriptionComponent implements OnInit {
     private accountService: AccountService
   ) {}
 
+  privatePost = {
+    text: 'this is a private post',
+    image: '',
+  };
+
   async getPosts() {
-    this.post = await this.postsService.getPostByPostId(this.id);
-    return new Promise(async (resolve) => {
-      for (let comment of this.post.comments) {
-        if (comment.commentLike.length > 0) {
-          for (let like of comment.commentLike) {
-            like.doneBy = await this.accountService.getBasicAccountDetails(
-              like.commentLikeCreatorId
-            );
-          }
+    if (this.postsService.homePagePosts || this.postsService.accountPosts) {
+      const foundInHomePage = this.postsService.homePagePosts.find(
+        (item) => item.idPost == this.id
+      );
+      if (foundInHomePage) {
+        this.post = foundInHomePage;
+        return this.post;
+      } else if (!foundInHomePage) {
+        const foundInAccountPosts = this.postsService.accountPosts.find(
+          (item) => item.idPost == this.id
+        );
+        if (foundInAccountPosts) {
+          this.post = foundInAccountPosts;
+          return this.post;
         }
       }
-      resolve(this.post);
-    });
+    } else {
+      this.post = await this.postsService.getPostByPostId(this.id);
+      if (
+        this.post.status == 2 &&
+        this.post.postCreatorId != this.accountService.userData.idAccount
+      ) {
+        this.post.text = 'this is a private post!!';
+        this.post.image = null;
+        this.post.comments = [];
+        this.post.postLikes = [];
+      } else {
+        return this.post;
+      }
+    }
   }
 
   ngOnInit() {

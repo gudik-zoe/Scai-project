@@ -93,6 +93,13 @@ export class PostsService {
             comment.date
           );
         }
+        if (comment.commentLike.length > 0) {
+          for (let like of comment.commentLike) {
+            like.doneBy = await this.accountService.getBasicAccountDetails(
+              like.commentLikeCreatorId
+            );
+          }
+        }
       }
       for (let like of post.postLikes) {
         this.userBasicData = await this.accountService.getBasicAccountDetails(
