@@ -51,6 +51,7 @@ export class PostComponent implements OnInit {
     } else {
       this.errorPhrase = '';
       this.commentPostEvent.emit({ post, commentText });
+      commentText = '';
     }
   }
 

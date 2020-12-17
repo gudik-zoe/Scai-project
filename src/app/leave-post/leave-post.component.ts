@@ -24,11 +24,7 @@ export class LeavePostComponent implements OnInit, OnDestroy {
   rootUrl: string = environment.rootUrl;
   hideButton: boolean = false;
   formData = new FormData();
-  constructor(
-    private http: HttpClient,
-    private postService: PostsService,
-    private accountService: AccountService
-  ) {}
+  constructor(private postService: PostsService) {}
 
   async uploadImage(event) {
     if (

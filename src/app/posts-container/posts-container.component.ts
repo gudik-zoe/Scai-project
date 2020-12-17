@@ -98,9 +98,7 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
             lastName: this.userData.lastName,
             profilePhoto: this.userData.profilePhoto,
           };
-          comment.date = await this.notificationService.timeCalculation(
-            comment.date
-          );
+          comment.date = this.notificationService.timeCalculation(comment.date);
 
           data.post.comments.unshift(comment);
           this.commentText = null;

@@ -57,7 +57,7 @@
         </div>
         <p style="padding-right: 220px; margin-top: 50px; font-size: larger;"> {{ post.text }} </p>
         <img *ngIf="post.image" src="{{  post.image }}" style="width: 100%; height: 60%; border-radius: 10px;" />
-        <p><i *ngIf="status== 'friends'" class="fa fa-thumbs-up" aria-hidden="true" style="color: blue">
+        <p><i class="fa fa-thumbs-up" aria-hidden="true">
           </i>{{post.likesNumber}}
           <i class="fa fa-comments" aria-hidden="true" style="margin-left: 150px;"></i>{{post.commentsNumber}}
         </p>
@@ -141,8 +141,7 @@
 
       </div>
     </ng-container>
-
-    <div style="margin-top: 10px;">
+    <div style="margin-top: 25px;">
       <img src="{{userData.profilePhoto }}" width="40px" height="40px" style="border-radius: 50%" />
       <input class="comment-input" [(ngModel)]="commentText" placeholder="write a comment" />
       <p class="text-danger">{{errorPhrase}}</p>

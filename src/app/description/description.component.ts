@@ -26,7 +26,6 @@ export class DescriptionComponent implements OnInit {
   ) {}
 
   async getPosts() {
-    // this.dbPosts = await this.postsService.getAllPosts();
     this.post = await this.postsService.getPostByPostId(this.id);
     return new Promise(async (resolve) => {
       for (let comment of this.post.comments) {
@@ -38,7 +37,6 @@ export class DescriptionComponent implements OnInit {
           }
         }
       }
-      console.log(this.post);
       resolve(this.post);
     });
   }

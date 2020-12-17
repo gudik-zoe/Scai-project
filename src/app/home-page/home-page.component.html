@@ -25,7 +25,7 @@
         </app-friends-container>
       </div>
       <br>
-      <div ngClass="{{openFriends == 1 ? 'peolpeYouMayKnow-open' : 'peolpeYouMayKnow-close'}}">
+      <div>
         <app-friends-container *ngIf="peopleYouMayKnow.length > 0" [users]="peopleYouMayKnow" [areFriends]="false">
         </app-friends-container>
       </div>

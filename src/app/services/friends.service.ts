@@ -24,19 +24,22 @@ export class FriendsService {
   getRelationStatusBetweenMeAnd(userId: number) {
     return new Promise<string>((resolve) => {
       this.http
-        .get(this.rootUrl + 'relation/getStatus/' + userId)
+        .get(this.rootUrl + 'relation/getRelation/accountId/' + userId)
         .subscribe((data: Relationship) => {
+          console.log(data);
           if (!data) {
             this.status = 'add friend';
           } else if (
             data.status == 0 &&
-            data.userTwoId == this.accountService.getId()
+            data.userTwoId == this.accountService.userData.idAccount
           ) {
+            console.log('sent u a friend request');
             this.status = 'sent u a friend request';
           } else if (
             data.status == 0 &&
-            data.userTwoId !== this.accountService.getId()
+            data.userTwoId !== this.accountService.userData.idAccount
           ) {
+            console.log('pending cancel request');
             this.status = 'pending cancel request';
           } else {
             this.status = 'friends';
