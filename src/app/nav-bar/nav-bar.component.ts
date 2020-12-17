@@ -83,8 +83,13 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.clearInterval();
   }
 
+  notificationSound = new Audio('../../assets/swiftly-610.mp3');
   async getMyMessages() {
     this.myMessages = await this.chatService.getMyMessages();
+    if (this.myMessages > 0) {
+      this.notificationSound.play();
+      console.log('here');
+    }
   }
 
   goToChat() {
