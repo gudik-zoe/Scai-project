@@ -46,7 +46,6 @@ export class NotificationService {
   }
 
   timeCalculation(date: string) {
-    // return new Promise<string>((resolve, reject) => {
     const now = new Date().getTime();
     let timeToCalculate = now - new Date(date).getTime();
     let dateInSeconds = Math.floor(timeToCalculate / 1000);
@@ -63,8 +62,6 @@ export class NotificationService {
       return dateInDays.toString() + ' days ago';
     } else {
       return this.datePipe.transform(date, 'short');
-      // reject('unknow error occured');
     }
-    // });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { notEqual } from 'assert';
 import { environment } from 'src/environments/environment';
@@ -13,7 +13,7 @@ import { NotificationService } from '../services/notification.service';
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.css'],
 })
-export class NotificationComponent implements OnInit {
+export class NotificationComponent implements OnInit, OnDestroy {
   notifications: Notification[];
   unseenNots: Notification[] = [];
   userData: AccountBasicData;
@@ -27,6 +27,11 @@ export class NotificationComponent implements OnInit {
     private accountService: AccountService,
     private route: Router
   ) {}
+  ngOnDestroy() {
+    this.clearInterval();
+  }
+
+  notificationSound = new Audio('../../assets/juntos-607.mp3');
 
   async getNotifications() {
     this.notifications = await this.notificationService.getNotification();
@@ -37,7 +42,14 @@ export class NotificationComponent implements OnInit {
     }
     for (let not of this.notifications) {
       if (!not.seen) {
-        this.unseenNots.push(not);
+        this.notificationSound.play();
+        const check = this.unseenNots.find(
+          (item) => item.idNotification == not.idNotification
+        );
+        if (!check) {
+          this.unseenNots.push(not);
+        } else {
+        }
       }
       not.date = this.notificationService.timeCalculation(not.date);
     }
@@ -47,7 +59,9 @@ export class NotificationComponent implements OnInit {
     this.notificationService
       .notHasBeenSeen(notificationId)
       .subscribe((data) => {
-        this.unseenNots.pop();
+        this.unseenNots = this.unseenNots.filter(
+          (item) => item.idNotification != notificationId
+        );
         for (let not of this.notifications) {
           if (not.idNotification == notificationId) {
             not.seen = true;
@@ -69,8 +83,20 @@ export class NotificationComponent implements OnInit {
     }
   }
 
+  interval;
+  startInterval() {
+    this.interval = setInterval(() => {
+      this.getNotifications();
+    }, 60000);
+  }
+
+  clearInterval() {
+    clearInterval(this.interval);
+  }
+
   ngOnInit(): void {
     this.getUserData();
     this.getNotifications();
+    this.startInterval();
   }
 }

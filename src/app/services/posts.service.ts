@@ -22,13 +22,13 @@ export class PostsService {
   alertComponent = new Subject<any>();
   confirmPostDeleting = new Subject<any>();
   leavePostComponent = new Subject<any>();
-  homePagePosts: Post[];
+  homePagePosts: Post[] = [];
   allPosts: Post[];
   comment: Comment;
   post: Post;
   postsData = [];
   userBasicData: AccountBasicData;
-  accountPosts: Post[];
+  accountPosts: Post[] = [];
   confirmCreatePost = new Subject<Post>();
   constructor(
     private accountService: AccountService,
