@@ -64,15 +64,32 @@ export class ChatComponent implements OnInit, OnDestroy {
         friend.unSeenMessages = 0;
       }
     }
+    if (this.myFriends.every((item) => item.unSeenMessages == 0)) {
+      this.chatService.clearUnseenMessages.next(true);
+    }
   }
   ngOnDestroy() {
     if (this.wantedUser) {
       this.webSocketService.closeWebSocket();
     }
     this.subscription.unsubscribe();
+    this.newMessagesSubscription.unsubscribe();
+    this.chatService.chatIsActive = false;
+  }
+  newMessagesSubscription: Subscription;
+  getNewMessagesSubject() {
+    this.newMessagesSubscription = this.chatService.haveNewMessages.subscribe(
+      (data: Boolean) => {
+        if (data) {
+          this.getMyRelationships();
+          this.getUserData();
+        }
+      }
+    );
   }
 
   chatWith(user: AccountBasicData) {
+    this.chatService.chatIsActive = true;
     this.webSocketService.openWebSocket();
     if (this.wantedUser && this.wantedUser.idAccount == user.idAccount) {
       return null;
@@ -115,7 +132,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getMyRelationships();
     this.getUserData();
-
+    this.getNewMessagesSubject();
     this.subscription = this.webSocketService.sendMessageSubject.subscribe(
       (data) => {
         if (data && this.wantedUser) {

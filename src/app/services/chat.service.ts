@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ChatMessageDto } from '../models/chatMessageDto';
 import { ImgUrl } from '../models/imgUrl';
@@ -10,7 +11,10 @@ import { ImgUrl } from '../models/imgUrl';
 export class ChatService {
   constructor(private http: HttpClient) {}
   rootUrl: string = environment.rootUrl;
+  chatIsActive: boolean = false;
   interval;
+  clearUnseenMessages = new Subject<boolean>();
+  haveNewMessages = new Subject<boolean>();
   getMyConvWithId(senderId: number) {
     return new Promise<ChatMessageDto[]>((resolve, reject) => {
       this.http
@@ -28,13 +32,14 @@ export class ChatService {
   messageHasBeenSeen(userId: number) {
     return this.http.put(this.rootUrl + 'messages/seen', userId);
   }
-
-  getMyMessages() {
+  myUnseenMessages: number;
+  getMyUnseenMessages() {
     return new Promise<number>((resolve, reject) => {
       return this.http
         .get(this.rootUrl + 'messages/myMessages')
         .subscribe((data: number) => {
-          resolve(data);
+          this.myUnseenMessages = data;
+          resolve(this.myUnseenMessages);
           reject('unknown error occured');
         });
     });

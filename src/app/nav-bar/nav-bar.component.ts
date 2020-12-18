@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AccountService } from '../services/account.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Subscription } from 'rxjs';
@@ -17,12 +17,14 @@ export class NavBarComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private route: Router,
     private friendsService: FriendsService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private aroute: ActivatedRoute
   ) {}
 
   loggedIn: boolean;
   userData: AccountBasicData;
-  myMessages: number;
+  myUnseenMessages: number;
+  messageSubscription: Subscription;
   async getUserData() {
     this.userData =
       this.accountService.userData ||
@@ -80,36 +82,58 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscribtion.unsubscribe();
+    this.messageSubscription.unsubscribe();
     this.clearInterval();
   }
 
   notificationSound = new Audio('../../assets/swiftly-610.mp3');
-  async getMyMessages() {
-    this.myMessages = await this.chatService.getMyMessages();
-    if (this.myMessages > 0) {
+  async getMyUnseenMessages() {
+    this.myUnseenMessages = await this.chatService.getMyUnseenMessages();
+    if (
+      this.myUnseenMessages > 0 &&
+      this.route.routerState.snapshot.url != '/chat'
+    ) {
+      console.log('calling just the number ');
       this.notificationSound.play();
-      console.log('here');
+    } else if (
+      this.myUnseenMessages > 0 &&
+      this.route.routerState.snapshot.url == '/chat'
+    ) {
+      this.notificationSound.play();
+
+      this.chatService.haveNewMessages.next(true);
     }
   }
 
   goToChat() {
-    this.myMessages = 0;
     this.route.navigate(['/chat']);
   }
+
+  getClearUnseenMessagesSubject() {
+    this.messageSubscription = this.chatService.clearUnseenMessages.subscribe(
+      (data: boolean) => {
+        if (data) {
+          this.myUnseenMessages = 0;
+        }
+      }
+    );
+  }
   ngOnInit() {
-    this.getMyMessages();
+    this.getMyUnseenMessages();
     this.navBarController();
     this.getTheUpdatedImage();
     this.startInterval();
+    this.getClearUnseenMessagesSubject();
   }
   interval;
 
   startInterval() {
     this.interval = setInterval(() => {
-      this.getMyMessages();
+      if (!this.chatService.chatIsActive) {
+        this.getMyUnseenMessages();
+      }
     }, 60000);
   }
-
   clearInterval() {
     clearInterval(this.interval);
   }
