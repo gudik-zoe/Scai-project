@@ -45,6 +45,13 @@ export class NotificationService {
     );
   }
 
+  allNotificationsSeen() {
+    return this.http.put(
+      this.rootUrl + 'notification/allNotification/seen',
+      {}
+    );
+  }
+
   timeCalculation(date: string) {
     const now = new Date().getTime();
     let timeToCalculate = now - new Date(date).getTime();
