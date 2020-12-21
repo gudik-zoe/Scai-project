@@ -1,78 +1,75 @@
 <div class="container-fluid">
-    <div class="row" style="margin-top:70px;" *ngIf="userData && myFriends">
-        <div class="col-md-3">
-            <img src="{{ userData.profilePhoto}}" width="50px" height="50px" style="border-radius: 50%" /> <span
-                class="font-weight-bold"> Chats</span>
-            <hr>
-            <div *ngFor="let friend of myFriends">
-                <div (click)="chatWith(friend)" class="friend" *ngIf="friend.idAccount">
-                    <img src="{{friend.profilePhoto}}" width="55px" height="55px" style="border-radius: 50%" />
-                    <span class="font-weight-bold">
-                        {{friend.firstName +" " + friend.lastName }}</span>
-                    <span
-                        style="width:20px; height: 20px; border-radius: 50%; background-color: lightgreen; color: white; float: right; padding-left:6px; "
-                        *ngIf="friend.unSeenMessages && friend.unSeenMessages > 0">{{friend.unSeenMessages}}</span>
+    <div class="container" style="border: 1px solid black; background-color:white ; margin-top: 80px;">
+        <div class="row" *ngIf="userData && myFriends" style="padding: 5px;">
+            <div class="col-md-3" style="border-right: 1px solid black;">
+                <h5> friends</h5>
+                <hr>
+                <div *ngFor="let friend of myFriends">
+                    <div (click)="chatWith(friend)" class="friend" *ngIf="friend.idAccount">
+                        <img src="{{friend.profilePhoto}}" width="45px" height="45px" style="border-radius: 50%" />
+                        <span class="font-weight-bold">
+                            {{friend.firstName +" " + friend.lastName }}</span>
+                        <span
+                            style="width:20px; height: 20px; border-radius: 50%; background-color: lightgreen; color: white; float: right; padding-left:6px; "
+                            *ngIf="friend.unSeenMessages && friend.unSeenMessages > 0">{{friend.unSeenMessages}}</span>
+                    </div>
                 </div>
-
             </div>
+
+            <div *ngIf="wantedUser" class="col-sm-9" style=" background-color: whitesmoke;  padding: 0px;">
+                <div style="border-bottom: 1px solid black; height: 80px; background-color: white; padding: 10px;">
+                    <img src="{{wantedUser.profilePhoto}}" width="60px" height="60px" style="border-radius: 50%;" />
+                    <span style="font-size: x-large; margin-left: 20px; font-weight:bolder; margin-top: 10px;">
+                        {{wantedUser.firstName + " "+ wantedUser.lastName}}
+                    </span>
+                </div>
+                <div class="scrollable-element">
+                    <i class="fa fa-arrow-down" *ngIf="myConvWith && myConvWith.length > 5" id="scrollDown"
+                        aria-hidden="true" style="position:fixed;" (click)="scrollBottom()"></i>
+                    <ul *ngFor="let conv of myConvWith">
+                        <div [class]="(conv.idSender == wantedUser.idAccount )? 'receiver' :'sender' "><span>
+                                <img *ngIf="conv.idSender == wantedUser.idAccount" src="{{ wantedUser.profilePhoto}}"
+                                    width="30px" height="30px" style="border-radius: 50%;" />
+                                <img *ngIf="conv.idSender != wantedUser.idAccount" src="{{ userData.profilePhoto}}"
+                                    width="30px" height="30px" style="border-radius: 50%;" /><span
+                                    class="ml-2">{{conv.message}} </span></span>
+                            <p style="color: grey; font-size: small; ">{{conv.date}}
+                                <span><i *ngIf="conv.idSender == userData.idAccount"
+                                        class="{{conv.seen ? 'fa fa-check-circle':'fa fa-check-circle-o'}}"
+                                        aria-hidden="true" style="float: right; margin-left: 10px;"></i></span>
+                            </p>
+                        </div>
+                    </ul>
+                    <ul *ngFor="let chatMessage of webSocketService.chatMessages">
+                        <div *ngIf="chatMessage.idSender == userData.idAccount && chatMessage.idReceiver == wantedUser.idAccount || chatMessage.idReceiver == userData.idAccount && chatMessage.idSender == wantedUser.idAccount"
+                            [class]="(chatMessage.idSender == wantedUser.idAccount )? 'receiver' :'sender' "><span>
+                                <img *ngIf="chatMessage.idSender == wantedUser.idAccount"
+                                    src="{{   wantedUser.profilePhoto}}" width="30px" height="30px"
+                                    style="border-radius: 50%;" />
+                                <img *ngIf="chatMessage.idSender != wantedUser.idAccount"
+                                    src="{{userData.profilePhoto}}" width="30px" height="30px"
+                                    style="border-radius: 50%;" />
+                                {{chatMessage.message}}
+                            </span>
+                            <p style="color: grey; font-size: small; ">{{chatMessage.date}}
+                                <i *ngIf="chatMessage.idSender == userData.idAccount"
+                                    class="{{chatMessage.seen ? 'fa fa-check-circle':'fa fa-check-circle-o'}}"
+                                    aria-hidden="true" style="float: right; margin-left: 10px;"></i>
+                            </p>
+                        </div>
+                    </ul>
+                    <hr id="target" style="margin-top: 70px; opacity:0.5;">
+                </div>
+                <div class="send-message">
+                    <img src="{{ userData.profilePhoto}}" width="40px" height="40px"
+                        style="border-radius: 50%; margin-left: 50px;" />
+                    <div class="col-md-9"> <input class="form-control" (keydown.enter)="sendMessage(message)"
+                            [(ngModel)]="message" type="text"> </div><button class="btn btn-outline-success btn-xs ml-2"
+                        (click)="sendMessage(message)"><i class="fa fa-paper-plane" style="font-size: medium;"
+                            aria-hidden="true"></i></button>
+                </div>
+            </div>
+
         </div>
-
-        <div *ngIf="wantedUser" class="col-9" style=" background-color: whitesmoke;  padding: 0px;">
-            <div
-                style="border-bottom: 1px solid black; height: 120px; border-left: 1px solid black; background-color: white; padding: 10px;">
-                <img src="{{wantedUser.profilePhoto}}" width="80px" height="80px" style="border-radius: 50%;" />
-                <span style="font-size: x-large; margin-left: 20px; font-weight:bolder; margin-top: 10px;">
-                    {{wantedUser.firstName + " "+ wantedUser.lastName}}
-                </span>
-
-            </div>
-            <div class="scrollable-element">
-                <i class="fa fa-arrow-down" *ngIf="myConvWith && myConvWith.length > 5" id="scrollDown"
-                    aria-hidden="true" style="position:fixed;" (click)="scrollBottom()"></i>
-                <ul *ngFor="let conv of myConvWith">
-                    <div [class]="(conv.idSender == wantedUser.idAccount )? 'receiver' :'sender' "><span>
-                            <img *ngIf="conv.idSender == wantedUser.idAccount" src="{{ wantedUser.profilePhoto}}"
-                                width="30px" height="30px" style="border-radius: 50%;" />
-                            <img *ngIf="conv.idSender != wantedUser.idAccount" src="{{ userData.profilePhoto}}"
-                                width="30px" height="30px" style="border-radius: 50%;" />{{conv.message}}</span>
-                        <p style="color: grey; font-size: small; ">{{conv.date}}
-                            <span><i *ngIf="conv.idSender == userData.idAccount"
-                                    class="{{conv.seen ? 'fa fa-check-circle':'fa fa-check-circle-o'}}"
-                                    aria-hidden="true" style="margin-left: 150px;"></i></span>
-                        </p>
-                    </div>
-                </ul>
-                <ul *ngFor="let chatMessage of webSocketService.chatMessages">
-                    <div *ngIf="chatMessage.idSender == userData.idAccount && chatMessage.idReceiver == wantedUser.idAccount || chatMessage.idReceiver == userData.idAccount && chatMessage.idSender == wantedUser.idAccount"
-                        [class]="(chatMessage.idSender == wantedUser.idAccount )? 'receiver' :'sender' "><span>
-                            <img *ngIf="chatMessage.idSender == wantedUser.idAccount"
-                                src="{{   wantedUser.profilePhoto}}" width="30px" height="30px"
-                                style="border-radius: 50%;" />
-                            <img *ngIf="chatMessage.idSender != wantedUser.idAccount" src="{{userData.profilePhoto}}"
-                                width="30px" height="30px" style="border-radius: 50%;" />
-                            {{chatMessage.message}}
-                        </span>
-                        <p style="color: grey; font-size: small; ">{{chatMessage.date}}
-                            <i *ngIf="chatMessage.idSender == userData.idAccount"
-                                class="{{chatMessage.seen ? 'fa fa-check-circle':'fa fa-check-circle-o'}}"
-                                aria-hidden="true" style="margin-left: 150px;"></i>
-                        </p>
-                    </div>
-                </ul>
-                <hr id="target" style="margin-top: 70px; opacity:0.5;">
-            </div>
-            <div style="padding: 10px; background-color: white;  display: flex;
-        align-items: center;
-        justify-content: left;
-        border-left: 1px solid black;
-         ">
-                <img src="{{ userData.profilePhoto}}" width="50px" height="50px" style="border-radius: 50%;" />
-                <div class="col-md-9"> <input class="form-control" (keydown.enter)="sendMessage(message)"
-                        [(ngModel)]="message" type="text"> </div><button class="btn btn-outline-success btn-xs ml-2"
-                    (click)="sendMessage(message)"><i class="fa fa-paper-plane" style="font-size: medium;"
-                        aria-hidden="true"></i></button>
-            </div>
-        </div>
-
     </div>
 </div>

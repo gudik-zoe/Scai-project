@@ -94,6 +94,18 @@ export class NotificationComponent implements OnInit, OnDestroy {
     clearInterval(this.interval);
   }
 
+  seeAll() {
+    for (let not of this.notifications) {
+      if (!not.seen) {
+        this.notificationService
+          .notHasBeenSeen(not.idNotification)
+          .subscribe((data) => {
+            this.unseenNots = [];
+            not.seen = true;
+          });
+      }
+    }
+  }
   ngOnInit(): void {
     this.getUserData();
     this.getNotifications();
