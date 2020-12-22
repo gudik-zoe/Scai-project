@@ -1,8 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { notEqual } from 'assert';
+import { first } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Account } from '../models/account';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Notification } from '../models/notification';
 import { AccountService } from '../services/account.service';
@@ -21,6 +20,9 @@ export class NotificationComponent implements OnInit, OnDestroy {
   basicData: AccountBasicData[] = [];
   imgUrl: string = environment.rootUrl + 'files/';
   now: number = new Date().getTime();
+  limit: number = 5;
+  restOfTheNotifications: Notification[];
+  restNotsLoaded: boolean = false;
 
   constructor(
     private notificationService: NotificationService,
@@ -35,6 +37,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
   async getNotifications() {
     this.notifications = await this.notificationService.getNotification();
+    console.log(this.notifications);
     if (this.notifications.length == 0) {
       this.haveNotification = false;
     } else {
@@ -51,7 +54,6 @@ export class NotificationComponent implements OnInit, OnDestroy {
         } else {
         }
       }
-      not.date = this.notificationService.timeCalculation(not.date);
     }
   }
 
@@ -104,6 +106,26 @@ export class NotificationComponent implements OnInit, OnDestroy {
       }
     });
   }
+  @HostListener('scroll', ['$event'])
+  async onScroll(event: any) {
+    const lastIndex = this.notifications[this.notifications.length - 1]
+      .idNotification;
+    if (
+      event.target.offsetHeight + event.target.scrollTop >=
+      event.target.scrollHeight
+    ) {
+      this.restOfTheNotifications = await this.notificationService.loadMore(
+        lastIndex
+      );
+      for (let not of this.restOfTheNotifications) {
+        this.notifications.push(not);
+        if (!not.seen) {
+          this.unseenNots.push(not);
+        }
+      }
+    }
+  }
+
   ngOnInit(): void {
     this.getUserData();
     this.getNotifications();

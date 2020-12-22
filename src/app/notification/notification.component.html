@@ -10,8 +10,8 @@
 
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="padding-bottom: 0px;">
         <p *ngIf="!haveNotification"> no notification </p>
-        <div class="scrollable-menu">
-            <div *ngFor="let not of notifications; let i = index">
+        <div (scroll)="onScroll($event)" class="scrollable-menu">
+            <div *ngFor="let not of notifications ; let i = index">
                 <div *ngIf="not.doneBy" (click)="goToDescription(not)"
                     style.background-color="{{ not.seen? 'white' : 'lightgray' }}" style="border-radius: 10px;"
                     class="dropdown-item">
@@ -21,14 +21,13 @@
                         {{not.action}}
                     </span>
                     <small style="color: blue;">
-                        {{not.date}} </small>
+                        {{not.date}}
+                    </small>
                 </div>
-
             </div>
         </div>
-
-
-        <div class="container-fluid" style="height: 45px; border-top: 1px thin black; background-color: whitesmoke;">
+        <div *ngIf="unseenNots && unseenNots.length > 0" class="container-fluid"
+            style="height: 45px; border-top: 1px thin black; background-color: whitesmoke;">
             <h6 style=" margin-left: 150px; cursor: pointer;color: blue;" (click)="seeAll()"> see all </h6>
         </div>
     </div>

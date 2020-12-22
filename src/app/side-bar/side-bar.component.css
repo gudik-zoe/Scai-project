@@ -20,7 +20,7 @@ li:hover {
 
 .item:hover {
   cursor: pointer;
-  background-color: white;
+  background-color: whitesmoke;
 }
 .header {
   width: 100%;

@@ -1,7 +1,8 @@
 <nav *ngIf="userData" class="navbar fixed-top navbar-expand-md navbar-light" style="background-color:#926dde ;">
     <div class="container">
-        <a class="navbar-brand" href="#"><img src="{{ userData.profilePhoto }}" width="35px" height="35px"
-                style="border-radius: 50%; border: 1px solid white;" /></a>
+        <a class="navbar-brand"><img src="{{ userData.profilePhoto }}" width="35px" height="35px"
+                style="border-radius: 50%; border: 1px solid white;" /><span
+                style="color: white; margin-left: 5px; font-size: medium;">{{userData.firstName}} </span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
             aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

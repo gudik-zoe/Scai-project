@@ -14,6 +14,7 @@ export class NotificationService {
     private datePipe: DatePipe
   ) {}
   notificationObject: Notification[];
+  restOfTheNotifications = [];
 
   rootUrl: string = environment.rootUrl;
 
@@ -24,6 +25,9 @@ export class NotificationService {
         .subscribe((data: Notification[]) => {
           this.notificationObject = data;
           this.getBasicData(this.notificationObject);
+          for (let not of this.notificationObject) {
+            not.date = this.timeCalculation(not.date);
+          }
           resolve(this.notificationObject);
           reject('uknown error occured');
         });
@@ -50,6 +54,23 @@ export class NotificationService {
       this.rootUrl + 'notification/allNotification/seen',
       {}
     );
+  }
+
+  loadMore(idNotification: number) {
+    return new Promise<Notification[]>((resolve, reject) => {
+      this.http
+        .post(this.rootUrl + 'loadMore', idNotification)
+        .subscribe((data: Notification[]) => {
+          if (data) {
+            this.restOfTheNotifications = data;
+            this.getBasicData(this.restOfTheNotifications);
+            for (let not of this.restOfTheNotifications) {
+              not.date = this.timeCalculation(not.date);
+            }
+            resolve(this.restOfTheNotifications);
+          }
+        });
+    });
   }
 
   timeCalculation(date: string) {
