@@ -34,7 +34,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
   postWithImage: boolean = true;
   hideButton: boolean = false;
   formData = new FormData();
-  public closeEditPostComponent(): void {
+  public close() {
     this.editPostComponent = false;
     this.showImage = true;
     this.errorPhrase = '';

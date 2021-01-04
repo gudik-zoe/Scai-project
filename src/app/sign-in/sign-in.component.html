@@ -31,7 +31,7 @@
                     {{errorPhrase}}
                 </p>
             </div>
-            <p *ngIf="weila">your data has been registered sign in</p>
+
             <img *ngIf="loading" src="../../assets/loading_spin_grey.gif_11ezlroiohbdwk2imlrjrbw2.gif" width="30"
                 height="30">
             <button *ngIf="!loading" style="margin-top:65px;" [disabled]="!signInForm.valid"
@@ -42,6 +42,7 @@
           signInForm.get('password').value
         )
       ">
+
                 Log In</button>
         </form>
     </div>

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AccountService } from '../services/account.service';
 import { AuthService } from '../services/auth.service';
 
@@ -13,7 +14,7 @@ import { AuthService } from '../services/auth.service';
 export class SignInComponent implements OnInit {
   errorPhrase: string;
   loading: boolean = false;
-  weila: boolean;
+  signUpSuccessfull: boolean = false;
   fieldError: boolean = false;
   constructor(
     private auth: AuthService,
@@ -53,17 +54,7 @@ export class SignInComponent implements OnInit {
     );
   }
 
-  getSignUpSuccessful() {
-    this.auth.signUpSuccessful.subscribe((data: boolean) => {
-      this.weila = true;
-      setTimeout(() => {
-        this.weila = false;
-      }, 5000);
-    });
-  }
-
   ngOnInit() {
     this.fillSignInForm();
-    this.getSignUpSuccessful();
   }
 }

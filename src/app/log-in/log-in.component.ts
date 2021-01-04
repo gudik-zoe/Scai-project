@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -6,14 +7,13 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './log-in.component.html',
   styleUrls: ['./log-in.component.css'],
 })
-export class LogInComponent implements OnInit {
+export class LogInComponent implements OnInit, OnDestroy {
   constructor(private auth: AuthService) {}
   signUp: boolean = false;
-  // dataSaved: boolean = false;
   error: boolean = false;
   emailExistError: boolean = false;
   loading: boolean = false;
-
+  signUpSuccessfull: boolean = false;
   errorPhrase: string = '';
 
   signUpAgain(): void {
@@ -23,11 +23,17 @@ export class LogInComponent implements OnInit {
   ok(): void {
     this.error = false;
   }
-
+  subscription: Subscription;
   getSignUpSuccessgful() {
-    this.auth.signUpSuccessful.subscribe((data: boolean) => {
-      this.signUp = data;
-    });
+    this.subscription = this.auth.openSignInComponent.subscribe(
+      (data: boolean) => {
+        this.signUp = data;
+        this.signUpSuccessfull = true;
+        setTimeout(() => {
+          this.signUpSuccessfull = false;
+        }, 3000);
+      }
+    );
   }
 
   switch() {
@@ -35,5 +41,9 @@ export class LogInComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getSignUpSuccessgful();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

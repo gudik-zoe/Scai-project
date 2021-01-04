@@ -41,3 +41,9 @@ h1 {
   animation: bounceInDown;
   animation-duration: 2s;
 }
+
+h5 {
+  color: white;
+  animation-name: bounceInUp;
+  animation-duration: 1s;
+}

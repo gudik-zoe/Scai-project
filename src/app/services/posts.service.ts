@@ -8,6 +8,8 @@ import { Post } from '../models/post';
 import { Comment } from '../models/comment';
 import { AccountBasicData } from '../models/accountBasicData';
 import { NotificationService } from './notification.service';
+import { PagesService } from './pages.service';
+import { Page } from '../models/page';
 
 @Injectable({
   providedIn: 'root',
@@ -28,12 +30,14 @@ export class PostsService {
   post: Post;
   postsData = [];
   userBasicData: AccountBasicData;
+  page: Page;
   accountPosts: Post[] = [];
   confirmCreatePost = new Subject<Post>();
   constructor(
     private accountService: AccountService,
     private http: HttpClient,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private pageService: PagesService
   ) {}
 
   async getPostOriginalUserData(post: Post) {
@@ -48,7 +52,7 @@ export class PostsService {
     //   post.originalPostDoneBy = postData.doneBy;
     // } else {
     const postData = await this.getPostByPostId(post.postOriginalId);
-    if (postData) {
+    if (postData && postData.postCreatorId) {
       const checkIfUserExistInBasicDataArray = this.accountService.accountBasicData.find(
         (item) => item.idAccount == postData.postCreatorId
       );
@@ -68,59 +72,69 @@ export class PostsService {
         post.commentsNumber = postData.comments.length;
         post.originalPostDoneBy = this.userBasicData;
       }
+    } else if (postData && postData.pageCreatorId) {
+      const checkIfPageExistInBasicDataArray = this.pageService.pages.find(
+        (item) => item.idPage == postData.pageCreatorId
+      );
+      if (checkIfPageExistInBasicDataArray) {
+        post.text = postData.text;
+        post.image = postData.image;
+        post.likesNumber = postData.postLikes.length;
+        post.commentsNumber = postData.comments.length;
+        post.originalPostDoneByPage = checkIfPageExistInBasicDataArray;
+      } else {
+        this.page = await this.pageService.getPageData(postData.pageCreatorId);
+        post.text = postData.text;
+        post.image = postData.image;
+        post.likesNumber = postData.postLikes.length;
+        post.commentsNumber = postData.comments.length;
+        post.originalPostDoneByPage = this.page;
+      }
     }
   }
 
   async getUserDetails(post: Post) {
-    if (post) {
+    if (post && post.postCreatorId) {
       this.userBasicData = await this.accountService.getBasicAccountDetails(
         post.postCreatorId
       );
       post.doneBy = this.userBasicData;
-      if (post.postedOn) {
-        this.userBasicData = await this.accountService.getBasicAccountDetails(
-          post.postedOn
+    } else if (post.pageCreatorId) {
+      post.doneByPage = await this.pageService.getPageData(post.pageCreatorId);
+    }
+    if (post.postedOn) {
+      this.userBasicData = await this.accountService.getBasicAccountDetails(
+        post.postedOn
+      );
+      post.postedOnData = this.userBasicData;
+    }
+    for (let comment of post.comments) {
+      this.userBasicData = await this.accountService.getBasicAccountDetails(
+        comment.commentCreatorId
+      );
+      comment.doneBy = this.userBasicData;
+      if (comment.date) {
+        comment.date = await this.notificationService.timeCalculation(
+          comment.date
         );
-        post.postedOnData = this.userBasicData;
       }
-      for (let comment of post.comments) {
-        this.userBasicData = await this.accountService.getBasicAccountDetails(
-          comment.commentCreatorId
-        );
-        comment.doneBy = this.userBasicData;
-        if (comment.date) {
-          comment.date = await this.notificationService.timeCalculation(
-            comment.date
+      if (comment.commentLike.length > 0) {
+        for (let like of comment.commentLike) {
+          like.doneBy = await this.accountService.getBasicAccountDetails(
+            like.commentLikeCreatorId
           );
         }
-        if (comment.commentLike.length > 0) {
-          for (let like of comment.commentLike) {
-            like.doneBy = await this.accountService.getBasicAccountDetails(
-              like.commentLikeCreatorId
-            );
-          }
-        }
       }
-      for (let like of post.postLikes) {
-        this.userBasicData = await this.accountService.getBasicAccountDetails(
-          like.postLikeCreatorId
-        );
-        like.doneBy = this.userBasicData;
-      }
-      post.date = await this.notificationService.timeCalculation(post.date);
     }
+    for (let like of post.postLikes) {
+      this.userBasicData = await this.accountService.getBasicAccountDetails(
+        like.postLikeCreatorId
+      );
+      like.doneBy = this.userBasicData;
+    }
+    post.date = this.notificationService.timeCalculation(post.date);
   }
 
-  // async getDate() {
-  //   this.post.date = await this.notificationService.timeCalculation(this.post);
-  //   for (let comment of this.post.comments) {
-  //     if (comment.date) {
-  //       comment.date = await this.notificationService.timeCalculation(
-  //         comment.date
-  //       );
-  //     }
-  //   }
-  // }
   getHomePagePosts() {
     return new Promise<Post[]>((resolve) => {
       this.http
@@ -139,18 +153,6 @@ export class PostsService {
         });
     });
   }
-
-  // getAllPosts() {
-  //   return new Promise<Post[]>((resolve) => {
-  //     this.http
-  //       .get(this.rootUrl + 'posts/allPosts')
-  //       .subscribe((data: Post[]) => {
-  //         this.allPosts = data;
-  //         this.getUserDetails(this.allPosts);
-  //         resolve(this.allPosts);
-  //       });
-  //   });
-  // }
 
   getPostsByAccountId(id: number) {
     return new Promise<Post[]>((resolve) => {
@@ -193,26 +195,12 @@ export class PostsService {
     });
   }
 
-  // getPostLikes(postId: number) {
-  //   return new Promise<number>((resolve) => {
-  //     this.http
-  //       .get(this.rootUrl + 'postLikes/likesNumber/' + postId)
-  //       .subscribe((data: number) => {
-  //         resolve(data);
-  //       });
-  //   });
-  // }
-
-  // getPostLikers(postId: number) {
-  //   return this.http.get(this.rootUrl + 'postLikes/likers/' + postId);
-  // }
-
   likePost(postId: number) {
     return this.http.post(this.rootUrl + 'postLikes/accountId/' + postId, {});
   }
 
   addPost(formData: FormData) {
-    return this.http.post(this.rootUrl + 'posts/accountId/', formData);
+    return this.http.post(this.rootUrl + 'posts/accountId', formData);
   }
 
   postOnWall(postedOn: number, formData: FormData) {

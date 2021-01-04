@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthenticationGuard } from './authentication.guard';
 
 import { LoggedUserGuard } from './logged-user.guard';
+import { PagesCoComponent } from './pages-co/pages-co.component';
+import { PagesComponent } from './pages/pages.component';
 
 const routes: Routes = [
   {
@@ -71,6 +73,11 @@ const routes: Routes = [
   {
     path: 'chat',
     loadChildren: () => import('./chat/chat.module').then((m) => m.ChatModule),
+  },
+  {
+    path: 'pages',
+    loadChildren: () =>
+      import('./pages/pages.module').then((m) => m.PagesModule),
   },
 ];
 

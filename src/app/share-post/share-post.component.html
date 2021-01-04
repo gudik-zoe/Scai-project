@@ -32,10 +32,15 @@
             <div class="md-form">
                 <input class="form-control mb-1" placeholder="enter your own text" [(ngModel)]="inputData">
                 <div style="border: 1px solid black; border-radius: 8px;">
-                    <img *ngIf="postDoneBy.profilePhoto" src="{{  postDoneBy.profilePhoto }}" width="50px"
+                    <img *ngIf="post.doneBy" src="{{  post.doneBy.profilePhoto }}" width="50px"
                         style="border-radius: 50%;" height="50px" />
-                    <span class="font-weight-bold">
-                        {{ postDoneBy.firstName + " " + postDoneBy.lastName }}
+                    <img *ngIf="post.doneByPage" src="{{  post.doneByPage.profilePhoto }}" width="50px"
+                        style="border-radius: 50%;" height="50px" />
+                    <span *ngIf="post.doneBy" class="font-weight-bold">
+                        {{ post.doneBy.firstName + " " + post.doneBy.lastName }}
+                        shared: </span>
+                    <span *ngIf="post.doneByPage" class="font-weight-bold">
+                        {{ post.doneByPage.name }}
                         shared: </span>
                     <p class="text-center">{{post.text}}</p>
                     <div class="text-center">

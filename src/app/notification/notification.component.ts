@@ -37,7 +37,6 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
   async getNotifications() {
     this.notifications = await this.notificationService.getNotification();
-    console.log(this.notifications);
     if (this.notifications.length == 0) {
       this.haveNotification = false;
     } else {

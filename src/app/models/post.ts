@@ -1,5 +1,6 @@
 import { AccountBasicData } from './accountBasicData';
 import { Comment } from './comment';
+import { Page } from './page';
 import { PostLike } from './postLike';
 
 export class Post {
@@ -20,4 +21,7 @@ export class Post {
   postedOn: number;
   date: string;
   postedOnData: AccountBasicData;
+  pageCreatorId: number;
+  doneByPage?: Page;
+  originalPostDoneByPage?: Page;
 }

@@ -37,3 +37,14 @@
   position: absolute;
   z-index: -1;
 }
+
+.close {
+  width: 30px;
+  height: 30px;
+  color: black;
+  background-color: lightgray;
+  border-radius: 50%;
+  padding-left: 6px;
+  padding-top: 2px;
+  cursor: pointer;
+}

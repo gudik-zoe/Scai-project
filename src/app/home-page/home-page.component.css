@@ -6,12 +6,12 @@
 
 #first-div {
   background-color: whitesmoke;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 #third-div {
   background-color: #926dde;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 li {

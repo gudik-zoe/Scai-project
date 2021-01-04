@@ -40,7 +40,7 @@ export class SharePostComponent implements OnInit, OnDestroy {
         (this.userData = data.userData),
           (this.post = data.post),
           (this.sharePostComponent = data.openComponent);
-        this.postDoneBy = data.doneBy;
+        // this.postDoneBy = data.doneBy;
       }
     );
   }
@@ -73,12 +73,11 @@ export class SharePostComponent implements OnInit, OnDestroy {
           };
           data.image = post.image;
           data.text = post.text;
-          data.originalPostDoneBy = {
-            firstName: post.doneBy.firstName,
-            lastName: post.doneBy.lastName,
-            idAccount: post.postCreatorId,
-            profilePhoto: post.doneBy.profilePhoto,
-          };
+          if (this.post.doneBy) {
+            data.originalPostDoneBy = { ...this.post.doneBy };
+          } else {
+            data.originalPostDoneByPage = { ...this.post.doneByPage };
+          }
           if (this.postOption.status != 'only-me') {
             this.postService.confirmCreatePost.next(data);
           }
