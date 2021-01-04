@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { AuthenticationGuard } from './authentication.guard';
-
 import { LoggedUserGuard } from './logged-user.guard';
-import { PagesCoComponent } from './pages-co/pages-co.component';
-import { PagesComponent } from './pages/pages.component';
 
 const routes: Routes = [
   {
@@ -28,12 +24,6 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard],
   },
   {
-    path: 'event-com',
-    loadChildren: () =>
-      import('./event-com/event-com.module').then((m) => m.EventComModule),
-  },
-
-  {
     path: 'description',
     loadChildren: () =>
       import('./description/description.module').then(
@@ -54,11 +44,6 @@ const routes: Routes = [
       import('./event-com/event-com.module').then((m) => m.EventComModule),
   },
   {
-    path: 'pages-co',
-    loadChildren: () =>
-      import('./pages-co/pages-co.module').then((m) => m.PagesCoModule),
-  },
-  {
     path: 'account-settings',
     loadChildren: () =>
       import('./account-settings/account-settings.module').then(
@@ -75,9 +60,11 @@ const routes: Routes = [
     loadChildren: () => import('./chat/chat.module').then((m) => m.ChatModule),
   },
   {
-    path: 'pages',
+    path: 'pagesContainer',
     loadChildren: () =>
-      import('./pages/pages.module').then((m) => m.PagesModule),
+      import('./pages-container/pages-container.module').then(
+        (m) => m.PagesContainerModule
+      ),
   },
 ];
 

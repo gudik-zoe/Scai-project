@@ -53,10 +53,7 @@ export class MyInterceptor implements HttpInterceptor {
             this.accountService.loggedIn.next(false);
             console.log('token expired');
           }
-          // } else {
-          // }
         }
-
         return throwError(error);
       })
     );

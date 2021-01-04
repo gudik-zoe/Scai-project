@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Page } from '../models/page';
 import { PageLike } from '../models/pageLike';
@@ -11,22 +11,18 @@ import { PagesService } from '../services/pages.service';
   styleUrls: ['./pages.component.css'],
 })
 export class PagesComponent implements OnInit {
-  pages: Page[];
-  userData: AccountBasicData;
   constructor(
     private pageService: PagesService,
     private accountService: AccountService
   ) {}
 
-  async getPages() {
-    this.pages = await this.pageService.getPages();
-    console.log(this.pages);
-  }
+  @Input() page: Page;
+  @Input() userData: AccountBasicData;
 
-  likePage(page: Page) {
-    this.pageService.likePage(page.idPage).subscribe((data: PageLike) => {
-      console.log(data);
-    });
+  @Output() likePage = new EventEmitter<Page>();
+
+  likePageInChild(page: Page) {
+    this.likePage.emit(page);
   }
 
   async getUserData() {
@@ -35,17 +31,17 @@ export class PagesComponent implements OnInit {
       (await this.accountService.getTheLoggedInUserData());
   }
 
-  // getLike(pageId:number) {
-  //   if (this.userData) {
-  //     const check = this.post.comments.find(
-  //       (item) => item.commentCreatorId == this.userData.idAccount
-  //     );
-  //     return check;
-  //   }
-  //   return false;
-  // }
+  getLike() {
+    if (this.userData) {
+      const check = this.page.pageLike.find(
+        (item) => item.pageLikeCreatorId == this.userData.idAccount
+      );
+      return check;
+    }
+    return false;
+  }
+
   ngOnInit() {
     this.getUserData();
-    this.getPages();
   }
 }

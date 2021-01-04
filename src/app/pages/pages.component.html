@@ -1,26 +1,14 @@
-<div class="container-fluid">
-    <div class="row" style="margin-top: 55px;">
-        <div class="col-md-3">
-            <app-side-bar></app-side-bar>
-        </div>
-        <div class="col-md-9 mt-3">
-            <div class="col-md-3" id="page" *ngFor="let page of pages">
-                <div
-                    style="background-image: url({{page.coverPhoto}}); border-radius: 8px; height:150px; width: 100%; background: no-repeat; background-position: center;">
-                </div>
-                <div class="content">
-                    <img src="{{page.profilePhoto}}" width="40px" height="40px" style="border-radius: 50%;"><span
-                        style="font-size: larger; font-weight: bolder;">
-                        {{page.name}}</span>
-                    <p> {{page.description}}</p>
-                    <small *ngIf="page.pageLike">{{page.pageLike.length}} people liked {{page.name}}</small>
-                    <br>
-                    <button class="btn btn-light btn-block  mt-2" style="color: black;" (click)="likePage(page)"> <i
-                            class="fa fa-thumbs-up mr-1" aria-hidden="true"> </i>like</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<div
+    style="background-image: url({{page.coverPhoto}}); border-top-left-radius:  8px;border-top-right-radius:  8px ; height:150px; width: 100%; background:content-box; background-position: center;">
+</div>
+<div class="content">
+    <img *ngIf="page.profilePhoto" src="{{page.profilePhoto}}" width="40px" height="40px"
+        style="border-radius: 50%;"><span style="font-size: larger; font-weight: bolder;">
+        {{page.name}}</span>
+    <p> {{page.description}}</p>
+    <small *ngIf="page.pageLike">{{page.pageLike.length}} people liked {{page.name}}</small>
 
-
+    <button [ngClass]="getLike() ? 'btn btn-primary btn-block mt-2' : 'btn btn-secondary btn-block mt-2'"
+        style="color: white;" (click)="likePageInChild(page)"> <i class="fa fa-thumbs-up mr-1" aria-hidden="true">
+        </i>like</button>
 </div>
