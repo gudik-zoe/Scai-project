@@ -3,9 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
 import { AccountBasicData } from '../models/accountBasicData';
+import { Page } from '../models/page';
 import { Post } from '../models/post';
 import { AccountService } from '../services/account.service';
 import { FriendsService } from '../services/friends.service';
+import { PagesService } from '../services/pages.service';
 import { PostsService } from '../services/posts.service';
 
 @Component({
@@ -19,7 +21,8 @@ export class UserProfileComponent implements OnInit {
     private route: Router,
     private postService: PostsService,
     private aroute: ActivatedRoute,
-    private friendService: FriendsService
+    private friendService: FriendsService,
+    private pageService: PagesService
   ) {}
   imgUrl: string = environment.rootUrl + 'files/';
   requestedUserData: Account;
@@ -30,6 +33,7 @@ export class UserProfileComponent implements OnInit {
   btnDisable: boolean;
   friends: AccountBasicData[];
   users: AccountBasicData[];
+  myPages: Page[];
 
   goToEditing() {
     this.route.navigate(['/account-settings']);
@@ -91,6 +95,9 @@ export class UserProfileComponent implements OnInit {
       }
     }
   }
+  async getMyPages() {
+    this.myPages = await this.pageService.getMyPages();
+  }
 
   async userProfileSetFunctions() {
     await this.getUserFromUrl();
@@ -98,6 +105,11 @@ export class UserProfileComponent implements OnInit {
     await this.getUserData();
     await this.getStatusWith(this.requestedUserData.idAccount);
     await this.getMutualFriends();
+    this.getMyPages();
+  }
+
+  goToPage(page: Page) {
+    this.route.navigate(['user-pages', page.idPage]);
   }
   ngOnInit() {
     this.aroute.params.subscribe((params) => {

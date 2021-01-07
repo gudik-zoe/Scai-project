@@ -4,6 +4,8 @@ import { Account } from '../models/account';
 import { PostsService } from '../services/posts.service';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Post } from '../models/post';
+import { Page } from '../models/page';
+import { PageBasicData } from '../models/pageBasicData';
 
 @Component({
   selector: 'app-what-on-mind',
@@ -20,6 +22,7 @@ export class WhatOnMindComponent implements OnInit {
   @Output() createPost = new EventEmitter<any>();
 
   @Input() requestedUser: Account;
+  @Input() page: PageBasicData;
   async getUserData() {
     this.userData =
       this.accountService.userData ||
@@ -27,10 +30,14 @@ export class WhatOnMindComponent implements OnInit {
   }
 
   openDiv() {
-    this.createPost.emit({
-      loggedInUserData: this.userData,
-      requestedUserData: this.requestedUser,
-    });
+    if (this.page) {
+      this.createPost.emit(this.page);
+    } else {
+      this.createPost.emit({
+        loggedInUserData: this.userData,
+        requestedUserData: this.requestedUser,
+      });
+    }
   }
 
   ngOnInit() {

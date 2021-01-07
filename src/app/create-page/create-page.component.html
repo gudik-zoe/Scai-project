@@ -1,0 +1,97 @@
+<div class="container-fluid">
+    <div class="row" style="margin-top: 65px;">
+        <div class="col-md-3" style="height: 100vh; border-right: 1px solid black;" *ngIf="createPage">
+            <h2>create a page</h2>
+            <hr>
+            <form [formGroup]="createPage">
+                <div class="form-group">
+                    <label>Page name</label>
+                    <input type="text" formControlName="pageName" placeholder="insert a name for your page"
+                        class="form-control" [class.is-invalid]="
+                    createPage.get('pageName').invalid &&
+                    createPage.get('pageName').touched">
+                    <p style="color: grey;">Use the name of your business, brand or organization, or a name that
+                        explains what the Page
+                        is about</p>
+                    <small class="text-danger" style="font-weight: bold;"
+                        *ngIf="createPage.get('pageName').errors?.required && createPage.get('pageName').touched">page
+                        name is required </small>
+                </div>
+
+                <div class="form-group">
+                    <label>Page description</label>
+                    <textarea type="text" formControlName="description" placeholder="page description"
+                        class="form-control" [class.is-invalid]="
+                    createPage.get('description').invalid &&
+                    createPage.get('description').touched">
+                    </textarea>
+                    <p style="color: grey;">write a description that describes what type of business, organization or
+                        topic the Page
+                        represents.
+                    </p>
+                    <small class="text-danger" style="font-weight: bold;"
+                        *ngIf="createPage.get('description').errors?.required && createPage.get('description').touched">description
+                        is required</small>
+                </div>
+                <div class="form-group">
+
+                    <input type="file" (change)="uploadPageProfilePhoto($event)" name="profilePhoto" id="profilePhoto"
+                        class="inputfile" />
+                    <label style="
+                      cursor: pointer;
+                      background-color: lightgrey;
+                      border-radius: 8px;
+                      padding: 5px;
+                      box-shadow: 1px 1px 1px 1px #888888;
+                    " for="profilePhoto">
+                        choose page profile Photo
+                    </label>
+                </div>
+
+                <div class="form-group">
+
+                    <input type="file" (change)="uploadPageCoverPhoto($event)" name="cover" id="cover"
+                        class="inputfile" />
+                    <label style="
+                      cursor: pointer;
+                      background-color: lightgrey;
+                      border-radius: 8px;
+                      padding: 5px;
+                      box-shadow: 1px 1px 1px 1px #888888;" for="cover">
+                        choose page cover Photo
+                    </label>
+                </div>
+                <small class="text-danger">{{errorPhrase}}</small>
+            </form>
+            <button class="btn btn-primary btn-block"
+                [disabled]="!createPage.valid || !pageTemporaryProfilePhoto || !pageTemporaryCoverPhoto"
+                (click)="createthePage()">create
+                page</button>
+
+        </div>
+        <div class="col-md-9" style="height: 100vh; background-color: lightgrey;padding: 10px;">
+            <div class="col-md-7"
+                style="background-color: white; border-radius: 8px; margin-left: 20%; margin-top:10%; ">
+                <h5>page preview</h5>
+                <div style="width: 100%; height: 250px;">
+
+                    <img *ngIf="!pageTemporaryCoverPhoto" src="../../assets/unnamed (1).jpg" width="100%" height="100%">
+                    <img *ngIf="pageTemporaryCoverPhoto" src="{{pageTemporaryCoverPhoto}}" width="100%" height="100%">
+                </div>
+                <div
+                    style="border-radius: 50%;  border: 5px solid white; width: 150px; ; height:150px ; margin-top: -50px; margin-left: 10px;">
+                    <img *ngIf="!pageTemporaryProfilePhoto" src="../../assets/facebook_pages.png" width="100%"
+                        height="100%"
+                        style="border-radius: 50%; border: 2px solid whitesmoke; box-shadow: 1px 1px 1px 1px #888888;" />
+                    <img *ngIf="pageTemporaryProfilePhoto" src="{{pageTemporaryProfilePhoto}}" width="100%"
+                        height="100%"
+                        style="border-radius: 50%; border: 2px solid whitesmoke; box-shadow: 1px 1px 1px 1px #888888;" />
+                </div>
+                <div style="margin-left: 160px; margin-top: -60px;">
+                    <h2>{{createPage.get('pageName').value}}</h2>
+                    <p>{{createPage.get('description').value}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

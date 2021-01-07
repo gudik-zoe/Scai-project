@@ -8,13 +8,20 @@
       <h4 class="text-center">create post</h4>
     </span>
     <hr />
-    <div class="alert-box-action" *ngIf="userData">
-      <img src="{{userData.profilePhoto}}" width="60px" height="60px" style="border-radius: 50%" />
-      <span class="font-weight-bold">
-        {{ userData.firstName + " " + userData.lastName }} shared:
+    <div class="alert-box-action" *ngIf="userData || page">
+      <img *ngIf="userData" src="{{userData.profilePhoto}}" width="60px" height="60px" style="border-radius: 50%" />
+      <img *ngIf="page" src="{{page.profilePhoto}}" width="60px" height="60px" style="border-radius: 50%" />
+      <span>
+        <span class="font-weight-bold" *ngIf="userData">
+          {{ userData.firstName + " " + userData.lastName }} shared:
+        </span>
+        <span class="font-weight-bold" *ngIf="page">
+          {{ page.name}} shared:
+        </span>
         <br>
-        <button type="button" class="btn btn-ourline btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-          aria-expanded="false" style="margin: -40px 0px 0px 75px; font-size: small;  background-color:lightgray ;">
+        <button *ngIf="userData" type="button" class="btn btn-ourline btn-sm dropdown-toggle" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false"
+          style="margin: -40px 0px 0px 75px; font-size: small;  background-color:lightgray ;">
           <i class="{{postOption.icon}}" aria-hidden="true"></i>
           {{postOption.status}}
         </button>
@@ -40,11 +47,13 @@
           </div>
         </label>
 
-        <textarea placeholder="what's in your mind {{ userData.firstName }}" [(ngModel)]="inputData"
+        <textarea *ngIf="userData" placeholder="what's in your mind {{ userData.firstName }}" [(ngModel)]="inputData"
           class="md-textarea form-control" rows="2" style="background-color: transparent;" appAutoFocus></textarea>
+        <textarea *ngIf="page " placeholder="start a post" [(ngModel)]="inputData" class="md-textarea form-control"
+          rows="2" style="background-color: transparent;" appAutoFocus></textarea>
       </div>
-      <button *ngIf="!hideButton" [disabled]="!inputData && !postTemporaryImage" type="button"
-        (click)="sharePost(inputData)" class="btn btn-outline-primary btn-block mt-1">
+      <button *ngIf="!hideButton" [disabled]="!inputData && !postTemporaryImage" type="button" (click)="sharePost()"
+        class="btn btn-outline-primary btn-block mt-1">
         Post
       </button>
     </div>

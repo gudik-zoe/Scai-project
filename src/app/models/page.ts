@@ -6,6 +6,6 @@ export class Page {
   description: string;
   profilePhoto: string;
   coverPhoto: string;
-  creatorId: number;
+  pageCreatorId: number;
   pageLike?: PageLike[];
 }

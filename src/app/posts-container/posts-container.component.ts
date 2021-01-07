@@ -64,7 +64,7 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
 
   confirmCreatePost() {
     this.createPostSubscribtion = this.postsService.confirmCreatePost.subscribe(
-      async (data: Post) => {
+      (data: Post) => {
         data.date = this.notificationService.timeCalculation(data.date);
         this.posts.unshift(data);
       }

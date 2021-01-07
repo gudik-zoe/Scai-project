@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthenticationGuard } from './authentication.guard';
 import { LoggedUserGuard } from './logged-user.guard';
+import { UserPagesComponent } from './user-pages/user-pages.component';
 
 const routes: Routes = [
   {
@@ -65,6 +66,18 @@ const routes: Routes = [
       import('./pages-container/pages-container.module').then(
         (m) => m.PagesContainerModule
       ),
+  },
+  {
+    path: 'createPage',
+    loadChildren: () =>
+      import('./create-page/create-page.module').then(
+        (m) => m.CreatePageModule
+      ),
+  },
+  {
+    path: 'user-pages',
+    loadChildren: () =>
+      import('./user-pages/user-pages.module').then((m) => m.UserPagesModule),
   },
 ];
 

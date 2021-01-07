@@ -21,6 +21,7 @@
 
 .content {
   padding: 10px;
+  height: 200px;
   background-color: whitesmoke;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;

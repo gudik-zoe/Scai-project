@@ -10,6 +10,7 @@ import { AccountBasicData } from '../models/accountBasicData';
 import { NotificationService } from './notification.service';
 import { PagesService } from './pages.service';
 import { Page } from '../models/page';
+import { PageBasicData } from '../models/pageBasicData';
 
 @Injectable({
   providedIn: 'root',
@@ -30,8 +31,9 @@ export class PostsService {
   post: Post;
   postsData = [];
   userBasicData: AccountBasicData;
-  page: Page;
+  page: PageBasicData;
   accountPosts: Post[] = [];
+  pagePosts: Post[] = [];
   confirmCreatePost = new Subject<Post>();
   constructor(
     private accountService: AccountService,
@@ -203,6 +205,10 @@ export class PostsService {
     return this.http.post(this.rootUrl + 'posts/accountId', formData);
   }
 
+  addPagePost(formData: FormData) {
+    return this.http.post(this.rootUrl + 'posts/pageId', formData);
+  }
+
   postOnWall(postedOn: number, formData: FormData) {
     return this.http.post(
       this.rootUrl + 'posts/postOnWall/' + postedOn,
@@ -222,6 +228,21 @@ export class PostsService {
       this.rootUrl + 'posts/update/idAccount/' + postId + '/' + postWithImage,
       formData
     );
+  }
+
+  getPagePosts(pageId: number) {
+    return new Promise<Post[]>((resolve, reject) => {
+      this.http
+        .get(this.rootUrl + '/page/posts/' + pageId)
+        .subscribe((data: Post[]) => {
+          this.pagePosts = data;
+          for (let post of this.pagePosts) {
+            this.getUserDetails(post);
+          }
+          resolve(this.pagePosts);
+          reject('unknown error occured');
+        });
+    });
   }
 
   deletePost(postId: number) {

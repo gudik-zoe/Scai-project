@@ -55,15 +55,28 @@
         </div>
       </div>
 
-      <div class="col-3" style=" padding: 10px;" *ngIf=" mutualFriends && mutualFriends.length > 0">
+      <div class="col-3" style=" padding: 10px;">
 
-        <div class="main">
+        <div class="main"
+          *ngIf=" mutualFriends && mutualFriends.length > 0 && requestedUserData.idAccount != loggedInUserData.idAccount">
           <div class="header">
             mutual friends
           </div>
           <div class="content" *ngFor="let friend of mutualFriends">
             <img src="{{friend.profilePhoto}}" width="40px" height="40px" style="border-radius: 50%;">
             {{friend.firstName + " " + friend.lastName}}
+          </div>
+        </div>
+        <div class="main"
+          *ngIf="myPages && myPages.length > 0 && requestedUserData.idAccount == loggedInUserData.idAccount ">
+          <div class="header">
+            my Pages
+          </div>
+          <div class="content" *ngFor="let page of myPages">
+            <div (click)="goToPage(page)">
+              <img src="{{page.profilePhoto}}" width="40px" height="40px" style="border-radius: 50%;">
+              {{page.name}}
+            </div>
           </div>
         </div>
 

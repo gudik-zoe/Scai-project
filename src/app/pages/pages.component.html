@@ -8,7 +8,7 @@
     <p> {{page.description}}</p>
     <small *ngIf="page.pageLike">{{page.pageLike.length}} people liked {{page.name}}</small>
 
-    <button [ngClass]="getLike() ? 'btn btn-primary btn-block mt-2' : 'btn btn-secondary btn-block mt-2'"
+    <button [ngClass]="getLike() ? 'btn btn-primary btn-block mt-2' : 'btn btn-info btn-block mt-2'"
         style="color: white;" (click)="likePageInChild(page)"> <i class="fa fa-thumbs-up mr-1" aria-hidden="true">
         </i>like</button>
 </div>
