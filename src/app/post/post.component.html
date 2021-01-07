@@ -25,13 +25,14 @@
 
 
 
-      <div *ngIf="userData.idAccount == post.postCreatorId" class="dropdown" style="float: right; margin-right: 20px;">
+      <div *ngIf="userData.idAccount == post.postCreatorId || userData.idAccount == pageCreatorId" class="dropdown"
+        style="float: right; margin-right: 20px;">
         <i class="fa fa-ellipsis-h fa-lg" aria-hidden="true" type="button" id="dropdownMenuButton"
           data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"></i>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-          <a *ngIf="post.postCreatorId == userData.idAccount && !post.postOriginalId" class="dropdown-item"
-            (click)="editPost(post)"> <i class=" fa fa-pencil fa-lg" style="color: blue;" aria-hidden="true"></i><span
-              class="ml-1"> Edit
+          <a *ngIf="post.postCreatorId == userData.idAccount && !post.postOriginalId || userData.idAccount == pageCreatorId"
+            class="dropdown-item" (click)="editPost(post)"> <i class=" fa fa-pencil fa-lg" style="color: blue;"
+              aria-hidden="true"></i><span class="ml-1"> Edit
               post</span>
           </a>
 
@@ -160,7 +161,10 @@
       </div>
     </ng-container>
     <div style="margin-top: 25px;">
-      <img src="{{userData.profilePhoto }}" width="40px" height="40px" style="border-radius: 50%" />
+      <img *ngIf="!pageCreatorId" src="{{ userData.profilePhoto }}" width="40px" height="40px"
+        style="border-radius: 50%" />
+      <img *ngIf="pageCreatorId && post.doneByPage " src="{{ post.doneByPage.profilePhoto }}" width="40px" height="40px"
+        style="border-radius: 50%" />
       <input class="comment-input" [(ngModel)]="commentText" placeholder="write a comment" />
       <p class="text-danger">{{errorPhrase}}</p>
     </div>

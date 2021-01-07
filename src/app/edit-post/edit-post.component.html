@@ -10,9 +10,15 @@
             </span>
             <hr class="m-0" />
             <div>
-                <img src="{{   userData.profilePhoto}}" width="60px" height="60px" style="border-radius: 50%" />
-                <span class="font-weight-bold ">
-                    {{ userData.firstName + " " + userData.lastName }} shared:
+                <img *ngIf="post.doneByPage" src="{{ post.doneByPage.profilePhoto}}" width="60px" height="60px"
+                    style="border-radius: 50%" />
+                <span *ngIf="post.doneByPage" class="font-weight-bold ">
+                    {{ post.doneByPage.name }} shared:
+                </span>
+                <img *ngIf="post.doneBy" src="{{ post.doneBy.profilePhoto}}" width="60px" height="60px"
+                    style="border-radius: 50%" />
+                <span *ngIf="post.doneBy" class="font-weight-bold ">
+                    {{ post.doneBy.firstName + " " + post.doneBy.lastName }} shared:
                 </span>
             </div>
 
@@ -38,8 +44,7 @@
                         width="25px" height="25px" style="border-radius: 50%; color: blue" />
                 </label>
             </div>
-            <button *ngIf="!hideButton" type="button" class="btn btn-outline-primary btn-block"
-                (click)="confirmEdit(inputData)">
+            <button *ngIf="!hideButton" type="button" class="btn btn-outline-primary btn-block" (click)="confirmEdit()">
                 Edit
             </button>
         </div>

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthenticationGuard } from './authentication.guard';
 import { LoggedUserGuard } from './logged-user.guard';
+import { PageGuard } from './page.guard';
 import { UserPagesComponent } from './user-pages/user-pages.component';
 
 const routes: Routes = [
@@ -78,6 +79,7 @@ const routes: Routes = [
     path: 'user-pages',
     loadChildren: () =>
       import('./user-pages/user-pages.module').then((m) => m.UserPagesModule),
+    canActivate: [PageGuard],
   },
 ];
 

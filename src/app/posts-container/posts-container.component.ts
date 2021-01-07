@@ -24,6 +24,7 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
   ) {}
   @Input() posts: Post[];
   @Input() status: string;
+  @Input() pageCreatorId: number;
   userData: AccountBasicData;
   commentText: string;
   errorPhrase: string;

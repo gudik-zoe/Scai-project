@@ -82,7 +82,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     this.hideButton = true;
     this.formData.append('text', this.inputData);
     this.formData.append('pageId', this.page.idPage.toString());
-    this.postsService.addPagePost(this.formData).subscribe(
+    this.pageService.addPagePost(this.formData).subscribe(
       (data: Post) => {
         this.hideButton = false;
         this.errorPhrase = '';

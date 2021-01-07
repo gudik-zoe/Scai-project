@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Page } from '../models/page';
 import { PageBasicData } from '../models/pageBasicData';
 import { Post } from '../models/post';
+import { AccountService } from '../services/account.service';
 import { NotificationService } from '../services/notification.service';
 import { PagesService } from '../services/pages.service';
 import { PostsService } from '../services/posts.service';
@@ -18,7 +19,8 @@ export class UserPagesComponent implements OnInit, OnDestroy {
     private aroute: ActivatedRoute,
     private pageService: PagesService,
     private postService: PostsService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private accountService: AccountService
   ) {}
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -26,6 +28,7 @@ export class UserPagesComponent implements OnInit, OnDestroy {
   id: number;
   page: PageBasicData;
   pagePosts: Post[];
+  status: string = 'friends';
   subscription: Subscription;
   async getPageInfo() {
     this.page = await this.pageService.getPageData(this.id);
@@ -47,6 +50,7 @@ export class UserPagesComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   ngOnInit() {
     this.aroute.params.subscribe((params) => {
       this.id = params['id'];

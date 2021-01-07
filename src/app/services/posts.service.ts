@@ -205,10 +205,6 @@ export class PostsService {
     return this.http.post(this.rootUrl + 'posts/accountId', formData);
   }
 
-  addPagePost(formData: FormData) {
-    return this.http.post(this.rootUrl + 'posts/pageId', formData);
-  }
-
   postOnWall(postedOn: number, formData: FormData) {
     return this.http.post(
       this.rootUrl + 'posts/postOnWall/' + postedOn,

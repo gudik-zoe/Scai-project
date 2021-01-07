@@ -8,6 +8,7 @@ import { EditPost } from '../models/editPostInt';
 import { ImgUrl } from '../models/imgUrl';
 import { Post } from '../models/post';
 import { AccountService } from '../services/account.service';
+import { PagesService } from '../services/pages.service';
 import { PostsService } from '../services/posts.service';
 
 @Component({
@@ -18,7 +19,7 @@ import { PostsService } from '../services/posts.service';
 export class EditPostComponent implements OnInit, OnDestroy {
   constructor(
     private postService: PostsService,
-    private accountService: AccountService
+    private pageService: PagesService
   ) {}
 
   editPostComponent: boolean;
@@ -34,13 +35,25 @@ export class EditPostComponent implements OnInit, OnDestroy {
   postWithImage: boolean = true;
   hideButton: boolean = false;
   formData = new FormData();
-  public close() {
-    this.editPostComponent = false;
-    this.showImage = true;
-    this.errorPhrase = '';
+  // public close() {
+  //   this.editPostComponent = false;
+  //   this.showImage = true;
+  //   this.errorPhrase = '';
+  //   this.image = undefined;
+  //   this.imageChanged = false;
+  //   this.postImage = undefined;
+  // }
+
+  close() {
+    this.hideButton = false;
     this.image = undefined;
     this.imageChanged = false;
+    this.showImage = true;
+    this.postWithImage = true;
     this.postImage = undefined;
+    this.errorPhrase = '';
+    this.editPostComponent = false;
+    this.formData = new FormData();
   }
 
   uploadImage(event) {
@@ -70,7 +83,41 @@ export class EditPostComponent implements OnInit, OnDestroy {
     this.postWithImage = false;
   }
 
-  confirmEdit(newtext: string) {
+  editUserPost() {
+    this.formData.append('text', this.inputData);
+    this.postService
+      .updatePost(this.post.idPost, this.formData, this.postWithImage)
+      .subscribe(
+        (data: Post) => {
+          this.post.image = data.image;
+          this.post.text = data.text;
+          this.close();
+        },
+        (error) => {
+          this.errorPhrase = error.error.message;
+          this.hideButton = false;
+        }
+      );
+  }
+
+  editPagePost() {
+    this.formData.append('text', this.inputData);
+    this.pageService
+      .editPost(this.post.idPost, this.formData, this.postWithImage)
+      .subscribe(
+        (data: Post) => {
+          this.post.image = data.image;
+          this.post.text = data.text;
+          this.close();
+        },
+        (error) => {
+          this.errorPhrase = error.error.message;
+          this.hideButton = false;
+        }
+      );
+  }
+
+  confirmEdit() {
     this.hideButton = true;
     if (this.imageChanged && !this.formData.get('image')) {
       this.hideButton = false;
@@ -88,27 +135,11 @@ export class EditPostComponent implements OnInit, OnDestroy {
       this.hideButton = false;
       this.errorPhrase = "canno't add an empty text";
     } else {
-      this.formData.append('text', newtext);
-      this.postService
-        .updatePost(this.post.idPost, this.formData, this.postWithImage)
-        .subscribe(
-          (data: Post) => {
-            this.hideButton = false;
-            this.post.image = data.image;
-            this.post.text = data.text;
-            this.image = undefined;
-            this.imageChanged = false;
-            this.showImage = true;
-            this.postWithImage = true;
-            this.postImage = undefined;
-            this.errorPhrase = '';
-            this.editPostComponent = false;
-          },
-          (error) => {
-            this.errorPhrase = error.error.message;
-            this.hideButton = false;
-          }
-        );
+      if (!this.post.pageCreatorId) {
+        this.editUserPost();
+      } else {
+        this.editPagePost();
+      }
     }
   }
   public subscribtion: Subscription;

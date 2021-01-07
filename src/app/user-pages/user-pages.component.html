@@ -17,7 +17,9 @@
             </app-what-on-mind>
         </div>
         <div class="col-md-5">
-            <app-posts-container [posts]="pagePosts"></app-posts-container>
+            <app-posts-container [posts]="pagePosts" [pageCreatorId]="page.pageCreatorId" [status]="status">
+            </app-posts-container>
+
             <hr>
         </div>
     </div>

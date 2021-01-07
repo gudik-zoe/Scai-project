@@ -18,6 +18,7 @@ export class PostComponent implements OnInit {
   @Input() userData: AccountBasicData;
   @Input() commentText: string;
   @Input() status: string;
+  @Input() pageCreatorId: number;
 
   @Output() testOutput = new EventEmitter<Post>();
   @Output() deletePostEvent = new EventEmitter<number>();

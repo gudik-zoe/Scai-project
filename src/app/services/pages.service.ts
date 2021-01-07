@@ -11,12 +11,12 @@ import { PageBasicData } from '../models/pageBasicData';
 export class PagesService {
   constructor(private http: HttpClient) {}
   rootUrl: string = environment.rootUrl;
-
+  userAccess: boolean;
   pages: Page[] = [];
   addPost = new Subject<any>();
   createPage(page: FormData) {
     this.http
-      .post(this.rootUrl + 'create/page', page)
+      .post(this.rootUrl + 'createPagePost', page)
       .subscribe((data: Page) => {
         console.log(data);
       });
@@ -42,6 +42,17 @@ export class PagesService {
         reject(null);
       });
     });
+  }
+
+  addPagePost(formData: FormData) {
+    return this.http.post(this.rootUrl + 'posts/pageId', formData);
+  }
+
+  editPost(postId: number, formData: FormData, postWithImage: boolean) {
+    return this.http.put(
+      this.rootUrl + 'editPagePost/' + postId + '/' + postWithImage,
+      formData
+    );
   }
 
   getPageData(pageId: number) {
