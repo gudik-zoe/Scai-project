@@ -9,6 +9,8 @@ import { AccountBasicData } from '../models/accountBasicData';
 import { Subscription } from 'rxjs';
 import { CommentLike } from '../models/commentLike';
 import { NotificationService } from '../services/notification.service';
+import { PagesService } from '../services/pages.service';
+import { PageBasicData } from '../models/pageBasicData';
 
 @Component({
   selector: 'app-posts-container',
@@ -20,11 +22,12 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
     private postsService: PostsService,
     private accountService: AccountService,
     private commentService: CommentsService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private pageService: PagesService
   ) {}
   @Input() posts: Post[];
   @Input() status: string;
-  @Input() pageCreatorId: number;
+  @Input() page: PageBasicData;
   userData: AccountBasicData;
   commentText: string;
   errorPhrase: string;
@@ -88,26 +91,53 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
   }
 
   commentPostInParent(data) {
-    this.commentService
-      .addCommment(data.post, data.commentText.trim())
-      .subscribe(
-        async (comment: Comment) => {
-          comment.commentLike = [];
-          comment.doneBy = {
-            idAccount: this.userData.idAccount,
-            firstName: this.userData.firstName,
-            lastName: this.userData.lastName,
-            profilePhoto: this.userData.profilePhoto,
-          };
-          comment.date = this.notificationService.timeCalculation(comment.date);
-
-          data.post.comments.unshift(comment);
-          this.commentText = null;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    if (!this.page) {
+      console.log("user's comment");
+      this.commentService
+        .addCommment(data.post, data.commentText.trim())
+        .subscribe(
+          (comment: Comment) => {
+            comment.commentLike = [];
+            comment.doneBy = {
+              idAccount: this.userData.idAccount,
+              firstName: this.userData.firstName,
+              lastName: this.userData.lastName,
+              profilePhoto: this.userData.profilePhoto,
+            };
+            comment.date = this.notificationService.timeCalculation(
+              comment.date
+            );
+            data.post.comments.unshift(comment);
+            this.commentText = null;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    } else {
+      console.log('page comment');
+      this.pageService
+        .addComment(data.post.idPost, data.commentText.trim())
+        .subscribe(
+          (comment: Comment) => {
+            comment.commentLike = [];
+            comment.doneByPage = {
+              idPage: this.page.idPage,
+              name: this.page.name,
+              profilePhoto: this.page.profilePhoto,
+              coverPhoto: this.page.coverPhoto,
+            };
+            comment.date = this.notificationService.timeCalculation(
+              comment.date
+            );
+            data.post.comments.unshift(comment);
+            this.commentText = null;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    }
   }
   likeCommentInParent(comment: Comment) {
     this.commentService.likeComment(comment.idComment).subscribe(

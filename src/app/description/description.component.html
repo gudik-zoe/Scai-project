@@ -4,9 +4,15 @@
   <div class="alert-box-action" style="background-color: lightgray;">
     <div *ngIf="post" class="row" style="height: max-content; background-color: lightgray; padding: 10px;">
       <div class="col-md-8">
-        <img *ngIf="post.doneBy" src="{{post.doneBy.profilePhoto}}" width="40px" height="40px"
-          style="border-radius: 50%;"><span *ngIf="post.doneBy">{{post.doneBy.firstName + " " +
-          post.doneBy.lastName}}</span>
+        <span *ngIf="post.doneBy">
+          <img src="{{post.doneBy.profilePhoto}}" width="40px" height="40px"
+            style="border-radius: 50%;">{{post.doneBy.firstName + " " +
+          post.doneBy.lastName}}
+        </span>
+        <span *ngIf="post.doneByPage">
+          <img src="{{post.doneByPage.profilePhoto}}" width="40px" height="40px"
+            style="border-radius: 50%;">{{post.doneByPage.name}}
+        </span>
         <span *ngIf="post.postedOn">
           <i style="padding: 10px;" class="fa fa-caret-right fa-lg" aria-hidden="true"></i>
           <img src="{{  post.postedOnData.profilePhoto }}" width="40px" height="40px" style="border-radius: 50%" />

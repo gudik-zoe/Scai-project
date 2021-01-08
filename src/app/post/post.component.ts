@@ -7,6 +7,7 @@ import { NotificationService } from '../services/notification.service';
 import { Comment } from '../models/comment';
 import { AccountBasicData } from '../models/accountBasicData';
 import { CommentLike } from '../models/commentLike';
+import { PageBasicData } from '../models/pageBasicData';
 
 @Component({
   selector: 'app-post',
@@ -18,7 +19,7 @@ export class PostComponent implements OnInit {
   @Input() userData: AccountBasicData;
   @Input() commentText: string;
   @Input() status: string;
-  @Input() pageCreatorId: number;
+  @Input() page: PageBasicData;
 
   @Output() testOutput = new EventEmitter<Post>();
   @Output() deletePostEvent = new EventEmitter<number>();

@@ -111,15 +111,16 @@ export class PostsService {
       post.postedOnData = this.userBasicData;
     }
     for (let comment of post.comments) {
-      this.userBasicData = await this.accountService.getBasicAccountDetails(
-        comment.commentCreatorId
-      );
-      comment.doneBy = this.userBasicData;
-      if (comment.date) {
-        comment.date = await this.notificationService.timeCalculation(
-          comment.date
+      if (comment.commentCreatorId) {
+        comment.doneBy = await this.accountService.getBasicAccountDetails(
+          comment.commentCreatorId
+        );
+      } else if (comment.pageCreatorId) {
+        comment.doneByPage = await this.pageService.getPageData(
+          comment.pageCreatorId
         );
       }
+      comment.date = this.notificationService.timeCalculation(comment.date);
       if (comment.commentLike.length > 0) {
         for (let like of comment.commentLike) {
           like.doneBy = await this.accountService.getBasicAccountDetails(

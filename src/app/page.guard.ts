@@ -23,12 +23,9 @@ export class PageGuard implements CanActivate {
     | boolean
     | UrlTree {
     if (this.pageService.userAccess) {
-      console.log(this.pageService.userAccess);
-      console.log('access granted');
       return true;
     } else {
-      console.log(this.pageService.userAccess);
-      console.log('access denied');
+      this.route.navigate(['home-page']);
       return false;
     }
   }

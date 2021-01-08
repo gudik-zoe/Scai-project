@@ -16,7 +16,7 @@ export class PagesService {
   addPost = new Subject<any>();
   createPage(page: FormData) {
     this.http
-      .post(this.rootUrl + 'createPagePost', page)
+      .post(this.rootUrl + 'create/page', page)
       .subscribe((data: Page) => {
         console.log(data);
       });
@@ -52,6 +52,13 @@ export class PagesService {
     return this.http.put(
       this.rootUrl + 'editPagePost/' + postId + '/' + postWithImage,
       formData
+    );
+  }
+
+  addComment(postId: number, commentText: string) {
+    return this.http.post(
+      this.rootUrl + 'page/addComment/' + postId,
+      commentText
     );
   }
 

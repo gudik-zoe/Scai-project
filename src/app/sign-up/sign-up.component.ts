@@ -24,7 +24,7 @@ export class SignUpComponent implements OnInit {
     } else {
       account.profilePhoto = 'https://i.ibb.co/nCJRcYk/Unknown-Girl.jpg';
     }
-    account.coverPhoto = 'https://i.ibb.co/fHnGMrJ/nature-design.jpg';
+    account.coverPhoto = 'https://i.ibb.co/7JmwPtK/nature-design.jpg';
     this.auth.signUp(account).subscribe(
       (data) => {
         this.loading = false;
