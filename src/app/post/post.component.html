@@ -85,7 +85,7 @@
     <hr />
 
     <button
-      [disabled]="post.postOriginalId && !post.originalPostDoneBy && !post.originalPostDoneByPage || status != 'friends'"
+      [disabled]="post.postOriginalId && !post.originalPostDoneBy && !post.originalPostDoneByPage || status != 'friends' || page"
       [ngClass]="getLike() ? 'btn btn-primary btn-md col-md-3' : 'btn btn-light btn-md col-md-3'" (click)="like(post)">
       <i class="fa fa-thumbs-up" aria-hidden="true"></i>
       like
@@ -93,13 +93,13 @@
 
     <button
       [disabled]="post.postOriginalId && !post.originalPostDoneBy && !post.originalPostDoneByPage || status != 'friends'"
-      [ngClass]="getComment() ? 'btn btn-primary btn-md col-md-3 ml-2' : 'btn btn-light btn-md col-md-3 ml-2'"
+      [ngClass]="getComment(post) ? 'btn btn-primary btn-md col-md-3 ml-2' : 'btn btn-light btn-md col-md-3 ml-2'"
       (click)="comment(post , commentText)">
       <i class="fa fa-comments" aria-hidden="true"></i>
       comment
     </button>
 
-    <button
+    <button *ngIf="!page"
       [disabled]="post.postOriginalId || post.postCreatorId == userData.idAccount || post.postedOn || status != 'friends' || page &&  userData.idAccount == page.pageCreatorId"
       (click)="sharePost(post)" class="btn btn-light btn-md col-md-3 ml-2">
       <i class="fa fa-share-alt" aria-hidden="true"></i>
@@ -155,7 +155,9 @@
           <img src="../../assets/download (1).jpg" width="20px" height="20px" style="border-radius:50% ;">
           {{comment.commentLike.length}}
           <span class="comment-info">
-            <div *ngFor="let like of comment.commentLike ;"> {{ like.doneBy.firstName + " " + like.doneBy.lastName }}
+            <div *ngFor="let like of comment.commentLike ;"> {{ like.doneBy ? like.doneBy.firstName + " " +
+              like.doneBy.lastName :
+              like.doneByPage.name }}
             </div>
           </span>
         </span>

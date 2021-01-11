@@ -58,8 +58,16 @@
   background-color: white;
 }
 
+.page {
+  padding: 10px;
+}
 .content {
   padding: 10px;
+}
+
+.page:hover {
+  cursor: pointer;
+  background-color: lightgrey;
 }
 .container-fluid {
   background-repeat: no-repeat;

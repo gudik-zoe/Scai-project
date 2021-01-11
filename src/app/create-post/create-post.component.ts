@@ -89,11 +89,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
         this.alertComponent = false;
         (data.postLikes = []), (data.comments = []);
         data.doneByPage = {
-          idPage: this.page.idPage,
-          name: this.page.name,
-          profilePhoto: this.page.profilePhoto,
-          coverPhoto: this.page.coverPhoto,
-          pageCreatorId: this.page.pageCreatorId,
+          ...this.page,
         };
         this.pageService.addPost.next(data);
         this.page = undefined;
@@ -120,10 +116,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
         this.alertComponent = false;
         (data.postLikes = []), (data.comments = []);
         data.doneBy = {
-          idAccount: this.userData.idAccount,
-          profilePhoto: this.userData.profilePhoto,
-          firstName: this.userData.firstName,
-          lastName: this.userData.lastName,
+          ...this.userData,
         };
         if (this.postOption.status != 'only-me') {
           this.postsService.confirmCreatePost.next(data);

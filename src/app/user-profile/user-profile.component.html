@@ -72,10 +72,12 @@
           <div class="header">
             my Pages
           </div>
-          <div class="content" *ngFor="let page of myPages">
+          <div class="page" *ngFor="let page of myPages">
             <div (click)="goToPage(page)">
               <img src="{{page.profilePhoto}}" width="40px" height="40px" style="border-radius: 50%;">
               {{page.name}}
+              <!-- <br>
+              <small style="color: grey;">{{page.description}}</small> -->
             </div>
           </div>
         </div>

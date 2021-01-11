@@ -15,11 +15,7 @@ export class PagesService {
   pages: Page[] = [];
   addPost = new Subject<any>();
   createPage(page: FormData) {
-    this.http
-      .post(this.rootUrl + 'create/page', page)
-      .subscribe((data: Page) => {
-        console.log(data);
-      });
+    return this.http.post(this.rootUrl + 'create/page', page);
   }
 
   getPages() {
@@ -59,6 +55,13 @@ export class PagesService {
     return this.http.post(
       this.rootUrl + 'page/addComment/' + postId,
       commentText
+    );
+  }
+
+  likeComment(commentId: number) {
+    return this.http.post(
+      this.rootUrl + 'page/addLikeToComment/' + commentId,
+      {}
     );
   }
 

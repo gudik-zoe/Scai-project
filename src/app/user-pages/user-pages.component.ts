@@ -30,6 +30,7 @@ export class UserPagesComponent implements OnInit, OnDestroy {
   pagePosts: Post[];
   status: string = 'friends';
   subscription: Subscription;
+
   async getPageInfo() {
     this.page = await this.pageService.getPageData(this.id);
     this.pagePosts = await this.postService.getPagePosts(this.id);

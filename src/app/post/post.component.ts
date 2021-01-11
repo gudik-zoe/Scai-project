@@ -85,10 +85,18 @@ export class PostComponent implements OnInit {
     return false;
   }
 
-  getComment() {
-    if (this.userData) {
-      const check = this.post.comments.find(
+  getComment(post: Post) {
+    if (this.userData && !this.page) {
+      const check = post.comments.find(
         (item) => item.commentCreatorId == this.userData.idAccount
+      );
+      return check;
+    }
+    if (this.page) {
+      const check = post.comments.find(
+        (item) =>
+          item.commentCreatorId == this.userData.idAccount ||
+          item.pageCreatorId == this.page.idPage
       );
       return check;
     }
@@ -99,7 +107,8 @@ export class PostComponent implements OnInit {
     if (this.userData) {
       const check = comment.commentLike.find(
         (item: CommentLike) =>
-          item.commentLikeCreatorId == this.userData.idAccount
+          item.commentLikeCreatorId == this.userData.idAccount ||
+          item.pageCreatorId == this.page.idPage
       );
       return check;
     }

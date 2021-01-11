@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Custome } from '../log-in/validator';
+import { Page } from '../models/page';
 import { PagesService } from '../services/pages.service';
 
 @Component({
@@ -9,7 +11,11 @@ import { PagesService } from '../services/pages.service';
   styleUrls: ['./create-page.component.css'],
 })
 export class CreatePageComponent implements OnInit {
-  constructor(private fb: FormBuilder, private pageService: PagesService) {}
+  constructor(
+    private fb: FormBuilder,
+    private pageService: PagesService,
+    private route: Router
+  ) {}
 
   createPage: FormGroup;
 
@@ -17,6 +23,7 @@ export class CreatePageComponent implements OnInit {
   pageTemporaryProfilePhoto: string | ArrayBuffer;
   pageTemporaryCoverPhoto: string | ArrayBuffer;
   errorPhrase: string;
+  loading: boolean;
 
   uploadPageProfilePhoto(event: any) {
     if (
@@ -59,12 +66,25 @@ export class CreatePageComponent implements OnInit {
   }
 
   createthePage() {
+    this.loading = true;
     this.formData.append('pageName', this.createPage.get('pageName').value);
     this.formData.append(
       'description',
       this.createPage.get('description').value
     );
-    this.pageService.createPage(this.formData);
+    this.pageService.createPage(this.formData).subscribe(
+      (data: Page) => {
+        if (data) {
+          this.loading = false;
+          this.pageService.userAccess = true;
+          this.route.navigate(['user-pages', data.idPage]);
+        }
+      },
+      (error) => {
+        this.loading = false;
+        this.errorPhrase = error.error.message;
+      }
+    );
   }
 
   ngOnInit() {

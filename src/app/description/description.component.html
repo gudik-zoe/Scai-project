@@ -51,9 +51,13 @@
           <ul *ngFor="let comment of post.comments">
             <li style="list-style-type: none;">
               <div class="container-fluid" style="background-color: whitesmoke ; border-radius: 8px;">
-                <span *ngIf=comment.doneBy>
-                  <img src="{{ comment.doneBy.profilePhoto }}" width="35px" height="35px" style="border-radius: 50%" />
-                  {{ comment.doneBy.firstName + " " + comment.doneBy.lastName }} :
+                <span *ngIf="comment.doneBy || comment.doneByPage">
+                  <img *ngIf="comment.doneBy" src="{{ comment.doneBy.profilePhoto }}" width="35px" height="35px"
+                    style="border-radius: 50%" />
+                  <img *ngIf="comment.doneByPage" src="{{ comment.doneByPage.profilePhoto }}" width="35px" height="35px"
+                    style="border-radius: 50%" />
+                  {{ comment.doneBy? comment.doneBy.firstName + " " + comment.doneBy.lastName : comment.doneByPage.name
+                  }} :
                   {{ comment.text }}
                 </span>
               </div>
@@ -63,7 +67,8 @@
                 {{comment.commentLike.length}}
                 <div class="comment-info" *ngIf="comment.commentLike">
                   <div *ngFor="let like of comment.commentLike">
-                    <span *ngIf="like.doneBy"> {{like.doneBy.firstName + " " + like.doneBy.lastName }}
+                    <span *ngIf="like.doneBy || like.doneByPage"> {{like.doneBy ? like.doneBy.firstName + " " +
+                      like.doneBy.lastName : like.doneByPage.name }}
                     </span>
                   </div>
                 </div>

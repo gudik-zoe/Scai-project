@@ -117,13 +117,6 @@ export class UserProfileComponent implements OnInit {
     this.route.navigate(['user-pages', page.idPage]);
   }
 
-  // getAccess() {
-  //   if (this.page.pageCreatorId == this.accountService.userData.idAccount) {
-  //     this.pageService.userAccess = true;
-  //   } else {
-  //     this.pageService.userAccess = false;
-  //   }
-  // }
   ngOnInit() {
     this.aroute.params.subscribe((params) => {
       const id = params['id'];

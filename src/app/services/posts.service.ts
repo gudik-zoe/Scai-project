@@ -11,6 +11,7 @@ import { NotificationService } from './notification.service';
 import { PagesService } from './pages.service';
 import { Page } from '../models/page';
 import { PageBasicData } from '../models/pageBasicData';
+import { rejects } from 'assert';
 
 @Injectable({
   providedIn: 'root',
@@ -123,9 +124,15 @@ export class PostsService {
       comment.date = this.notificationService.timeCalculation(comment.date);
       if (comment.commentLike.length > 0) {
         for (let like of comment.commentLike) {
-          like.doneBy = await this.accountService.getBasicAccountDetails(
-            like.commentLikeCreatorId
-          );
+          if (!like.pageCreatorId) {
+            like.doneBy = await this.accountService.getBasicAccountDetails(
+              like.commentLikeCreatorId
+            );
+          } else {
+            like.doneByPage = await this.pageService.getPageData(
+              like.pageCreatorId
+            );
+          }
         }
       }
     }
@@ -158,7 +165,7 @@ export class PostsService {
   }
 
   getPostsByAccountId(id: number) {
-    return new Promise<Post[]>((resolve) => {
+    return new Promise<Post[]>((resolve, reject) => {
       this.http
         .get(this.rootUrl + 'posts/accountId/' + id)
         .subscribe((data: Post[]) => {
@@ -170,6 +177,7 @@ export class PostsService {
             }
           }
           resolve(this.accountPosts);
+          // reject(null);
         });
     });
   }

@@ -29,7 +29,6 @@ export class PagesContainerComponent implements OnInit {
   }
   likePageInParent(page: Page) {
     this.pageService.likePage(page.idPage).subscribe((data: PageLike) => {
-      console.log(data);
       if (data) {
         page.pageLike.push(data);
       } else {
