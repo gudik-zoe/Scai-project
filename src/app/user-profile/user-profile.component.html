@@ -8,6 +8,12 @@
       <img src="{{ requestedUserData.profilePhoto}}" width="100%" height="100%"
         style="border-radius: 50%; border: 2px solid white;" />
     </div>
+    <div style="    width: fit-content;
+    margin-left: 137px;
+    margin-top: -44px;">
+      <h1>{{ requestedUserData.firstName + " " + requestedUserData.lastName }}</h1>
+
+    </div>
   </div>
 
   <div class="container-fluid mt-5" *ngIf="requestedUserData && loggedInUserData">
@@ -42,11 +48,12 @@
 
       </div>
 
-      <div class="col-6">
-        <app-what-on-mind *ngIf="requestedUserData.idAccount != loggedInUserData.idAccount && status == 'friends' "
-          (createPost)="openLeavePostComponent($event)" [requestedUser]="requestedUserData">
-        </app-what-on-mind>
-
+      <div class="col-md-6">
+        <div class="col-md-7" style="margin: 10px auto 0px auto;">
+          <app-what-on-mind *ngIf="requestedUserData.idAccount != loggedInUserData.idAccount && status == 'friends' "
+            (createPost)="openLeavePostComponent($event)" [requestedUser]="requestedUserData">
+          </app-what-on-mind>
+        </div>
         <app-leave-post></app-leave-post>
         <h3>posts</h3>
         <hr>

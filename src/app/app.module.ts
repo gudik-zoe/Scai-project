@@ -11,6 +11,7 @@ import { AuthenticationGuard } from './authentication.guard';
 
 import { NavBarModule } from './nav-bar/nav-bar.module';
 import { DatePipe } from '@angular/common';
+import { PostsService } from './services/posts.service';
 
 @NgModule({
   declarations: [AppComponent],

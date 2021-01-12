@@ -1,4 +1,5 @@
 import { PageLike } from './pageLike';
+import { Post } from './post';
 
 export class Page {
   idPage: number;
@@ -7,5 +8,6 @@ export class Page {
   profilePhoto: string;
   coverPhoto: string;
   pageCreatorId: number;
+  posts: Post[];
   pageLike?: PageLike[];
 }

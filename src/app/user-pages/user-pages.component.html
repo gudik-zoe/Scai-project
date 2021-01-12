@@ -1,5 +1,5 @@
-<div class="container-fluid" *ngIf="page" style="margin-top: 100px;">
-    <div class="container">
+<div class="container-fluid" *ngIf="page">
+    <div class="container-fluid">
         <div style="width: 100%; height: 250px; margin-top: 100px;">
             <img src="{{page.coverPhoto}}" width="100%" height="100%"
                 style="border: 1px solid black; border-radius: 8px;">
@@ -9,19 +9,32 @@
             <img src="{{ page.profilePhoto}}" width="100%" height="100%"
                 style="border-radius: 50%; border: 2px solid white;" />
         </div>
+        <div style="    width: fit-content;
+        margin-left: 137px;
+        margin-top: -44px;">
+            <h1>{{page.name}}</h1>
+            <p>{{page.description}}</p>
+        </div>
     </div>
-    <hr>
-    <div class="row">
-        <div class="col-md-6">
+    <div class="row" style="background-color: whitesmoke;">
+        <div class="col-md-3" style=" margin-top: 10px;">
             <app-what-on-mind [page]="page" (createPost)="openDiv($event)">
             </app-what-on-mind>
-        </div>
-        <div class="col-md-5" *ngIf="pagePosts && pagePosts.length > 0 ">
-            <app-posts-container [posts]="pagePosts" [page]="page" [status]="status">
-            </app-posts-container>
 
-            <hr>
+            <div class="main" *ngIf="page" style="margin-top: 20px;">
+                <div class="header">
+                    likers ({{page.pageLike.length}})
+                </div>
+                <div class="content" *ngFor="let like of page.pageLike">
+                    <p *ngIf="like.doneBy"><img src="{{like.doneBy.profilePhoto}}" width="30px" height="30px"
+                            style="border-radius: 50%;"> {{ like.doneBy.firstName + " " + like.doneBy.lastName }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5" *ngIf="page.posts && page.posts.length > 0 " style="background-color: white;">
+            <app-posts-container [posts]="page.posts" [page]="page" [status]="status">
+            </app-posts-container>
         </div>
     </div>
-    <app-create-post></app-create-post>
 </div>

@@ -4,12 +4,14 @@ import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Page } from '../models/page';
 import { PageBasicData } from '../models/pageBasicData';
+import { PostsService } from './posts.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PagesService {
-  constructor(private http: HttpClient) {}
+  constructor(private postService: PostsService, private http: HttpClient) {}
+
   rootUrl: string = environment.rootUrl;
   userAccess: boolean;
   pages: Page[] = [];
@@ -64,7 +66,21 @@ export class PagesService {
       {}
     );
   }
-
+  page: Page;
+  getPageFullData(pageId: number) {
+    return new Promise<Page>((resolve, reject) => {
+      this.http
+        .get(this.rootUrl + 'pageFullData/' + pageId)
+        .subscribe((data: Page) => {
+          this.page = data;
+          for (let post of this.page.posts) {
+            this.postService.getUserDetails(post);
+          }
+          resolve(this.page);
+          reject('unknown error occured');
+        });
+    });
+  }
   getPageData(pageId: number) {
     return new Promise<PageBasicData>((resolve, reject) => {
       const check = this.pages.find((item: Page) => {

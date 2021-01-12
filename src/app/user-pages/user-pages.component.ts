@@ -26,14 +26,18 @@ export class UserPagesComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
   id: number;
-  page: PageBasicData;
-  pagePosts: Post[];
+  page: Page;
   status: string = 'friends';
   subscription: Subscription;
 
   async getPageInfo() {
-    this.page = await this.pageService.getPageData(this.id);
-    this.pagePosts = await this.postService.getPagePosts(this.id);
+    this.page = await this.pageService.getPageFullData(this.id);
+    for (let like of this.page.pageLike) {
+      like.doneBy = await this.accountService.getBasicAccountDetails(
+        like.pageLikeCreatorId
+      );
+    }
+    console.log(this.page);
   }
 
   openDiv(event: any) {
@@ -47,7 +51,7 @@ export class UserPagesComponent implements OnInit, OnDestroy {
     this.subscription = this.pageService.addPost.subscribe((data: Post) => {
       if (data) {
         data.date = this.notificationService.timeCalculation(data.date);
-        this.pagePosts.unshift(data);
+        this.page.posts.unshift(data);
       }
     });
   }

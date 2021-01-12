@@ -1,7 +1,6 @@
-.col-md-6 {
+.container-fluid {
   padding: 10px;
   background-color: white;
-  margin: 10px auto 0px auto;
   border-radius: 10px;
   border: 1px solid;
   box-shadow: 1px 1px 1px 1px #888888;

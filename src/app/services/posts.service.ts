@@ -39,21 +39,10 @@ export class PostsService {
   constructor(
     private accountService: AccountService,
     private http: HttpClient,
-    private notificationService: NotificationService,
-    private pageService: PagesService
+    private notificationService: NotificationService // private pageService: PagesService
   ) {}
 
   async getPostOriginalUserData(post: Post) {
-    // const postData = this.homePagePosts.find(
-    //   (item) => item.idPost == post.postOriginalId
-    // );
-    // if (postData) {
-    //   post.text = postData.text;
-    //   post.image = postData.image;
-    //   post.likesNumber = postData.postLikes.length;
-    //   post.commentsNumber = postData.comments.length;
-    //   post.originalPostDoneBy = postData.doneBy;
-    // } else {
     const postData = await this.getPostByPostId(post.postOriginalId);
     if (postData && postData.postCreatorId) {
       const checkIfUserExistInBasicDataArray = this.accountService.accountBasicData.find(
@@ -76,7 +65,7 @@ export class PostsService {
         post.originalPostDoneBy = this.userBasicData;
       }
     } else if (postData && postData.pageCreatorId) {
-      const checkIfPageExistInBasicDataArray = this.pageService.pages.find(
+      const checkIfPageExistInBasicDataArray = this.pages.find(
         (item) => item.idPage == postData.pageCreatorId
       );
       if (checkIfPageExistInBasicDataArray) {
@@ -86,7 +75,7 @@ export class PostsService {
         post.commentsNumber = postData.comments.length;
         post.originalPostDoneByPage = checkIfPageExistInBasicDataArray;
       } else {
-        this.page = await this.pageService.getPageData(postData.pageCreatorId);
+        this.page = await this.getPageData(postData.pageCreatorId);
         post.text = postData.text;
         post.image = postData.image;
         post.likesNumber = postData.postLikes.length;
@@ -103,7 +92,7 @@ export class PostsService {
       );
       post.doneBy = this.userBasicData;
     } else if (post.pageCreatorId) {
-      post.doneByPage = await this.pageService.getPageData(post.pageCreatorId);
+      post.doneByPage = await this.getPageData(post.pageCreatorId);
     }
     if (post.postedOn) {
       this.userBasicData = await this.accountService.getBasicAccountDetails(
@@ -117,9 +106,7 @@ export class PostsService {
           comment.commentCreatorId
         );
       } else if (comment.pageCreatorId) {
-        comment.doneByPage = await this.pageService.getPageData(
-          comment.pageCreatorId
-        );
+        comment.doneByPage = await this.getPageData(comment.pageCreatorId);
       }
       comment.date = this.notificationService.timeCalculation(comment.date);
       if (comment.commentLike.length > 0) {
@@ -129,9 +116,7 @@ export class PostsService {
               like.commentLikeCreatorId
             );
           } else {
-            like.doneByPage = await this.pageService.getPageData(
-              like.pageCreatorId
-            );
+            like.doneByPage = await this.getPageData(like.pageCreatorId);
           }
         }
       }
@@ -177,7 +162,7 @@ export class PostsService {
             }
           }
           resolve(this.accountPosts);
-          // reject(null);
+          reject(null);
         });
     });
   }
@@ -252,5 +237,22 @@ export class PostsService {
 
   deletePost(postId: number) {
     return this.http.delete(this.rootUrl + 'posts/' + postId);
+  }
+  pages: Page[] = [];
+  getPageData(pageId: number) {
+    return new Promise<PageBasicData>((resolve, reject) => {
+      const check = this.pages.find((item: Page) => {
+        item.idPage == pageId;
+      });
+      if (check) {
+        resolve(check);
+      } else {
+        this.http
+          .get(this.rootUrl + 'pages/getPage/' + pageId)
+          .subscribe((data: Page) => {
+            resolve(data);
+          });
+      }
+    });
   }
 }

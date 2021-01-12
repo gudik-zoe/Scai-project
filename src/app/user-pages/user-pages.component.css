@@ -1,0 +1,23 @@
+.main {
+  border: 1px solid;
+  border-radius: 8px;
+  width: 100%;
+  box-shadow: 1px 1px 1px 1px #888888;
+  background-color: white;
+}
+
+.header {
+  width: 100%;
+  font-size: larger;
+  border-top-left-radius: 9px;
+  border-top-right-radius: 9px;
+  border-bottom: 1px solid black;
+  padding: 10px;
+  height: 60px;
+  color: white;
+  background-color: #926dde;
+}
+
+.content {
+  padding: 10px;
+}

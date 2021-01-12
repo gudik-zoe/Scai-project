@@ -5,6 +5,7 @@ import { PostsContainerModule } from '../posts-container/posts-container.module'
 import { RouterModule, Routes } from '@angular/router';
 import { WhatOnMindModule } from '../what-on-mind/what-on-mind.module';
 import { CreatePostModule } from '../create-post/create-post.module';
+import { PostsService } from '../services/posts.service';
 
 const routes: Routes = [{ path: ':id', component: UserPagesComponent }];
 

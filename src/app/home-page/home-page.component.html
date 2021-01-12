@@ -7,9 +7,9 @@
     </div>
     <!-- ngClass="{{ open ? 'col-md-6' : 'col-md-9' }}" -->
     <div id="second-div" class="col-md-6">
-
-      <app-what-on-mind (createPost)="openDiv($event)"></app-what-on-mind>
-
+      <div class="col-md-7" style="margin: 10px auto 0px auto;">
+        <app-what-on-mind (createPost)="openDiv($event)"></app-what-on-mind>
+      </div>
 
       <hr />
       <h2 style="color: blue" class="font-weight-bold">News Feed</h2>
