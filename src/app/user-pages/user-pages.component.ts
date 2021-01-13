@@ -37,7 +37,6 @@ export class UserPagesComponent implements OnInit, OnDestroy {
         like.pageLikeCreatorId
       );
     }
-    console.log(this.page);
   }
 
   openDiv(event: any) {

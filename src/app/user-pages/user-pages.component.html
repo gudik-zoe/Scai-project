@@ -9,11 +9,12 @@
             <img src="{{ page.profilePhoto}}" width="100%" height="100%"
                 style="border-radius: 50%; border: 2px solid white;" />
         </div>
-        <div style="    width: fit-content;
+        <div style="width: fit-content;
         margin-left: 137px;
         margin-top: -44px;">
             <h1>{{page.name}}</h1>
-            <p>{{page.description}}</p>
+            <p style=" color:grey">{{page.description}}</p>
+            <small></small>
         </div>
     </div>
     <div class="row" style="background-color: whitesmoke;">
@@ -22,19 +23,26 @@
             </app-what-on-mind>
 
             <div class="main" *ngIf="page" style="margin-top: 20px;">
-                <div class="header">
-                    likers ({{page.pageLike.length}})
-                </div>
-                <div class="content" *ngFor="let like of page.pageLike">
-                    <p *ngIf="like.doneBy"><img src="{{like.doneBy.profilePhoto}}" width="30px" height="30px"
-                            style="border-radius: 50%;"> {{ like.doneBy.firstName + " " + like.doneBy.lastName }}
+                <!-- <div class="header">
+                    About
+                </div> -->
+                <h3>About</h3>
+                <div class="content">
+                    <p>
+                        <i class="fa fa-info-circle fa-2x" aria-hidden="true" style="color: grey;"></i>
+                        {{ page.description }}
                     </p>
+                    <p><i class="fa fa-thumbs-up  fa-2x mr-1" aria-hidden="true" style="color: grey;"></i> {{
+                        page.pageLike.length }} peolpe liked
+                        this</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-5" *ngIf="page.posts && page.posts.length > 0 " style="background-color: white;">
-            <app-posts-container [posts]="page.posts" [page]="page" [status]="status">
-            </app-posts-container>
+        <div class="col-md-5 mt-1" *ngIf="page.posts && page.posts.length > 0 " style="background-color: white; ">
+            <div class="scrollable-element" style="overflow-y: scroll; overflow-x: hidden; height: 450px;">
+                <app-posts-container [posts]="page.posts" [page]="page" [status]="status">
+                </app-posts-container>
+            </div>
         </div>
     </div>
 </div>

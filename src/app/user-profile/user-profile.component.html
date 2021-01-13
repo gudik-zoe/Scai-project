@@ -1,7 +1,7 @@
-<ng-container *ngIf="requestedUserData" style="background-color: white;">
-  <div class="container">
-    <div style="width: 100%; height: 250px; margin-top: 100px;">
-      <img src="{{requestedUserData.coverPhoto}}" width="100%" height="100%">
+<ng-container *ngIf="requestedUserData">
+  <div class="container-fluid">
+    <div style="width: 100%; height: 250px; margin-top: 80px; ">
+      <img src="{{requestedUserData.coverPhoto}}" width="100%" height="100%" style="border-radius: 9px;">
     </div>
     <div
       style="border-radius: 50%;  border: 5px solid white; width: 150px; ; height:150px ; margin-top: -100px; margin-left: 10px;">
@@ -9,38 +9,39 @@
         style="border-radius: 50%; border: 2px solid white;" />
     </div>
     <div style="    width: fit-content;
-    margin-left: 137px;
-    margin-top: -44px;">
-      <h1>{{ requestedUserData.firstName + " " + requestedUserData.lastName }}</h1>
-
+    margin-left: 157px;
+    margin-top: -44px;
+    ">
+      <h2>{{ requestedUserData.firstName + " " + requestedUserData.lastName }}</h2>
+      <p style="color: grey;" *ngIf="requestedUserData.livesIn"><i class="fa fa-map-marker"
+          aria-hidden="true"></i>{{requestedUserData.livesIn}}</p>
     </div>
   </div>
 
-  <div class="container-fluid mt-5" *ngIf="requestedUserData && loggedInUserData">
-    <div class="row" style="background-color: whitesmoke;">
+  <div class="container-fluid mt-2" *ngIf="requestedUserData && loggedInUserData">
+    <div class="row" style="background-color: lightgray">
       <div class="col-3" style=" padding: 10px;">
         <div class="container-fluid">
-          <div class="main">
-            <div class="header">
-              intro
-            </div>
-            <div class="content">
-              <p>
-                <i class="fa fa-graduation-cap" aria-hidden="true" style="color: gray;"></i> studied at
-                <span>{{ requestedUserData?.study }}</span>
-              </p>
-              <p>
-                <i class="fa fa-university" aria-hidden="true" style="color: gray;"></i> went to
-                <span> {{ requestedUserData.wentTo }}</span>
-              </p>
-              <p>
-                <i class="fa fa-home" aria-hidden="true" style="color: gray;"></i> lives in
-                <span> {{ requestedUserData.livesIn }}</span>
-              </p>
-              <button *ngIf="requestedUserData.idAccount == loggedInUserData.idAccount"
-                style="background-color: lightgrey;" class="btn btn-outline  btn-block mt-2" (click)="goToEditing() ">
-                edit details</button>
-            </div>
+          <div class="main" style="padding: 10px;">
+            <!-- <div class="header"> -->
+            <h4 style="font-weight: bold; margin-bottom: 20px;">Intro</h4>
+            <!-- </div> -->
+            <p>
+              <i class="fa fa-graduation-cap fa-lg mr-1" aria-hidden="true" style="color: gray;"></i> studied at
+              <span>{{ requestedUserData?.study }}</span>
+            </p>
+            <p>
+              <i class="fa fa-university fa-lg mr-1" aria-hidden="true" style="color: gray;"></i> went to
+              <span> {{ requestedUserData.wentTo }}</span>
+            </p>
+            <p>
+              <i class="fa fa-map-marker fa-2x mr-1" aria-hidden="true" style="color: gray;"></i> lives in
+              <span> {{ requestedUserData.livesIn }}</span>
+            </p>
+            <button *ngIf="requestedUserData.idAccount == loggedInUserData.idAccount"
+              style="background-color: lightgrey;" class="btn btn-outline  btn-block mt-2" (click)="goToEditing() ">
+              edit details</button>
+
           </div>
         </div>
 
@@ -83,8 +84,6 @@
             <div (click)="goToPage(page)">
               <img src="{{page.profilePhoto}}" width="40px" height="40px" style="border-radius: 50%;">
               {{page.name}}
-              <!-- <br>
-              <small style="color: grey;">{{page.description}}</small> -->
             </div>
           </div>
         </div>
