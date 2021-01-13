@@ -32,6 +32,11 @@ li:hover {
   background-color: #926dde;
 }
 
+.container-fluid {
+  animation: fadeInUp;
+  animation-duration: 0.6s;
+}
+
 .main {
   margin-top: 10px;
   margin-left: 15px;

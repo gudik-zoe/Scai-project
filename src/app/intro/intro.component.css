@@ -1,0 +1,6 @@
+.container-fluid {
+  background: white;
+  border-radius: 8px;
+  animation: fadeInUp;
+  animation-duration: 1s;
+}

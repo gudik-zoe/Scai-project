@@ -1,5 +1,5 @@
 <ng-container *ngIf="requestedUserData">
-  <div class="container-fluid">
+  <div class="container-fluid" id="photos">
     <div style="width: 100%; height: 250px; margin-top: 80px; ">
       <img src="{{requestedUserData.coverPhoto}}" width="100%" height="100%" style="border-radius: 9px;">
     </div>
@@ -19,34 +19,10 @@
   </div>
 
   <div class="container-fluid mt-2" *ngIf="requestedUserData && loggedInUserData">
-    <div class="row" style="background-color: lightgray">
+    <div class="row" style="background-color: whitesmoke">
       <div class="col-3" style=" padding: 10px;">
-        <div class="container-fluid">
-          <div class="main" style="padding: 10px;">
-            <!-- <div class="header"> -->
-            <h4 style="font-weight: bold; margin-bottom: 20px;">Intro</h4>
-            <!-- </div> -->
-            <p>
-              <i class="fa fa-graduation-cap fa-lg mr-1" aria-hidden="true" style="color: gray;"></i> studied at
-              <span>{{ requestedUserData?.study }}</span>
-            </p>
-            <p>
-              <i class="fa fa-university fa-lg mr-1" aria-hidden="true" style="color: gray;"></i> went to
-              <span> {{ requestedUserData.wentTo }}</span>
-            </p>
-            <p>
-              <i class="fa fa-map-marker fa-2x mr-1" aria-hidden="true" style="color: gray;"></i> lives in
-              <span> {{ requestedUserData.livesIn }}</span>
-            </p>
-            <button *ngIf="requestedUserData.idAccount == loggedInUserData.idAccount"
-              style="background-color: lightgrey;" class="btn btn-outline  btn-block mt-2" (click)="goToEditing() ">
-              edit details</button>
-
-          </div>
-        </div>
-
+        <app-intro [userData]="requestedUserData" [loggedInUserData]="loggedInUserData"></app-intro>
         <app-account-photos [account]="requestedUserData"></app-account-photos>
-
       </div>
 
       <div class="col-md-6">

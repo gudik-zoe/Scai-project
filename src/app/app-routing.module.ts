@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthenticationGuard } from './authentication.guard';
+import { HomePageComponent } from './home-page/home-page.component';
 import { LoggedUserGuard } from './logged-user.guard';
 import { PageGuard } from './page.guard';
-import { UserPagesComponent } from './user-pages/user-pages.component';
 
 const routes: Routes = [
   {
@@ -11,7 +11,6 @@ const routes: Routes = [
     redirectTo: 'auth',
     pathMatch: 'full',
   },
-
   {
     path: 'auth',
     loadChildren: () =>
@@ -41,14 +40,9 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'event-com',
-    loadChildren: () =>
-      import('./event-com/event-com.module').then((m) => m.EventComModule),
-  },
-  {
     path: 'account-settings',
     loadChildren: () =>
-      import('./account-settings/account-settings.module').then(
+      import('./account-settings/account.settings.module').then(
         (m) => m.AccountSettingsModule
       ),
   },
@@ -81,6 +75,7 @@ const routes: Routes = [
       import('./user-pages/user-pages.module').then((m) => m.UserPagesModule),
     canActivate: [PageGuard],
   },
+  { path: '**', component: HomePageComponent },
 ];
 
 @NgModule({
