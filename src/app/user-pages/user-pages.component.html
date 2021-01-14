@@ -41,7 +41,7 @@
         </div>
         <div class="col-md-5 mt-1" *ngIf="page.posts && page.posts.length > 0 " style="background-color: white; ">
             <div class="scrollable-element" style="overflow-y: scroll; overflow-x: hidden; height: 450px;">
-                <app-posts-container [posts]="page.posts" [page]="page" [status]="status">
+                <app-posts-container [isAdmin]="isAdmin" [posts]="page.posts" [page]="page" [status]="status">
                 </app-posts-container>
             </div>
         </div>

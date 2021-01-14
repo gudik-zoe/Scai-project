@@ -22,6 +22,7 @@ export class PostComponent implements OnInit {
   @Input() commentText: string;
   @Input() status: string;
   @Input() page: Page;
+  @Input() isAdmin: boolean;
 
   @Output() testOutput = new EventEmitter<Post>();
   @Output() deletePostEvent = new EventEmitter<number>();
@@ -107,19 +108,22 @@ export class PostComponent implements OnInit {
   }
 
   getCommentLike(comment: Comment) {
-    if (comment.commentCreatorId) {
-      const check = comment.commentLike.find(
-        (item: CommentLike) =>
+    if (comment.commentLike) {
+      const check = comment.commentLike.find((item: CommentLike) => {
+        if (
+          item.commentLikeCreatorId &&
           item.commentLikeCreatorId == this.userData.idAccount
-      );
-      return check;
-    } else if (comment.pageCreatorId) {
-      const check = comment.commentLike.find(
-        (item: CommentLike) => item.pageCreatorId == this.page.idPage
-      );
+        ) {
+          return true;
+        } else if (
+          item.pageCreatorId &&
+          item.pageCreatorId == this.page.idPage
+        ) {
+          return true;
+        }
+      });
       return check;
     }
-    return false;
   }
 
   hoverFunction(comment: Comment) {

@@ -11,8 +11,8 @@
         <small *ngIf="page.pageLike">{{page.pageLike.length}} people liked {{page.name}}</small>
 
         <button [ngClass]="getLike() ? 'btn btn-primary btn-block mt-2' : 'btn btn-info btn-block mt-2'"
-            (click)="likePageInChild(page)"> <i [ngClass]="getLike() ? 'fa fa-thumbs-down ' : 'fa fa-thumbs-up '"
+            (click)="likePageInChild(page)"> <i [ngClass]="getLike() ? 'fa fa-rss mr-1 ' : 'fa fa-rss mr-1'"
                 aria-hidden="true">
-            </i> {{ getLike() ? 'unlike' : 'like' }}</button>
+            </i> {{ getLike() ? 'unfollow' : 'follow' }}</button>
     </div>
 </div>

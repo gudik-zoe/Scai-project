@@ -28,6 +28,7 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
   @Input() posts: Post[];
   @Input() status: string;
   @Input() page: PageBasicData;
+  @Input() isAdmin: boolean;
   userData: AccountBasicData;
   commentText: string;
   errorPhrase: string;
@@ -135,7 +136,8 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
     }
   }
   likeCommentInParent(comment: Comment) {
-    if (!this.page) {
+    if (!this.isAdmin) {
+      console.log('user like');
       this.commentService.likeComment(comment.idComment).subscribe(
         (data: CommentLike) => {
           if (data) {

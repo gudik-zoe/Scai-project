@@ -130,7 +130,7 @@
                 aria-hidden="true"></i>
             </div>
             <i [ngClass]=" getCommentLike(comment) ? 'commentLike' : 'commentUnLike' "
-              *ngIf="  comment.commentCreatorId != userData.idAccount && !comment.pageCreatorId || comment.pageCreatorId  && page.pageCreatorId != userData.idAccount  "
+              *ngIf="comment.commentCreatorId != userData.idAccount && !comment.pageCreatorId || comment.pageCreatorId && !page ||page && comment.pageCreatorId  && page.pageCreatorId != userData.idAccount  "
               (click)="likeComment(comment)" class="fa fa-thumbs-up fa-lg" id="commentLike" aria-hidden="true"></i>
             <span *ngIf="comment.doneBy" class="font-weight-bold" style="float: left;">
               {{comment.doneBy.firstName + " " + comment.doneBy.lastName }}: </span>

@@ -31,6 +31,7 @@ export class UserPagesComponent implements OnInit, OnDestroy {
   status: string = 'friends';
   subscription: Subscription;
   userData: AccountBasicData;
+  isAdmin: boolean;
 
   async getPageInfo() {
     this.page = await this.pageService.getPageFullData(this.id);
@@ -39,6 +40,9 @@ export class UserPagesComponent implements OnInit, OnDestroy {
         like.pageLikeCreatorId
       );
     }
+    this.page.pageCreatorId == this.userData.idAccount
+      ? (this.isAdmin = true)
+      : (this.isAdmin = false);
   }
 
   openDiv(event: any) {
@@ -66,8 +70,8 @@ export class UserPagesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.aroute.params.subscribe((params) => {
       this.id = params['id'];
-      this.getPageInfo();
       this.getUserData();
+      this.getPageInfo();
     });
     this.getNewPost();
   }
