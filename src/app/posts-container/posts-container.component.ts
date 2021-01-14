@@ -91,14 +91,17 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
   }
 
   commentPostInParent(data) {
-    if (!this.page) {
-      this.commentService
-        .addCommment(data.post, data.commentText.trim())
+    if (this.page && this.page.pageCreatorId == this.userData.idAccount) {
+      this.pageService
+        .addComment(data.post.idPost, data.commentText.trim())
         .subscribe(
           (comment: Comment) => {
             comment.commentLike = [];
-            comment.doneBy = {
-              ...this.userData,
+            comment.doneByPage = {
+              idPage: this.page.idPage,
+              name: this.page.name,
+              profilePhoto: this.page.profilePhoto,
+              coverPhoto: this.page.coverPhoto,
             };
             comment.date = this.notificationService.timeCalculation(
               comment.date
@@ -111,16 +114,13 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
           }
         );
     } else {
-      this.pageService
-        .addComment(data.post.idPost, data.commentText.trim())
+      this.commentService
+        .addCommment(data.post, data.commentText.trim())
         .subscribe(
           (comment: Comment) => {
             comment.commentLike = [];
-            comment.doneByPage = {
-              idPage: this.page.idPage,
-              name: this.page.name,
-              profilePhoto: this.page.profilePhoto,
-              coverPhoto: this.page.coverPhoto,
+            comment.doneBy = {
+              ...this.userData,
             };
             comment.date = this.notificationService.timeCalculation(
               comment.date

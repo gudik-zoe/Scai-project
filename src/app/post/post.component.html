@@ -85,22 +85,22 @@
     <hr />
 
     <button
-      [disabled]="post.postOriginalId && !post.originalPostDoneBy && !post.originalPostDoneByPage || status != 'friends' || page"
+      [disabled]="post.postOriginalId && !post.originalPostDoneBy && !post.originalPostDoneByPage || status != 'friends' || page  && !pageLike  "
       [ngClass]="getLike() ? 'btn btn-primary btn-md col-md-3' : 'btn btn-light btn-md col-md-3'" (click)="like(post)">
       <i class="fa fa-thumbs-up" aria-hidden="true"></i>
       like
     </button>
 
     <button
-      [disabled]="post.postOriginalId && !post.originalPostDoneBy && !post.originalPostDoneByPage || status != 'friends'"
+      [disabled]="post.postOriginalId && !post.originalPostDoneBy && !post.originalPostDoneByPage || status != 'friends' || page &&  page.pageCreatorId != userData.idAccount && !pageLike  "
       [ngClass]="getComment(post) ? 'btn btn-primary btn-md col-md-3 ml-2' : 'btn btn-light btn-md col-md-3 ml-2'"
       (click)="comment(post , commentText)">
       <i class="fa fa-comments" aria-hidden="true"></i>
       comment
     </button>
 
-    <button *ngIf="!page"
-      [disabled]="post.postOriginalId || post.postCreatorId == userData.idAccount || post.postedOn || status != 'friends' || page &&  userData.idAccount == page.pageCreatorId"
+    <button
+      [disabled]="post.postOriginalId || post.postCreatorId == userData.idAccount || post.postedOn || status != 'friends' || page &&  userData.idAccount == page.pageCreatorId || page && !pageLike"
       (click)="sharePost(post)" class="btn btn-light btn-md col-md-3 ml-2">
       <i class="fa fa-share-alt" aria-hidden="true"></i>
       share
@@ -118,19 +118,19 @@
             style="border-radius: 50%;" height="35px" />
           <div class="container-fluid" style="background-color: whitesmoke; border-radius: 8px; padding: 5px;">
             <div
-              *ngIf="!page && comment.commentCreatorId == userData.idAccount || page && page.idPage == comment.pageCreatorId "
+              *ngIf="comment.commentCreatorId == userData.idAccount ||  page && !comment.commentCreatorId && page.pageCreatorId == userData.idAccount  "
               class="icon">
               <i (click)="editComment(comment.text ,comment.idComment)" style="color: blue; cursor: pointer;"
                 class="fa fa-pencil fa-xxs" aria-hidden="true"></i>
             </div>
             <div
-              *ngIf=" !page && comment.commentCreatorId == userData.idAccount ||  page && page.idPage == comment.pageCreatorId "
+              *ngIf="  comment.commentCreatorId == userData.idAccount ||  page && !comment.commentCreatorId && page.pageCreatorId == userData.idAccount  "
               class="icon">
               <i (click)="deleteComment(comment.idComment)" style="color: red; cursor: pointer;" class="fa fa-trash"
                 aria-hidden="true"></i>
             </div>
             <i [ngClass]=" getCommentLike(comment) ? 'commentLike' : 'commentUnLike' "
-              *ngIf=" !page &&  userData.idAccount != comment.commentCreatorId  || page &&  page.idPage != comment.pageCreatorId "
+              *ngIf="  comment.commentCreatorId != userData.idAccount && !comment.pageCreatorId || comment.pageCreatorId  && page.pageCreatorId != userData.idAccount  "
               (click)="likeComment(comment)" class="fa fa-thumbs-up fa-lg" id="commentLike" aria-hidden="true"></i>
             <span *ngIf="comment.doneBy" class="font-weight-bold" style="float: left;">
               {{comment.doneBy.firstName + " " + comment.doneBy.lastName }}: </span>
@@ -165,9 +165,10 @@
       </div>
     </ng-container>
     <div style="margin-top: 25px;">
-      <img *ngIf="!page" src="{{ userData.profilePhoto }}" width="40px" height="40px" style="border-radius: 50%" />
-      <img *ngIf="page && post.doneByPage " src="{{ post.doneByPage.profilePhoto }}" width="40px" height="40px"
-        style="border-radius: 50%" />
+      <img *ngIf="!page || page && userData.idAccount != page.pageCreatorId  " src="{{ userData.profilePhoto }}"
+        width="40px" height="40px" style="border-radius: 50%" />
+      <img *ngIf="page && post.doneByPage && userData.idAccount == page.pageCreatorId"
+        src="{{ post.doneByPage.profilePhoto }}" width="40px" height="40px" style="border-radius: 50%" />
       <input class="comment-input" [(ngModel)]="commentText" placeholder="write a comment" />
       <p class="text-danger">{{errorPhrase}}</p>
     </div>

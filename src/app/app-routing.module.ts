@@ -73,7 +73,7 @@ const routes: Routes = [
     path: 'user-pages',
     loadChildren: () =>
       import('./user-pages/user-pages.module').then((m) => m.UserPagesModule),
-    canActivate: [PageGuard],
+    // canActivate: [PageGuard],
   },
   { path: '**', component: HomePageComponent },
 ];

@@ -81,6 +81,7 @@
 
 #commentLike {
   transition: all 0.2s ease-in-out;
+  margin-top: 5px;
 }
 
 #commentLike:hover {

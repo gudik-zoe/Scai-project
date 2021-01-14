@@ -8,6 +8,8 @@ import { Comment } from '../models/comment';
 import { AccountBasicData } from '../models/accountBasicData';
 import { CommentLike } from '../models/commentLike';
 import { PageBasicData } from '../models/pageBasicData';
+import { Page } from '../models/page';
+import { PageLike } from '../models/pageLike';
 
 @Component({
   selector: 'app-post',
@@ -19,7 +21,7 @@ export class PostComponent implements OnInit {
   @Input() userData: AccountBasicData;
   @Input() commentText: string;
   @Input() status: string;
-  @Input() page: PageBasicData;
+  @Input() page: Page;
 
   @Output() testOutput = new EventEmitter<Post>();
   @Output() deletePostEvent = new EventEmitter<number>();
@@ -35,6 +37,7 @@ export class PostComponent implements OnInit {
   editCommentValue: string;
   errorPhrase: string = '';
   commentLikers: AccountBasicData[];
+  pageLike: PageLike;
 
   constructor(
     private commentService: CommentsService,
@@ -104,11 +107,15 @@ export class PostComponent implements OnInit {
   }
 
   getCommentLike(comment: Comment) {
-    if (this.userData) {
+    if (comment.commentCreatorId) {
       const check = comment.commentLike.find(
         (item: CommentLike) =>
-          item.commentLikeCreatorId == this.userData.idAccount ||
-          item.pageCreatorId == this.page.idPage
+          item.commentLikeCreatorId == this.userData.idAccount
+      );
+      return check;
+    } else if (comment.pageCreatorId) {
+      const check = comment.commentLike.find(
+        (item: CommentLike) => item.pageCreatorId == this.page.idPage
       );
       return check;
     }
@@ -165,5 +172,15 @@ export class PostComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  getIfPageIsLikedByLoggedInUser() {
+    return (this.pageLike = this.page.pageLike.find(
+      (item) => item.pageLikeCreatorId == this.userData.idAccount
+    ));
+  }
+
+  ngOnInit() {
+    if (this.page) {
+      this.getIfPageIsLikedByLoggedInUser();
+    }
+  }
 }

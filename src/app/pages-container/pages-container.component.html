@@ -1,15 +1,16 @@
 <div class="container-fluid" style="margin-top: 65px;">
     <div class="row">
 
-        <div class="col-sm-3" id="side-bar" style="border-right: 1px solid black;">
+        <div class="col-md-3" style="border-right: 1px solid black;">
             <app-side-bar></app-side-bar>
         </div>
-        <div class="col-md-9" style="background-color: lightgrey; height: 100vh;">
+        <div class="col-md-9" style=" height: 100vh;">
             <div class="row" style="margin-top: 20px;">
-                <button routerLink="/createPage" class="btn btn-info" style="margin-left: 20px;"> + create your own
+                <button routerLink="/createPage" class="btn btn-info" id="animation" style="margin-left: 20px;"> +
+                    create your own
                     page</button>
-                <div *ngFor="let page of pages" class="col-md-4">
-                    <app-pages [page]="page" (likePage)="likePageInParent($event)"> </app-pages>
+                <div *ngFor="let page of pages; let i = index" class="col-md-4">
+                    <app-pages [page]="page" [i]="i" (likePage)="likePageInParent($event)"> </app-pages>
                 </div>
             </div>
         </div>

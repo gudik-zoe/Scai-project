@@ -10,9 +10,13 @@
 }
 
 .col-md-9 {
-  background-color: whitesmoke;
+  background: whitesmoke;
 }
 
+#animation {
+  animation: fadeInUp;
+  animation-duration: 0.8s;
+}
 .content {
   padding: 10px;
   background-color: lightgray;
@@ -22,7 +26,7 @@
 .col-md-4 {
   height: fit-content;
 }
-.side-bar {
-  margin-top: 34px;
-  background-color: white;
+
+.col-md-3 {
+  background-color: lightgrey;
 }

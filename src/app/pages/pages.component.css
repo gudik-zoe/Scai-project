@@ -22,7 +22,16 @@
 .content {
   padding: 10px;
   height: 200px;
-  background-color: whitesmoke;
+  background-color: lightgrey;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
+}
+
+.container-fluid:hover {
+  transform: scale(1.1);
+}
+
+.container-fluid {
+  transition: all 0.2s ease-in-out;
+  animation: fadeInUp;
 }

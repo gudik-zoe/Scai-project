@@ -1,16 +1,18 @@
-<div *ngIf="page.pageCreatorId != userData.idAccount">
+<div class="container-fluid" *ngIf="page.pageCreatorId != userData.idAccount" [ngStyle]="{'animation-duration':index }">
     <div
         style="background-image: url({{page.coverPhoto}}); border-top-left-radius:  8px;border-top-right-radius:  8px ; height:150px; width: 100%; background:content-box; background-position: center;">
     </div>
     <div class="content">
         <img *ngIf="page.profilePhoto" src="{{page.profilePhoto}}" width="40px" height="40px"
-            style="border-radius: 50%;"><span style="font-size: larger; font-weight: bolder;">
+            style="border-radius: 50%;"><span (click)="goToPage()"
+            style="font-size: larger; font-weight: bolder;cursor: pointer;">
             {{page.name}}</span>
         <p> {{page.description}}</p>
         <small *ngIf="page.pageLike">{{page.pageLike.length}} people liked {{page.name}}</small>
 
         <button [ngClass]="getLike() ? 'btn btn-primary btn-block mt-2' : 'btn btn-info btn-block mt-2'"
-            style="color: white;" (click)="likePageInChild(page)"> <i class="fa fa-thumbs-up mr-1" aria-hidden="true">
-            </i>like</button>
+            (click)="likePageInChild(page)"> <i [ngClass]="getLike() ? 'fa fa-thumbs-down ' : 'fa fa-thumbs-up '"
+                aria-hidden="true">
+            </i> {{ getLike() ? 'unlike' : 'like' }}</button>
     </div>
 </div>

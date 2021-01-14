@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AccountBasicData } from '../models/accountBasicData';
 import { Page } from '../models/page';
 import { PageBasicData } from '../models/pageBasicData';
 import { Post } from '../models/post';
@@ -29,6 +30,7 @@ export class UserPagesComponent implements OnInit, OnDestroy {
   page: Page;
   status: string = 'friends';
   subscription: Subscription;
+  userData: AccountBasicData;
 
   async getPageInfo() {
     this.page = await this.pageService.getPageFullData(this.id);
@@ -55,10 +57,17 @@ export class UserPagesComponent implements OnInit, OnDestroy {
     });
   }
 
+  async getUserData() {
+    this.userData =
+      this.accountService.userData ||
+      (await this.accountService.getTheLoggedInUserData());
+  }
+
   ngOnInit() {
     this.aroute.params.subscribe((params) => {
       this.id = params['id'];
       this.getPageInfo();
+      this.getUserData();
     });
     this.getNewPost();
   }

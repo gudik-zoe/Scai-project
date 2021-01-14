@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Page } from '../models/page';
 import { PageLike } from '../models/pageLike';
@@ -11,24 +12,27 @@ import { PagesService } from '../services/pages.service';
   styleUrls: ['./pages.component.css'],
 })
 export class PagesComponent implements OnInit {
-  constructor(
-    private pageService: PagesService,
-    private accountService: AccountService
-  ) {}
+  constructor(private accountService: AccountService, private route: Router) {}
 
   @Input() page: Page;
   @Input() userData: AccountBasicData;
+  @Input() i: number;
 
   @Output() likePage = new EventEmitter<Page>();
 
   likePageInChild(page: Page) {
     this.likePage.emit(page);
   }
-
+  index: string;
   async getUserData() {
     this.userData =
       this.accountService.userData ||
       (await this.accountService.getTheLoggedInUserData());
+    if (this.i == 0) {
+      this.index = '0.8s';
+    } else {
+      this.index = this.i + 's';
+    }
   }
 
   getLike() {
@@ -39,6 +43,10 @@ export class PagesComponent implements OnInit {
       return check;
     }
     return false;
+  }
+
+  goToPage() {
+    this.route.navigate(['/user-pages', this.page.idPage]);
   }
 
   ngOnInit() {

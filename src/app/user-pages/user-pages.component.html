@@ -19,7 +19,8 @@
     </div>
     <div class="row" style="background-color: whitesmoke;">
         <div class="col-md-3" style=" margin-top: 10px;">
-            <app-what-on-mind [page]="page" (createPost)="openDiv($event)">
+            <app-what-on-mind *ngIf="page.pageCreatorId == userData.idAccount" [page]="page"
+                (createPost)="openDiv($event)">
             </app-what-on-mind>
 
             <div class="main" *ngIf="page" style="margin-top: 20px;">
