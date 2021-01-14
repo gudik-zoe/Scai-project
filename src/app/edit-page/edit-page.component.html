@@ -1,0 +1,53 @@
+<ng-container>
+    <div class="backdrop"></div>
+    <div class="alert-box">
+        <div class="alert-box-action">
+
+            <div class="close">
+                <i (click)="close()" class="fa fa-times fa-md" aria-hidden="true"></i>
+            </div>
+            <h4 class="text-center">Edit page</h4>
+            <hr>
+
+            <h4>cover photo</h4><span style=" float:right; margin-top: -36px;">
+                <input type="file" name="coverPhoto" id="coverPhoto" (change)="changeCoverPhoto($event)"
+                    class="inputfile" />
+                <label for="coverPhoto">
+                    <i class=" fa fa-pencil fa-lg" style=" cursor: pointer ; color:blue" aria-hidden="true"></i>
+                </label>
+            </span>
+            <img src="{{page.coverPhoto}}" width="100%" height="100px" style="border-radius: 8px;">
+            <hr>
+            <h4>profile photo</h4> <span style=" float:right; margin-top: -36px;">
+                <input type="file" name="profilePhoto" (change)="changeProfilePhoto($event)" id="profilePhoto"
+                    class="inputfile" />
+                <label for="profilePhoto">
+                    <i class=" fa fa-pencil fa-lg" style=" cursor: pointer ; color:blue" aria-hidden="true"></i>
+                </label>
+            </span>
+            <img src="{{page.profilePhoto}}" width="100px" height="100px" style="border-radius: 50%;">
+            <hr>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Page Name</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default" value="{{page.name}}">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Page Description</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default" value="{{page.description}}">
+            </div>
+
+
+
+            <button class="btn btn-primary btn-block">Edit page</button>
+
+
+        </div>
+    </div>
+</ng-container>

@@ -1,0 +1,49 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vw;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 50;
+}
+
+.alert-box {
+  position: fixed;
+  left: 30vw;
+  width: 35vw;
+  bottom: 2vw;
+  height: max-content;
+  padding: 16px;
+  z-index: 100;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0, 0.26);
+  border-radius: 8px;
+  animation: bounceInDown;
+  animation-duration: 1s;
+}
+
+.alert-box-action {
+  position: relative;
+  animation: bounceInUp;
+  animation-duration: 1s;
+}
+.close {
+  width: 30px;
+  height: 30px;
+  color: black;
+  background-color: lightgray;
+  border-radius: 50%;
+  padding-left: 6px;
+  padding-top: 2px;
+  cursor: pointer;
+}
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 1;
+  overflow: hidden;
+  /* position: absolute; */
+  z-index: -1;
+}

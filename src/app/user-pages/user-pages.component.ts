@@ -32,6 +32,7 @@ export class UserPagesComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   userData: AccountBasicData;
   isAdmin: boolean;
+  editPage: boolean;
 
   async getPageInfo() {
     this.page = await this.pageService.getPageFullData(this.id);
@@ -67,6 +68,13 @@ export class UserPagesComponent implements OnInit, OnDestroy {
       (await this.accountService.getTheLoggedInUserData());
   }
 
+  openEditPage() {
+    this.editPage = true;
+  }
+
+  closeEditPage(data: boolean) {
+    this.editPage = data;
+  }
   ngOnInit() {
     this.aroute.params.subscribe((params) => {
       this.id = params['id'];
