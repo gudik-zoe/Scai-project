@@ -29,18 +29,26 @@ export class AccountPhotosComponent implements OnInit {
         this.account.idAccount
       );
     } else {
-      this.pageService
-        .getPagePhotos(this.page.idPage)
-        .subscribe((data: string[]) => {
-          this.photos = data;
-          this.photos.push(this.page.profilePhoto);
-          this.photos.push(this.page.coverPhoto);
-        });
+      this.photos = await this.pageService.getPagePhotos(this.page.idPage);
     }
+    this.checkForDuplicatPhotos(this.photos);
   }
 
   openImage(image: string) {
     this.image = image;
+  }
+  checkForDuplicatPhotos(photos: string[]) {
+    let thePhotos = [];
+    let repeatedPhotos = [];
+    for (let photo of photos) {
+      let urlEndsWith = photo.slice(25, 30);
+      if (!repeatedPhotos.includes(urlEndsWith)) {
+        repeatedPhotos.push(urlEndsWith);
+        thePhotos.push(photo);
+      }
+    }
+    this.photos = thePhotos;
+    console.log(this.photos);
   }
 
   ngOnInit() {

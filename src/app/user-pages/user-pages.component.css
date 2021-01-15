@@ -21,6 +21,14 @@
 .content {
   padding: 10px;
 }
+.container-fluid {
+  animation: fadeInUp;
+  animation-duration: 0.8s;
+}
+.row {
+  animation: fadeInUp;
+  animation-duration: 1.3s;
+}
 
 ::-webkit-scrollbar {
   width: 5px;

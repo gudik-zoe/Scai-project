@@ -1,5 +1,5 @@
-<div class="container-fluid" *ngIf="page">
-    <div class="container-fluid">
+<div class="container-fluid">
+    <div class="container-fluid" *ngIf="page">
         <div style="width: 100%; height: 250px; margin-top: 80px;">
             <img src="{{page.coverPhoto}}" width="100%" height="100%"
                 style="border: 1px solid black; border-radius: 8px;">
@@ -9,7 +9,7 @@
             <img src="{{ page.profilePhoto}}" width="100%" height="100%"
                 style="border-radius: 50%; border: 2px solid white;" />
         </div>
-        <button class="btn btn-outline-info btn-md" (click)="openEditPage()" style="float: right;margin-right: 250px;">
+        <button class="btn btn-outline-dark btn-md" (click)="openEditPage()" style="float: right;margin-right: 250px;">
             edit page </button>
         <div style="width: fit-content;
         margin-left: 137px;
@@ -46,11 +46,11 @@
                 </app-posts-container>
             </div>
         </div>
-        <div class="col-md-3" *ngIf="isAdmin">
-
-            <app-edit-page [page]="page" *ngIf="editPage" (sendNewPage)="receiveNewPage($event)"
-                (closeEditPage)="closeEditPage($event)"></app-edit-page>
+        <div class="col-md-4">
             <app-account-photos [page]="page"></app-account-photos>
         </div>
     </div>
+
+    <app-edit-page [page]="page" *ngIf="editPage && isAdmin" (sendNewPage)="receiveNewPage($event)"
+        (closeEditPage)="closeEditPage($event)"></app-edit-page>
 </div>

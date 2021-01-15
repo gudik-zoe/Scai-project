@@ -103,6 +103,13 @@ export class PagesService {
   }
 
   getPagePhotos(pageId: number) {
-    return this.http.get(this.rootUrl + 'pagePhotos/' + pageId);
+    return new Promise<string[]>((resolve, reject) => {
+      this.http
+        .get(this.rootUrl + 'pagePhotos/' + pageId)
+        .subscribe((data: string[]) => {
+          resolve(data);
+          reject(null);
+        });
+    });
   }
 }

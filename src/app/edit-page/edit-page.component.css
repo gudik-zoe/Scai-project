@@ -12,7 +12,7 @@
   position: fixed;
   left: 30vw;
   width: 35vw;
-  bottom: 2vw;
+  bottom: 4vw;
   height: max-content;
   padding: 16px;
   z-index: 100;
@@ -25,8 +25,6 @@
 
 .alert-box-action {
   position: relative;
-  /* animation: bounceInUp;
-  animation-duration: 1s; */
 }
 .close {
   width: 30px;
