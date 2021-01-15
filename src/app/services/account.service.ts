@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { rejects } from 'assert';
 import jwt_decode from 'jwt-decode';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -171,6 +172,34 @@ export class AccountService {
       return formData;
     }
   }
+
+  uploadImage(event: any) {
+    let photoObject = {};
+    if (
+      event.target.files.length > 0 &&
+      event.target.files[0].type.includes('image')
+    ) {
+      return new Promise<any>((resolve, reject) => {
+        const file = event.target.files[0];
+        let temporaryImage;
+        let reader = new FileReader();
+        reader.readAsDataURL(event.target.files[0]);
+        reader.onload = (event) => {
+          temporaryImage = event.target.result;
+          if (file != null && temporaryImage != null) {
+            (photoObject['formData'] = file),
+              (photoObject['temporaryImage'] = temporaryImage);
+            resolve(photoObject);
+          } else {
+            reject(null);
+          }
+        };
+      });
+    } else {
+      return null;
+    }
+  }
+
   photos: string[];
   getAccountPhotos(accountId: number) {
     return new Promise<string[]>((resolve, reject) => {

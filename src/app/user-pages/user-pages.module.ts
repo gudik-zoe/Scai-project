@@ -7,6 +7,8 @@ import { WhatOnMindModule } from '../what-on-mind/what-on-mind.module';
 import { CreatePostModule } from '../create-post/create-post.module';
 import { PostsService } from '../services/posts.service';
 import { EditPageComponent } from '../edit-page/edit-page.component';
+import { FormsModule } from '@angular/forms';
+import { AccountPhotosModule } from '../account-photos/account-photos.module';
 
 const routes: Routes = [{ path: ':id', component: UserPagesComponent }];
 
@@ -16,7 +18,9 @@ const routes: Routes = [{ path: ':id', component: UserPagesComponent }];
     CommonModule,
     PostsContainerModule,
     WhatOnMindModule,
+    FormsModule,
     RouterModule.forChild(routes),
+    AccountPhotosModule,
     CreatePostModule,
   ],
   exports: [UserPagesComponent],

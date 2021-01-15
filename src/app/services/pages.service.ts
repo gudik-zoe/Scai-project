@@ -97,4 +97,12 @@ export class PagesService {
       }
     });
   }
+
+  updateThePage(newPage: FormData) {
+    return this.http.put(this.rootUrl + 'updatePage', newPage);
+  }
+
+  getPagePhotos(pageId: number) {
+    return this.http.get(this.rootUrl + 'pagePhotos/' + pageId);
+  }
 }

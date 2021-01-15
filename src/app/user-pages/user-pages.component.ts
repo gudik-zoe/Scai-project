@@ -75,6 +75,13 @@ export class UserPagesComponent implements OnInit, OnDestroy {
   closeEditPage(data: boolean) {
     this.editPage = data;
   }
+
+  receiveNewPage(data: Page) {
+    this.page.profilePhoto = data.profilePhoto;
+    this.page.coverPhoto = data.coverPhoto;
+    this.page.name = data.name;
+    this.page.description = data.description;
+  }
   ngOnInit() {
     this.aroute.params.subscribe((params) => {
       this.id = params['id'];

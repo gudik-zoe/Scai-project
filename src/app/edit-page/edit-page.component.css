@@ -19,14 +19,14 @@
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0, 0.26);
   border-radius: 8px;
-  animation: bounceInDown;
+  animation: bounceInUp;
   animation-duration: 1s;
 }
 
 .alert-box-action {
   position: relative;
-  animation: bounceInUp;
-  animation-duration: 1s;
+  /* animation: bounceInUp;
+  animation-duration: 1s; */
 }
 .close {
   width: 30px;

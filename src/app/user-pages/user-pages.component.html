@@ -9,12 +9,13 @@
             <img src="{{ page.profilePhoto}}" width="100%" height="100%"
                 style="border-radius: 50%; border: 2px solid white;" />
         </div>
+        <button class="btn btn-outline-info btn-md" (click)="openEditPage()" style="float: right;margin-right: 250px;">
+            edit page </button>
         <div style="width: fit-content;
         margin-left: 137px;
         margin-top: -44px;">
             <h1>{{page.name}}</h1>
             <p style=" color:grey">{{page.description}}</p>
-            <small></small>
         </div>
     </div>
     <div class="row" style="background-color: whitesmoke;">
@@ -46,8 +47,10 @@
             </div>
         </div>
         <div class="col-md-3" *ngIf="isAdmin">
-            <button class="btn btn-info btn-md" (click)="openEditPage()"> edit page </button>
-            <app-edit-page [page]="page" *ngIf="editPage" (closeEditPage)="closeEditPage($event)"></app-edit-page>
+
+            <app-edit-page [page]="page" *ngIf="editPage" (sendNewPage)="receiveNewPage($event)"
+                (closeEditPage)="closeEditPage($event)"></app-edit-page>
+            <app-account-photos [page]="page"></app-account-photos>
         </div>
     </div>
 </div>

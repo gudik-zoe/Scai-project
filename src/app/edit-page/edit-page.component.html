@@ -16,7 +16,10 @@
                     <i class=" fa fa-pencil fa-lg" style=" cursor: pointer ; color:blue" aria-hidden="true"></i>
                 </label>
             </span>
-            <img src="{{page.coverPhoto}}" width="100%" height="100px" style="border-radius: 8px;">
+            <img *ngIf="temporaryCPhoto" src="{{temporaryCPhoto}}" width="100%" height="100px"
+                style="border-radius: 8px;">
+            <img *ngIf="!temporaryCPhoto" src="{{page.coverPhoto}}" width="100%" height="100px"
+                style="border-radius: 8px;">
             <hr>
             <h4>profile photo</h4> <span style=" float:right; margin-top: -36px;">
                 <input type="file" name="profilePhoto" (change)="changeProfilePhoto($event)" id="profilePhoto"
@@ -25,27 +28,31 @@
                     <i class=" fa fa-pencil fa-lg" style=" cursor: pointer ; color:blue" aria-hidden="true"></i>
                 </label>
             </span>
-            <img src="{{page.profilePhoto}}" width="100px" height="100px" style="border-radius: 50%;">
+            <img *ngIf="!temporaryPPhoto" src="{{page.profilePhoto}}" width="100px" height="100px"
+                style="border-radius: 50%;">
+            <img *ngIf="temporaryPPhoto" src="{{temporaryPPhoto}}" width="100px" height="100px"
+                style="border-radius: 50%;">
             <hr>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Page Name</span>
                 </div>
-                <input type="text" class="form-control" aria-label="Default"
-                    aria-describedby="inputGroup-sizing-default" value="{{page.name}}">
+                <input type="text" placeholder="{{page.name}}" [(ngModel)]="pageName" class="form-control"
+                    aria-label="Default" aria-describedby="inputGroup-sizing-default">
             </div>
 
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-default">Page Description</span>
                 </div>
-                <input type="text" class="form-control" aria-label="Default"
-                    aria-describedby="inputGroup-sizing-default" value="{{page.description}}">
+                <input type="text" [(ngModel)]="pageDescription" class="form-control" aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default" placeholder="{{page.description}}">
             </div>
 
 
-
-            <button class="btn btn-primary btn-block">Edit page</button>
+            <small class="text-danger">{{errorPhrase}}</small>
+            <button [disabled]="!pageDescription && !pageName && !photoChanged" *ngIf="showButton"
+                class="btn btn-primary btn-block" (click)="confirmEditPage()">Edit page</button>
 
 
         </div>
