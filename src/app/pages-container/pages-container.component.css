@@ -11,6 +11,7 @@
 
 .col-md-9 {
   background: whitesmoke;
+  overflow-y: hidden;
 }
 
 #animation {
@@ -29,4 +30,9 @@
 
 .col-md-3 {
   background-color: lightgrey;
+}
+
+.container-fluid {
+  margin-top: 65px;
+  overflow-y: hidden;
 }

@@ -48,7 +48,6 @@ export class AccountPhotosComponent implements OnInit {
       }
     }
     this.photos = thePhotos;
-    console.log(this.photos);
   }
 
   ngOnInit() {
