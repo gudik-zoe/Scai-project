@@ -8,7 +8,8 @@
             style="font-size: larger; font-weight: bolder;cursor: pointer;">
             {{page.name}}</span>
         <p> {{page.description}}</p>
-        <small *ngIf="page.pageLike">{{page.pageLike.length}} people liked {{page.name}}</small>
+        <small *ngIf="page.pageLike"> <i class="fa fa-thumbs-up  fa-2x mr-1" aria-hidden="true"
+                style="color: grey;"></i> {{page.pageLike.length}} people liked {{page.name}}</small>
 
         <button [ngClass]="getLike() ? 'btn btn-primary btn-block mt-2' : 'btn btn-info btn-block mt-2'"
             (click)="likePageInChild(page)"> <i [ngClass]="getLike() ? 'fa fa-rss mr-1 ' : 'fa fa-rss mr-1'"

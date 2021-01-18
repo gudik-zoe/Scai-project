@@ -38,6 +38,7 @@ export class PagesContainerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getUserData();
     this.getPages();
   }
 }

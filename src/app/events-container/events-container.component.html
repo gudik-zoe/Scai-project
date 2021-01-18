@@ -1,0 +1,20 @@
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-3" style="border-right: 1px solid black;">
+            <app-side-bar></app-side-bar>
+        </div>
+        <div class="col-md-9" style=" height: 100vh;">
+            <div class="row" style="margin-top: 20px;">
+                <button class="btn btn-info" id="animation" style="margin-left: 20px;"> +
+                    create your own
+                    event</button>
+                <div *ngFor="let event of events; let i = index" class="col-md-4">
+                    <app-event (interestedEventEmitter)="interestedInParent($event)"
+                        (goingEventEmitter)="goingInParent($event)" [event]="event" [i]="i" [userData]="userData">
+                    </app-event>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

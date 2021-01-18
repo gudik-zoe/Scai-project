@@ -10,7 +10,8 @@
                     create your own
                     page</button>
                 <div *ngFor="let page of pages; let i = index" class="col-md-4">
-                    <app-pages [page]="page" [i]="i" (likePage)="likePageInParent($event)"> </app-pages>
+                    <app-pages [page]="page" [i]="i" [userData]="userData" (likePage)="likePageInParent($event)">
+                    </app-pages>
                 </div>
             </div>
         </div>

@@ -1,0 +1,20 @@
+.content {
+  padding: 10px;
+  height: fit-content;
+  background-color: lightgrey;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.container-fluid:hover {
+  transform: scale(1.05);
+}
+
+.container-fluid {
+  transition: all 0.2s ease-in-out;
+  animation: fadeInUp;
+}
+
+.custom {
+  width: 170px !important;
+}

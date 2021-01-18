@@ -24,10 +24,8 @@ export class PagesComponent implements OnInit {
     this.likePage.emit(page);
   }
   index: string;
-  async getUserData() {
-    this.userData =
-      this.accountService.userData ||
-      (await this.accountService.getTheLoggedInUserData());
+
+  getIndex() {
     if (this.i == 0) {
       this.index = '0.8s';
     } else {
@@ -50,6 +48,6 @@ export class PagesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUserData();
+    this.getIndex();
   }
 }
