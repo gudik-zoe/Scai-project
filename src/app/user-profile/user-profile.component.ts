@@ -5,10 +5,13 @@ import { Account } from '../models/account';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Page } from '../models/page';
 import { Post } from '../models/post';
+import { Event } from '../models/event';
 import { AccountService } from '../services/account.service';
+import { EventsService } from '../services/events.service';
 import { FriendsService } from '../services/friends.service';
 import { PagesService } from '../services/pages.service';
 import { PostsService } from '../services/posts.service';
+import { EventReact } from '../models/eventReact';
 
 @Component({
   selector: 'app-user-profile',
@@ -22,7 +25,8 @@ export class UserProfileComponent implements OnInit {
     private postService: PostsService,
     private aroute: ActivatedRoute,
     private friendService: FriendsService,
-    private pageService: PagesService
+    private pageService: PagesService,
+    private eventService: EventsService
   ) {}
   imgUrl: string = environment.rootUrl + 'files/';
   requestedUserData: Account;
@@ -34,6 +38,8 @@ export class UserProfileComponent implements OnInit {
   friends: AccountBasicData[];
   users: AccountBasicData[];
   myPages: Page[];
+  myEvents: Event[];
+  linkedEvents: EventReact[];
 
   goToEditing() {
     this.route.navigate(['/account-settings']);
@@ -99,13 +105,19 @@ export class UserProfileComponent implements OnInit {
     this.myPages = await this.pageService.getMyPages();
   }
 
+  async getEvents() {
+    this.myEvents = await this.eventService.getMyEvents();
+    this.linkedEvents = await this.eventService.getLinkedEvents();
+  }
+
   async userProfileSetFunctions() {
     await this.getUserFromUrl();
     await this.getPostsByAccountId(this.requestedUserData.idAccount);
     await this.getUserData();
     await this.getStatusWith(this.requestedUserData.idAccount);
     await this.getMutualFriends();
-    this.getMyPages();
+    await this.getMyPages();
+    await this.getEvents();
   }
 
   goToPage(page: Page) {

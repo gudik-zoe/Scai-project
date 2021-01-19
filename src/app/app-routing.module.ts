@@ -73,7 +73,13 @@ const routes: Routes = [
     path: 'user-pages',
     loadChildren: () =>
       import('./user-pages/user-pages.module').then((m) => m.UserPagesModule),
-    // canActivate: [PageGuard],
+  },
+  {
+    path: 'user-events',
+    loadChildren: () =>
+      import('./user-events/user-events.module').then(
+        (m) => m.UserEventsModule
+      ),
   },
   {
     path: 'eventsContainer',
@@ -81,7 +87,6 @@ const routes: Routes = [
       import('./events-container/events-container.module').then(
         (m) => m.EventsContainerModule
       ),
-    // canActivate: [PageGuard],
   },
   { path: '**', component: HomePageComponent },
 ];

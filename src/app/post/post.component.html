@@ -86,14 +86,14 @@
 
     <button
       [disabled]="post.postOriginalId && !post.originalPostDoneBy && !post.originalPostDoneByPage || status != 'friends' || page  && !pageLike  "
-      [ngClass]="getLike() ? 'btn btn-primary btn-md col-md-3' : 'btn btn-light btn-md col-md-3'" (click)="like(post)">
+      [ngClass]="likedByMe ? 'btn btn-primary btn-md col-md-3' : 'btn btn-light btn-md col-md-3'" (click)="like(post)">
       <i class="fa fa-thumbs-up" aria-hidden="true"></i>
       like
     </button>
 
     <button
       [disabled]="post.postOriginalId && !post.originalPostDoneBy && !post.originalPostDoneByPage || status != 'friends' || page &&  page.pageCreatorId != userData.idAccount && !pageLike  "
-      [ngClass]="getComment(post) ? 'btn btn-primary btn-md col-md-3 ml-2' : 'btn btn-light btn-md col-md-3 ml-2'"
+      [ngClass]="iCommented ? 'btn btn-primary btn-md col-md-3 ml-2' : 'btn btn-light btn-md col-md-3 ml-2'"
       (click)="comment(post , commentText)">
       <i class="fa fa-comments" aria-hidden="true"></i>
       comment

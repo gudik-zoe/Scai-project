@@ -20,6 +20,7 @@ export class PagesContainerComponent implements OnInit {
 
   async getPages() {
     this.pages = await this.pageService.getPages();
+    console.log(this.pages);
   }
 
   async getUserData() {

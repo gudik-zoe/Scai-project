@@ -1,0 +1,47 @@
+.main {
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 20px;
+  background-color: white;
+  padding: 10px;
+}
+
+.header {
+  width: 100%;
+  font-size: larger;
+  border-top-left-radius: 9px;
+  border-top-right-radius: 9px;
+  border-bottom: 1px solid black;
+  padding: 10px;
+  height: 60px;
+  color: white;
+  background-color: #926dde;
+}
+
+.content {
+  padding: 10px;
+}
+.container-fluid {
+  animation: fadeInUp;
+  animation-duration: 0.8s;
+}
+.row {
+  animation: fadeInUp;
+  animation-duration: 1.3s;
+}
+
+.down-title {
+  background-color: lightgrey;
+  border-top: 1px solid black;
+  padding: 0px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  width: fit-content;
+}
+
+.react {
+  border: 1px solid black;
+  border-radius: 8px;
+  width: fit-content;
+  padding: 0px;
+}

@@ -4,6 +4,7 @@ import { EventsContainerComponent } from './events-container.component';
 import { EventComponent } from '../event/event.component';
 import { SideBarModule } from '../side-bar/side-bar.module';
 import { RouterModule, Routes } from '@angular/router';
+import { UserEventsModule } from '../user-events/user-events.module';
 
 const routes: Routes = [{ path: '', component: EventsContainerComponent }];
 

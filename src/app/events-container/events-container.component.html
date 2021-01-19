@@ -11,10 +11,12 @@
                     event</button>
                 <div *ngFor="let event of events; let i = index" class="col-md-4">
                     <app-event (interestedEventEmitter)="interestedInParent($event)"
-                        (goingEventEmitter)="goingInParent($event)" [event]="event" [i]="i" [userData]="userData">
+                        (goingEventEmitter)="goingInParent($event)" [event]="event" [i]="i" [userData]="userData"
+                        [errorPhrase]="errorPhrase">
                     </app-event>
                 </div>
             </div>
+            <p>{{errorPhrase}}</p>
         </div>
     </div>
 </div>

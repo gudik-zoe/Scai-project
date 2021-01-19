@@ -9,6 +9,7 @@ import { MyInterceptor } from './my-interceptor';
 import { AuthenticationGuard } from './authentication.guard';
 import { NavBarModule } from './nav-bar/nav-bar.module';
 import { DatePipe } from '@angular/common';
+import { UserEventsComponent } from './user-events/user-events.component';
 
 @NgModule({
   declarations: [AppComponent],

@@ -10,7 +10,6 @@ export class Event {
   coverPhoto: string;
   eventCreatorId: number;
   description: string;
-  intrested: AccountBasicData[];
-  going: AccountBasicData[];
+  doneBy: AccountBasicData;
   eventFollower: EventReact[];
 }

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Event } from '../models/event';
 import { EventReact } from '../models/eventReact';
@@ -9,13 +10,17 @@ import { EventReact } from '../models/eventReact';
   styleUrls: ['./event.component.css'],
 })
 export class EventComponent implements OnInit {
+  constructor(private route: Router) {}
   @Input() event: Event;
   @Input() userData: AccountBasicData;
   @Input() i: number;
+  @Input() errorPhrase: number;
   index: string;
-
+  iGoing: boolean;
+  iInterested: boolean;
   @Output() goingEventEmitter = new EventEmitter<Event>();
   @Output() interestedEventEmitter = new EventEmitter<Event>();
+
   getIndex() {
     if (this.i == 0) {
       this.index = '0.8s';
@@ -26,33 +31,41 @@ export class EventComponent implements OnInit {
 
   going() {
     this.goingEventEmitter.emit(this.event);
+    if (this.iInterested) {
+      this.iInterested = false;
+    }
+    this.iGoing = !this.iGoing;
   }
 
-  getGoing() {
-    if (this.userData) {
-      const check = this.event.eventFollower.find(
-        (item: EventReact) =>
-          item.eventReactCreatorId == this.userData.idAccount &&
-          item.status == 1
-      );
-      return check;
-    }
+  goToEvent(eventId: number) {
+    this.route.navigate(['/user-events', eventId]);
   }
 
-  getInterested() {
-    if (this.userData) {
-      const check = this.event.eventFollower.find(
-        (item: EventReact) =>
-          item.eventReactCreatorId == this.userData.idAccount &&
-          item.status == 2
-      );
-      return check;
-    }
-  }
   interested() {
     this.interestedEventEmitter.emit(this.event);
+    if (this.iGoing) {
+      this.iGoing = false;
+    }
+    this.iInterested = !this.iInterested;
+  }
+
+  getIfReacted() {
+    for (let react of this.event.eventFollower) {
+      if (
+        react.status == 1 &&
+        react.eventReactCreatorId == this.userData.idAccount
+      ) {
+        this.iGoing = true;
+      } else if (
+        react.status == 2 &&
+        react.eventReactCreatorId == this.userData.idAccount
+      ) {
+        this.iInterested = true;
+      }
+    }
   }
   ngOnInit() {
     this.getIndex();
+    this.getIfReacted();
   }
 }

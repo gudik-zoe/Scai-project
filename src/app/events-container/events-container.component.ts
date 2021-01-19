@@ -14,6 +14,7 @@ import { EventsService } from '../services/events.service';
 export class EventsContainerComponent implements OnInit {
   events: Event[];
   userData: AccountBasicData;
+  errorPhrase: string;
   constructor(
     private eventService: EventsService,
     private accountService: AccountService
@@ -21,7 +22,6 @@ export class EventsContainerComponent implements OnInit {
 
   async getEvents() {
     this.events = await this.eventService.getEvents();
-    console.log(this.events);
   }
 
   async getUserData() {
@@ -32,16 +32,17 @@ export class EventsContainerComponent implements OnInit {
 
   goingInParent(event: Event) {
     const reactToEvent = new ReactToEvent(event.idEvent, 1);
-    this.eventService
-      .goingToEvent(reactToEvent)
-      .subscribe((data: EventReact) => {
+    this.eventService.goingToEvent(reactToEvent).subscribe(
+      (data: EventReact) => {
         if (data && data.status == 1) {
           event.eventFollower.pop();
           event.eventFollower.push(data);
         } else if (!data) {
           event.eventFollower.pop();
         }
-      });
+      },
+      (error) => (this.errorPhrase = error.error.message)
+    );
   }
 
   interestedInParent(event: Event) {

@@ -1,19 +1,20 @@
-<div class="container-fluid" *ngIf="event.eventCreatorId != userData.idAccount"
-    [ngStyle]="{'animation-duration':index }">
+<div class="container-fluid" [ngStyle]="{'animation-duration':index }">
     <div
         style="background-image: url({{event.coverPhoto}}); border-top-left-radius:  8px;border-top-right-radius:  8px ; height:150px; width: 100%; background:content-box; background-position: center;">
     </div>
     <div class="content">
         <h6><i class="fa fa-map-marker fa-lg mr-1" aria-hidden="true"></i>{{event.where}}</h6>
-        <h3>{{event.name}}</h3>
+        <h3 (click)="goToEvent(event.idEvent)">{{event.name}}</h3>
         <p> <i class="fa fa-calendar" aria-hidden="true"></i> {{event.when | date}}</p>
 
 
-        <span><button [ngClass]="getGoing() ? ' btn btn-success custom ' : ' btn btn-secondary custom ' "
-                (click)="going()"><i
-                    [ngClass]="getGoing() ? ' fa fa-check-circle mr-1 ' :' fa fa-check-circle-o mr-1 ' "
-                    aria-hidden="true"></i>going</button> <button class="btn btn-info ml-1" (click)="interested()"> <i
-                    [ngClass]=" getInterested() ? 'fa fa-star mr-1' : 'fa fa-star-o mr-1' "
+        <span><button [disabled]="event.eventCreatorId == userData.idAccount"
+                [ngClass]="iGoing ? ' btn btn-success custom ' : ' btn btn-outline-success custom ' "
+                (click)="going()"><i [ngClass]="iGoing ? ' fa fa-check-circle mr-1 ' :' fa fa-check-circle-o mr-1 ' "
+                    aria-hidden="true"></i>going</button> <button
+                [disabled]="event.eventCreatorId == userData.idAccount"
+                [ngClass]="iInterested ? 'btn btn-info':'btn btn-outline-info ml-1'" (click)="interested()"> <i
+                    [ngClass]=" iInterested ? 'fa fa-star mr-1' : 'fa fa-star-o mr-1' "
                     aria-hidden="true"></i>interested</button></span>
     </div>
 </div>

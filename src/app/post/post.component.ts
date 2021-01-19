@@ -39,6 +39,10 @@ export class PostComponent implements OnInit {
   errorPhrase: string = '';
   commentLikers: AccountBasicData[];
   pageLike: PageLike;
+  likedByMe: boolean;
+  iCommented: boolean;
+  pageCommented: boolean;
+  iLikedComment: boolean;
 
   constructor(
     private commentService: CommentsService,
@@ -48,6 +52,7 @@ export class PostComponent implements OnInit {
 
   like(post: Post) {
     this.likePostEvent.emit(post);
+    this.likedByMe = !this.likedByMe;
   }
 
   comment(post: Post, commentText: string) {
@@ -57,7 +62,8 @@ export class PostComponent implements OnInit {
     } else {
       this.errorPhrase = '';
       this.commentPostEvent.emit({ post, commentText });
-      commentText = '';
+      this.iCommented = true;
+      this.commentText = '';
     }
   }
 
@@ -80,49 +86,35 @@ export class PostComponent implements OnInit {
     this.deletePostEvent.emit(id);
   }
 
-  getLike() {
+  getIfUserLiked() {
     if (this.userData) {
-      return !!this.post.postLikes.find(
-        (item: PostLike) => item.postLikeCreatorId == this.userData.idAccount
+      this.likedByMe = this.post.postLikes.some(
+        (item) => item.postLikeCreatorId == this.userData.idAccount
       );
     }
-    return false;
   }
 
-  getComment(post: Post) {
+  getIfUserCommented() {
     if (this.userData && !this.page) {
-      const check = post.comments.find(
+      this.iCommented = this.post.comments.some(
         (item) => item.commentCreatorId == this.userData.idAccount
       );
-      return check;
-    }
-    if (this.page) {
-      const check = post.comments.find(
-        (item) =>
-          item.commentCreatorId == this.userData.idAccount ||
-          item.pageCreatorId == this.page.idPage
+    } else if (this.page) {
+      this.iCommented = this.post.comments.some(
+        (item) => item.pageCreatorId == this.page.idPage
       );
-      return check;
     }
-    return false;
   }
 
   getCommentLike(comment: Comment) {
-    if (comment.commentLike) {
-      const check = comment.commentLike.find((item: CommentLike) => {
-        if (
-          item.commentLikeCreatorId &&
-          item.commentLikeCreatorId == this.userData.idAccount
-        ) {
-          return true;
-        } else if (
-          item.pageCreatorId &&
-          item.pageCreatorId == this.page.idPage
-        ) {
-          return true;
-        }
-      });
-      return check;
+    if (!this.page) {
+      return (this.iLikedComment = comment.commentLike.some(
+        (item) => item.commentLikeCreatorId == this.userData.idAccount
+      ));
+    } else {
+      return (this.iLikedComment = comment.commentLike.some(
+        (item) => item.pageCreatorId == this.page.idPage
+      ));
     }
   }
 
@@ -173,6 +165,15 @@ export class PostComponent implements OnInit {
       this.post.comments = this.post.comments.filter(
         (item) => item.idComment !== id
       );
+      if (!this.page) {
+        this.iCommented = this.post.comments.some(
+          (item) => item.commentCreatorId == this.userData.idAccount
+        );
+      } else {
+        this.iCommented = this.post.comments.some(
+          (item) => item.pageCreatorId == this.page.idPage
+        );
+      }
     });
   }
 
@@ -186,5 +187,7 @@ export class PostComponent implements OnInit {
     if (this.page) {
       this.getIfPageIsLikedByLoggedInUser();
     }
+    this.getIfUserLiked();
+    this.getIfUserCommented();
   }
 }
