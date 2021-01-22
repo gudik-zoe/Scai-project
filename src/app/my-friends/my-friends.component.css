@@ -28,9 +28,11 @@ span:hover {
 .the-friend-1 {
   padding: 10px;
   background-color: white;
+  border-bottom-left-radius: 8px;
 }
 
 .the-friend-2 {
   padding: 10px;
   background-color: lightgray;
+  border-bottom-left-radius: 8px;
 }

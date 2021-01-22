@@ -1,16 +1,25 @@
 <div class="container-fluid">
     <div class="main" style="background: white;">
         <div class="header">
-            <h5 style="color: white;">Photos <i class="fa fa-picture-o ml-1" aria-hidden="true"></i></h5>
+            <div class="mat-headline" style="color: white;">Photos <i class="fa fa-picture-o ml-1"
+                    aria-hidden="true"></i>
+            </div>
             <!-- <hr> -->
         </div>
         <div class="container">
-            <div class="row">
+            <!-- <div class="row">
                 <div class="column" *ngFor="let image of photos; let i = index">
                     <img *ngIf="image" src="{{image}}" width="130px" height="130px"
                         style="margin-left: 10px; padding: 10px; cursor: pointer;" (click)="openImage(image)">
                 </div>
-            </div>
+            </div> -->
+            <mat-grid-list cols="{{(photos.length % 2 != 0) ? photos.length -1 : photos.length/2 }}">
+                <div *ngFor="let image of photos; let i =index">
+                    <mat-grid-tile><img src="{{image}}" width="80%" height="80%"></mat-grid-tile>
+                    <!-- <mat-grid-tile>Tile2</mat-grid-tile>
+                <mat-grid-tile>Tile3</mat-grid-tile> -->
+                </div>
+            </mat-grid-list>
         </div>
     </div>
 

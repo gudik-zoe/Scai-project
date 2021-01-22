@@ -8,10 +8,6 @@
   background-color: lightgrey;
 }
 
-#third-div {
-  background-color: #926dde;
-}
-
 li {
   margin-top: 20px;
   outline: none;
@@ -26,26 +22,6 @@ li:hover {
   animation: fadeInUp;
   animation-duration: 0.6s;
 }
-
-/* .friends-close {
-  animation: fadeOutUpBig;
-  animation-duration: 0.8s;
-}
-
-.friends-open {
-  animation: fadeInDownBig;
-  animation-duration: 0.5s;
-}
-
-.peolpeYouMayKnow-open {
-  animation: fadeInDownBig;
-  animation-duration: 0.7s;
-}
-
-.peolpeYouMayKnow-close {
-  animation: fadeOutUpBig;
-  animation-duration: 0.9s;
-} */
 
 small:hover {
   text-decoration: underline;
@@ -66,6 +42,20 @@ span {
   overflow: hidden;
   position: absolute;
   z-index: -1;
+}
+
+mat-sidenav-container {
+  height: fit-content;
+}
+
+/* mat-sidenav,
+mat-sidenav-content {
+  
+} */
+
+mat-sidenav {
+  /* background-color: lightcoral; */
+  width: 100%;
 }
 
 ::-webkit-scrollbar {

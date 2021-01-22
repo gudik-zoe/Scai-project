@@ -42,3 +42,7 @@
 ::-webkit-scrollbar-thumb:vertical:active {
   background: rgba(0, 0, 0, 0.61);
 }
+
+mat-grid-tile {
+  background-color: lightblue;
+}

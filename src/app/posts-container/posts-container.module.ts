@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PostComponent } from '../post/post.component';
 import { PostsContainerComponent } from './posts-container.component';
-import { EditPostComponent } from '../edit-post/edit-post.component';
 import { DeletePostModule } from '../delete-post/delete-post.module';
 import { EditPostModule } from '../edit-post/edit-post.module';
 import { CreatePostModule } from '../create-post/create-post.module';
+import { MaterialModule } from '../material/material.module';
 
 @NgModule({
   declarations: [PostsContainerComponent, PostComponent],
@@ -16,6 +16,7 @@ import { CreatePostModule } from '../create-post/create-post.module';
     DeletePostModule,
     EditPostModule,
     CreatePostModule,
+    MaterialModule,
   ],
   exports: [PostsContainerComponent],
 })

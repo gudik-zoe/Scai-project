@@ -10,7 +10,7 @@ import { AuthenticationGuard } from './authentication.guard';
 import { NavBarModule } from './nav-bar/nav-bar.module';
 import { DatePipe } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material/button';
+import { MaterialModule } from './material/material.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +22,7 @@ import { MatButtonModule } from '@angular/material/button';
     HttpClientModule,
     NavBarModule,
     BrowserAnimationsModule,
-    MatButtonModule,
+    MaterialModule,
   ],
   providers: [
     AuthenticationGuard,

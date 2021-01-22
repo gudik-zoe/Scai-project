@@ -24,8 +24,23 @@
       </span>
 
 
+      <div *ngIf="userData.idAccount == post.postCreatorId || page &&  userData.idAccount == page.pageCreatorId">
+        <mat-menu #dropDown="matMenu" xPosition="before" yPosition="below">
+          <button
+            *ngIf="post.postCreatorId == userData.idAccount && !post.postOriginalId || page &&  userData.idAccount == page.pageCreatorId"
+            mat-menu-item (click)="editPost(post)">
+            <mat-icon color="primary">create</mat-icon>
+            Edit
+          </button>
+          <button mat-menu-item (click)=" deletePost(post.idPost)">
+            <mat-icon color="warn">delete</mat-icon>Delete
+          </button>
+        </mat-menu>
+        <mat-icon [matMenuTriggerFor]="dropDown" class="three-dots">more_horiz
+        </mat-icon>
 
-      <div *ngIf="userData.idAccount == post.postCreatorId || page &&  userData.idAccount == page.pageCreatorId"
+      </div>
+      <!-- <div *ngIf="userData.idAccount == post.postCreatorId || page &&  userData.idAccount == page.pageCreatorId"
         class="dropdown" style="float: right; margin-right: 20px;">
         <i class="fa fa-ellipsis-h fa-lg" aria-hidden="true" type="button" id="dropdownMenuButton"
           data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"></i>
@@ -39,7 +54,7 @@
           <a class="dropdown-item" (click)=" deletePost(post.idPost)"><i class="fa fa-trash fa-lg" aria-hidden="true"
               style="color: red;"></i><span class="ml-1">Delete post</span></a>
         </div>
-      </div>
+      </div> -->
 
 
 
@@ -84,9 +99,11 @@
       style="cursor: pointer; color: blue; font-weight: bold; margin-left: 130px">description</span>
     <hr />
 
+    <!-- [ngClass]="likedByMe ? 'btn btn-primary btn-md col-md-3' : 'btn btn-light btn-md col-md-3'" -->
+
     <button
       [disabled]="post.postOriginalId && !post.originalPostDoneBy && !post.originalPostDoneByPage || status != 'friends' || page  && !pageLike  "
-      [ngClass]="likedByMe ? 'btn btn-primary btn-md col-md-3' : 'btn btn-light btn-md col-md-3'" (click)="like(post)">
+      (click)="like(post)" mat-flat-button color="{{likedByMe ? 'primary' : 'basic'}}">
       <i class="fa fa-thumbs-up" aria-hidden="true"></i>
       like
     </button>

@@ -23,8 +23,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   peopleYouMayKnow: AccountBasicData[];
   RespondToRequestSubject: Subscription;
   UnfriendSubject: Subscription;
-  open: boolean = true;
-  openFriends: number = 0;
+  openFriends = false;
   openFriendsubscription: Subscription;
   status: string = 'friends';
   image() {

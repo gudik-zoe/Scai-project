@@ -19,7 +19,7 @@
             <p style=" color:grey">{{page.description}}</p>
         </div>
     </div>
-    <div class="row" style="background-color: whitesmoke;">
+    <div class="row mt-4" style="background-color: whitesmoke;">
         <div class="col-md-3" style=" margin-top: 10px;">
             <app-what-on-mind *ngIf="page.pageCreatorId == userData.idAccount" [page]="page"
                 (createPost)="openDiv($event)">

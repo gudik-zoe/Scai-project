@@ -1,10 +1,10 @@
 <div class="dropdown">
     <div class="icon" id=" dropdownMenuButton" data-toggle="dropdown">
-        <i class="fa fa-bell-o" style="color:white;" aria-hidden="true" type="button" aria-haspopup="true"
-            aria-expanded="false">
-            <span style="color:white; font-size: medium; margin-left: 1px;"
-                *ngIf="unseenNots.length > 0">{{unseenNots.length}} </span>
-        </i>
+        <mat-icon matIconSize="large">notifications</mat-icon>
+        <span [matBadgeHidden]="unseenNots.length == 0" [matBadge]="unseenNots.length" matBadgePosition="above after"
+            matBadgeSize="small" matBadgeColor="warn">
+        </span>
+
     </div>
 
 
