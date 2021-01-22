@@ -20,7 +20,6 @@ export class PagesContainerComponent implements OnInit {
 
   async getPages() {
     this.pages = await this.pageService.getPages();
-    console.log(this.pages);
   }
 
   async getUserData() {
@@ -28,6 +27,7 @@ export class PagesContainerComponent implements OnInit {
       this.accountService.userData ||
       (await this.accountService.getTheLoggedInUserData());
   }
+
   likePageInParent(page: Page) {
     this.pageService.likePage(page.idPage).subscribe((data: PageLike) => {
       if (data) {

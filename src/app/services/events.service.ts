@@ -4,20 +4,33 @@ import { environment } from 'src/environments/environment';
 import { Event } from '../models/event';
 import { EventReact } from '../models/eventReact';
 import { ReactToEvent } from '../models/reactToEvent';
+import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventsService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private accountService: AccountService
+  ) {}
   rootUrl: string = environment.rootUrl;
+  events: Event[] = [];
 
   getEvents() {
     return new Promise<Event[]>((resolve, reject) => {
-      this.http.get(this.rootUrl + 'events').subscribe((data: Event[]) => {
-        resolve(data);
-        reject('unknown error occured');
-      });
+      this.http
+        .get(this.rootUrl + 'events')
+        .subscribe(async (data: Event[]) => {
+          this.events = data;
+          for (let event of this.events) {
+            event.doneBy = await this.accountService.getBasicAccountDetails(
+              event.eventCreatorId
+            );
+          }
+          resolve(this.events);
+          reject('unknown error occured');
+        });
     });
   }
 
@@ -53,11 +66,22 @@ export class EventsService {
   getEventData(eventId: number) {
     return new Promise<Event>((resolve, reject) => {
       this.http.get(this.rootUrl + 'getEventById/' + eventId).subscribe(
-        (data: Event) => {
+        async (data: Event) => {
+          data.doneBy = await this.accountService.getBasicAccountDetails(
+            data.eventCreatorId
+          );
           resolve(data);
         },
         (error) => reject(error.error.message)
       );
     });
+  }
+
+  createEvent(formData: FormData) {
+    return this.http.post(this.rootUrl + 'createEvent', formData);
+  }
+
+  editEvent(formData: FormData) {
+    return this.http.put(this.rootUrl + 'editEvent', formData);
   }
 }

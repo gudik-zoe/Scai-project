@@ -1,0 +1,67 @@
+<ng-container>
+    <div class="backdrop"></div>
+    <div class="alert-box">
+        <div class="alert-box-action">
+
+            <div class="close">
+                <i (click)="close()" class="fa fa-times fa-md" aria-hidden="true"></i>
+            </div>
+            <h4 class="text-center">Edit event</h4>
+            <hr>
+
+            <h4>event photo</h4><span style=" float:right; margin-top: -36px;">
+                <input type="file" name="coverPhoto" id="coverPhoto" (change)="changePhoto($event)" class="inputfile" />
+                <label for="coverPhoto">
+                    <i class=" fa fa-pencil fa-lg" style=" cursor: pointer ; color:blue" aria-hidden="true"></i>
+                </label>
+            </span>
+            <img *ngIf="temporaryEventPhoto" src="{{temporaryEventPhoto}}" width="100%" height="100px"
+                style="border-radius: 8px;">
+            <img *ngIf="!temporaryEventPhoto" src="{{event.coverPhoto}}" width="100%" height="100px"
+                style="border-radius: 8px;">
+            <hr>
+            <div class="form-row mt-3">
+                <div class="col">
+                    <label>Start date </label>
+                    <input type="date" min="{{today}}" max="2030-12-31" [(ngModel)]="when" class="form-control-lg">
+                </div>
+                <div class="col">
+                    <label>Start time</label>
+                    <br>
+
+                    <input [(ngModel)]="time" type="time" class="form-control-lg">
+
+                </div>
+
+            </div>
+            <label style="margin-top: 10px;">where</label>
+            <br>
+            <input [(ngModel)]="where" type="text" class="form-control-lg" />
+
+            <hr>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">event Name</span>
+                </div>
+                <input type="text" placeholder="{{event.name}}" value="{{event.name}}" [(ngModel)]="name"
+                    class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">event Description</span>
+                </div>
+                <input type="text" [(ngModel)]="description" class="form-control" aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default" placeholder="{{event.description}}">
+            </div>
+
+
+            <small class="text-danger">{{errorPhrase}}</small>
+            <button *ngIf="showButton" [disabled]="!description && !name && !time && !when"
+                class="btn btn-primary btn-block" (click)="editEvent()">Edit
+                event</button>
+
+
+        </div>
+    </div>
+</ng-container>

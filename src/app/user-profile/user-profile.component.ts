@@ -129,6 +129,9 @@ export class UserProfileComponent implements OnInit {
     this.route.navigate(['user-pages', page.idPage]);
   }
 
+  goToEvent(eventId: number) {
+    this.route.navigate(['/user-events', eventId]);
+  }
   ngOnInit() {
     this.aroute.params.subscribe((params) => {
       const id = params['id'];

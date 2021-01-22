@@ -88,6 +88,13 @@ const routes: Routes = [
         (m) => m.EventsContainerModule
       ),
   },
+  {
+    path: 'createEvent',
+    loadChildren: () =>
+      import('./create-event/create-event.module').then(
+        (m) => m.CreateEventModule
+      ),
+  },
   { path: '**', component: HomePageComponent },
 ];
 

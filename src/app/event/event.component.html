@@ -3,9 +3,9 @@
         style="background-image: url({{event.coverPhoto}}); border-top-left-radius:  8px;border-top-right-radius:  8px ; height:150px; width: 100%; background:content-box; background-position: center;">
     </div>
     <div class="content">
-        <h6><i class="fa fa-map-marker fa-lg mr-1" aria-hidden="true"></i>{{event.where}}</h6>
-        <h3 (click)="goToEvent(event.idEvent)">{{event.name}}</h3>
-        <p> <i class="fa fa-calendar" aria-hidden="true"></i> {{event.when | date}}</p>
+        <h6><i class="fa fa-map-marker fa-lg mr-1" aria-hidden="true"></i>{{event.location}}</h6>
+        <h3 (click)="goToEvent(event.idEvent)" style="cursor: pointer;">{{event.name}}</h3>
+        <p> <i class="fa fa-calendar" aria-hidden="true"></i> {{event.time | date}}</p>
 
 
         <span><button [disabled]="event.eventCreatorId == userData.idAccount"
@@ -13,8 +13,8 @@
                 (click)="going()"><i [ngClass]="iGoing ? ' fa fa-check-circle mr-1 ' :' fa fa-check-circle-o mr-1 ' "
                     aria-hidden="true"></i>going</button> <button
                 [disabled]="event.eventCreatorId == userData.idAccount"
-                [ngClass]="iInterested ? 'btn btn-info':'btn btn-outline-info ml-1'" (click)="interested()"> <i
-                    [ngClass]=" iInterested ? 'fa fa-star mr-1' : 'fa fa-star-o mr-1' "
+                [ngClass]="iInterested ? 'btn btn-info ml-1':'btn btn-outline-info ml-1'" (click)="interested()"> <i
+                    [ngClass]=" iInterested ? 'fa fa-star mr-1 ' : 'fa fa-star-o mr-1 ' "
                     aria-hidden="true"></i>interested</button></span>
     </div>
 </div>

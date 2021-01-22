@@ -12,13 +12,13 @@
             <div style="float: right;">
                 <h1>{{event.name}}</h1>
                 <p style=" color:grey; "> <i class=" fa fa-map-marker" aria-hidden="true">
-                    </i>{{event.where}}</p>
-                <p style=" color:grey "> <i class="fa fa-clock-o" aria-hidden="true"></i>{{event.when
+                    </i>{{event.location}}</p>
+                <p style=" color:grey "> <i class="fa fa-clock-o" aria-hidden="true"></i>{{event.time
                     | date}}</p>
             </div>
         </div>
         <button class="btn btn-outline-dark btn-md" *ngIf="event.eventCreatorId == userData.idAccount"
-            style="float: right;margin-right: 250px;">
+            style="float: right;margin-right: 250px;" (click)="openEditMode()">
             edit event </button>
         <span style="float: right;margin-right: 250px;">
             <button (click)="going(event)" [ngClass]="iGoing ? 'btn btn-success' : 'btn btn-outline-success'"
@@ -34,7 +34,7 @@
     </div>
 
 
-    <div class="row" style="background-color: whitesmoke;margin-top: 80px;">
+    <div class="row" style="background-color: whitesmoke;margin-top: 6%;">
         <div class="col-md-4" style="  margin-left: 20%;">
             <div class="main">
                 <h3>About</h3>
@@ -43,7 +43,7 @@
                 {{ event.description }}
                 <div class="content">
                     <div class="row">
-                        <div class="col-md-2 ml-3">
+                        <div class="col-md-2" style="margin-left: 20%;">
                             <div class="react">
                                 <h2 class="text-center"> {{isGoing.length}}</h2>
                                 <div class="down-title">
@@ -55,7 +55,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-2 ml-3">
+                        <div class="col-md-2" style="margin-left: 10%;">
                             <div class="react">
                                 <h2 class="text-center"> {{isInterested.length}}</h2>
                                 <div class="down-title">
@@ -68,19 +68,21 @@
                         </div>
                     </div>
                 </div>
-                <p><i class=" fa fa-map-marker fa-2x mr-2" style="color: grey;" aria-hidden="true"></i>{{event.where}}
+                <p><i class=" fa fa-map-marker fa-2x mr-2" style="color: grey;"
+                        aria-hidden="true"></i>{{event.location}}
                 </p>
-                <p> <i class="fa fa-clock-o fa-2x mr-2" style="color: grey;" aria-hidden="true"></i>{{event.when
+                <p> <i class="fa fa-clock-o fa-2x mr-2" style="color: grey;" aria-hidden="true"></i>{{event.time
                     | date:'short'}}</p>
             </div>
-            <div class="main" *ngIf="event.doneBy">
-                <h4>Hosted By</h4>
-                <hr>
-                <img src="{{event.doneBy.profilePhoto}}" width="50px" height="50px"
-                    style="border-radius: 50%;">{{event.doneBy.firstName + " " + event.doneBy.lastName}}
-            </div>
-        </div>
-        <div class="col-md-4 mt-1" style="background-color: white; ">
-        </div>
 
+        </div>
+        <div class="col-md-3 mt-3" style="background-color: white;border-radius: 9px; height: fit-content; ">
+            <h3>Hosted By</h3>
+            <hr>
+            <img src="{{event.doneBy.profilePhoto}}" width="50px" height="50px"
+                style="border-radius: 50%;">{{event.doneBy.firstName + " " + event.doneBy.lastName}}
+
+        </div>
+        <app-edit-event [event]="event" *ngIf="editMode" (closeEmitter)="closeInParent($event)"
+            (updateEvent)="updateEvent($event)"></app-edit-event>
     </div>

@@ -23,7 +23,8 @@ export class PagesService {
   getPages() {
     return new Promise<Page[]>((resolve, reject) => {
       this.http.get(this.rootUrl + 'pages').subscribe((data: Page[]) => {
-        resolve(data);
+        this.pages = data;
+        resolve(this.pages);
         reject('unknown error occured');
       });
     });

@@ -1,0 +1,73 @@
+<div class="container-fluid" style="margin-top: 70px;">
+
+    <div class="row">
+        <div class="col-md-4" style="background: white; height: 100vh; border-right: 1px solid black;">
+
+            <h3>Event details</h3>
+            <hr>
+            <div class="form-group mt-1">
+                <label>event name</label>
+                <br>
+                <input [(ngModel)]="name" type="text" class="form-control-lg" />
+                <div class="form-row mt-3">
+                    <div class="col">
+                        <label>Start date </label>
+                        <input type="date" value="" min="{{today}}" max="2030-12-31" [(ngModel)]="when"
+                            class="form-control-lg">
+                    </div>
+                    <div class="col">
+                        <label>Start time</label>
+                        <br>
+
+                        <input [(ngModel)]="time" type="time" class="form-control-lg">
+
+                    </div>
+                </div>
+                <label style="margin-top: 10px;">where</label>
+                <br>
+                <input [(ngModel)]="where" type="text" class="form-control-lg" />
+                <div class="form-group mt-3">
+                    <label>description</label>
+                    <br>
+                    <textarea [(ngModel)]="description" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+
+                    <input type="file" (change)="uploadEventPhoto($event)" name="profilePhoto" id="profilePhoto"
+                        class="inputfile" />
+                    <label style="
+                      cursor: pointer;
+                      background-color: lightgrey;
+                      border-radius: 8px;
+                      padding: 5px;
+                      box-shadow: 1px 1px 1px 1px #888888;
+                      color:black
+                    " for="profilePhoto">
+                        choose event Photo <i class="fa fa-picture-o ml-1" aria-hidden="true"></i>
+                    </label>
+                </div>
+                <p class="text-danger">{{errorPhrase}}</p>
+                <img *ngIf="loading" src="../../assets/loading_spin_grey.gif_11ezlroiohbdwk2imlrjrbw2.gif" width="30"
+                    height="30">
+                <button [disabled]="!name || !when || !time || !where || !eventTemporaryPhoto || !description"
+                    class="btn btn-primary btn-block mt-2" (click)="createEvent()">create event</button>
+            </div>
+        </div>
+
+        <div class="col-md-8" style="background: whitesmoke;">
+
+            <div class="container"
+                style="border:1px solid black ; border-radius: 8px;width: 70%; margin-top:5%;padding: 0px;">
+                <img [src]="eventTemporaryPhoto ?  eventTemporaryPhoto : '../../assets/dwzJjf.webp ' " width="100%"
+                    height="80%" style="border-top-right-radius: 8px; border-top-left-radius: 8px; ">
+                <div
+                    style="padding: 10px; background: white; border-bottom-left-radius:8px ;border-bottom-right-radius:8px">
+                    <h5 style="color: red;"><i class="fa fa-clock-o mr-1" aria-hidden="true"></i>{{when ? when : 'start
+                        date'}} at {{time ? time : 'start time'}}</h5>
+                    <h1 style="color: grey;">{{ name ? name : 'event name' }}</h1>
+                    <h3><i class=" fa fa-map-marker mr-1" aria-hidden="true"></i>{{ where ? where : 'event where'}}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

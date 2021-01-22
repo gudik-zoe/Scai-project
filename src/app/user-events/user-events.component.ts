@@ -26,6 +26,7 @@ export class UserEventsComponent implements OnInit {
   iGoing: boolean = false;
   iInterested: boolean = false;
   errorPhrase: string;
+  editMode: boolean = false;
 
   async getUserData() {
     this.userData =
@@ -53,6 +54,20 @@ export class UserEventsComponent implements OnInit {
     );
   }
 
+  openEditMode() {
+    this.editMode = true;
+  }
+
+  updateEvent(data: Event) {
+    this.event.name = data.name;
+    this.event.coverPhoto = data.coverPhoto;
+    this.event.location = data.location;
+    this.event.time = data.time;
+  }
+
+  closeInParent(data: boolean) {
+    this.editMode = data;
+  }
   interested(event: Event) {
     const reactToEvent = new ReactToEvent(event.idEvent, 2);
     this.eventService
@@ -73,10 +88,12 @@ export class UserEventsComponent implements OnInit {
   }
 
   async getEvent() {
-    this.event = await this.eventService.getEventData(this.id);
-    this.event.doneBy = await this.accountService.getBasicAccountDetails(
-      this.event.eventCreatorId
+    this.event = this.eventService.events.find(
+      (item) => item.idEvent == this.id
     );
+    if (!this.event) {
+      this.event = await this.eventService.getEventData(this.id);
+    }
     for (let react of this.event.eventFollower) {
       if (react.status == 1) {
         this.isGoing.push(react);
@@ -92,11 +109,9 @@ export class UserEventsComponent implements OnInit {
         react.eventReactCreatorId == this.userData.idAccount &&
         react.status == 2
       ) {
-        console.log('yes interested is true');
         this.iInterested = true;
       }
     }
-    console.log(this.event);
   }
   ngOnInit() {
     this.aroute.params.subscribe((params) => {

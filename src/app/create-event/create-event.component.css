@@ -1,0 +1,17 @@
+label {
+  color: grey;
+}
+
+input {
+  border: 0.5px solid black;
+  outline: none;
+}
+
+.inputfile {
+  margin-top: 15px;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 1;
+  overflow: hidden;
+  z-index: -1;
+}

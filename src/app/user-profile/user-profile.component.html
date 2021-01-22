@@ -26,14 +26,15 @@
         <div *ngIf="requestedUserData && linkedEvents && linkedEvents.length > 0"
           style="background: white; border-radius: 9px; width: 100%; height: fit-content;">
           <div *ngFor="let linkedEvent of linkedEvents">
-            <img src="{{requestedUserData.profilePhoto}}" width="40px" height="40px" style="border-radius: 50%;"> {{
-            requestedUserData.firstName + " " + requestedUserData.lastName }}<span class="font-weight-bold"> {{
+            <img src="{{ requestedUserData.profilePhoto }}" width="40px" height="40px" style="border-radius: 50%;">{{
+            requestedUserData.firstName }}<span class="font-weight-bold"> {{
               linkedEvent.status == 1 ? 'is going
               to' :
               'is interested in '}} <img src="{{linkedEvent.eventData.coverPhoto}}" width="40px" height="40px"
                 style="border-radius: 50%;"> {{linkedEvent.eventData.name}}
             </span>
-            <button style="margin-left: 100px;" class="btn btn-outline-info btn-sm">see details</button>
+            <button style="margin-left: 100px;" class="btn btn-outline-info"
+              (click)="goToEvent(linkedEvent.relatedEventId)">see details</button>
             <hr>
           </div>
         </div>

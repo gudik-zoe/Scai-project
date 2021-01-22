@@ -35,11 +35,12 @@ export class UserPagesComponent implements OnInit, OnDestroy {
   editPage: boolean;
 
   async getPageInfo() {
-    this.page = await this.pageService.getPageFullData(this.id);
-    for (let like of this.page.pageLike) {
-      like.doneBy = await this.accountService.getBasicAccountDetails(
-        like.pageLikeCreatorId
-      );
+    this.page = this.pageService.pages.find((item) => item.idPage == this.id);
+    if (!this.page) {
+      this.page = await this.pageService.getPageFullData(this.id);
+    }
+    for (let post of this.page.posts) {
+      this.postService.getUserDetails(post);
     }
     this.page.pageCreatorId == this.userData.idAccount
       ? (this.isAdmin = true)
