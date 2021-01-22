@@ -11,6 +11,7 @@ import { SharePostModule } from '../share-post/share-post.module';
 import { WhatOnMindModule } from '../what-on-mind/what-on-mind.module';
 import { AccountPhotosModule } from '../account-photos/account-photos.module';
 import { PhotoViewerModule } from '../photo-viewer/photo-viewer.module';
+import { MatButtonModule } from '@angular/material/button';
 
 const routes: Routes = [{ path: '', component: HomePageComponent }];
 
@@ -28,6 +29,7 @@ const routes: Routes = [{ path: '', component: HomePageComponent }];
     WhatOnMindModule,
     AccountPhotosModule,
     PhotoViewerModule,
+    MatButtonModule,
   ],
 })
 export class HomePageModule {}

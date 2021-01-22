@@ -9,6 +9,8 @@ import { MyInterceptor } from './my-interceptor';
 import { AuthenticationGuard } from './authentication.guard';
 import { NavBarModule } from './nav-bar/nav-bar.module';
 import { DatePipe } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +21,8 @@ import { DatePipe } from '@angular/common';
     AppRoutingModule,
     HttpClientModule,
     NavBarModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
   ],
   providers: [
     AuthenticationGuard,
