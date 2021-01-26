@@ -51,9 +51,8 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
 
   deletePostInParent(post: Post) {
     let dialog = this.dialog.open(DeleteDialogComponent, { data: post.idPost });
-
-    dialog.afterClosed().subscribe((res: boolean) => {
-      if (res) {
+    dialog.afterClosed().subscribe((result: boolean) => {
+      if (result) {
         this.postsService.deletePost(post.idPost).subscribe(
           () => {
             this.posts = this.posts.filter(
@@ -68,6 +67,8 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  confirmDeletePost(data) {}
 
   confirmCreatePost() {
     this.createPostSubscribtion = this.postsService.confirmCreatePost.subscribe(
