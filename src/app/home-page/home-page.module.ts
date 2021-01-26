@@ -7,7 +7,6 @@ import { SideBarModule } from '../side-bar/side-bar.module';
 import { CreatePostModule } from '../create-post/create-post.module';
 import { PostsContainerModule } from '../posts-container/posts-container.module';
 import { FriendsContainerModule } from '../friends-container/friends-container.module';
-import { SharePostModule } from '../share-post/share-post.module';
 import { WhatOnMindModule } from '../what-on-mind/what-on-mind.module';
 import { AccountPhotosModule } from '../account-photos/account-photos.module';
 import { MaterialModule } from '../material/material.module';
@@ -24,7 +23,6 @@ const routes: Routes = [{ path: '', component: HomePageComponent }];
     FriendsContainerModule,
     CreatePostModule,
     PostsContainerModule,
-    SharePostModule,
     WhatOnMindModule,
     AccountPhotosModule,
     MaterialModule,

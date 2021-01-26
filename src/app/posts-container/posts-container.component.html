@@ -1,5 +1,4 @@
 <div class="container-fluid">
-  <app-delete-post *ngIf="postId" [postId]="postId" (confirmDeletPost)="confirmDeletePost($event)"></app-delete-post>
   <app-edit-post [postToEditComponent]="postToEditComponent" *ngIf="postToEditComponent"
     (confirmEditInParent)="confirmEditPost($event)"></app-edit-post>
   <app-create-post></app-create-post>

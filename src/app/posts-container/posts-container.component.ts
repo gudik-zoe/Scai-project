@@ -68,8 +68,6 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
     });
   }
 
-  confirmDeletePost(data) {}
-
   confirmCreatePost() {
     this.createPostSubscribtion = this.postsService.confirmCreatePost.subscribe(
       (data: Post) => {
