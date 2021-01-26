@@ -66,8 +66,8 @@
                 </div>
                 <small class="text-danger">{{errorPhrase}}</small>
             </form>
-            <img *ngIf="loading" src="../../assets/loading_spin_grey.gif_11ezlroiohbdwk2imlrjrbw2.gif" width="30"
-                height="30">
+            <mat-spinner *ngIf="loading" diameter="30">
+            </mat-spinner>
             <button class="btn btn-primary btn-block"
                 [disabled]="!createPage.valid || !pageTemporaryProfilePhoto || !pageTemporaryCoverPhoto"
                 (click)="createthePage()">create
