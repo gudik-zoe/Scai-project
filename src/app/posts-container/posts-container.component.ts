@@ -13,6 +13,8 @@ import { PagesService } from '../services/pages.service';
 import { PageBasicData } from '../models/pageBasicData';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { share } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-posts-container',
@@ -26,7 +28,8 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
     private commentService: CommentsService,
     private notificationService: NotificationService,
     private pageService: PagesService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) {}
   @Input() posts: Post[];
   @Input() status: string;
@@ -38,7 +41,6 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
   postId: number;
   postToEditComponent: Post;
   postToShare: Post;
-  public deleteSubscribtion: Subscription;
   public createPostSubscribtion: Subscription;
 
   async getUserData() {
@@ -47,25 +49,24 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
       (await this.accountService.getTheLoggedInUserData());
   }
 
-  deletePostInParent(id: number) {
-    this.postId = id;
-  }
+  deletePostInParent(post: Post) {
+    let dialog = this.dialog.open(DeleteDialogComponent, { data: post.idPost });
 
-  confirmDeletePost(postId: number) {
-    if (postId) {
-      this.postsService.deletePost(postId).subscribe(
-        () => {
-          this.posts = this.posts.filter((item: Post) => item.idPost != postId);
-          this.postId = undefined;
-          this.snackBar.open('post has been deleted', '', { duration: 2000 });
-        },
-        (error) => {
-          this.errorPhrase = error.error.message;
-        }
-      );
-    } else {
-      this.postId = undefined;
-    }
+    dialog.afterClosed().subscribe((res: boolean) => {
+      if (res) {
+        this.postsService.deletePost(post.idPost).subscribe(
+          () => {
+            this.posts = this.posts.filter(
+              (item: Post) => item.idPost != post.idPost
+            );
+            this.snackBar.open('post has been deleted', '', { duration: 2000 });
+          },
+          (error) => {
+            this.errorPhrase = error.error.message;
+          }
+        );
+      }
+    });
   }
 
   confirmCreatePost() {

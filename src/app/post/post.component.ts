@@ -25,7 +25,7 @@ export class PostComponent implements OnInit {
   @Input() isAdmin: boolean;
 
   @Output() testOutput = new EventEmitter<Post>();
-  @Output() deletePostEvent = new EventEmitter<number>();
+  @Output() deletePostEvent = new EventEmitter<Post>();
   @Output() likePostEvent = new EventEmitter<Post>();
   @Output() commentPostEvent = new EventEmitter<any>();
   @Output() likeCommentEvent = new EventEmitter<Comment>();
@@ -82,8 +82,8 @@ export class PostComponent implements OnInit {
     this.editPostEvent.emit(post);
   }
 
-  deletePost(id: number) {
-    this.deletePostEvent.emit(id);
+  deletePost(post: Post) {
+    this.deletePostEvent.emit(post);
   }
 
   getIfUserLiked() {
