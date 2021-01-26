@@ -206,11 +206,35 @@ export class PostsService {
     );
   }
 
-  resharePost(idPost: number, formData: FormData) {
-    return this.http.post(
-      this.rootUrl + 'post/resharePost/' + idPost,
-      formData
-    );
+  // resharePost(idPost: number, formData: FormData) {
+  //   return this.http.post(
+  //     this.rootUrl + 'post/resharePost/' + idPost,
+  //     formData
+  //   );
+  // }
+
+  resharePost(post: Post, formData: FormData) {
+    return new Promise<Post>((resolve, reject) => {
+      this.http
+        .post(this.rootUrl + 'post/resharePost/' + post.idPost, formData)
+        .subscribe(
+          (data: Post) => {
+            (data.postLikes = []), (data.comments = []);
+            data.image = post.image;
+            data.text = post.text;
+            data.doneBy = { ...this.accountService.userData };
+            if (post.postCreatorId) {
+              data.originalPostDoneBy = { ...post.doneBy };
+            } else {
+              data.originalPostDoneByPage = { ...post.doneByPage };
+            }
+            resolve(data);
+          },
+          (error) => {
+            reject(error.error.message);
+          }
+        );
+    });
   }
 
   updatePost(postId: number, formData: FormData, postWithImage: boolean) {

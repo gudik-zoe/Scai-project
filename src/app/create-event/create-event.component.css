@@ -1,11 +1,11 @@
-label {
+/* label {
   color: grey;
 }
 
 input {
   border: 0.5px solid black;
   outline: none;
-}
+} */
 
 .inputfile {
   margin-top: 15px;
@@ -14,4 +14,10 @@ input {
   opacity: 1;
   overflow: hidden;
   z-index: -1;
+}
+
+.text-danger {
+  margin-top: 0px;
+  font: small;
+  font-weight: bold;
 }

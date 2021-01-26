@@ -27,8 +27,15 @@ export class EventsService {
             event.doneBy = await this.accountService.getBasicAccountDetails(
               event.eventCreatorId
             );
+            // if (Date.parse(event.time) - new Date().getTime() < 0) {
+            //   this.events = this.events.filter(
+            //     (item) => item.idEvent != event.idEvent
+            //   );
+            // } else {
+            //   resolve(this.events);
+            // }
+            resolve(this.events);
           }
-          resolve(this.events);
           reject('unknown error occured');
         });
     });

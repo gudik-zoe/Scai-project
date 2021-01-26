@@ -11,6 +11,8 @@ import { CommentLike } from '../models/commentLike';
 import { NotificationService } from '../services/notification.service';
 import { PagesService } from '../services/pages.service';
 import { PageBasicData } from '../models/pageBasicData';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { share } from 'rxjs/operators';
 
 @Component({
   selector: 'app-posts-container',
@@ -23,7 +25,8 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private commentService: CommentsService,
     private notificationService: NotificationService,
-    private pageService: PagesService
+    private pageService: PagesService,
+    private snackBar: MatSnackBar
   ) {}
   @Input() posts: Post[];
   @Input() status: string;
@@ -32,8 +35,12 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
   userData: AccountBasicData;
   commentText: string;
   errorPhrase: string;
+  postId: number;
+  postToEditComponent: Post;
+  postToShare: Post;
   public deleteSubscribtion: Subscription;
   public createPostSubscribtion: Subscription;
+
   async getUserData() {
     this.userData =
       this.accountService.userData ||
@@ -41,30 +48,24 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
   }
 
   deletePostInParent(id: number) {
-    this.postsService.deletePostSubject.next({
-      subject: 'post',
-      openComponent: true,
-      postId: id,
-    });
+    this.postId = id;
   }
 
-  confirmDeletePost() {
-    this.deleteSubscribtion = this.postsService.confirmPostDeleting.subscribe(
-      (data) => {
-        if (data.delete) {
-          this.postsService.deletePost(data.postId).subscribe(
-            () => {
-              this.posts = this.posts.filter(
-                (item: Post) => item.idPost !== data.postId
-              );
-            },
-            (error) => {
-              this.errorPhrase = error.error.message;
-            }
-          );
+  confirmDeletePost(postId: number) {
+    if (postId) {
+      this.postsService.deletePost(postId).subscribe(
+        () => {
+          this.posts = this.posts.filter((item: Post) => item.idPost != postId);
+          this.postId = undefined;
+          this.snackBar.open('post has been deleted', '', { duration: 2000 });
+        },
+        (error) => {
+          this.errorPhrase = error.error.message;
         }
-      }
-    );
+      );
+    } else {
+      this.postId = undefined;
+    }
   }
 
   confirmCreatePost() {
@@ -171,29 +172,74 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
   }
 
   sharePost(data: Post) {
-    this.postsService.sharePostComponent.next({
-      post: data,
-      openComponent: true,
-      userData: this.userData,
-      doneBy: data.doneBy,
-    });
+    this.postToShare = data;
+  }
+
+  async confirmSharePost(data) {
+    if (!data) {
+      this.postToShare = undefined;
+    } else {
+      const sharedPost = await this.postsService.resharePost(
+        data.post,
+        data.formData
+      );
+      if (sharedPost.status != 2) {
+        this.posts.unshift(sharedPost);
+      }
+      this.postToShare = undefined;
+    }
   }
 
   editPostInParent(data: Post) {
-    this.postsService.editPostComponent.next({
-      post: data,
-      openComponent: true,
-      userData: this.userData,
-    });
+    this.postToEditComponent = data;
   }
+
+  confirmEditPost(data) {
+    if (!data) {
+      this.postToEditComponent = null;
+    } else if (data.userPost) {
+      this.postsService
+        .updatePost(data.idPost, data.formData, data.postWithImage)
+        .subscribe(
+          (theEditedPost: Post) => {
+            for (let post of this.posts) {
+              if (post.idPost == theEditedPost.idPost) {
+                post.image = theEditedPost.image;
+                post.text = theEditedPost.text;
+                this.postToEditComponent = undefined;
+              }
+            }
+          },
+          (error) => {
+            this.errorPhrase = error.error.message;
+          }
+        );
+    } else if (!data.userPost) {
+      this.pageService
+        .editPost(data.idPost, data.formData, data.postWithImage)
+        .subscribe(
+          (theEditedPagePost: Post) => {
+            for (let post of this.posts) {
+              if (post.idPost == theEditedPagePost.idPost) {
+                post.image = theEditedPagePost.image;
+                post.text = theEditedPagePost.text;
+                this.postToEditComponent = undefined;
+              }
+            }
+          },
+          (error) => {
+            this.errorPhrase = error.error.message;
+          }
+        );
+    }
+  }
+
   ngOnDestroy() {
-    this.deleteSubscribtion.unsubscribe();
     this.createPostSubscribtion.unsubscribe();
   }
 
   ngOnInit() {
     this.getUserData();
-    this.confirmDeletePost();
     this.confirmCreatePost();
   }
 }

@@ -19,13 +19,14 @@ export class HomePageComponent implements OnInit, OnDestroy {
   ) {}
   userData: AccountBasicData;
   dbPosts: Post[];
-  friends: AccountBasicData[];
-  peopleYouMayKnow: AccountBasicData[];
+  friends: AccountBasicData[] = [];
+  peopleYouMayKnow: AccountBasicData[] = [];
   RespondToRequestSubject: Subscription;
   UnfriendSubject: Subscription;
   openFriends = false;
   openFriendsubscription: Subscription;
   status: string = 'friends';
+  post: Post;
   image() {
     return this.userData?.profilePhoto;
   }
@@ -36,22 +37,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
   async getPeopleyouMayKnow() {
     this.peopleYouMayKnow = await this.accountService.getPeopleYouMayKnow();
   }
-
-  // openFriendTab() {
-  //   this.openFriendsubscription = this.friendService.openFriendsTab.subscribe(
-  //     (data: Boolean) => {
-  //       if (!this.open) {
-  //         this.openFriends = 1;
-  //         this.open = true;
-  //       } else {
-  //         this.openFriends = 0;
-  //         setTimeout(() => {
-  //           this.open = false;
-  //         }, 300);
-  //       }
-  //     }
-  //   );
-  // }
 
   async getUserData() {
     this.userData =

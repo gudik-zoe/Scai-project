@@ -23,6 +23,7 @@ export class SignInComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
+  showPassword: boolean;
   signInForm: FormGroup;
 
   fillSignInForm() {
@@ -30,6 +31,9 @@ export class SignInComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
+  }
+  showThePassword() {
+    this.showPassword = !this.showPassword;
   }
 
   signIn(email: string, password: string) {

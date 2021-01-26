@@ -4,6 +4,9 @@ import { AccountBasicData } from '../models/accountBasicData';
 import { AccountService } from '../services/account.service';
 import { EventsService } from '../services/events.service';
 import { Event } from '../models/event';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Custome } from '../log-in/validator';
+import { eventNames } from 'process';
 
 @Component({
   selector: 'app-create-event',
@@ -14,15 +17,12 @@ export class CreateEventComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private eventService: EventsService,
-    private route: Router
+    private route: Router,
+    private fb: FormBuilder
   ) {}
   userData: AccountBasicData;
-  time: string;
-  name: string;
-  where: string;
-  when: string;
+  createEvent: FormGroup;
   errorPhrase: string;
-  description: string;
   eventTemporaryPhoto: string | ArrayBuffer;
   eventPhotoObject;
   loading = false;
@@ -46,6 +46,9 @@ export class CreateEventComponent implements OnInit {
       (await this.accountService.getTheLoggedInUserData());
   }
 
+  minDate = new Date();
+  maxDate = new Date(2025, 11, 31);
+
   async uploadEventPhoto(event: any) {
     if (this.accountService.uploadImage(event)) {
       this.eventPhotoObject = await this.accountService.uploadImage(event);
@@ -55,18 +58,43 @@ export class CreateEventComponent implements OnInit {
       this.errorPhrase = 'file type not supported';
     }
   }
-  createEvent() {
+
+  fillCreateEventForm() {
+    this.createEvent = this.fb.group({
+      eventName: ['event name', Validators.required],
+      description: ['', Validators.required],
+      date: ['', Validators.required],
+      startTime: ['', Validators.required],
+      location: ['', Validators.required],
+    });
+  }
+
+  createTheEvent() {
     let differenceInHours =
-      (Date.parse(this.when + ' ' + this.time) - new Date().getTime()) /
+      (Date.parse(
+        this.createEvent.get('date').value +
+          ' ' +
+          this.createEvent.get('startTime').value
+      ) -
+        new Date().getTime()) /
       3600000;
-    if (differenceInHours < 3 && this.name && this.where) {
+    if (differenceInHours < 3) {
       this.errorPhrase = 'the event should be at least 3 hours from now';
     } else {
       this.loading = true;
-      this.formData.append('when', this.when + ' ' + this.time);
-      this.formData.append('where', this.where);
-      this.formData.append('name', this.name);
-      this.formData.append('description', this.description);
+
+      this.formData.append(
+        'when',
+        this.createEvent.get('date').value +
+          ' ' +
+          this.createEvent.get('startTime').value
+      );
+      this.formData.append('where', this.createEvent.get('location').value);
+      this.formData.append('name', this.createEvent.get('eventName').value);
+      this.formData.append(
+        'description',
+        this.createEvent.get('description').value
+      );
       this.eventService.createEvent(this.formData).subscribe(
         (data: Event) => {
           this.loading = false;
@@ -81,6 +109,7 @@ export class CreateEventComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.fillCreateEventForm();
     this.getUserData();
   }
 }

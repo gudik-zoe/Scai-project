@@ -1,6 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { PostsService } from '../services/posts.service';
-import { Post } from '../models/post';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -8,33 +14,19 @@ import { Subscription } from 'rxjs';
   templateUrl: './delete-post.component.html',
   styleUrls: ['./delete-post.component.css'],
 })
-export class DeletePostComponent implements OnInit, OnDestroy {
+export class DeletePostComponent implements OnInit {
   constructor(private postService: PostsService) {}
-  openComponent: boolean;
-  postId: number;
 
-  getSubject() {
-    this.subscribtion = this.postService.deletePostSubject.subscribe((data) => {
-      this.openComponent = data.openComponent;
-      this.postId = data.postId;
-    });
-  }
+  @Input() postId: number;
+  @Output() confirmDeletPost = new EventEmitter<number>();
+
   cancel() {
-    this.openComponent = false;
+    this.confirmDeletPost.emit(undefined);
   }
 
   delete() {
-    this.postService.confirmPostDeleting.next({
-      delete: true,
-      postId: this.postId,
-    });
-    this.openComponent = false;
+    this.confirmDeletPost.emit(this.postId);
   }
-  public subscribtion: Subscription;
-  ngOnDestroy() {
-    this.subscribtion.unsubscribe();
-  }
-  ngOnInit() {
-    this.getSubject();
-  }
+
+  ngOnInit() {}
 }

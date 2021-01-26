@@ -13,11 +13,10 @@
                         style="margin-left: 10px; padding: 10px; cursor: pointer;" (click)="openImage(image)">
                 </div>
             </div> -->
-            <mat-grid-list cols="{{(photos.length % 2 != 0) ? photos.length -1 : photos.length/2 }}">
+            <mat-grid-list *ngIf="photos" cols="{{(photos.length % 2 != 0) ? photos.length -1 : photos.length/2 }}">
                 <div *ngFor="let image of photos; let i =index">
-                    <mat-grid-tile><img src="{{image}}" width="80%" height="80%"></mat-grid-tile>
-                    <!-- <mat-grid-tile>Tile2</mat-grid-tile>
-                <mat-grid-tile>Tile3</mat-grid-tile> -->
+                    <mat-grid-tile><img src="{{image}}" width="80%" height="80%" (click)="openImage(image)"
+                            style="cursor: pointer;"></mat-grid-tile>
                 </div>
             </mat-grid-list>
         </div>

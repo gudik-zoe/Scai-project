@@ -5,11 +5,12 @@
             <hr>
             <form [formGroup]="createPage">
                 <div class="form-group">
-                    <label>Page name</label>
-                    <input type="text" formControlName="pageName" placeholder="insert a name for your page"
-                        class="form-control" [class.is-invalid]="
+                    <mat-form-field appearance="outline">
+                        <mat-label>Page name</mat-label>
+                        <input type="text" matInput formControlName="pageName" class="form-control" [class.is-invalid]="
                     createPage.get('pageName').invalid &&
                     createPage.get('pageName').touched">
+                    </mat-form-field>
                     <p style="color: grey;">Use the name of your business, brand or organization, or a name that
                         explains what the Page
                         is about</p>
@@ -19,12 +20,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Page description</label>
-                    <textarea type="text" formControlName="description" placeholder="page description"
-                        class="form-control" [class.is-invalid]="
+                    <mat-form-field appearance="outline">
+                        <mat-label>Page description</mat-label>
+                        <textarea type="text" matInput formControlName="description" placeholder="page description"
+                            class="form-control" [class.is-invalid]="
                     createPage.get('description').invalid &&
                     createPage.get('description').touched">
                     </textarea>
+                    </mat-form-field>
                     <p style="color: grey;">write a description that describes what type of business, organization or
                         topic the Page
                         represents.

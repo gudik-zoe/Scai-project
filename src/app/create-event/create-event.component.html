@@ -1,36 +1,71 @@
 <div class="container-fluid" style="margin-top: 70px;">
 
     <div class="row">
-        <div class="col-md-4" style="background: white; height: 100vh; border-right: 1px solid black;">
+        <div class="col-md-4" style="background: white; height: 100vh;" *ngIf="createEvent">
 
             <h3>Event details</h3>
             <hr>
-            <div class="form-group mt-1">
-                <label>event name</label>
-                <br>
-                <input [(ngModel)]="name" type="text" class="form-control-lg" />
+            <form [formGroup]="createEvent">
+                <div class="form-group mt-1">
+                    <mat-form-field appearance="outline">
+                        <mat-label>event name</mat-label>
+                        <input formControlName="eventName" matInput type="text" [class.is-invalid]="
+                        createEvent.get('eventName').invalid &&
+                        createEvent.get('eventName').touched" />
+                    </mat-form-field>
+                    <p class="text-danger"
+                        *ngIf="createEvent.get('eventName').errors?.required &&createEvent.get('eventName').touched">
+                        this field is required</p>
+                    <p class="text-danger"
+                        *ngIf="createEvent.get('eventName').errors?.notEmptyError && createEvent.get('date').touched">
+                        cannot enter an empty string</p>
+                </div>
                 <div class="form-row mt-3">
                     <div class="col">
-                        <label>Start date </label>
-                        <input type="date" value="" min="{{today}}" max="2030-12-31" [(ngModel)]="when"
-                            class="form-control-lg">
+                        <label> date </label>
+                        <input type="date" value="" formControlName="date" min="{{today}}" max="2030-12-31"
+                            class="form-control" [class.is-invalid]="
+                            createEvent.get('date').invalid &&
+                            createEvent.get('date').touched">
+                        <p class="text-danger"
+                            *ngIf="createEvent.get('date').errors?.required &&createEvent.get('date').touched">
+                            this field is required</p>
+
                     </div>
                     <div class="col">
-                        <label>Start time</label>
-                        <br>
-
-                        <input [(ngModel)]="time" type="time" class="form-control-lg">
-
+                        <label>start time</label>
+                        <input formControlName="startTime" type="time" class="form-control" [class.is-invalid]="
+                        createEvent.get('startTime').invalid &&
+                        createEvent.get('startTime').touched">
+                        <p class="text-danger"
+                            *ngIf="createEvent.get('startTime').errors?.required &&createEvent.get('startTime').touched">
+                            this field is required</p>
                     </div>
                 </div>
-                <label style="margin-top: 10px;">where</label>
-                <br>
-                <input [(ngModel)]="where" type="text" class="form-control-lg" />
                 <div class="form-group mt-3">
-                    <label>description</label>
-                    <br>
-                    <textarea [(ngModel)]="description" class="form-control"></textarea>
+                    <mat-form-field appearance="outline">
+                        <mat-label>location</mat-label>
+                        <input type="text" matInput formControlName="location" [class.is-invalid]="
+                        createEvent.get('location').invalid &&
+                        createEvent.get('location').touched" />
+                    </mat-form-field>
+                    <p class="text-danger"
+                        *ngIf="createEvent.get('location').errors?.required &&createEvent.get('location').touched">
+                        this field is required</p>
+
                 </div>
+                <div class="form-group mt-2">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>description</mat-label>
+                        <textarea formControlName="description" matInput [class.is-invalid]="
+                        createEvent.get('description').invalid &&
+                        createEvent.get('description').touched"></textarea>
+                    </mat-form-field>
+                    <p class="text-danger"
+                        *ngIf="createEvent.get('description').errors?.required &&createEvent.get('description').touched">
+                        this field is required</p>
+                </div>
+
                 <div class="form-group">
 
                     <input type="file" (change)="uploadEventPhoto($event)" name="profilePhoto" id="profilePhoto"
@@ -42,30 +77,36 @@
                       padding: 5px;
                       box-shadow: 1px 1px 1px 1px #888888;
                       color:black
-                    " for="profilePhoto">
+                        " for="profilePhoto">
                         choose event Photo <i class="fa fa-picture-o ml-1" aria-hidden="true"></i>
                     </label>
                 </div>
-                <p class="text-danger">{{errorPhrase}}</p>
-                <img *ngIf="loading" src="../../assets/loading_spin_grey.gif_11ezlroiohbdwk2imlrjrbw2.gif" width="30"
-                    height="30">
-                <button [disabled]="!name || !when || !time || !where || !eventTemporaryPhoto || !description"
-                    class="btn btn-primary btn-block mt-2" (click)="createEvent()">create event</button>
-            </div>
+            </form>
+            <p class="text-danger">{{errorPhrase}}</p>
+            <mat-spinner *ngIf="loading" diameter="30">
+            </mat-spinner>
+            <button [disabled]="!createEvent.valid || !eventTemporaryPhoto" class="btn btn-primary btn-block mt-2"
+                (click)="createTheEvent()">create event</button>
         </div>
+
 
         <div class="col-md-8" style="background: whitesmoke;">
 
             <div class="container"
                 style="border:1px solid black ; border-radius: 8px;width: 70%; margin-top:5%;padding: 0px;">
                 <img [src]="eventTemporaryPhoto ?  eventTemporaryPhoto : '../../assets/dwzJjf.webp ' " width="100%"
-                    height="80%" style="border-top-right-radius: 8px; border-top-left-radius: 8px; ">
+                    height="300px" style="border-top-right-radius: 8px; border-top-left-radius: 8px; ">
                 <div
                     style="padding: 10px; background: white; border-bottom-left-radius:8px ;border-bottom-right-radius:8px">
-                    <h5 style="color: red;"><i class="fa fa-clock-o mr-1" aria-hidden="true"></i>{{when ? when : 'start
-                        date'}} at {{time ? time : 'start time'}}</h5>
-                    <h1 style="color: grey;">{{ name ? name : 'event name' }}</h1>
-                    <h3><i class=" fa fa-map-marker mr-1" aria-hidden="true"></i>{{ where ? where : 'event where'}}</h3>
+                    <h5 style="color: red;"><i class="fa fa-clock-o mr-1"
+                            aria-hidden="true"></i>{{createEvent.get("location").value ? createEvent.get("date").value :
+                        'start
+                        date'}} at {{createEvent.get("startTime").value ? createEvent.get("startTime").value : 'start
+                        time'}}</h5>
+                    <h1 style="color: grey;">{{ createEvent.get("eventName").value ? createEvent.get("eventName").value
+                        : 'event name' }}</h1>
+                    <h3><i class=" fa fa-map-marker mr-1" aria-hidden="true"></i>{{ createEvent.get("location").value ?
+                        createEvent.get("location").value : 'event location'}}</h3>
                 </div>
             </div>
         </div>

@@ -7,6 +7,7 @@ import { DeletePostModule } from '../delete-post/delete-post.module';
 import { EditPostModule } from '../edit-post/edit-post.module';
 import { CreatePostModule } from '../create-post/create-post.module';
 import { MaterialModule } from '../material/material.module';
+import { SharePostModule } from '../share-post/share-post.module';
 
 @NgModule({
   declarations: [PostsContainerComponent, PostComponent],
@@ -16,6 +17,7 @@ import { MaterialModule } from '../material/material.module';
     DeletePostModule,
     EditPostModule,
     CreatePostModule,
+    SharePostModule,
     MaterialModule,
   ],
   exports: [PostsContainerComponent],

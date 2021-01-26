@@ -87,7 +87,7 @@
             My Events <i class="fa fa-calendar ml-1" aria-hidden="true"></i>
           </div>
           <div class="page" *ngFor="let event of myEvents">
-            <div>
+            <div (click)="goToEvent(event.idEvent)">
               <img src="{{event.coverPhoto}}" width="40px" height="40px" style="border-radius: 50%;">
               {{event.name}}
             </div>

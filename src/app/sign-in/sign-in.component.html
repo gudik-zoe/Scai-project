@@ -1,48 +1,57 @@
 <div class="main">
-    <div class="container mt-3">
-        <form [formGroup]="signInForm">
-            <div [class]="fieldError ? 'field-error':'form-group'">
-                <input type="email" placeholder="Email" class="form-control" formControlName="email" [class.is-invalid]="
+  <div class="container mt-3">
+    <form [formGroup]="signInForm">
+      <div [class]="fieldError ? 'field-error':'form-group'">
+        <mat-form-field appearance="outline" style="width: 100%; ">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput formControlName="email" [class.is-invalid]="
           signInForm.get('email').invalid &&
           signInForm.get('email').touched
         " />
-                <small class="text-danger" *ngIf="
+        </mat-form-field>
+        <small class="text-danger" *ngIf="
           signInForm.get('email').errors?.required &&
           signInForm.get('email').touched
         ">
-                    this field is required
-                </small>
-                <small class="text-danger" *ngIf="
+          this field is required
+        </small>
+        <small class="text-danger" *ngIf="
           signInForm.get('email').errors?.email &&
           signInForm.get('email').touched
         ">
-                    invalid email
-                </small>
-            </div>
-            <div [class]="fieldError ? 'field-error':'form-group'">
-                <input type="password" placeholder="Password" class="form-control" formControlName="password" />
-                <small class="text-danger" *ngIf="
+          invalid email
+        </small>
+
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-label>Password </mat-label>
+          <input [type]="showPassword ? 'text' : 'password' " matInput formControlName="password" />
+        </mat-form-field>
+        <div class="check-box">
+          <mat-checkbox (click)="showThePassword()">show
+            password
+          </mat-checkbox>
+        </div>
+      </div>
+      <small class="text-danger" *ngIf="
           signInForm.get('password').errors?.required &&
           signInForm.get('password').touched
         ">
-                    this field is required
-                </small>
-                <p class="text-danger">
-                    {{errorPhrase}}
-                </p>
-            </div>
-
-            <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
-            <button *ngIf="!loading" style="margin-top:65px;" [disabled]="!signInForm.valid"
-                [class]="!signInForm.valid ? 'btn btn-outline-danger btn-block': 'btn btn-outline-primary btn-block'"
-                (click)="
+        this field is required
+      </small>
+      <p class="text-danger">
+        {{errorPhrase}}
+      </p>
+      <mat-spinner *ngIf="loading" diameter="30">
+      </mat-spinner>
+      <button *ngIf="!loading" style="margin-top:4px;" [disabled]="!signInForm.valid"
+        [class]="!signInForm.valid ? 'btn btn-outline-danger btn-block': 'btn btn-outline-primary btn-block'" (click)="
         signIn(
           signInForm.get('email').value,
           signInForm.get('password').value
         )
       ">
 
-                Log In</button>
-        </form>
-    </div>
+        Log In</button>
+    </form>
+  </div>
 </div>

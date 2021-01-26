@@ -1,4 +1,4 @@
-<ng-container *ngIf="post && editPostComponent && userData">
+<ng-container>
     <div class="backdrop"></div>
     <div class="alert-box">
         <div class="alert-box-action">
@@ -10,30 +10,31 @@
             </span>
             <hr class="m-0" />
             <div>
-                <img *ngIf="post.doneByPage" src="{{ post.doneByPage.profilePhoto}}" width="60px" height="60px"
-                    style="border-radius: 50%" />
-                <span *ngIf="post.doneByPage" class="font-weight-bold ">
-                    {{ post.doneByPage.name }} shared:
+                <img *ngIf="postToEditComponent.doneByPage" src="{{ postToEditComponent.doneByPage.profilePhoto}}"
+                    width="60px" height="60px" style="border-radius: 50%" />
+                <span *ngIf="postToEditComponent.doneByPage" class="font-weight-bold ">
+                    {{ postToEditComponent.doneByPage.name }} shared:
                 </span>
-                <img *ngIf="post.doneBy" src="{{ post.doneBy.profilePhoto}}" width="60px" height="60px"
-                    style="border-radius: 50%" />
-                <span *ngIf="post.doneBy" class="font-weight-bold ">
-                    {{ post.doneBy.firstName + " " + post.doneBy.lastName }} shared:
+                <img *ngIf="postToEditComponent.doneBy" src="{{ postToEditComponent.doneBy.profilePhoto}}" width="60px"
+                    height="60px" style="border-radius: 50%" />
+                <span *ngIf="postToEditComponent.doneBy" class="font-weight-bold ">
+                    {{ postToEditComponent.doneBy.firstName + " " + postToEditComponent.doneBy.lastName }} shared:
                 </span>
             </div>
 
             <p class="text-center">{{ inputData }}</p>
-            <p class="text-danger">{{errorPhrase}}</p>
+            <p class="text-danger">{{ errorPhrase }}</p>
 
-            <i *ngIf="showImage && post?.image" style="color: lightskyblue; cursor: pointer; float: right;"
-                class="fa fa-trash fa-lg" aria-hidden="true" (click)="deleteImage()"></i>
+            <i *ngIf="showImage && postToEditComponent?.image"
+                style="color: lightskyblue; cursor: pointer; float: right;" class="fa fa-trash fa-lg" aria-hidden="true"
+                (click)="deleteImage()"></i>
             <br>
-            <div *ngIf="post.image && showImage" style=" width: 58% ;height: 175px; margin-left: 20%;">
-                <img *ngIf="post.image && showImage" src="{{post.image}}" width="100%" height="100%"
-                    style="border-radius: 8px;" />
+            <div *ngIf="postToEditComponent.image && showImage" style=" width: 58% ;height: 175px; margin-left: 20%;">
+                <img *ngIf="postToEditComponent.image && showImage" src="{{postToEditComponent.image}}" width="100%"
+                    height="100%" style="border-radius: 8px;" />
             </div>
             <div *ngIf="postImage" style=" width: 58% ;height: 175px; margin-left: 20%;">
-                <img *ngIf="postImage" [src]="postImage" width="100%" height="100%" style="border-radius: 8px;" />
+                <img [src]="postImage" width="100%" height="100%" style="border-radius: 8px;" />
             </div>
 
             <div class="container-fluid" style="margin: 10px 0 10px 0 ; display: flex;">
