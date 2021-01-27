@@ -209,65 +209,12 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
               this.snackBar.open(error.error.message, '', { duration: 2000 });
             }
           );
-        //  else {
-        //   this.pageService
-        //     .editPost(post.idPost, newData.formData, newData.postWithImage)
-        //     .subscribe(
-        //       (data: Post) => {
-        //         post.image = data.image;
-        //         post.text = data.text;
-        //       },
-        //       (error) => {
-        //         this.snackBar.open(error.error.message, '', { duration: 2000 });
-        //       }
-        //     );
-        // }
       } else {
         this.snackBar.open("you haven't make any changes", '', {
           duration: 2000,
         });
       }
     });
-  }
-
-  confirmEditPost(data) {
-    if (!data) {
-      this.postToEditComponent = null;
-    } else if (data.userPost) {
-      this.postsService
-        .updatePost(data.idPost, data.formData, data.postWithImage)
-        .subscribe(
-          (theEditedPost: Post) => {
-            for (let post of this.posts) {
-              if (post.idPost == theEditedPost.idPost) {
-                post.image = theEditedPost.image;
-                post.text = theEditedPost.text;
-                this.postToEditComponent = undefined;
-              }
-            }
-          },
-          (error) => {
-            this.errorPhrase = error.error.message;
-          }
-        );
-    } else if (!data.userPost) {
-      this.pageService
-        .editPost(data.idPost, data.formData, data.postWithImage)
-        .subscribe(
-          (theEditedPagePost: Post) => {
-            for (let post of this.posts) {
-              if (post.idPost == theEditedPagePost.idPost) {
-                post.image = theEditedPagePost.image;
-                post.text = theEditedPagePost.text;
-                this.postToEditComponent = undefined;
-              }
-            }
-          },
-          (error) => {
-            this.errorPhrase = error.error.message;
-          }
-        );
-    }
   }
 
   ngOnDestroy() {

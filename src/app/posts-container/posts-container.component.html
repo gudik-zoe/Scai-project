@@ -1,6 +1,4 @@
 <div class="container-fluid">
-  <app-edit-post [postToEditComponent]="postToEditComponent" *ngIf="postToEditComponent"
-    (confirmEditInParent)="confirmEditPost($event)"></app-edit-post>
   <app-create-post></app-create-post>
   <app-share-post [postToShare]="postToShare" *ngIf="postToShare" (confirmSharePost)="confirmSharePost($event)"
     [userData]="userData">

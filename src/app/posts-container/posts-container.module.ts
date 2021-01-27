@@ -6,7 +6,6 @@ import { PostsContainerComponent } from './posts-container.component';
 import { CreatePostModule } from '../create-post/create-post.module';
 import { MaterialModule } from '../material/material.module';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
-import { EditPostComponent } from '../edit-post/edit-post.component';
 import { SharePostComponent } from '../share-post/share-post.component';
 import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 
@@ -16,7 +15,6 @@ import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
     PostComponent,
     DeleteDialogComponent,
     EditDialogComponent,
-    EditPostComponent,
     SharePostComponent,
   ],
   imports: [CommonModule, FormsModule, CreatePostModule, MaterialModule],

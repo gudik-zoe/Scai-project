@@ -1,7 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { EditPostComponent } from '../edit-post/edit-post.component';
-import { AccountBasicData } from '../models/accountBasicData';
 import { Post } from '../models/post';
 import { AccountService } from '../services/account.service';
 
