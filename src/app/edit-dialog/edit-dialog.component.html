@@ -3,10 +3,15 @@
 <mat-dialog-actions>
     <div class="container-fluid">
         <mat-icon style="color:black; float:right;" [mat-dialog-close]="null">highlight_off</mat-icon>
-
-        <img src="{{post.doneBy.profilePhoto}}" class="profile-photo"> <span
-            class="font-weight-bold">{{post.doneBy.firstName + " " +
-            post.doneBy.lastName}}</span>
+        <div *ngIf="post.postCreatorId">
+            <img src="{{post.doneBy.profilePhoto}}" class="profile-photo"> <span
+                class="font-weight-bold">{{post.doneBy.firstName + " " +
+                post.doneBy.lastName}}</span>
+        </div>
+        <div *ngIf="post.pageCreatorId">
+            <img src="{{post.doneByPage.profilePhoto}}" class="profile-photo"> <span
+                class="font-weight-bold">{{post.doneByPage.name}}</span>
+        </div>
         <mat-vertical-stepper>
             <mat-step label="edit text">
                 <div class="input-group">
@@ -37,7 +42,7 @@
         <br>
         <p style="font-size: small; font-weight: bold;">{{errorPhrase}}</p>
         <button mat-flat-button color="primary" [mat-dialog-close]="data"
-            [disabled]="post.image != null && inputData == post.text && !postImage" (click)="editPost()"
+            [disabled]="!imageChanged && inputData == post.text" (click)="editPost()"
             style="width: 100%; margin-top: 5px;">Edit
             post</button>
 

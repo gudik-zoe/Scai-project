@@ -196,6 +196,7 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
   editPostInParent(post: Post) {
     let editDialog = this.dialog.open(EditDialogComponent, { data: post });
     editDialog.afterClosed().subscribe((newData: any) => {
+      console.log(newData);
       if (newData) {
         this.postsService
           .updatePost(post.idPost, newData.formData, newData.postWithImage)
@@ -208,6 +209,19 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
               this.snackBar.open(error.error.message, '', { duration: 2000 });
             }
           );
+        //  else {
+        //   this.pageService
+        //     .editPost(post.idPost, newData.formData, newData.postWithImage)
+        //     .subscribe(
+        //       (data: Post) => {
+        //         post.image = data.image;
+        //         post.text = data.text;
+        //       },
+        //       (error) => {
+        //         this.snackBar.open(error.error.message, '', { duration: 2000 });
+        //       }
+        //     );
+        // }
       } else {
         this.snackBar.open("you haven't make any changes", '', {
           duration: 2000,

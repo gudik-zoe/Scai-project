@@ -22,11 +22,13 @@ export class EditDialogComponent implements OnInit, OnDestroy {
   inputData: string;
   formData = new FormData();
   errorPhrase: string;
-  postWithImage: boolean;
+  postWithImage: boolean = true;
   showPostPhoto: boolean = true;
+  imageChanged: boolean = false;
   removePhoto() {
     this.showPostPhoto = false;
     this.postWithImage = false;
+    this.imageChanged = true;
   }
   postPhotoObject;
   postImage: string | ArrayBuffer;
@@ -36,6 +38,7 @@ export class EditDialogComponent implements OnInit, OnDestroy {
       this.postImage = this.postPhotoObject.temporaryImage;
       this.formData.append('image', this.postPhotoObject.formData);
       this.postWithImage = true;
+      this.imageChanged = true;
     } else {
       this.errorPhrase = 'file type not supported';
     }
