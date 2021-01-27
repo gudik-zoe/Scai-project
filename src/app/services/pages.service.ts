@@ -47,13 +47,6 @@ export class PagesService {
     return this.http.post(this.rootUrl + 'posts/pageId', formData);
   }
 
-  editPost(postId: number, formData: FormData, postWithImage: boolean) {
-    return this.http.put(
-      this.rootUrl + 'editPagePost/' + postId + '/' + postWithImage,
-      formData
-    );
-  }
-
   addComment(postId: number, commentText: string) {
     return this.http.post(
       this.rootUrl + 'page/addComment/' + postId,

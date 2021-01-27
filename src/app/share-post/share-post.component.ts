@@ -53,7 +53,7 @@ export class SharePostComponent implements OnInit {
     } else {
       const formData = new FormData();
       formData.append('extraText', text);
-      formData.append('postOption', this.postOption.status.toString());
+      formData.append('postOption', this.postOption.status);
       this.confirmSharePost.emit({
         post: this.postToShare,
         formData: formData,

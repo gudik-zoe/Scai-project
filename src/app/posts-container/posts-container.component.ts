@@ -16,6 +16,7 @@ import { share } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
+import { ShareDialogComponent } from '../share-dialog/share-dialog.component';
 
 @Component({
   selector: 'app-posts-container',
@@ -39,8 +40,6 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
   userData: AccountBasicData;
   commentText: string;
   errorPhrase: string;
-  postId: number;
-  postToEditComponent: Post;
   postToShare: Post;
   public createPostSubscribtion: Subscription;
 
@@ -83,14 +82,10 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
   likePostInParent(post: Post) {
     this.postsService.likePost(post.idPost).subscribe(
       (data: PostLike) => {
-        if (data) {
-          post.postLikes.push({ ...data });
-        } else {
-          post.postLikes.pop();
-        }
+        data ? post.postLikes.push({ ...data }) : post.postLikes.pop();
       },
       (error) => {
-        console.log(error.error.message);
+        this.snackBar.open(error.error.message, '', { duration: 2000 });
       }
     );
   }
@@ -103,10 +98,7 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
           (comment: Comment) => {
             comment.commentLike = [];
             comment.doneByPage = {
-              idPage: this.page.idPage,
-              name: this.page.name,
-              profilePhoto: this.page.profilePhoto,
-              coverPhoto: this.page.coverPhoto,
+              ...this.page,
             };
             comment.date = this.notificationService.timeCalculation(
               comment.date
@@ -115,7 +107,7 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
             this.commentText = null;
           },
           (error) => {
-            console.log(error);
+            this.snackBar.open(error.error.message, '', { duration: 2000 });
           }
         );
     } else {
@@ -174,8 +166,22 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
     }
   }
 
-  sharePost(data: Post) {
-    this.postToShare = data;
+  sharePost(post: Post) {
+    const dataToPass = { post: post, userData: this.userData };
+    let DeleteDialog = this.dialog.open(ShareDialogComponent, {
+      data: dataToPass,
+    });
+    DeleteDialog.afterClosed().subscribe(
+      async (data: FormData) => {
+        const sharedPost = await this.postsService.resharePost(post, data);
+        if (sharedPost.status != 2) {
+          this.posts.unshift(sharedPost);
+        }
+      },
+      (error) => {
+        this.snackBar.open(error.error.message, '', { duration: 2000 });
+      }
+    );
   }
 
   async confirmSharePost(data) {

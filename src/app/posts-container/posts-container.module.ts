@@ -8,6 +8,7 @@ import { MaterialModule } from '../material/material.module';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { SharePostComponent } from '../share-post/share-post.component';
 import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
+import { ShareDialogComponent } from '../share-dialog/share-dialog.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
     DeleteDialogComponent,
     EditDialogComponent,
     SharePostComponent,
+    ShareDialogComponent,
   ],
   imports: [CommonModule, FormsModule, CreatePostModule, MaterialModule],
   exports: [PostsContainerComponent],

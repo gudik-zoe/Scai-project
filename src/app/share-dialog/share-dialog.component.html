@@ -1,0 +1,47 @@
+<mat-dialog-content>share post
+    <mat-icon style="color:black; float:right;" [mat-dialog-close]="null">highlight_off</mat-icon>
+    <hr>
+</mat-dialog-content>
+<div>
+    <img src="{{userData.profilePhoto}}" class="profile-photo"> <span class="font-weight-bold">{{userData.firstName
+        + " " +
+        userData.lastName}}</span>
+    <mat-menu #dropDown="matMenu" xPosition="before" yPosition="below">
+        <div *ngFor="let option of postOptions">
+            <button (click)="selectOption(option)" mat-menu-item style="color: black;">
+                <mat-icon>{{option.icon}}</mat-icon>
+                {{option.status}}
+            </button>
+        </div>
+    </mat-menu>
+    <br>
+    <button mat-stroked-button [matMenuTriggerFor]="dropDown" color="accent" class="drop-down">
+        <mat-icon class="mr-1">{{dropDownBtnText.icon}}</mat-icon>{{dropDownBtnText.status}}
+        <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+</div>
+
+<mat-dialog-actions style=" width: 400px;">
+
+    <div class="container">
+        <input class="form-control mb-1" placeholder="enter your own text" [(ngModel)]="inputData">
+        <div style="border: 1px solid black; border-radius: 8px; padding: 5px;margin-bottom: 5px;">
+            <img *ngIf="postToShare.doneBy" src="{{  postToShare.doneBy.profilePhoto }}" width="50px"
+                style="border-radius: 50%;" height="50px" />
+            <img *ngIf="postToShare.doneByPage" src="{{  postToShare.doneByPage.profilePhoto }}" width="50px"
+                style="border-radius: 50%;" height="50px" />
+            <span *ngIf="postToShare.doneBy" class="font-weight-bold">
+                {{ postToShare.doneBy.firstName + " " + postToShare.doneBy.lastName }}
+                shared: </span>
+            <span *ngIf="postToShare.doneByPage" class="font-weight-bold">
+                {{ postToShare.doneByPage.name }}
+                shared: </span>
+            <p class="text-center">{{postToShare.text}}</p>
+            <div class="text-center">
+                <img *ngIf="postToShare.image" src="{{  postToShare.image }}" class="post-photo" />
+            </div>
+        </div>
+        <button mat-flat-button color="primary" (click)="confirmShare()" [mat-dialog-close]="formData"
+            [disabled]="!inputData" style="width: 100%;">share post</button>
+    </div>
+</mat-dialog-actions>

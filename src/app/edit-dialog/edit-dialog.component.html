@@ -1,8 +1,11 @@
-<mat-dialog-content>Edit post </mat-dialog-content>
+<mat-dialog-content>Edit post <mat-icon style="color:black; float:right;" [mat-dialog-close]="null">highlight_off
+    </mat-icon>
+</mat-dialog-content>
+
+<hr>
 
 <mat-dialog-actions>
     <div class="container-fluid">
-        <mat-icon style="color:black; float:right;" [mat-dialog-close]="null">highlight_off</mat-icon>
         <div *ngIf="post.postCreatorId">
             <img src="{{post.doneBy.profilePhoto}}" class="profile-photo"> <span
                 class="font-weight-bold">{{post.doneBy.firstName + " " +
