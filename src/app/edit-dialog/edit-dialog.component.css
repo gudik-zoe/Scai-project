@@ -1,0 +1,23 @@
+.profile-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.post-photo {
+  width: 50%;
+  height: 20%;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 1;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}

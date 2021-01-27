@@ -1,0 +1,45 @@
+<mat-dialog-content>Edit post </mat-dialog-content>
+
+<mat-dialog-actions>
+    <div class="container-fluid">
+        <mat-icon style="color:black; float:right;" [mat-dialog-close]="null">highlight_off</mat-icon>
+
+        <img src="{{post.doneBy.profilePhoto}}" class="profile-photo"> <span
+            class="font-weight-bold">{{post.doneBy.firstName + " " +
+            post.doneBy.lastName}}</span>
+        <mat-vertical-stepper>
+            <mat-step label="edit text">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">post text</span>
+                    </div>
+                    <input type="text" [(ngModel)]="inputData" class="form-control" aria-label="Default"
+                        aria-describedby="inputGroup-sizing-default" autofocus="false">
+                </div>
+            </mat-step>
+            <mat-step label="edit or remove photo">
+                <span style="float: right;">
+                    <mat-icon color="warn" class="icon" matTooltip=" remove photo" (click)="removePhoto()">delete
+                    </mat-icon>
+                    <input type="file" name="file" (change)="uploadImage($event)" id="file" class="inputfile" />
+                    <label style=" cursor: pointer" for="file">
+                        <mat-icon color="primary" class="icon" style="margin-left: 10px;" matTooltip="change photo">
+                            backup</mat-icon>
+                    </label>
+                </span>
+                <div class="text-center">
+                    <img *ngIf="post.image && showPostPhoto || postImage" src="{{postImage ? postImage : post.image}}"
+                        class="post-photo">
+
+                </div>
+            </mat-step>
+        </mat-vertical-stepper>
+        <br>
+        <p style="font-size: small; font-weight: bold;">{{errorPhrase}}</p>
+        <button mat-flat-button color="primary" [mat-dialog-close]="data"
+            [disabled]="post.image != null && inputData == post.text && !postImage" (click)="editPost()"
+            style="width: 100%; margin-top: 5px;">Edit
+            post</button>
+
+    </div>
+</mat-dialog-actions>

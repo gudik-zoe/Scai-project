@@ -15,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { share } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
+import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 
 @Component({
   selector: 'app-posts-container',
@@ -50,8 +51,10 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
   }
 
   deletePostInParent(post: Post) {
-    let dialog = this.dialog.open(DeleteDialogComponent, { data: post.idPost });
-    dialog.afterClosed().subscribe((result: boolean) => {
+    let DeleteDialog = this.dialog.open(DeleteDialogComponent, {
+      data: post.idPost,
+    });
+    DeleteDialog.afterClosed().subscribe((result: boolean) => {
       if (result) {
         this.postsService.deletePost(post.idPost).subscribe(
           () => {
@@ -190,8 +193,27 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
     }
   }
 
-  editPostInParent(data: Post) {
-    this.postToEditComponent = data;
+  editPostInParent(post: Post) {
+    let editDialog = this.dialog.open(EditDialogComponent, { data: post });
+    editDialog.afterClosed().subscribe((newData: any) => {
+      if (newData) {
+        this.postsService
+          .updatePost(post.idPost, newData.formData, newData.postWithImage)
+          .subscribe(
+            (data: Post) => {
+              post.image = data.image;
+              post.text = data.text;
+            },
+            (error) => {
+              this.snackBar.open(error.error.message, '', { duration: 2000 });
+            }
+          );
+      } else {
+        this.snackBar.open("you haven't make any changes", '', {
+          duration: 2000,
+        });
+      }
+    });
   }
 
   confirmEditPost(data) {
