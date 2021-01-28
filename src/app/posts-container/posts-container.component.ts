@@ -7,12 +7,9 @@ import { Comment } from '../models/comment';
 import { PostLike } from '../models/postLike';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Subscription } from 'rxjs';
-import { CommentLike } from '../models/commentLike';
 import { NotificationService } from '../services/notification.service';
-import { PagesService } from '../services/pages.service';
 import { PageBasicData } from '../models/pageBasicData';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { share } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
@@ -29,7 +26,6 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private commentService: CommentsService,
     private notificationService: NotificationService,
-    private pageService: PagesService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog
   ) {}
@@ -95,49 +91,24 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
       .addCommment(
         data.post,
         data.commentText.trim(),
-        this.page && this.page.pageCreatorId == this.userData.idAccount
-          ? false
-          : true
+        this.isAdmin ? false : true
       )
       .catch((errorMessage: string) => {
-        this.snackBar.open(errorMessage, '', { duration: 3000 });
+        this.showError(errorMessage);
       });
-
     data.post.comments.unshift(newComment);
   }
 
-  likeCommentInParent(comment: Comment) {
-    if (!this.isAdmin) {
-      console.log('user like');
-      this.commentService.likeComment(comment.idComment).subscribe(
-        (data: CommentLike) => {
-          if (data) {
-            data.doneBy = {
-              ...this.userData,
-            };
-            comment.commentLike.push(data);
-          } else {
-            comment.commentLike.pop();
-          }
-        },
-        (error) => {
-          this.errorPhrase = error.error.message;
-        }
-      );
+  async likeCommentInParent(comment: Comment) {
+    const commentLike = await this.commentService
+      .likeComment(comment.idComment, this.isAdmin ? false : true)
+      .catch((errorMessage: string) => {
+        this.showError(errorMessage);
+      });
+    if (commentLike) {
+      comment.commentLike.push(commentLike);
     } else {
-      this.pageService.likeComment(comment.idComment).subscribe(
-        (data: CommentLike) => {
-          if (data) {
-            data.doneByPage = { ...this.page };
-            comment.commentLike.push(data);
-          } else {
-            comment.commentLike.pop();
-          }
-        },
-        (error) => {
-          this.errorPhrase = error.error.message;
-        }
-      );
+      comment.commentLike.pop();
     }
   }
 
@@ -146,60 +117,43 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
     let DeleteDialog = this.dialog.open(ShareDialogComponent, {
       data: dataToPass,
     });
-    DeleteDialog.afterClosed().subscribe(
-      async (data: FormData) => {
-        const sharedPost = await this.postsService.resharePost(post, data);
-        if (sharedPost.status != 2) {
-          this.posts.unshift(sharedPost);
-        }
-      },
-      (error) => {
-        this.snackBar.open(error.error.message, '', { duration: 2000 });
-      }
-    );
-  }
-
-  async confirmSharePost(data) {
-    if (!data) {
-      this.postToShare = undefined;
-    } else {
-      const sharedPost = await this.postsService.resharePost(
-        data.post,
-        data.formData
-      );
-      if (sharedPost.status != 2) {
+    DeleteDialog.afterClosed().subscribe(async (data: FormData) => {
+      const sharedPost = await this.postsService
+        .resharePost(post, data)
+        .catch((errorMessage: string) => {
+          this.showError(errorMessage);
+        });
+      if (sharedPost && sharedPost.status != 2) {
         this.posts.unshift(sharedPost);
       }
-      this.postToShare = undefined;
-    }
+    });
   }
 
   editPostInParent(post: Post) {
     let editDialog = this.dialog.open(EditDialogComponent, { data: post });
-    editDialog.afterClosed().subscribe((newData: any) => {
-      console.log(newData);
+    editDialog.afterClosed().subscribe(async (newData: any) => {
       if (newData) {
-        this.postsService
+        const updatedPost = await this.postsService
           .updatePost(post.idPost, newData.formData, newData.postWithImage)
-          .subscribe(
-            (data: Post) => {
-              post.image = data.image;
-              post.text = data.text;
-            },
-            (error) => {
-              this.snackBar.open(error.error.message, '', { duration: 2000 });
-            }
-          );
+          .catch((errorMessage) => {
+            this.showError(errorMessage);
+          });
+        if (updatedPost) {
+          post.text = updatedPost.text;
+          post.image = updatedPost.image;
+        }
       } else {
-        this.snackBar.open("you haven't make any changes", '', {
-          duration: 2000,
-        });
+        this.showError("you haven't make any changes");
       }
     });
   }
 
   ngOnDestroy() {
     this.createPostSubscribtion.unsubscribe();
+  }
+
+  showError(errorMessage: string) {
+    this.snackBar.open(errorMessage, '', { duration: 2500 });
   }
 
   ngOnInit() {

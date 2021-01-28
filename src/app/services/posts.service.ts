@@ -8,10 +8,8 @@ import { Post } from '../models/post';
 import { Comment } from '../models/comment';
 import { AccountBasicData } from '../models/accountBasicData';
 import { NotificationService } from './notification.service';
-import { PagesService } from './pages.service';
 import { Page } from '../models/page';
 import { PageBasicData } from '../models/pageBasicData';
-import { rejects } from 'assert';
 
 @Injectable({
   providedIn: 'root',
@@ -206,19 +204,17 @@ export class PostsService {
     );
   }
 
-  resharePost(post: Post, formData: FormData) {
+  resharePost(post: Post, formData: FormData): Promise<Post> {
     return new Promise<Post>((resolve, reject) => {
       this.http
         .post(this.rootUrl + 'post/resharePost/' + post.idPost, formData)
         .subscribe(
-          async (data: Post) => {
+          (data: Post) => {
             (data.postLikes = []), (data.comments = []);
             data.image = post.image;
             data.text = post.text;
             data.doneBy = { ...this.accountService.userData };
-            data.date = await this.notificationService.timeCalculation(
-              data.date
-            );
+            data.date = this.notificationService.timeCalculation(data.date);
             if (post.postCreatorId) {
               data.originalPostDoneBy = { ...post.doneBy };
             } else {
@@ -234,10 +230,25 @@ export class PostsService {
   }
 
   updatePost(postId: number, formData: FormData, postWithImage: boolean) {
-    return this.http.put(
-      this.rootUrl + 'posts/update/idAccount/' + postId + '/' + postWithImage,
-      formData
-    );
+    return new Promise<Post>((resolve, reject) => {
+      this.http
+        .put(
+          this.rootUrl +
+            'posts/update/idAccount/' +
+            postId +
+            '/' +
+            postWithImage,
+          formData
+        )
+        .subscribe(
+          (data: Post) => {
+            resolve(data);
+          },
+          (error) => {
+            reject(error.error.message);
+          }
+        );
+    });
   }
 
   getPagePosts(pageId: number) {
