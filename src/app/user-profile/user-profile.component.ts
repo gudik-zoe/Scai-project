@@ -28,7 +28,6 @@ export class UserProfileComponent implements OnInit {
     private pageService: PagesService,
     private eventService: EventsService
   ) {}
-  imgUrl: string = environment.rootUrl + 'files/';
   requestedUserData: Account;
   id: number;
   loggedInUserData: Account;
@@ -62,6 +61,7 @@ export class UserProfileComponent implements OnInit {
       requestedUserData: data.requestedUserData,
     });
   }
+
   getUserFromUrl() {
     return new Promise<Account>(async (resolve, reject) => {
       this.id = parseInt(this.aroute.snapshot.paramMap.get('id'));

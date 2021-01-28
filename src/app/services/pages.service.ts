@@ -47,13 +47,6 @@ export class PagesService {
     return this.http.post(this.rootUrl + 'posts/pageId', formData);
   }
 
-  addComment(postId: number, commentText: string) {
-    return this.http.post(
-      this.rootUrl + 'page/addComment/' + postId,
-      commentText
-    );
-  }
-
   likeComment(commentId: number) {
     return this.http.post(
       this.rootUrl + 'page/addLikeToComment/' + commentId,

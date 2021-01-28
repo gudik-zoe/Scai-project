@@ -130,10 +130,6 @@ export class PostComponent implements OnInit {
     }
   }
 
-  goToDescription(id: number): void {
-    this.route.navigate(['/description', id]);
-  }
-
   openComments() {
     this.openCommentsList = !this.openCommentsList;
   }

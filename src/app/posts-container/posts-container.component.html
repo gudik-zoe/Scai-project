@@ -1,8 +1,6 @@
 <div class="container-fluid">
   <app-create-post></app-create-post>
-  <app-share-post [postToShare]="postToShare" *ngIf="postToShare" (confirmSharePost)="confirmSharePost($event)"
-    [userData]="userData">
-  </app-share-post>
+
   <div *ngFor="let post of posts; let i = index">
     <app-post [isAdmin]="isAdmin" [commentText]="commentText" [post]="post" [page]="page" [status]="status"
       [userData]="userData" (commentPostEvent)="commentPostInParent($event)" (likePostEvent)="likePostInParent($event)"

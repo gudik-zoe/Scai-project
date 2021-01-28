@@ -90,47 +90,22 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
     );
   }
 
-  commentPostInParent(data) {
-    if (this.page && this.page.pageCreatorId == this.userData.idAccount) {
-      this.pageService
-        .addComment(data.post.idPost, data.commentText.trim())
-        .subscribe(
-          (comment: Comment) => {
-            comment.commentLike = [];
-            comment.doneByPage = {
-              ...this.page,
-            };
-            comment.date = this.notificationService.timeCalculation(
-              comment.date
-            );
-            data.post.comments.unshift(comment);
-            this.commentText = null;
-          },
-          (error) => {
-            this.snackBar.open(error.error.message, '', { duration: 2000 });
-          }
-        );
-    } else {
-      this.commentService
-        .addCommment(data.post, data.commentText.trim())
-        .subscribe(
-          (comment: Comment) => {
-            comment.commentLike = [];
-            comment.doneBy = {
-              ...this.userData,
-            };
-            comment.date = this.notificationService.timeCalculation(
-              comment.date
-            );
-            data.post.comments.unshift(comment);
-            this.commentText = null;
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-    }
+  async commentPostInParent(data) {
+    const newComment = await this.commentService
+      .addCommment(
+        data.post,
+        data.commentText.trim(),
+        this.page && this.page.pageCreatorId == this.userData.idAccount
+          ? false
+          : true
+      )
+      .catch((errorMessage: string) => {
+        this.snackBar.open(errorMessage, '', { duration: 3000 });
+      });
+
+    data.post.comments.unshift(newComment);
   }
+
   likeCommentInParent(comment: Comment) {
     if (!this.isAdmin) {
       console.log('user like');
