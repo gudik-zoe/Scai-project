@@ -32,7 +32,6 @@ export class PostsService {
     private notificationService: NotificationService,
     private utilityService: UtilityService
   ) {}
-  thePost: Post;
 
   async getPostOriginalUserData(post: Post) {
     const originalPost = await this.getPostByPostId(post.postOriginalId);

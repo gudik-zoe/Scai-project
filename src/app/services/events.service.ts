@@ -19,34 +19,29 @@ export class EventsService {
 
   getEvents() {
     return new Promise<Event[]>((resolve, reject) => {
-      this.http
-        .get(this.rootUrl + 'events')
-        .subscribe(async (data: Event[]) => {
+      this.http.get(this.rootUrl + 'events').subscribe(
+        async (data: Event[]) => {
           this.events = data;
           for (let event of this.events) {
             event.doneBy = await this.accountService.getBasicAccountDetails(
               event.eventCreatorId
             );
-            // if (Date.parse(event.time) - new Date().getTime() < 0) {
-            //   this.events = this.events.filter(
-            //     (item) => item.idEvent != event.idEvent
-            //   );
-            // } else {
-            //   resolve(this.events);
-            // }
-            resolve(this.events);
           }
-          reject('unknown error occured');
-        });
+          resolve(this.events);
+        },
+        (error) => reject(error.error.message)
+      );
     });
   }
 
   getMyEvents() {
     return new Promise<Event[]>((resolve, reject) => {
-      this.http.get(this.rootUrl + 'myEvents').subscribe((data: Event[]) => {
-        resolve(data);
-        reject('unknown error occured');
-      });
+      this.http.get(this.rootUrl + 'myEvents').subscribe(
+        (data: Event[]) => {
+          resolve(data);
+        },
+        (error) => reject(error.error.message)
+      );
     });
   }
 
@@ -72,15 +67,20 @@ export class EventsService {
 
   getEventData(eventId: number) {
     return new Promise<Event>((resolve, reject) => {
-      this.http.get(this.rootUrl + 'getEventById/' + eventId).subscribe(
-        async (data: Event) => {
-          data.doneBy = await this.accountService.getBasicAccountDetails(
-            data.eventCreatorId
-          );
-          resolve(data);
-        },
-        (error) => reject(error.error.message)
-      );
+      const event = this.events.find((item) => item.idEvent == eventId);
+      if (event) {
+        resolve(event);
+      } else {
+        this.http.get(this.rootUrl + 'getEventById/' + eventId).subscribe(
+          async (data: Event) => {
+            data.doneBy = await this.accountService.getBasicAccountDetails(
+              data.eventCreatorId
+            );
+            resolve(data);
+          },
+          (error) => reject(error.error.message)
+        );
+      }
     });
   }
 
