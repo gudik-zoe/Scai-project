@@ -7,6 +7,8 @@ import { Post } from '../models/post';
 import { NotificationService } from './notification.service';
 import { PagesService } from './pages.service';
 import { CommentLike } from '../models/commentLike';
+import { UtilityService } from './utility.service';
+import { PostsService } from './posts.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +19,8 @@ export class CommentsService {
     private http: HttpClient,
     private accountService: AccountService,
     private notificationService: NotificationService,
-    private pageService: PagesService
+    private postService: PostsService,
+    private utilityService: UtilityService
   ) {}
 
   getCommentsByPostId(postId: number) {
@@ -44,7 +47,7 @@ export class CommentsService {
             if (comment.commentCreatorId) {
               comment.doneBy = { ...this.accountService.userData };
             } else {
-              comment.doneByPage = await this.pageService.getPageData(
+              comment.doneByPage = await this.utilityService.getPageData(
                 comment.pageCreatorId
               );
             }
@@ -79,7 +82,7 @@ export class CommentsService {
             } else if (commentLike.commentLikeCreatorId) {
               commentLike.doneBy = { ...this.accountService.userData };
             } else if (commentLike.pageCreatorId) {
-              commentLike.doneByPage = await this.pageService.getPageData(
+              commentLike.doneByPage = await this.utilityService.getPageData(
                 commentLike.pageCreatorId
               );
             }

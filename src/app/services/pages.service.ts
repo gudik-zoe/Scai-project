@@ -5,29 +5,23 @@ import { environment } from 'src/environments/environment';
 import { Page } from '../models/page';
 import { PageBasicData } from '../models/pageBasicData';
 import { PostsService } from './posts.service';
+import { UtilityService } from './utility.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PagesService {
-  constructor(private postService: PostsService, private http: HttpClient) {}
+  constructor(
+    private postService: PostsService,
+    private http: HttpClient,
+    private utilityService: UtilityService
+  ) {}
 
   rootUrl: string = environment.rootUrl;
   userAccess: boolean;
-  pages: Page[] = [];
   addPost = new Subject<any>();
   createPage(page: FormData) {
     return this.http.post(this.rootUrl + 'create/page', page);
-  }
-
-  getPages() {
-    return new Promise<Page[]>((resolve, reject) => {
-      this.http.get(this.rootUrl + 'pages').subscribe((data: Page[]) => {
-        this.pages = data;
-        resolve(this.pages);
-        reject('unknown error occured');
-      });
-    });
   }
 
   likePage(idPage: number) {
@@ -39,6 +33,17 @@ export class PagesService {
       this.http.get(this.rootUrl + 'myPages').subscribe((data: Page[]) => {
         resolve(data);
         reject(null);
+      });
+    });
+  }
+
+  pages: Page[] = [];
+  getPages() {
+    return new Promise<Page[]>((resolve, reject) => {
+      this.http.get(this.rootUrl + 'pages').subscribe((data: Page[]) => {
+        this.pages = data;
+        resolve(this.pages);
+        reject('unknown error occured');
       });
     });
   }
@@ -68,22 +73,22 @@ export class PagesService {
         });
     });
   }
-  getPageData(pageId: number) {
-    return new Promise<PageBasicData>((resolve, reject) => {
-      const check = this.pages.find((item: Page) => {
-        item.idPage == pageId;
-      });
-      if (check) {
-        resolve(check);
-      } else {
-        this.http
-          .get(this.rootUrl + 'pages/getPage/' + pageId)
-          .subscribe((data: Page) => {
-            resolve(data);
-          });
-      }
-    });
-  }
+  // getPageData(pageId: number) {
+  //   return new Promise<PageBasicData>((resolve, reject) => {
+  //     const check = this.pages.find((item: Page) => {
+  //       item.idPage == pageId;
+  //     });
+  //     if (check) {
+  //       resolve(check);
+  //     } else {
+  //       this.http
+  //         .get(this.rootUrl + 'pages/getPage/' + pageId)
+  //         .subscribe((data: Page) => {
+  //           resolve(data);
+  //         });
+  //     }
+  //   });
+  // }
 
   updateThePage(newPage: FormData) {
     return this.http.put(this.rootUrl + 'updatePage', newPage);

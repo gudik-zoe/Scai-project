@@ -4,6 +4,7 @@ import { Page } from '../models/page';
 import { PageLike } from '../models/pageLike';
 import { AccountService } from '../services/account.service';
 import { PagesService } from '../services/pages.service';
+import { PostsService } from '../services/posts.service';
 
 @Component({
   selector: 'app-pages-container',
@@ -13,7 +14,8 @@ import { PagesService } from '../services/pages.service';
 export class PagesContainerComponent implements OnInit {
   constructor(
     private pageService: PagesService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private postService: PostsService
   ) {}
   pages: Page[];
   userData: AccountBasicData;

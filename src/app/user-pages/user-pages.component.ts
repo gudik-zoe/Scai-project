@@ -35,10 +35,7 @@ export class UserPagesComponent implements OnInit, OnDestroy {
   editPage: boolean;
 
   async getPageInfo() {
-    this.page = this.pageService.pages.find((item) => item.idPage == this.id);
-    if (!this.page) {
-      this.page = await this.pageService.getPageFullData(this.id);
-    }
+    this.page = await this.pageService.getPageFullData(this.id);
     for (let post of this.page.posts) {
       this.postService.getUserDetails(post);
     }
@@ -57,7 +54,7 @@ export class UserPagesComponent implements OnInit, OnDestroy {
   getNewPost() {
     this.subscription = this.pageService.addPost.subscribe((data: Post) => {
       if (data) {
-        data.date = this.notificationService.timeCalculation(data.date);
+        // data.date = this.notificationService.timeCalculation(data.date);
         this.page.posts.unshift(data);
       }
     });

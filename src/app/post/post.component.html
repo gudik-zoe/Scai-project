@@ -155,9 +155,11 @@
           <img src="../../assets/download (1).jpg" width="20px" height="20px" style="border-radius:50% ;">
           {{comment.commentLike.length}}
           <span class="comment-info">
-            <div *ngFor="let like of comment.commentLike ;"> {{ like.doneBy ? like.doneBy.firstName + " " +
-              like.doneBy.lastName :
-              like.doneByPage.name }}
+            <div *ngFor="let like of comment.commentLike ;"><span *ngIf="like.doneBy || like.doneByPage"> {{ like.doneBy
+                ? like.doneBy.firstName + " " +
+                like.doneBy.lastName :
+                like.doneByPage.name }}
+              </span>
             </div>
           </span>
         </span>

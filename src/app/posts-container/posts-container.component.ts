@@ -105,17 +105,14 @@ export class PostsContainerComponent implements OnInit, OnDestroy {
       .catch((errorMessage: string) => {
         this.showError(errorMessage);
       });
-    if (commentLike) {
-      comment.commentLike.push(commentLike);
-    } else {
-      comment.commentLike.pop();
-    }
+    commentLike
+      ? comment.commentLike.push(commentLike)
+      : comment.commentLike.pop();
   }
 
   sharePost(post: Post) {
-    const dataToPass = { post: post, userData: this.userData };
     let DeleteDialog = this.dialog.open(ShareDialogComponent, {
-      data: dataToPass,
+      data: { post: post, userData: this.userData },
     });
     DeleteDialog.afterClosed().subscribe(async (data: FormData) => {
       const sharedPost = await this.postsService

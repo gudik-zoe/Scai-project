@@ -5,30 +5,22 @@ import { HttpClient } from '@angular/common/http';
 import { AccountService } from './account.service';
 import { environment } from 'src/environments/environment';
 import { Post } from '../models/post';
-import { Comment } from '../models/comment';
 import { AccountBasicData } from '../models/accountBasicData';
 import { NotificationService } from './notification.service';
 import { Page } from '../models/page';
 import { PageBasicData } from '../models/pageBasicData';
+import { PagesService } from './pages.service';
+import { UtilityService } from './utility.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostsService {
   rootUrl: string = environment.rootUrl;
-  close = new Subject<any>();
-  editPostComponent = new Subject<any>();
-  sharePostComponent = new Subject<any>();
-  errorSubject = new Subject<boolean>();
-  deletePostSubject = new Subject<any>();
   alertComponent = new Subject<any>();
-  confirmPostDeleting = new Subject<any>();
   leavePostComponent = new Subject<any>();
   homePagePosts: Post[] = [];
-  allPosts: Post[];
-  comment: Comment;
   post: Post;
-  postsData = [];
   userBasicData: AccountBasicData;
   page: PageBasicData;
   accountPosts: Post[] = [];
@@ -37,60 +29,83 @@ export class PostsService {
   constructor(
     private accountService: AccountService,
     private http: HttpClient,
-    private notificationService: NotificationService // private pageService: PagesService
+    private notificationService: NotificationService,
+    private utilityService: UtilityService
   ) {}
+  thePost: Post;
 
   async getPostOriginalUserData(post: Post) {
-    const postData = await this.getPostByPostId(post.postOriginalId);
-    if (postData && postData.postCreatorId) {
-      const checkIfUserExistInBasicDataArray = this.accountService.accountBasicData.find(
-        (item) => item.idAccount == postData.postCreatorId
+    const originalPost = await this.getPostByPostId(post.postOriginalId);
+    if (originalPost && originalPost.postCreatorId) {
+      post.text = originalPost.text;
+      post.image = originalPost.image;
+      post.likesNumber = originalPost.postLikes.length;
+      post.commentsNumber = originalPost.comments.length;
+      post.originalPostDoneBy = await this.accountService.getBasicAccountDetails(
+        originalPost.postCreatorId
       );
-      if (checkIfUserExistInBasicDataArray) {
-        post.text = postData.text;
-        post.image = postData.image;
-        post.likesNumber = postData.postLikes.length;
-        post.commentsNumber = postData.comments.length;
-        post.originalPostDoneBy = checkIfUserExistInBasicDataArray;
-      } else {
-        this.userBasicData = await this.accountService.getBasicAccountDetails(
-          postData.postCreatorId
-        );
-        post.text = postData.text;
-        post.image = postData.image;
-        post.likesNumber = postData.postLikes.length;
-        post.commentsNumber = postData.comments.length;
-        post.originalPostDoneBy = this.userBasicData;
-      }
-    } else if (postData && postData.pageCreatorId) {
-      const checkIfPageExistInBasicDataArray = this.pages.find(
-        (item) => item.idPage == postData.pageCreatorId
+    } else {
+      post.text = originalPost.text;
+      post.image = originalPost.image;
+      post.likesNumber = originalPost.postLikes.length;
+      post.commentsNumber = originalPost.comments.length;
+      post.originalPostDoneByPage = await this.utilityService.getPageData(
+        originalPost.pageCreatorId
       );
-      if (checkIfPageExistInBasicDataArray) {
-        post.text = postData.text;
-        post.image = postData.image;
-        post.likesNumber = postData.postLikes.length;
-        post.commentsNumber = postData.comments.length;
-        post.originalPostDoneByPage = checkIfPageExistInBasicDataArray;
-      } else {
-        this.page = await this.getPageData(postData.pageCreatorId);
-        post.text = postData.text;
-        post.image = postData.image;
-        post.likesNumber = postData.postLikes.length;
-        post.commentsNumber = postData.comments.length;
-        post.originalPostDoneByPage = this.page;
-      }
     }
+    // post.originalPostDoneBy = await this.accountService.getBasicAccountDetails(post.o)
+    // if (postData && postData.postCreatorId) {
+    //   const checkIfUserExistInBasicDataArray = this.accountService.accountBasicData.find(
+    //     (item) => item.idAccount == postData.postCreatorId
+    //   );
+    //   if (checkIfUserExistInBasicDataArray) {
+    //     post.text = postData.text;
+    //     post.image = postData.image;
+    //     post.likesNumber = postData.postLikes.length;
+    //     post.commentsNumber = postData.comments.length;
+    //     post.originalPostDoneBy = checkIfUserExistInBasicDataArray;
+    //   } else {
+    //     this.userBasicData = await this.accountService.getBasicAccountDetails(
+    //       postData.postCreatorId
+    //     );
+    //     post.text = postData.text;
+    //     post.image = postData.image;
+    //     post.likesNumber = postData.postLikes.length;
+    //     post.commentsNumber = postData.comments.length;
+    //     post.originalPostDoneBy = this.userBasicData;
+    //   }
+    // } else if (postData && postData.pageCreatorId) {
+    //   const checkIfPageExistInBasicDataArray = this.pages.find(
+    //     (item) => item.idPage == postData.pageCreatorId
+    //   );
+    //   if (checkIfPageExistInBasicDataArray) {
+    //     post.text = postData.text;
+    //     post.image = postData.image;
+    //     post.likesNumber = postData.postLikes.length;
+    //     post.commentsNumber = postData.comments.length;
+    //     post.originalPostDoneByPage = checkIfPageExistInBasicDataArray;
+    //   } else {
+    //     this.page = await this.getPageData(postData.pageCreatorId);
+    //     post.text = postData.text;
+    //     post.image = postData.image;
+    //     post.likesNumber = postData.postLikes.length;
+    //     post.commentsNumber = postData.comments.length;
+    //     post.originalPostDoneByPage = this.page;
+    //   }
+    // }
   }
 
   async getUserDetails(post: Post) {
-    if (post && post.postCreatorId) {
+    post.date = this.notificationService.timeCalculation(post.date);
+    if (post.postCreatorId) {
       this.userBasicData = await this.accountService.getBasicAccountDetails(
         post.postCreatorId
       );
       post.doneBy = this.userBasicData;
     } else if (post.pageCreatorId) {
-      post.doneByPage = await this.getPageData(post.pageCreatorId);
+      post.doneByPage = await this.utilityService.getPageData(
+        post.pageCreatorId
+      );
     }
     if (post.postedOn) {
       this.userBasicData = await this.accountService.getBasicAccountDetails(
@@ -99,14 +114,18 @@ export class PostsService {
       post.postedOnData = this.userBasicData;
     }
     for (let comment of post.comments) {
+      if (!comment.date.includes('ago')) {
+        comment.date = this.notificationService.timeCalculation(comment.date);
+      }
       if (comment.commentCreatorId) {
         comment.doneBy = await this.accountService.getBasicAccountDetails(
           comment.commentCreatorId
         );
       } else if (comment.pageCreatorId) {
-        comment.doneByPage = await this.getPageData(comment.pageCreatorId);
+        comment.doneByPage = await this.utilityService.getPageData(
+          comment.pageCreatorId
+        );
       }
-      comment.date = this.notificationService.timeCalculation(comment.date);
       if (comment.commentLike.length > 0) {
         for (let like of comment.commentLike) {
           if (!like.pageCreatorId) {
@@ -114,7 +133,9 @@ export class PostsService {
               like.commentLikeCreatorId
             );
           } else {
-            like.doneByPage = await this.getPageData(like.pageCreatorId);
+            like.doneByPage = await this.utilityService.getPageData(
+              like.pageCreatorId
+            );
           }
         }
       }
@@ -125,7 +146,6 @@ export class PostsService {
       );
       like.doneBy = this.userBasicData;
     }
-    post.date = this.notificationService.timeCalculation(post.date);
   }
 
   getHomePagePosts() {
@@ -173,19 +193,24 @@ export class PostsService {
 
   getPostByPostId(id: number) {
     return new Promise<Post>((resolve, reject) => {
-      this.http
-        .get(this.rootUrl + 'posts/postId/' + id)
-        .subscribe((data: Post) => {
-          this.post = data;
-          if (this.post) {
-            this.getUserDetails(this.post);
-            if (this.post.postOriginalId) {
-              this.getPostOriginalUserData(this.post);
+      let post = this.homePagePosts.find((item) => item.idPost == id);
+      if (post) {
+        resolve(post);
+      } else {
+        this.http
+          .get(this.rootUrl + 'posts/postId/' + id)
+          .subscribe((data: Post) => {
+            post = data;
+            if (post) {
+              this.getUserDetails(post);
+              // if (this.post.postOriginalId) {
+              //   this.getPostOriginalUserData(this.post);
+              // }
             }
-          }
-          resolve(this.post);
-          reject('there is no post with this id');
-        });
+            resolve(post);
+            reject('there is no post with this id');
+          });
+      }
     });
   }
 
@@ -268,22 +293,5 @@ export class PostsService {
 
   deletePost(postId: number) {
     return this.http.delete(this.rootUrl + 'posts/' + postId);
-  }
-  pages: Page[] = [];
-  getPageData(pageId: number) {
-    return new Promise<PageBasicData>((resolve, reject) => {
-      const check = this.pages.find((item: Page) => {
-        item.idPage == pageId;
-      });
-      if (check) {
-        resolve(check);
-      } else {
-        this.http
-          .get(this.rootUrl + 'pages/getPage/' + pageId)
-          .subscribe((data: Page) => {
-            resolve(data);
-          });
-      }
-    });
   }
 }
