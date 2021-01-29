@@ -4,6 +4,7 @@ import { first } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Notification } from '../models/notification';
+import { NotificationDetails } from '../models/notificationDetails';
 import { AccountService } from '../services/account.service';
 import { NotificationService } from '../services/notification.service';
 
@@ -14,7 +15,7 @@ import { NotificationService } from '../services/notification.service';
 })
 export class NotificationComponent implements OnInit, OnDestroy {
   notifications: Notification[];
-  unseenNots: Notification[] = [];
+  unseenNots: number = 0;
   userData: AccountBasicData;
   haveNotification: boolean;
   basicData: AccountBasicData[] = [];
@@ -37,21 +38,13 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
   async getNotifications() {
     this.notifications = await this.notificationService.getNotification();
-    if (this.notifications.length == 0) {
-      this.haveNotification = false;
-    } else {
-      this.haveNotification = true;
-    }
+    this.notifications.length == 0
+      ? (this.haveNotification = false)
+      : (this.haveNotification = true);
     for (let not of this.notifications) {
       if (!not.seen) {
         this.notificationSound.play();
-        const check = this.unseenNots.find(
-          (item) => item.idNotification == not.idNotification
-        );
-        if (!check) {
-          this.unseenNots.push(not);
-        } else {
-        }
+        this.unseenNots++;
       }
     }
   }
@@ -60,9 +53,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
     this.notificationService
       .notHasBeenSeen(notificationId)
       .subscribe((data) => {
-        this.unseenNots = this.unseenNots.filter(
-          (item) => item.idNotification != notificationId
-        );
+        this.unseenNots--;
         for (let not of this.notifications) {
           if (not.idNotification == notificationId) {
             not.seen = true;
@@ -99,7 +90,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
     this.notificationService.allNotificationsSeen().subscribe((data) => {
       for (let not of this.notifications) {
         if (!not.seen) {
-          this.unseenNots = [];
+          this.unseenNots = 0;
           not.seen = true;
         }
       }
@@ -113,21 +104,36 @@ export class NotificationComponent implements OnInit, OnDestroy {
       event.target.offsetHeight + event.target.scrollTop >=
       event.target.scrollHeight
     ) {
-      this.restOfTheNotifications = await this.notificationService.loadMore(
-        lastIndex
-      );
-      for (let not of this.restOfTheNotifications) {
-        this.notifications.push(not);
-        if (!not.seen) {
-          this.unseenNots.push(not);
+      if (
+        this.notifications.length == this.notificationDetails.notificationNumber
+      ) {
+        console.log('that would be all am not loading any more');
+      } else {
+        this.restOfTheNotifications = await this.notificationService.loadMore(
+          lastIndex
+        );
+        for (let not of this.restOfTheNotifications) {
+          this.notifications.push(not);
         }
       }
     }
   }
 
+  notificationDetails: NotificationDetails;
+  getNotsDetails() {
+    this.notificationService
+      .getNotificationDetails()
+      .subscribe((data: NotificationDetails) => {
+        this.notificationDetails = data;
+        this.unseenNots = this.notificationDetails.unseenNotsNumber;
+        console.log(this.notificationDetails);
+      });
+  }
+
   ngOnInit(): void {
     this.getUserData();
     this.getNotifications();
+    this.getNotsDetails();
     this.startInterval();
   }
 }

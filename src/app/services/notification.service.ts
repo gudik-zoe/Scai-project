@@ -73,6 +73,10 @@ export class NotificationService {
     });
   }
 
+  getNotificationDetails() {
+    return this.http.get(this.rootUrl + 'notification/notificationDetails');
+  }
+
   timeCalculation(date: string) {
     const now = new Date().getTime();
     let timeToCalculate = now - new Date(date).getTime();

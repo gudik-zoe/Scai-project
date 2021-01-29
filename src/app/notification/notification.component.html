@@ -1,7 +1,7 @@
 <div class="dropdown">
     <div class="icon" id=" dropdownMenuButton" data-toggle="dropdown">
         <mat-icon matIconSize="large">notifications</mat-icon>
-        <span [matBadgeHidden]="unseenNots.length == 0" [matBadge]="unseenNots.length" matBadgePosition="above after"
+        <span [matBadgeHidden]="unseenNots == 0" [matBadge]="unseenNots" matBadgePosition="above after"
             matBadgeSize="small" matBadgeColor="warn">
         </span>
 
@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="unseenNots && unseenNots.length > 0" class="container-fluid"
+        <div *ngIf=" unseenNots > 0" class="container-fluid"
             style="height: 45px; border-top: 1px thin black; background-color: whitesmoke;">
             <h6 style=" margin-left: 150px; cursor: pointer;color: blue;" (click)="seeAll()"> see all </h6>
         </div>
