@@ -36,9 +36,6 @@ export class UserPagesComponent implements OnInit, OnDestroy {
 
   async getPageInfo() {
     this.page = await this.pageService.getPageFullData(this.id);
-    for (let post of this.page.posts) {
-      this.postService.getUserDetails(post);
-    }
     this.page.pageCreatorId == this.userData.idAccount
       ? (this.isAdmin = true)
       : (this.isAdmin = false);
@@ -54,7 +51,7 @@ export class UserPagesComponent implements OnInit, OnDestroy {
   getNewPost() {
     this.subscription = this.pageService.addPost.subscribe((data: Post) => {
       if (data) {
-        // data.date = this.notificationService.timeCalculation(data.date);
+        data.date = this.notificationService.timeCalculation(data.date);
         this.page.posts.unshift(data);
       }
     });

@@ -7,9 +7,9 @@
             style="border-radius: 50%;"><span (click)="goToPage()"
             style="font-size: larger; font-weight: bolder;cursor: pointer;">
             {{page.name}}</span>
-        <p> {{page.description}}</p>
-        <small *ngIf="page.pageLike"> <i class="fa fa-thumbs-up  fa-2x mr-1" aria-hidden="true"
-                style="color: grey;"></i> {{page.pageLike.length}} people liked {{page.name}}</small>
+        <!-- <p> {{page.description}}</p> -->
+        <p *ngIf="page.likers"> <i class="fa fa-thumbs-up  fa-2x mr-1" aria-hidden="true" style="color: grey;"></i>
+            {{page.likers.length}} people liked {{page.name}}</p>
 
         <button [disabled]="page.pageCreatorId == userData.idAccount"
             [ngClass]="getLike() ? 'btn btn-primary btn-block mt-2' : 'btn btn-info btn-block mt-2'"

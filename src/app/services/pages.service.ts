@@ -37,14 +37,16 @@ export class PagesService {
     });
   }
 
-  pages: Page[] = [];
+  pages: PageBasicData[] = [];
   getPages() {
-    return new Promise<Page[]>((resolve, reject) => {
-      this.http.get(this.rootUrl + 'pages').subscribe((data: Page[]) => {
-        this.pages = data;
-        resolve(this.pages);
-        reject('unknown error occured');
-      });
+    return new Promise<PageBasicData[]>((resolve, reject) => {
+      this.http
+        .get(this.rootUrl + 'pages')
+        .subscribe((data: PageBasicData[]) => {
+          this.pages = data;
+          resolve(this.pages);
+          reject('unknown error occured');
+        });
     });
   }
 

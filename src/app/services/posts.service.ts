@@ -53,46 +53,6 @@ export class PostsService {
         originalPost.pageCreatorId
       );
     }
-    // post.originalPostDoneBy = await this.accountService.getBasicAccountDetails(post.o)
-    // if (postData && postData.postCreatorId) {
-    //   const checkIfUserExistInBasicDataArray = this.accountService.accountBasicData.find(
-    //     (item) => item.idAccount == postData.postCreatorId
-    //   );
-    //   if (checkIfUserExistInBasicDataArray) {
-    //     post.text = postData.text;
-    //     post.image = postData.image;
-    //     post.likesNumber = postData.postLikes.length;
-    //     post.commentsNumber = postData.comments.length;
-    //     post.originalPostDoneBy = checkIfUserExistInBasicDataArray;
-    //   } else {
-    //     this.userBasicData = await this.accountService.getBasicAccountDetails(
-    //       postData.postCreatorId
-    //     );
-    //     post.text = postData.text;
-    //     post.image = postData.image;
-    //     post.likesNumber = postData.postLikes.length;
-    //     post.commentsNumber = postData.comments.length;
-    //     post.originalPostDoneBy = this.userBasicData;
-    //   }
-    // } else if (postData && postData.pageCreatorId) {
-    //   const checkIfPageExistInBasicDataArray = this.pages.find(
-    //     (item) => item.idPage == postData.pageCreatorId
-    //   );
-    //   if (checkIfPageExistInBasicDataArray) {
-    //     post.text = postData.text;
-    //     post.image = postData.image;
-    //     post.likesNumber = postData.postLikes.length;
-    //     post.commentsNumber = postData.comments.length;
-    //     post.originalPostDoneByPage = checkIfPageExistInBasicDataArray;
-    //   } else {
-    //     this.page = await this.getPageData(postData.pageCreatorId);
-    //     post.text = postData.text;
-    //     post.image = postData.image;
-    //     post.likesNumber = postData.postLikes.length;
-    //     post.commentsNumber = postData.comments.length;
-    //     post.originalPostDoneByPage = this.page;
-    //   }
-    // }
   }
 
   async getUserDetails(post: Post) {
@@ -114,9 +74,7 @@ export class PostsService {
       post.postedOnData = this.userBasicData;
     }
     for (let comment of post.comments) {
-      if (!comment.date.includes('ago')) {
-        comment.date = this.notificationService.timeCalculation(comment.date);
-      }
+      comment.date = this.notificationService.timeCalculation(comment.date);
       if (comment.commentCreatorId) {
         comment.doneBy = await this.accountService.getBasicAccountDetails(
           comment.commentCreatorId

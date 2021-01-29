@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountBasicData } from '../models/accountBasicData';
-import { Page } from '../models/page';
+import { PageBasicData } from '../models/pageBasicData';
 import { PageLike } from '../models/pageLike';
 import { AccountService } from '../services/account.service';
 import { PagesService } from '../services/pages.service';
@@ -17,11 +17,12 @@ export class PagesContainerComponent implements OnInit {
     private accountService: AccountService,
     private postService: PostsService
   ) {}
-  pages: Page[];
+  pages: PageBasicData[];
   userData: AccountBasicData;
 
   async getPages() {
     this.pages = await this.pageService.getPages();
+    console.log(this.pages);
   }
 
   async getUserData() {
@@ -30,12 +31,12 @@ export class PagesContainerComponent implements OnInit {
       (await this.accountService.getTheLoggedInUserData());
   }
 
-  likePageInParent(page: Page) {
+  likePageInParent(page: PageBasicData) {
     this.pageService.likePage(page.idPage).subscribe((data: PageLike) => {
       if (data) {
-        page.pageLike.push(data);
+        page.likers.push(data);
       } else {
-        page.pageLike.pop();
+        page.likers.pop();
       }
     });
   }
