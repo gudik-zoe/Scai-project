@@ -1,50 +1,43 @@
 <div class="container-fluid">
   <div class="row" style="margin-top: 65px;">
-    <div id="first-div" class="col-md-3" *ngIf="userData">
+    <div class="col-md-3" *ngIf="userData">
       <div class="side-bar">
         <app-side-bar></app-side-bar>
       </div>
       <br>
       <app-account-photos [account]="userData"></app-account-photos>
     </div>
-    <!-- ngClass="{{ open ? 'col-md-6' : 'col-md-9' }}" -->
-    <div [ngClass]="!openFriends ? 'col-md-6' : 'col-md-9'" id="second-div">
-      <div class="container-fluid">
-        <div class="col-md-7" style="margin: 10px auto 0px auto;">
-          <app-what-on-mind (createPost)="openDiv($event)"></app-what-on-mind>
-          <!-- <app-create-post [post]="post"></app-create-post> -->
-        </div>
-        <hr />
-        <h2 style="color: blue" class="font-weight-bold">News Feed</h2>
-        <hr />
-        <button (click)="openFriends = !openFriends" mat-mini-fab style="outline: none;float:right;">
-          <mat-icon>
-            multiple_stop</mat-icon>
-        </button>
 
+    <div class="col-md-6">
 
-        <app-posts-container [posts]="dbPosts" [status]="status"> </app-posts-container>
+      <div style="margin: 10px auto 0px auto; width: 50%;">
+        <app-what-on-mind (createPost)="openDiv($event)"></app-what-on-mind>
       </div>
+      <hr />
+      <h2 style="color: blue" class="font-weight-bold">News Feed</h2>
+      <hr />
+
+      <app-posts-container [posts]="dbPosts" [status]="status"> </app-posts-container>
     </div>
 
-    <div *ngIf="peopleYouMayKnow && friends" id="third-div" class="col-md-3 mt-2">
-      <mat-sidenav-container>
+    <div *ngIf="peopleYouMayKnow && friends" class="col-md-3">
+      <!-- <mat-sidenav-container>
         <mat-sidenav #sidenav mode="side" color="primary" [opened]="openFriends">
 
           sidenav
         </mat-sidenav>
 
-        <mat-sidenav-content>
-          <app-friends-container *ngIf="!openFriends && friends.length > 0" (unFriendInHomePage)="unFriend($event)"
-            [users]="friends" [areFriends]="true">
-          </app-friends-container>
-          <app-friends-container *ngIf="!openFriends && peopleYouMayKnow.length > 0 " [users]="peopleYouMayKnow"
-            [areFriends]="false">
-          </app-friends-container>
+        <mat-sidenav-content> -->
+      <app-friends-container *ngIf="!openFriends && friends.length > 0" (unFriendInHomePage)="unFriend($event)"
+        [users]="friends" [areFriends]="true">
+      </app-friends-container>
+      <app-friends-container *ngIf="!openFriends && peopleYouMayKnow.length > 0 " [users]="peopleYouMayKnow"
+        [areFriends]="false">
+      </app-friends-container>
 
-
+      <!-- 
         </mat-sidenav-content>
-      </mat-sidenav-container>
+      </mat-sidenav-container> -->
 
 
 

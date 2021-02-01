@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { PostsService } from '../services/posts.service';
 
@@ -10,12 +11,10 @@ import { PostsService } from '../services/posts.service';
 export class PhotoViewerComponent implements OnInit {
   subscription: Subscription;
   openComponent: boolean;
-  constructor(private postService: PostsService) {}
-
-  @Input() image: string;
+  constructor(@Inject(MAT_DIALOG_DATA) public image: string) {}
 
   close() {
-    this.image = null;
+    this.image = undefined;
   }
 
   ngOnInit() {}

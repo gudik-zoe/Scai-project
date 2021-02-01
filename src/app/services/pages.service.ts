@@ -29,11 +29,13 @@ export class PagesService {
   }
 
   getMyPages() {
-    return new Promise<Page[]>((resolve, reject) => {
-      this.http.get(this.rootUrl + 'myPages').subscribe((data: Page[]) => {
-        resolve(data);
-        reject(null);
-      });
+    return new Promise<PageBasicData[]>((resolve, reject) => {
+      this.http.get(this.rootUrl + 'myPages').subscribe(
+        (data: PageBasicData[]) => {
+          resolve(data);
+        },
+        (error) => reject(error.error.message)
+      );
     });
   }
 
@@ -75,22 +77,6 @@ export class PagesService {
         });
     });
   }
-  // getPageData(pageId: number) {
-  //   return new Promise<PageBasicData>((resolve, reject) => {
-  //     const check = this.pages.find((item: Page) => {
-  //       item.idPage == pageId;
-  //     });
-  //     if (check) {
-  //       resolve(check);
-  //     } else {
-  //       this.http
-  //         .get(this.rootUrl + 'pages/getPage/' + pageId)
-  //         .subscribe((data: Page) => {
-  //           resolve(data);
-  //         });
-  //     }
-  //   });
-  // }
 
   updateThePage(newPage: FormData) {
     return this.http.put(this.rootUrl + 'updatePage', newPage);

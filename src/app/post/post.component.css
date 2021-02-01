@@ -9,7 +9,17 @@
   transition: all 0.2s ease-in-out;
   box-shadow: 0px 0px 1px 0px #888888;
 }
-
+.container {
+  text-align: center;
+  border-radius: 6px;
+  margin: 20px auto 0px auto;
+  border: 1px solid white;
+  width: 80%;
+  padding: 10px;
+  background-color: whitesmoke;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0px 0px 1px 0px #888888;
+}
 .post-container:hover {
   text-align: center;
   border-radius: 6px;

@@ -12,6 +12,7 @@ import { FriendsService } from '../services/friends.service';
 import { PagesService } from '../services/pages.service';
 import { PostsService } from '../services/posts.service';
 import { EventReact } from '../models/eventReact';
+import { PageBasicData } from '../models/pageBasicData';
 
 @Component({
   selector: 'app-user-profile',
@@ -36,7 +37,7 @@ export class UserProfileComponent implements OnInit {
   btnDisable: boolean;
   friends: AccountBasicData[];
   users: AccountBasicData[];
-  myPages: Page[];
+  myPages: PageBasicData[];
   myEvents: Event[];
   linkedEvents: EventReact[];
 

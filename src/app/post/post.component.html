@@ -1,178 +1,178 @@
-<div class="container-fluid">
-  <div *ngIf="userData" class="post-container">
-    <ng-container *ngIf="post.doneBy || post.doneByPage">
+<div class="container">
 
-      <span class="font-weight-bold mt-1" style="float: left;">
-        <img *ngIf="!post.doneByPage" src="{{  post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%;"
-          height="50px" />
-        <img *ngIf="post.doneByPage" src="{{  post.doneByPage.profilePhoto }}" width="50px" style="border-radius: 50%;"
-          height="50px" />
-        <span *ngIf="!post.doneByPage"> {{ post.doneBy.firstName + " " + post.doneBy.lastName }} {{ post.postedOn ?
-          '':'shared'}}</span>
-        <span *ngIf="post.doneByPage"> {{ post.doneByPage.name}} {{ post.postedOn ? '':'shared'}}</span>
-        <p style="color:gray ; font-size: x-small; margin-left: 70px; margin-top: -17px;">
-          {{post.date}} .
-          <i *ngIf="post.status == 0" class="fa fa-globe" aria-hidden="true"></i>
-          <i *ngIf="post.status == 1" class="fa fa-users" aria-hidden="true"></i>
-          <i *ngIf="post.status == 2" class="fa fa-lock" aria-hidden="true"></i>
-        </p>
-      </span>
-      <span style="float: left;" *ngIf="post.postedOn && post.postedOnData">
-        <i style="padding: 10px; margin-top: 10px;" class="fa fa-caret-right fa-lg" aria-hidden="true"></i>
-        <img src="{{ post.postedOnData.profilePhoto }}" style="width: 45px; height: 45px; border-radius: 50%;" />
-        {{post.postedOnData.firstName + " " + post.postedOnData.lastName}}
-      </span>
+  <ng-container *ngIf="post.doneBy || post.doneByPage">
+
+    <span class="font-weight-bold mt-1" style="float: left;">
+      <img *ngIf="!post.doneByPage" src="{{  post.doneBy.profilePhoto }}" width="50px" style="border-radius: 50%;"
+        height="50px" />
+      <img *ngIf="post.doneByPage" src="{{  post.doneByPage.profilePhoto }}" width="50px" style="border-radius: 50%;"
+        height="50px" />
+      <span *ngIf="!post.doneByPage"> {{ post.doneBy.firstName + " " + post.doneBy.lastName }} {{ post.postedOn ?
+        '':'shared'}}</span>
+      <span *ngIf="post.doneByPage"> {{ post.doneByPage.name}} {{ post.postedOn ? '':'shared'}}</span>
+      <p style="color:gray ; font-size: x-small; margin-left: 70px; margin-top: -17px;">
+        {{post.date}} .
+        <i *ngIf="post.status == 0" class="fa fa-globe" aria-hidden="true"></i>
+        <i *ngIf="post.status == 1" class="fa fa-users" aria-hidden="true"></i>
+        <i *ngIf="post.status == 2" class="fa fa-lock" aria-hidden="true"></i>
+      </p>
+    </span>
+    <span style="float: left;" *ngIf="post.postedOn && post.postedOnData">
+      <i style="padding: 10px; margin-top: 10px;" class="fa fa-caret-right fa-lg" aria-hidden="true"></i>
+      <img src="{{ post.postedOnData.profilePhoto }}" style="width: 45px; height: 45px; border-radius: 50%;" />
+      {{post.postedOnData.firstName + " " + post.postedOnData.lastName}}
+    </span>
 
 
-      <div *ngIf="userData.idAccount == post.postCreatorId || page &&  userData.idAccount == page.pageCreatorId">
-        <mat-menu #dropDown="matMenu" xPosition="before" yPosition="below">
-          <button
-            *ngIf="post.postCreatorId == userData.idAccount && !post.postOriginalId || page &&  userData.idAccount == page.pageCreatorId"
-            mat-menu-item (click)="editPost(post)">
-            <mat-icon color="primary">create</mat-icon>
-            Edit
-          </button>
-          <button mat-menu-item (click)=" deletePost(post)">
-            <mat-icon color="warn">delete</mat-icon>Delete
-          </button>
-        </mat-menu>
-        <mat-icon [matMenuTriggerFor]="dropDown" class="three-dots">more_horiz
-        </mat-icon>
+    <div *ngIf="userData.idAccount == post.postCreatorId || page &&  userData.idAccount == page.pageCreatorId">
+      <mat-menu #dropDown="matMenu" xPosition="before" yPosition="below">
+        <button
+          *ngIf="post.postCreatorId == userData.idAccount && !post.postOriginalId || page &&  userData.idAccount == page.pageCreatorId"
+          mat-menu-item (click)="editPost(post)">
+          <mat-icon color="primary">create</mat-icon>
+          Edit
+        </button>
+        <button mat-menu-item (click)=" deletePost(post)">
+          <mat-icon color="warn">delete</mat-icon>Delete
+        </button>
+      </mat-menu>
+      <mat-icon [matMenuTriggerFor]="dropDown" class="three-dots">more_horiz
+      </mat-icon>
 
+    </div>
+
+    <p *ngIf="post.text && !post.postOriginalId" style="margin:70px auto 10px auto; font-size: larger; ">
+      {{post.text}}</p>
+    <p *ngIf="post.extraText" style="margin:70px auto 10px auto ">{{post.extraText}}</p>
+    <div *ngIf="post.postOriginalId && !post.originalPostDoneBy && post.doneBy && !post.originalPostDoneByPage"
+      style="  border: 1px solid black; cursor: pointer;">
+      content is unavailabe could be because of its setting was set on private or that it has been deleted
+    </div>
+    <img *ngIf="post.image && !post.postOriginalId" src="{{ post.image }}"
+      style="width: 100%; height: 60%; border-radius: 10px;" />
+    <div *ngIf="post.postOriginalId  && post.originalPostDoneBy || post.originalPostDoneByPage"
+      (click)="toDescription(post.postOriginalId)"
+      style="margin-top: 30px; border: 1px solid black; cursor: pointer; padding: 10px; ">
+      <div style="margin-top: 10px; float: left;">
+        <img *ngIf="post.originalPostDoneBy" src="{{  post.originalPostDoneBy.profilePhoto }}" width="50px"
+          style="border-radius: 50%;" height="50px" />
+        <img *ngIf="post.originalPostDoneByPage" src="{{  post.originalPostDoneByPage.profilePhoto }}" width="50px"
+          style="border-radius: 50%;" height="50px" />
+        <span *ngIf="post.originalPostDoneBy" class="font-weight-bold">
+          {{ post.originalPostDoneBy.firstName + " " + post.originalPostDoneBy.lastName }}
+          shared: </span>
+        <span *ngIf="post.originalPostDoneByPage" class="font-weight-bold">
+          {{ post.originalPostDoneByPage.name}}
+          shared: </span>
       </div>
+      <p style="padding-right: 220px; margin-top: 50px; font-size: larger;"> {{ post.text }} </p>
+      <img *ngIf="post.image" src="{{  post.image }}" style="width: 100%; height: 60%; border-radius: 10px;" />
+      <p><i class="fa fa-thumbs-up" aria-hidden="true">
+        </i>{{post.likesNumber}}
+        <i class="fa fa-comments" aria-hidden="true" style="margin-left: 150px;"></i>{{post.commentsNumber}}
+      </p>
+    </div>
+  </ng-container>
 
-      <p *ngIf="post.text && !post.postOriginalId" style="margin:70px auto 10px auto; font-size: larger; ">
-        {{post.text}}</p>
-      <p *ngIf="post.extraText" style="margin:70px auto 10px auto ">{{post.extraText}}</p>
-      <div *ngIf="post.postOriginalId && !post.originalPostDoneBy && post.doneBy && !post.originalPostDoneByPage"
-        style="  border: 1px solid black; cursor: pointer;">
-        content is unavailabe could be because of its setting was set on private or that it has been deleted
-      </div>
-      <img *ngIf="post.image && !post.postOriginalId" src="{{ post.image }}"
-        style="width: 100%; height: 60%; border-radius: 10px;" />
-      <div *ngIf="post.postOriginalId  && post.originalPostDoneBy || post.originalPostDoneByPage"
-        (click)="toDescription(post.postOriginalId)"
-        style="margin-top: 30px; border: 1px solid black; cursor: pointer; padding: 10px; ">
-        <div style="margin-top: 10px; float: left;">
-          <img *ngIf="post.originalPostDoneBy" src="{{  post.originalPostDoneBy.profilePhoto }}" width="50px"
-            style="border-radius: 50%;" height="50px" />
-          <img *ngIf="post.originalPostDoneByPage" src="{{  post.originalPostDoneByPage.profilePhoto }}" width="50px"
-            style="border-radius: 50%;" height="50px" />
-          <span *ngIf="post.originalPostDoneBy" class="font-weight-bold">
-            {{ post.originalPostDoneBy.firstName + " " + post.originalPostDoneBy.lastName }}
-            shared: </span>
-          <span *ngIf="post.originalPostDoneByPage" class="font-weight-bold">
-            {{ post.originalPostDoneByPage.name}}
-            shared: </span>
-        </div>
-        <p style="padding-right: 220px; margin-top: 50px; font-size: larger;"> {{ post.text }} </p>
-        <img *ngIf="post.image" src="{{  post.image }}" style="width: 100%; height: 60%; border-radius: 10px;" />
-        <p><i class="fa fa-thumbs-up" aria-hidden="true">
-          </i>{{post.likesNumber}}
-          <i class="fa fa-comments" aria-hidden="true" style="margin-left: 150px;"></i>{{post.commentsNumber}}
-        </p>
-      </div>
-    </ng-container>
+  <hr />
+  <span><i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue"></i> {{ post.postLikes.length }} </span>
+  <span (click)="openComments()" class="font-weight-bold" style="margin-left: 140px; cursor: pointer;">{{
+    post.comments.length }}comments</span>
+  <span (click)="toDescription(post.idPost)"
+    style="cursor: pointer; color: blue; font-weight: bold; margin-left: 130px">description</span>
+  <hr />
 
-    <hr />
-    <span><i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue"></i> {{ post.postLikes.length }} </span>
-    <span (click)="openComments()" class="font-weight-bold" style="margin-left: 140px; cursor: pointer;">{{
-      post.comments.length }}comments</span>
-    <span (click)="toDescription(post.idPost)"
-      style="cursor: pointer; color: blue; font-weight: bold; margin-left: 130px">description</span>
-    <hr />
+  <!-- [ngClass]="likedByMe ? 'btn btn-primary btn-md col-md-3' : 'btn btn-light btn-md col-md-3'" -->
 
-    <!-- [ngClass]="likedByMe ? 'btn btn-primary btn-md col-md-3' : 'btn btn-light btn-md col-md-3'" -->
+  <button
+    [disabled]="post.postOriginalId && !post.originalPostDoneBy && !post.originalPostDoneByPage || status != 'friends' || page  && !pageLike  "
+    (click)="like(post)" mat-flat-button color="{{likedByMe ? 'primary' : 'basic'}}" style="width: 120px;">
+    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+    like
+  </button>
 
-    <button
-      [disabled]="post.postOriginalId && !post.originalPostDoneBy && !post.originalPostDoneByPage || status != 'friends' || page  && !pageLike  "
-      (click)="like(post)" mat-flat-button color="{{likedByMe ? 'primary' : 'basic'}}">
-      <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-      like
-    </button>
+  <button
+    [disabled]="post.postOriginalId && !post.originalPostDoneBy && !post.originalPostDoneByPage || status != 'friends' || page &&  page.pageCreatorId != userData.idAccount && !pageLike  "
+    [ngClass]="iCommented ? 'btn btn-primary btn-md col-md-3 ml-2' : 'btn btn-light btn-md col-md-3 ml-2'"
+    (click)="comment(post , commentText)">
+    <i class="fa fa-comments" aria-hidden="true"></i>
+    comment
+  </button>
 
-    <button
-      [disabled]="post.postOriginalId && !post.originalPostDoneBy && !post.originalPostDoneByPage || status != 'friends' || page &&  page.pageCreatorId != userData.idAccount && !pageLike  "
-      [ngClass]="iCommented ? 'btn btn-primary btn-md col-md-3 ml-2' : 'btn btn-light btn-md col-md-3 ml-2'"
-      (click)="comment(post , commentText)">
-      <i class="fa fa-comments" aria-hidden="true"></i>
-      comment
-    </button>
-
-    <button
-      [disabled]="post.postOriginalId || post.postCreatorId == userData.idAccount || post.postedOn || status != 'friends' || page &&  userData.idAccount == page.pageCreatorId || page && !pageLike"
-      (click)="sharePost(post)" class="btn btn-light btn-md col-md-3 ml-2">
-      <i class="fa fa-share-alt" aria-hidden="true"></i>
-      share
-    </button>
-    <hr>
-    <ng-container *ngIf="openCommentsList">
-      <div class="container" *ngFor="let comment of post.comments">
-        <div *ngIf="comment.doneBy || comment.doneByPage" class="container-fluid mt-3" style=" display: flex;
+  <button
+    [disabled]="post.postOriginalId || post.postCreatorId == userData.idAccount || post.postedOn || status != 'friends' || page &&  userData.idAccount == page.pageCreatorId || page && !pageLike"
+    (click)="sharePost(post)" class="btn btn-light btn-md col-md-3 ml-2">
+    <i class="fa fa-share-alt" aria-hidden="true"></i>
+    share
+  </button>
+  <hr>
+  <ng-container *ngIf="openCommentsList">
+    <div class="container" *ngFor="let comment of post.comments">
+      <div *ngIf="comment.doneBy || comment.doneByPage" class="container-fluid mt-3" style=" display: flex;
         align-items: flex-start;
         justify-content: left;
          ">
-          <img *ngIf="comment.doneBy" src="{{comment.doneBy.profilePhoto}}" width="35px" style="border-radius: 50%;"
-            height="35px" />
-          <img *ngIf="comment.doneByPage" src="{{ comment.doneByPage.profilePhoto }}" width="35px"
-            style="border-radius: 50%;" height="35px" />
-          <div class="container-fluid" style="background-color: whitesmoke; border-radius: 8px; padding: 5px;">
-            <div
-              *ngIf="comment.commentCreatorId == userData.idAccount ||  page && !comment.commentCreatorId && page.pageCreatorId == userData.idAccount  "
-              class="icon">
-              <i (click)="editComment(comment.text ,comment.idComment)" style="color: blue; cursor: pointer;"
-                class="fa fa-pencil fa-xxs" aria-hidden="true"></i>
-            </div>
-            <div
-              *ngIf="  comment.commentCreatorId == userData.idAccount ||  page && !comment.commentCreatorId && page.pageCreatorId == userData.idAccount  "
-              class="icon">
-              <i (click)="deleteComment(comment.idComment)" style="color: red; cursor: pointer;" class="fa fa-trash"
-                aria-hidden="true"></i>
-            </div>
-            <i [ngClass]=" getCommentLike(comment) ? 'commentLike' : 'commentUnLike' "
-              *ngIf="comment.commentCreatorId != userData.idAccount && !comment.pageCreatorId || comment.pageCreatorId && !page ||page && comment.pageCreatorId  && page.pageCreatorId != userData.idAccount  "
-              (click)="likeComment(comment)" class="fa fa-thumbs-up fa-lg" id="commentLike" aria-hidden="true"></i>
-            <span *ngIf="comment.doneBy" class="font-weight-bold" style="float: left;">
-              {{comment.doneBy.firstName + " " + comment.doneBy.lastName }}: </span>
-            <span *ngIf="comment.doneByPage" class="font-weight-bold" style="float: left;">
-              {{comment.doneByPage.name}}: </span>
-            <br>
-            <p *ngIf="!editCommentOn || commentId != comment.idComment" style="float: left;">{{comment.text}}
-            </p>
-
-            <input *ngIf="editCommentOn && commentId == comment.idComment" [(ngModel)]="editCommentValue"
-              class="edit-comment-input" />
-            <button [disabled]="!editCommentValue && status == 'friends'"
-              (click)="confirmEditComment(comment , editCommentValue)"
-              *ngIf="editCommentOn && commentId == comment.idComment" class="btn btn-info btn-sm">edit</button>
+        <img *ngIf="comment.doneBy" src="{{comment.doneBy.profilePhoto}}" width="35px" style="border-radius: 50%;"
+          height="35px" />
+        <img *ngIf="comment.doneByPage" src="{{ comment.doneByPage.profilePhoto }}" width="35px"
+          style="border-radius: 50%;" height="35px" />
+        <div class="container-fluid" style="background-color: whitesmoke; border-radius: 8px; padding: 5px;">
+          <div
+            *ngIf="comment.commentCreatorId == userData.idAccount ||  page && !comment.commentCreatorId && page.pageCreatorId == userData.idAccount  "
+            class="icon">
+            <i (click)="editComment(comment.text ,comment.idComment)" style="color: blue; cursor: pointer;"
+              class="fa fa-pencil fa-xxs" aria-hidden="true"></i>
           </div>
+          <div
+            *ngIf="  comment.commentCreatorId == userData.idAccount ||  page && !comment.commentCreatorId && page.pageCreatorId == userData.idAccount  "
+            class="icon">
+            <i (click)="deleteComment(comment.idComment)" style="color: red; cursor: pointer;" class="fa fa-trash"
+              aria-hidden="true"></i>
+          </div>
+          <i [ngClass]=" getCommentLike(comment) ? 'commentLike' : 'commentUnLike' "
+            *ngIf="comment.commentCreatorId != userData.idAccount && !comment.pageCreatorId || comment.pageCreatorId && !page ||page && comment.pageCreatorId  && page.pageCreatorId != userData.idAccount  "
+            (click)="likeComment(comment)" class="fa fa-thumbs-up fa-lg" id="commentLike" aria-hidden="true"></i>
+          <span *ngIf="comment.doneBy" class="font-weight-bold" style="float: left;">
+            {{comment.doneBy.firstName + " " + comment.doneBy.lastName }}: </span>
+          <span *ngIf="comment.doneByPage" class="font-weight-bold" style="float: left;">
+            {{comment.doneByPage.name}}: </span>
+          <br>
+          <p *ngIf="!editCommentOn || commentId != comment.idComment" style="float: left;">{{comment.text}}
+          </p>
 
+          <input *ngIf="editCommentOn && commentId == comment.idComment" [(ngModel)]="editCommentValue"
+            class="edit-comment-input" />
+          <button [disabled]="!editCommentValue && status == 'friends'"
+            (click)="confirmEditComment(comment , editCommentValue)"
+            *ngIf="editCommentOn && commentId == comment.idComment" class="btn btn-info btn-sm">edit</button>
         </div>
-        <small style="color: gray;   float: left;
-        margin-left: 80px;">{{comment.date}}</small>
-        <span *ngIf="comment.commentLike.length > 0" class="comment-number"
-          style="background-color: lightgray; border-radius: 9px; padding: 5px; width: min-content; ">
-          <img src="../../assets/download (1).jpg" width="20px" height="20px" style="border-radius:50% ;">
-          {{comment.commentLike.length}}
-          <span class="comment-info">
-            <div *ngFor="let like of comment.commentLike ;"><span *ngIf="like.doneBy || like.doneByPage"> {{ like.doneBy
-                ? like.doneBy.firstName + " " +
-                like.doneBy.lastName :
-                like.doneByPage.name }}
-              </span>
-            </div>
-          </span>
-        </span>
 
       </div>
-    </ng-container>
-    <div style="margin-top: 25px;">
-      <img *ngIf="!page || page && userData.idAccount != page.pageCreatorId  " src="{{ userData.profilePhoto }}"
-        width="40px" height="40px" style="border-radius: 50%" />
-      <img *ngIf="page && post.doneByPage && userData.idAccount == page.pageCreatorId"
-        src="{{ post.doneByPage.profilePhoto }}" width="40px" height="40px" style="border-radius: 50%" />
-      <input class="comment-input" [(ngModel)]="commentText" placeholder="write a comment" />
-      <p class="text-danger">{{errorPhrase}}</p>
+      <small style="color: gray;   float: left;
+        margin-left: 80px;">{{comment.date}}</small>
+      <span *ngIf="comment.commentLike.length > 0" class="comment-number"
+        style="background-color: lightgray; border-radius: 9px; padding: 5px; width: min-content; ">
+        <img src="../../assets/download (1).jpg" width="20px" height="20px" style="border-radius:50% ;">
+        {{comment.commentLike.length}}
+        <span class="comment-info">
+          <div *ngFor="let like of comment.commentLike ;"><span *ngIf="like.doneBy || like.doneByPage"> {{ like.doneBy
+              ? like.doneBy.firstName + " " +
+              like.doneBy.lastName :
+              like.doneByPage.name }}
+            </span>
+          </div>
+        </span>
+      </span>
+
     </div>
+  </ng-container>
+  <div style="margin-top: 25px;">
+    <img *ngIf="!page || page && userData.idAccount != page.pageCreatorId  " src="{{ userData.profilePhoto }}"
+      width="40px" height="40px" style="border-radius: 50%" />
+    <img *ngIf="page && post.doneByPage && userData.idAccount == page.pageCreatorId"
+      src="{{ post.doneByPage.profilePhoto }}" width="40px" height="40px" style="border-radius: 50%" />
+    <input class="comment-input" [(ngModel)]="commentText" placeholder="write a comment" />
+    <p class="text-danger">{{errorPhrase}}</p>
   </div>
+
 </div>

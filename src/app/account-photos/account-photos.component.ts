@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Page } from '../models/page';
+import { PhotoViewerComponent } from '../photo-viewer/photo-viewer.component';
 import { AccountService } from '../services/account.service';
 import { PagesService } from '../services/pages.service';
 import { PostsService } from '../services/posts.service';
@@ -16,7 +18,8 @@ export class AccountPhotosComponent implements OnInit {
   image: string = null;
   constructor(
     private accountService: AccountService,
-    private pageService: PagesService
+    private pageService: PagesService,
+    public dialog: MatDialog
   ) {}
 
   @Input() account: AccountBasicData;
@@ -35,7 +38,7 @@ export class AccountPhotosComponent implements OnInit {
   }
 
   openImage(image: string) {
-    this.image = image;
+    this.dialog.open(PhotoViewerComponent, { data: image });
   }
   checkForDuplicatPhotos(photos: string[]) {
     let thePhotos = [];

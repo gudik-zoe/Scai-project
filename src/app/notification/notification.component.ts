@@ -126,11 +126,10 @@ export class NotificationComponent implements OnInit, OnDestroy {
       .subscribe((data: NotificationDetails) => {
         this.notificationDetails = data;
         this.unseenNots = this.notificationDetails.unseenNotsNumber;
-        console.log(this.notificationDetails);
       });
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.getUserData();
     this.getNotifications();
     this.getNotsDetails();
