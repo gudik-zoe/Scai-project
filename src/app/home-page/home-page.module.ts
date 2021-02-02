@@ -27,7 +27,7 @@ const routes: Routes = [{ path: '', component: HomePageComponent }];
     WhatOnMindModule,
     AccountPhotosModule,
     MaterialModule,
-    // FlexLayoutModule,
+    FlexLayoutModule,
   ],
 })
 export class HomePageModule {}

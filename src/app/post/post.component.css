@@ -23,39 +23,28 @@
     box-shadow: 0px 0px 1px 0px #888888;
   }
 } */
-.container {
+.post {
   text-align: center;
   border-radius: 6px;
   margin: 20px auto 0px auto;
   border: 1px solid white;
-  width: 80%;
+  width: 60%;
   padding: 10px;
   background-color: whitesmoke;
   transition: all 0.2s ease-in-out;
   box-shadow: 0px 0px 1px 0px #888888;
 }
-.container:hover {
+.post:hover {
   text-align: center;
   border-radius: 6px;
   margin: 20px auto 0px auto;
   border: 1px solid white;
-  width: 560px;
+  width: 60%;
   padding: 10px;
   box-shadow: 1px 10px 10px 1px #888888;
   background-color: white;
   transform: scale(1);
 }
-/* .post-container:hover {
-  text-align: center;
-  border-radius: 6px;
-  margin: 20px auto 0px auto;
-  border: 1px solid white;
-  width: 560px;
-  padding: 10px;
-  box-shadow: 1px 10px 10px 1px #888888;
-  background-color: white;
-  transform: scale(1);
-} */
 
 .three-dots {
   float: right;

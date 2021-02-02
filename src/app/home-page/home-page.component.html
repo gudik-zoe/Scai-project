@@ -1,4 +1,30 @@
-<div class="container-fluid">
+<div flexLayout="row" fxLayoutAlign="center stretch" style="margin-top: 70px;">
+  <div fxFlex="22.5" class="first-flex">
+    <app-side-bar></app-side-bar>
+    <br>
+    <app-account-photos [account]="userData"></app-account-photos>
+  </div>
+  <div fxFlex="55" class="second-flex">
+    <div style="margin: 10px auto 0px auto; width: 50%;">
+      <app-what-on-mind (createPost)="openDiv($event)"></app-what-on-mind>
+    </div>
+    <hr />
+    <h2 style="color: blue" class="font-weight-bold">News Feed</h2>
+    <hr />
+    <app-posts-container [posts]="dbPosts" [status]="status"> </app-posts-container>
+  </div>
+  <div fxFlex="22.5" class="third-flex" *ngIf="peopleYouMayKnow && friends">
+    <app-friends-container *ngIf="!openFriends && friends.length > 0" (unFriendInHomePage)="unFriend($event)"
+      [users]="friends" [areFriends]="true">
+    </app-friends-container>
+    <app-friends-container *ngIf="!openFriends && peopleYouMayKnow.length > 0 " [users]="peopleYouMayKnow"
+      [areFriends]="false">
+    </app-friends-container>
+
+  </div>
+</div>
+
+<!-- <div class="container-fluid">
   <div class="row" style="margin-top: 65px;">
     <div class="col-md-3" *ngIf="userData">
       <div class="side-bar">
@@ -30,4 +56,4 @@
       </app-friends-container>
     </div>
   </div>
-</div>
+</div> -->

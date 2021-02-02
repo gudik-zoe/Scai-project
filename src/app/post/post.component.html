@@ -1,4 +1,4 @@
-<div class="container">
+<div class="post">
 
   <ng-container *ngIf="post.doneBy || post.doneByPage">
 
@@ -49,7 +49,7 @@
       content is unavailabe could be because of its setting was set on private or that it has been deleted
     </div>
     <img *ngIf="post.image && !post.postOriginalId" src="{{ post.image }}"
-      style="width: 100%; height: 60%; border-radius: 10px;" />
+      style="width: 80%; height: 60%; border-radius: 10px;" />
     <div *ngIf="post.postOriginalId  && post.originalPostDoneBy || post.originalPostDoneByPage"
       (click)="toDescription(post.postOriginalId)"
       style="margin-top: 30px; border: 1px solid black; cursor: pointer; padding: 10px; ">
@@ -66,7 +66,7 @@
           shared: </span>
       </div>
       <p style="padding-right: 220px; margin-top: 50px; font-size: larger;"> {{ post.text }} </p>
-      <img *ngIf="post.image" src="{{  post.image }}" style="width: 100%; height: 60%; border-radius: 10px;" />
+      <img *ngIf="post.image" src="{{  post.image }}" style="width: 80%; height: 60%; border-radius: 10px;" />
       <p><i class="fa fa-thumbs-up" aria-hidden="true">
         </i>{{post.likesNumber}}
         <i class="fa fa-comments" aria-hidden="true" style="margin-left: 150px;"></i>{{post.commentsNumber}}
