@@ -10,6 +10,7 @@ import { FriendsContainerModule } from '../friends-container/friends-container.m
 import { WhatOnMindModule } from '../what-on-mind/what-on-mind.module';
 import { AccountPhotosModule } from '../account-photos/account-photos.module';
 import { MaterialModule } from '../material/material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 const routes: Routes = [{ path: '', component: HomePageComponent }];
 
@@ -26,6 +27,7 @@ const routes: Routes = [{ path: '', component: HomePageComponent }];
     WhatOnMindModule,
     AccountPhotosModule,
     MaterialModule,
+    // FlexLayoutModule,
   ],
 })
 export class HomePageModule {}

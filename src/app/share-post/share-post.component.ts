@@ -27,23 +27,8 @@ export class SharePostComponent implements OnInit {
     { status: 'only-me', icon: 'fa fa-lock' },
   ];
 
-  // getRequestedData() {
-  //   this.subscribtion = this.postService.sharePostComponent.subscribe(
-  //     (data) => {
-  //       (this.userData = data.userData),
-  //         (this.post = data.post),
-  //         (this.sharePostComponent = data.openComponent);
-  //       // this.postDoneBy = data.doneBy;
-  //     }
-  //   );
-  // }
-
   private(postOption: PostOption) {
     this.postOption = postOption;
-  }
-
-  closeSharePostComponent() {
-    this.confirmSharePost.emit(undefined);
   }
 
   confirmShare(post: Post, extraText: string) {
@@ -58,37 +43,8 @@ export class SharePostComponent implements OnInit {
         post: this.postToShare,
         formData: formData,
       });
-      // this.postService.resharePost(post.idPost, formData).subscribe(
-      //   (data: Post) => {
-      //     // post.doneBy && post.postOriginalId && post.originalPostDoneBy
-      //     (data.postLikes = []), (data.comments = []);
-      //     data.doneBy = {
-      //       idAccount: this.userData.idAccount,
-      //       profilePhoto: this.userData.profilePhoto,
-      //       firstName: this.userData.firstName,
-      //       lastName: this.userData.lastName,
-      //     };
-      //     data.image = post.image;
-      //     data.text = post.text;
-      //     if (this.postToShare.doneBy) {
-      //       data.originalPostDoneBy = { ...this.postToShare.doneBy };
-      //     } else {
-      //       data.originalPostDoneByPage = { ...this.postToShare.doneByPage };
-      //     }
-      //     if (this.postOption.status != 'only-me') {
-      //       this.postService.confirmCreatePost.next(data);
-      //     }
-      //     this.inputData = undefined;
-      //     this.sharePostComponent = false;
-      //   },
-      //   (error) => {
-      //     this.errorPhrase = error.error.message;
-      //   }
-      // );
     }
   }
-  // ngOnDestroy() {
-  //   this.subscribtion.unsubscribe();
-  // }
+
   ngOnInit() {}
 }

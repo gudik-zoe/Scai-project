@@ -11,6 +11,7 @@ import { Page } from '../models/page';
 import { PageBasicData } from '../models/pageBasicData';
 import { PagesService } from './pages.service';
 import { UtilityService } from './utility.service';
+import { rejects } from 'assert';
 
 @Injectable({
   providedIn: 'root',
@@ -106,10 +107,9 @@ export class PostsService {
   }
 
   getHomePagePosts() {
-    return new Promise<Post[]>((resolve) => {
-      this.http
-        .get(this.rootUrl + 'homePage/posts')
-        .subscribe((data: Post[]) => {
+    return new Promise<Post[]>((resolve, reject) => {
+      this.http.get(this.rootUrl + 'homePage/posts').subscribe(
+        (data: Post[]) => {
           this.homePagePosts = data;
           this.homePagePosts.sort((a, b) => b.date.localeCompare(a.date));
           for (let post of this.homePagePosts) {
@@ -118,17 +118,17 @@ export class PostsService {
               this.getPostOriginalUserData(post);
             }
           }
-
           resolve(this.homePagePosts);
-        });
+        },
+        (error) => reject(error.error.message)
+      );
     });
   }
 
   getPostsByAccountId(id: number) {
     return new Promise<Post[]>((resolve, reject) => {
-      this.http
-        .get(this.rootUrl + 'posts/accountId/' + id)
-        .subscribe((data: Post[]) => {
+      this.http.get(this.rootUrl + 'posts/accountId/' + id).subscribe(
+        (data: Post[]) => {
           this.accountPosts = data;
           for (let post of this.accountPosts) {
             this.getUserDetails(post);
@@ -137,8 +137,9 @@ export class PostsService {
             }
           }
           resolve(this.accountPosts);
-          reject(null);
-        });
+        },
+        (error) => reject(error.error.message)
+      );
     });
   }
   async getPostDetail(post: Post) {
@@ -154,19 +155,16 @@ export class PostsService {
       if (post) {
         resolve(post);
       } else {
-        this.http
-          .get(this.rootUrl + 'posts/postId/' + id)
-          .subscribe((data: Post) => {
+        this.http.get(this.rootUrl + 'posts/postId/' + id).subscribe(
+          (data: Post) => {
             post = data;
             if (post) {
               this.getUserDetails(post);
-              // if (this.post.postOriginalId) {
-              //   this.getPostOriginalUserData(this.post);
-              // }
             }
             resolve(post);
-            reject('there is no post with this id');
-          });
+          },
+          (error) => reject(error.error.message)
+        );
       }
     });
   }

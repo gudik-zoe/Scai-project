@@ -17,12 +17,15 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
 const materialComponents = [
   MatButtonModule,
   MatButtonToggleModule,
   MatIconModule,
   MatBadgeModule,
   MatProgressSpinnerModule,
+  MatToolbarModule,
   MatSidenavModule,
   MatMenuModule,
   MatGridListModule,
@@ -35,6 +38,7 @@ const materialComponents = [
   MatDialogModule,
   MatStepperModule,
   MatTooltipModule,
+  MatListModule,
 ];
 
 @NgModule({

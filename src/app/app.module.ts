@@ -11,6 +11,7 @@ import { NavBarModule } from './nav-bar/nav-bar.module';
 import { DatePipe } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,7 @@ import { MaterialModule } from './material/material.module';
     NavBarModule,
     BrowserAnimationsModule,
     MaterialModule,
+    FlexLayoutModule,
   ],
   providers: [
     AuthenticationGuard,

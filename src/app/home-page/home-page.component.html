@@ -21,34 +21,13 @@
     </div>
 
     <div *ngIf="peopleYouMayKnow && friends" class="col-md-3">
-      <!-- <mat-sidenav-container>
-        <mat-sidenav #sidenav mode="side" color="primary" [opened]="openFriends">
 
-          sidenav
-        </mat-sidenav>
-
-        <mat-sidenav-content> -->
       <app-friends-container *ngIf="!openFriends && friends.length > 0" (unFriendInHomePage)="unFriend($event)"
         [users]="friends" [areFriends]="true">
       </app-friends-container>
       <app-friends-container *ngIf="!openFriends && peopleYouMayKnow.length > 0 " [users]="peopleYouMayKnow"
         [areFriends]="false">
       </app-friends-container>
-
-      <!-- 
-        </mat-sidenav-content>
-      </mat-sidenav-container> -->
-
-
-
     </div>
-
-
-
-
-
-
   </div>
-
-
 </div>

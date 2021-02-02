@@ -1,4 +1,4 @@
-.post-container {
+/* .post-container {
   text-align: center;
   border-radius: 6px;
   margin: 20px auto 0px auto;
@@ -8,7 +8,21 @@
   background-color: whitesmoke;
   transition: all 0.2s ease-in-out;
   box-shadow: 0px 0px 1px 0px #888888;
-}
+} */
+
+/* @media screen and (max-width: 1024px) {
+  .container {
+    text-align: center;
+    border-radius: 6px;
+    margin: 100px auto 0px auto;
+    border: 1px solid white;
+    width: 100%;
+    padding: 10px;
+    background-color: whitesmoke;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0px 0px 1px 0px #888888;
+  }
+} */
 .container {
   text-align: center;
   border-radius: 6px;
@@ -20,7 +34,7 @@
   transition: all 0.2s ease-in-out;
   box-shadow: 0px 0px 1px 0px #888888;
 }
-.post-container:hover {
+.container:hover {
   text-align: center;
   border-radius: 6px;
   margin: 20px auto 0px auto;
@@ -31,6 +45,17 @@
   background-color: white;
   transform: scale(1);
 }
+/* .post-container:hover {
+  text-align: center;
+  border-radius: 6px;
+  margin: 20px auto 0px auto;
+  border: 1px solid white;
+  width: 560px;
+  padding: 10px;
+  box-shadow: 1px 10px 10px 1px #888888;
+  background-color: white;
+  transform: scale(1);
+} */
 
 .three-dots {
   float: right;

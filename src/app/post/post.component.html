@@ -75,7 +75,7 @@
   </ng-container>
 
   <hr />
-  <span><i class="fa fa-thumbs-up" aria-hidden="true" style="color: blue"></i> {{ post.postLikes.length }} </span>
+  <span><i class="fa fa-thumbs-up fa-lg" aria-hidden="true" style="color: blue"></i> {{ post.postLikes.length }} </span>
   <span (click)="openComments()" class="font-weight-bold" style="margin-left: 140px; cursor: pointer;">{{
     post.comments.length }}comments</span>
   <span (click)="toDescription(post.idPost)"
@@ -107,7 +107,7 @@
   </button>
   <hr>
   <ng-container *ngIf="openCommentsList">
-    <div class="container" *ngFor="let comment of post.comments">
+    <div class="container-fluid" *ngFor="let comment of post.comments">
       <div *ngIf="comment.doneBy || comment.doneByPage" class="container-fluid mt-3" style=" display: flex;
         align-items: flex-start;
         justify-content: left;
