@@ -1,18 +1,24 @@
-.background {
-  background-color: transparent;
+/* .background {
+  background-color: lightblue;
   border-radius: 8px;
-  width: 350px;
+  width: 100%;
   height: max-content;
   position: relative;
   animation-name: bounceInDown;
   animation-duration: 1s;
+} */
+
+.container-fluid {
+  background-color: white;
+  width: fit-content;
+  padding: 30px;
 }
 
-button {
-  position: relative;
+/* button {
+   position: relative;
   animation-name: bounceInUp;
-  animation-duration: 2s;
-}
+  animation-duration: 2s; 
+} */
 
 .field-error {
   margin-top: 5px;

@@ -1,21 +1,15 @@
-<div id="back">
-  <div id="main" class="container">
-    <div class="row">
-      <div class="left-div">
-        <h2 style="color: white; margin-top: 30px; margin-left: 10px;" class="pulse">welcome back </h2>
-        <p style="color: white;  margin-left: 10px" class="pulse"> to stay connected with us please sign
-          up..already a
-          friend </p>
+<div class="back">
+  <div class="container-fluid ">
+    <div class="text-center">SignIn/SignUp</div>
+    <mat-tab-group mat-stretch-tabs style="background-color: white;">
+      <mat-tab label="Sign in">
+        <app-sign-in></app-sign-in>
+      </mat-tab>
+      <mat-tab label="Sign up">
+        <app-sign-up></app-sign-up>
+      </mat-tab>
+    </mat-tab-group>
 
-        <div class="pulse" style="width: 300px; margin-left: 25px;">
-          <button *ngIf="!signUpSuccessfull" (click)="switch()" class="btn btn-outline-light btn-block   mt-5">{{signUp
-            ? 'Sign in' : 'Sign
-            up'}}</button>
-          <h5 *ngIf="signUpSuccessfull">your data has been successfully registered</h5>
-        </div>
-      </div>
-      <app-sign-up *ngIf="signUp"></app-sign-up>
-      <app-sign-in *ngIf="!signUp"></app-sign-in>
-    </div>
+
   </div>
 </div>

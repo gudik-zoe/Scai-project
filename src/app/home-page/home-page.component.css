@@ -14,7 +14,7 @@
   }
 }
 .second-flex {
-  /* height: 100vh; */
+  height: 100vh;
   overflow-y: scroll;
   background-color: white;
 }
@@ -34,6 +34,10 @@ li:hover {
   cursor: pointer;
 }
 
+.whats-on-your-mind {
+  margin: 10px auto 0px auto;
+  width: 60%;
+}
 /* .side-bar {
   animation: fadeInUp;
   animation-duration: 0.6s;

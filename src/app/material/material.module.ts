@@ -19,6 +19,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
+import { MatTabsModule } from '@angular/material/tabs';
 const materialComponents = [
   MatButtonModule,
   MatButtonToggleModule,
@@ -39,6 +40,7 @@ const materialComponents = [
   MatStepperModule,
   MatTooltipModule,
   MatListModule,
+  MatTabsModule,
 ];
 
 @NgModule({

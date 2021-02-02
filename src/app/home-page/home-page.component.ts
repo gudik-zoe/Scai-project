@@ -88,8 +88,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getPosts();
     this.getUserData();
+    this.getPosts();
     this.getFriends();
     this.getPeopleyouMayKnow();
     this.getRespondToRequestSubject();

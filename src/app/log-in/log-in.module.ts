@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SignInComponent } from '../sign-in/sign-in.component';
 import { SignUpComponent } from '../sign-up/sign-up.component';
 import { MaterialModule } from '../material/material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 const routes: Routes = [{ path: '', component: LogInComponent }];
 
 @NgModule({
@@ -17,6 +18,7 @@ const routes: Routes = [{ path: '', component: LogInComponent }];
     HttpClientModule,
     RouterModule.forChild(routes),
     MaterialModule,
+    FlexLayoutModule,
   ],
 })
 export class LogInModule {}

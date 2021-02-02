@@ -1,50 +1,25 @@
-/* .post-container {
-  text-align: center;
-  border-radius: 6px;
-  margin: 20px auto 0px auto;
-  border: 1px solid white;
-  width: 550px;
-  padding: 10px;
-  background-color: whitesmoke;
-  transition: all 0.2s ease-in-out;
-  box-shadow: 0px 0px 1px 0px #888888;
-} */
-
-/* @media screen and (max-width: 1024px) {
-  .container {
-    text-align: center;
-    border-radius: 6px;
-    margin: 100px auto 0px auto;
-    border: 1px solid white;
-    width: 100%;
-    padding: 10px;
-    background-color: whitesmoke;
-    transition: all 0.2s ease-in-out;
-    box-shadow: 0px 0px 1px 0px #888888;
-  }
-} */
 .post {
   text-align: center;
   border-radius: 6px;
   margin: 20px auto 0px auto;
   border: 1px solid white;
-  width: 60%;
+  width: 100%;
   padding: 10px;
   background-color: whitesmoke;
   transition: all 0.2s ease-in-out;
   box-shadow: 0px 0px 1px 0px #888888;
 }
-.post:hover {
+/* .post:hover {
   text-align: center;
   border-radius: 6px;
   margin: 20px auto 0px auto;
   border: 1px solid white;
-  width: 60%;
+  width: 90%;
   padding: 10px;
   box-shadow: 1px 10px 10px 1px #888888;
   background-color: white;
   transform: scale(1);
-}
+} */
 
 .three-dots {
   float: right;
@@ -89,11 +64,10 @@
 }
 
 .comment-input {
-  width: 320px;
+  width: 100%;
   border-radius: 8px;
   background-color: lightgray;
   border-style: none;
-  margin-left: 10px;
   outline: none;
 }
 .comment-info {
@@ -157,8 +131,51 @@
 .icon:hover {
   width: 30px;
   height: 30px;
+  padding-top: 4px;
   background-color: lightgray;
   border-radius: 50%;
   transform: scale(1.4);
   /* box-shadow: 1px 1px 1px 1px #888888; */
+}
+
+.profile-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.post-text {
+  margin: 70px auto 10px auto;
+  font-size: larger;
+}
+
+.post-image {
+  width: 80%;
+  height: 60%;
+  border-radius: 10px;
+}
+
+.shared-post-container {
+  margin-top: 30px;
+  border: 1px solid darkblue;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.flex {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-evenly;
+}
+
+button {
+  width: 100%;
+}
+
+.profile-photo-comment {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%ks;
 }
