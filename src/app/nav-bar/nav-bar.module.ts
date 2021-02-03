@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { FriendRequestModule } from '../friend-request/friend-request.module';
 import { NotificationModule } from '../notification/notification.module';
 import { RouterModule } from '@angular/router';
+import { MaterialModule } from '../material/material.module';
 
 @NgModule({
   declarations: [NavBarComponent],
@@ -14,6 +15,7 @@ import { RouterModule } from '@angular/router';
     FriendRequestModule,
     NotificationModule,
     RouterModule,
+    MaterialModule,
   ],
   exports: [NavBarComponent],
 })

@@ -1,11 +1,15 @@
-<div class="container-fluid">
-  <app-create-post></app-create-post>
-
-  <div *ngFor="let post of posts; let i = index">
-    <app-post [isAdmin]="isAdmin" [commentText]="commentText" [post]="post" [page]="page" [status]="status"
-      [userData]="userData" (commentPostEvent)="commentPostInParent($event)" (likePostEvent)="likePostInParent($event)"
-      (likeCommentEvent)="likeCommentInParent($event)" (editPostEvent)="editPostInParent($event)"
-      (sharePostEvent)="sharePost($event)" (deletePostEvent)="deletePostInParent($event)">
-    </app-post>
+<div flexLayout="column">
+  <div>
+    <app-create-post></app-create-post>
+  </div>
+  <div fxFlex.xl="90" fxFlex.lg="65" fxFlex.xs="100" fxFlex.sm="100" class="center">
+    <div *ngFor="let post of posts; let i = index">
+      <app-post [isAdmin]="isAdmin" [commentText]="commentText" [post]="post" [page]="page" [status]="status"
+        [userData]="userData" (commentPostEvent)="commentPostInParent($event)"
+        (likePostEvent)="likePostInParent($event)" (likeCommentEvent)="likeCommentInParent($event)"
+        (editPostEvent)="editPostInParent($event)" (sharePostEvent)="sharePost($event)"
+        (deletePostEvent)="deletePostInParent($event)">
+      </app-post>
+    </div>
   </div>
 </div>

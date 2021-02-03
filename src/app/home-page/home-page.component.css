@@ -34,9 +34,9 @@ li:hover {
   cursor: pointer;
 }
 
-.whats-on-your-mind {
+.center {
   margin: 10px auto 0px auto;
-  width: 60%;
+  width: 80%;
 }
 /* .side-bar {
   animation: fadeInUp;

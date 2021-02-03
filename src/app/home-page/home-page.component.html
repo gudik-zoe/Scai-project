@@ -6,10 +6,8 @@
     <br>
     <app-account-photos [account]="userData"></app-account-photos>
   </div>
-  <div fxFlex.xl="50" fxFlex.lg="50" fxFlex.xs="100" fxFlex.sm="70" class="second-flex">
-    <div class="whats-on-your-mind">
-      <app-what-on-mind (createPost)="openDiv($event)"></app-what-on-mind>
-    </div>
+  <div fxFlex.xl="50" fxFlex.lg="50" fxFlex.xs="100" fxFlex.sm="100" class="second-flex">
+    <app-what-on-mind (createPost)="openDiv($event)"></app-what-on-mind>
     <hr />
     <h2 style="color: blue" class="font-weight-bold">News Feed</h2>
     <hr />

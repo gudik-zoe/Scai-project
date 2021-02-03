@@ -1,5 +1,3 @@
-.posts-handler {
-  padding: 30px;
-  /* border : 1px solid blue ; */
-  background: #cccccc;
+.center {
+  margin: 0px auto 0px auto;
 }
