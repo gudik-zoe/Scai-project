@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AccountService } from '../services/account.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
@@ -21,7 +21,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
     private aroute: ActivatedRoute
   ) {}
 
-  loggedIn: boolean;
+  @Input() deviceXs: boolean;
   userData: AccountBasicData;
   myUnseenMessages: number;
   messageSubscription: Subscription;

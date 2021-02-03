@@ -12,6 +12,7 @@ export class AuthService {
   error: boolean = false;
   openSignInComponent = new Subject<boolean>();
   signUpSuccessfull = new Subject<boolean>();
+  deviseXs = new Subject<boolean>();
 
   loggedIn(): boolean {
     return !!localStorage.getItem('token');

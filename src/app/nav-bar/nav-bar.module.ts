@@ -6,6 +6,7 @@ import { FriendRequestModule } from '../friend-request/friend-request.module';
 import { NotificationModule } from '../notification/notification.module';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [NavBarComponent],
@@ -16,6 +17,7 @@ import { MaterialModule } from '../material/material.module';
     NotificationModule,
     RouterModule,
     MaterialModule,
+    FlexLayoutModule,
   ],
   exports: [NavBarComponent],
 })

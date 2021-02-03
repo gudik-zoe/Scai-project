@@ -1,4 +1,4 @@
-.active-class {
+/* .active-class {
   color: white;
   opacity: 1;
 }
@@ -9,9 +9,20 @@
 
 p {
   animation-name: example;
-  animation-duration: 4s;
+  animation-duration: 4s; */
+mat-toolbar {
+  overflow-x: hidden;
 }
 
+span {
+  font-size: medium;
+  margin-left: 5px;
+}
+
+i {
+  font-size: 1.8rem;
+  padding: 0px 5px;
+}
 /* i {
   transition: all 0.2s ease-in-out;
   color: #efe5ff;
@@ -19,7 +30,7 @@ p {
   outline: none;
 } */
 
-i {
+/* i {
   color: #efe5ff;
 }
 a {
@@ -38,4 +49,4 @@ a:hover {
 .imageAndName {
   width: fit-content;
   color: whitesmoke;
-}
+} */

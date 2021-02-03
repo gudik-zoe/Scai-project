@@ -1,5 +1,5 @@
 <div fxLayout="column">
-    <app-nav-bar *ngIf="open">
+    <app-nav-bar [deviceXs]="deviceXs" *ngIf="open">
     </app-nav-bar>
 </div>
 <router-outlet></router-outlet>
