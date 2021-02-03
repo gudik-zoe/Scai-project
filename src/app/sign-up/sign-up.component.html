@@ -1,105 +1,125 @@
 <div class="container-fluid">
-    <form [formGroup]="signUpForm">
-        <div class="row">
-            <div class="col-md-6">
-                <input class="form-control" formControlName="firstName" [class.is-invalid]="
-                signUpForm.get('firstName').invalid &&
-                signUpForm.get('firstName').touched
-              " placeholder="first name" />
-                <small class="text-danger" *ngIf="
+  <form [formGroup]="signUpForm">
+    <div class="form-group">
+      <div fxLayout="column" fxLayoutAlign="center stretch">
+        <div flexLayout="row" fxLayoutAlign="center stretch" fxLayout.sm=" column" fxLayout.xs="column">
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>First name</mat-label>
+              <mat-icon matSuffix>perm_identity</mat-icon>
+              <input matInput formControlName="firstName" [class.is-invalid]="
+          signUpForm.get('firstName').invalid &&
+          signUpForm.get('firstName').touched
+          " placeholder="first name" />
+            </mat-form-field>
+            <small class="text-danger" *ngIf="
               signUpForm.get('firstName').errors?.required &&
               signUpForm.get('firstName').touched
-            ">this field is required
-                </small>
-            </div>
+              ">this field is required
+            </small>
+          </div>
 
-            <div class="col-md-6">
-                <input class="form-control " placeholder="Last name" formControlName="lastName" [class.is-invalid]="
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>last name</mat-label>
+              <mat-icon matSuffix>perm_identity</mat-icon>
+              <input matInput placeholder="Last name" formControlName="lastName" [class.is-invalid]="
                 signUpForm.get('lastName').invalid &&
                 signUpForm.get('lastName').touched
                 " />
-                <small class="text-danger" *ngIf="
+            </mat-form-field>
+            <small class="text-danger" *ngIf="
                   signUpForm.get('lastName').errors?.required &&
                   signUpForm.get('lastName').touched
                 ">this field is required
-                </small>
-            </div>
+            </small>
+          </div>
         </div>
 
 
-        <div [class]="emailError ? 'field-error':'form-group mt-3'">
-            <input class="form-control" type="email" placeholder="Email" style="width: 240px" formControlName="email"
-                [class.is-invalid]="
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <mat-icon matSuffix>email</mat-icon>
+            <input matInput type="email" placeholder="Email" formControlName="email" [class.is-invalid]="
               signUpForm.get('email').invalid &&
               signUpForm.get('email').touched
             " />
-            <small class="text-danger" *ngIf="
+          </mat-form-field>
+          <small class="text-danger" *ngIf="
               signUpForm.get('email').errors?.required &&
               signUpForm.get('email').touched
             ">this field is required
-            </small>
-            <small class="text-danger" *ngIf="
+          </small>
+          <small class="text-danger" *ngIf="
               signUpForm.get('email').errors?.email &&
               signUpForm.get('email').touched
             ">
-                invalid mail
-            </small>
+            invalid mail
+          </small>
 
         </div>
-        <div [class]="passwordError ? 'field-error':'form-group mt-2'">
-            <input class="form-control" type="password" placeholder="Password" style="width: 240px"
-                formControlName="password" />
-            <small class="text-danger" *ngIf="
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>password</mat-label>
+            <mat-icon matSuffix>https</mat-icon>
+            <input matInput type="password" placeholder="Password" formControlName="password" />
+          </mat-form-field>
+          <small class="text-danger" *ngIf="
                 signUpForm.get('password').errors?.required &&
                 signUpForm.get('password').touched
               ">this field is required
-            </small>
-            <small class="text-danger" *ngIf="
+          </small>
+          <small class="text-danger" *ngIf="
                 signUpForm.get('password').errors?.minlength &&
                 signUpForm.get('password').touched
               ">
-                password should be longer than 8 characters
-            </small>
-            <small class="text-danger" *ngIf="
+            password should be longer than 8 characters
+          </small>
+          <small class="text-danger" *ngIf="
               signUpForm.get('password').errors
               ?.passwordPatternError &&
               signUpForm.get('password').touched
               ">
-                a valid password password should contains at least one letter in upperCase + one digit + one
-                alphanumeric character -/*?\")
-            </small>
-        </div>
-        <div class="form-group mt-2">
-            <input class="form-control" type="password" placeholder="Confirm password" style="width: 240px"
-                formControlName="confirmPassword" />
-            <small class="text-danger" *ngIf="
-                signUpForm.get('confirmPassword').errors?.required &&
-                signUpForm.get('confirmPassword').touched
-              ">this field is required
-            </small>
-            <small class="text-danger" *ngIf="
-                signUpForm.get('confirmPassword').errors?.customeError &&
-                signUpForm.get('confirmPassword').touched
-              ">not identical to password
-            </small>
+            a valid password password should contains at least one letter in upperCase + one digit + one
+            alphanumeric character -/*?\")
+          </small>
         </div>
 
-        <div id="gender" class="form-group" style="display: flex; align-items:baseline;">
-            <input formControlName="gender" type="radio" value="male" />
-            <label>male</label>
-            <input type="radio" formControlName="gender" value="female" class="ml-3" />
-            <label>female</label>
-            <input type="radio" formControlName="gender" value="other" class="ml-3" />
-            <label>other</label>
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>confirm password</mat-label>
+            <mat-icon matSuffix>https</mat-icon>
+            <input matInput type="password" placeholder="Confirm password" formControlName="confirmPassword" />
+          </mat-form-field>
+          <small class="text-danger" *ngIf="
+        signUpForm.get('confirmPassword').errors?.required &&
+        signUpForm.get('confirmPassword').touched
+        ">this field is required
+          </small>
+          <small class="text-danger" *ngIf="
+      signUpForm.get('confirmPassword').errors?.customeError &&
+      signUpForm.get('confirmPassword').touched
+      ">not identical to password
+          </small>
         </div>
-        <p class="text-danger">
-            {{errorPhrase}}
-        </p>
-        <img *ngIf="loading" src="../../assets/loading_spin_grey.gif_11ezlroiohbdwk2imlrjrbw2.gif" width="30"
-            height="30">
-        <button *ngIf="!loading" [disabled]="!signUpForm.valid" class="btn btn-outline-success btn-block  mb-2"
-            (click)="signUpfunc(signUpForm.value)">
-            Sign Up
-        </button>
-    </form>
+      </div>
+    </div>
+    <mat-radio-group formControlName="gender">
+      <div class="flex">
+        <mat-radio-button value="male">male</mat-radio-button>
+        <mat-radio-button value="female">female</mat-radio-button>
+        <mat-radio-button value="other">other</mat-radio-button>
+      </div>
+    </mat-radio-group>
+    <p class="text-danger">
+      {{errorPhrase}}
+    </p>
+    <mat-spinner *ngIf="loading" diameter="30">
+    </mat-spinner>
+    <button *ngIf="!loading" [disabled]="!signUpForm.valid" color="accent" mat-flat-button
+      (click)="signUpfunc(signUpForm.value)">
+      Sign Up
+    </button>
+  </form>
 </div>

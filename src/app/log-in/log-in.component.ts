@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
@@ -8,37 +9,27 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./log-in.component.css'],
 })
 export class LogInComponent implements OnInit, OnDestroy {
-  constructor(private auth: AuthService) {}
-  signUp: boolean = false;
-  error: boolean = false;
+  constructor(private auth: AuthService, private snackBar: MatSnackBar) {}
   emailExistError: boolean = false;
   loading: boolean = false;
-  signUpSuccessfull: boolean = false;
   errorPhrase: string = '';
+  selectedTab: number;
 
-  signUpAgain(): void {
-    this.emailExistError = false;
-  }
-
-  ok(): void {
-    this.error = false;
-  }
   subscription: Subscription;
   getSignUpSuccessgful() {
     this.subscription = this.auth.openSignInComponent.subscribe(
       (data: boolean) => {
-        this.signUp = data;
-        this.signUpSuccessfull = true;
-        setTimeout(() => {
-          this.signUpSuccessfull = false;
-        }, 3000);
+        if (data) {
+          this.selectedTab = 0;
+          this.snackBar.open('your have been registered successfully', '', {
+            duration: 2000,
+            panelClass: 'snackbar',
+          });
+        }
       }
     );
   }
 
-  switch() {
-    this.signUp = !this.signUp;
-  }
   ngOnInit(): void {
     this.getSignUpSuccessgful();
   }

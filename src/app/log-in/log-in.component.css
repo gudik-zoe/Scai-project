@@ -10,13 +10,30 @@
   overflow: hidden;
   animation: bounceInDown;
   animation-duration: 1s;
-  padding-top: 180px;
+  padding-top: 5%;
 }
 
 .text-center {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
   background-color: white;
   font-weight: bolder;
   font-size: x-large;
   padding-top: 20px;
   padding-bottom: 10px;
+}
+
+.footer {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: white;
+  height: 10px;
+}
+
+.snackbar {
+  margin: 0 !important;
+  position: absolute;
+  right: 25px;
+  color: red;
+  top: 60px;
 }

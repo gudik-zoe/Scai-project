@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Custome } from '../log-in/validator';
 import { Account } from '../models/account';
@@ -15,6 +15,8 @@ export class SignUpComponent implements OnInit {
   loading: boolean = false;
   emailError: boolean = false;
   passwordError: boolean = false;
+
+  @Output() goToSignIn = new EventEmitter<boolean>();
   constructor(private fb: FormBuilder, private auth: AuthService) {}
 
   signUpfunc(account: Account): void {
@@ -26,10 +28,10 @@ export class SignUpComponent implements OnInit {
     }
     account.coverPhoto = 'https://i.ibb.co/7JmwPtK/nature-design.jpg';
     this.auth.signUp(account).subscribe(
-      (data) => {
+      (data: Account) => {
         this.loading = false;
         this.errorPhrase = '';
-        this.auth.openSignInComponent.next(false);
+        this.auth.openSignInComponent.next(true);
       },
       (error) => {
         if (error.error.message.startsWith('this')) {
