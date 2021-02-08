@@ -87,11 +87,16 @@ export class HomePageComponent implements OnInit, OnDestroy {
     // this.openFriendsubscription.unsubscribe();
   }
 
+  getUsers() {
+    this.accountService.getAllUsers();
+  }
+
   ngOnInit() {
     this.getUserData();
     this.getPosts();
     this.getFriends();
     this.getPeopleyouMayKnow();
     this.getRespondToRequestSubject();
+    // this.getUsers();
   }
 }

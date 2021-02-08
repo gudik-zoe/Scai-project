@@ -1,26 +1,42 @@
 <!--responsive navbar using flexLayout-->
-<mat-toolbar color="primary" *ngIf="userData">
+<!-- <mat-toolbar color="primary" *ngIf="userData">
     <mat-toolbar-row fxLayoutAlign="space-between center">
-        <div>
-
+        <button mat-button>
             <img src="{{userData.profilePhoto}}" class="profile-photo">
             <span>{{userData.firstName}}</span>
-
-
-            <button mat-button *ngIf="!deviceXs">
+        </button>
+        <div *ngIf="!deviceXs">
+            <button mat-button routerLink="/home-page">
                 <i class="fa fa-home" aria-hidden="true"></i><span>home</span>
             </button>
-            <button mat-button *ngIf="!deviceXs">
+            <button mat-button [routerLink]="['/home-page , userData.idAccount']">
                 <i class="fa fa-user" aria-hidden=" true">
                 </i><span>profile</span>
             </button>
-            <button mat-button *ngIf="!deviceXs">
+            <button mat-button>
                 <i class="fa fa-comments" aria-hidden="true"></i><span>chat</span>
             </button>
 
         </div>
-        <div style="margin-right: 3%;">
-            <button mat-icon-button (click)="logOut()">
+        <div>
+
+            <mat-menu #dropDown="matMenu" xPosition="before" yPosition="below">
+                <div mat-menu-item>
+
+                    <app-notification>
+                    </app-notification>
+
+                </div>
+            </mat-menu>
+            <button mat-icon-button>
+                <mat-icon [matMenuTriggerFor]="dropDown" class="three-dots">notifications
+                </mat-icon>
+            </button>
+
+
+
+
+            <button mat-button (click)="logOut()">
                 <mat-icon>power_settings_new</mat-icon>
                 <span *ngIf="!deviceXs">Log out</span>
 
@@ -38,13 +54,13 @@
             <i class="fa fa-user" aria-hidden=" true">
             </i><span>profile</span>
         </button>
-        <button mat-button>
+        <button mat-button (click)="goToChat()">
             <i class="fa fa-comments" aria-hidden="true"></i><span>chat</span>
         </button>
 
     </mat-toolbar-row>
 
-</mat-toolbar>
+</mat-toolbar> -->
 
 
 
@@ -54,7 +70,7 @@
 
 
 <!-- responsive nav bar using bootstrap + css-->
-<!-- <nav *ngIf="userData" class="navbar fixed-top navbar-expand-md navbar-light" style="background-color:darkblue ;">
+<nav *ngIf="userData" class="navbar fixed-top navbar-expand-md navbar-light" style="background-color:darkblue ;">
     <div class="container">
         <a class="navbar-brand"><img src="{{ userData.profilePhoto }}" width="35px" height="35px"
                 style="border-radius: 50%; border: 1px solid white;" /><span
@@ -135,4 +151,4 @@
             </ul>
         </div>
     </div>
-</nav> -->
+</nav>

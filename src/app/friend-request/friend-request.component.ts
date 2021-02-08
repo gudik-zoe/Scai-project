@@ -26,13 +26,19 @@ export class FriendRequestComponent implements OnInit {
       .acceptFriendRequest(relation.idRelationship, status)
       .subscribe(
         (data: Relationship) => {
-          this.friendService.respondToRequest.next({
-            userBasicData: relation.doneBy,
-            status: data.status,
-          });
-          this.relations = this.relations.filter(
-            (item) => item.idRelationship !== relation.idRelationship
-          );
+          if (data) {
+            this.friendService.respondToRequest.next({
+              userBasicData: relation.doneBy,
+              status: data.status,
+            });
+            this.relations = this.relations.filter(
+              (item) => item.idRelationship !== relation.idRelationship
+            );
+          } else {
+            this.relations = this.relations.filter(
+              (item) => item.idRelationship !== relation.idRelationship
+            );
+          }
         },
         (error) =>
           this.snackBar.open(error.error.message, '', { duration: 2000 })

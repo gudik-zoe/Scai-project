@@ -1,13 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { rejects } from 'assert';
 import jwt_decode from 'jwt-decode';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
 import { AccountBasicData } from '../models/accountBasicData';
-import { ImgUrl } from '../models/imgUrl';
 
 @Injectable({
   providedIn: 'root',
@@ -32,15 +29,11 @@ export class AccountService {
   }
 
   getAllUsers() {
-    return new Promise<AccountBasicData[]>((resolve, reject) => {
-      this.http
-        .get(this.rootUrl + 'api/allUsers')
-        .subscribe((data: AccountBasicData[]) => {
-          this.allUsers = data;
-          resolve(this.allUsers);
-          reject('unknown error occured');
-        });
-    });
+    this.http
+      .get(this.rootUrl + 'api/allUsers')
+      .subscribe((data: Account[]) => {
+        console.log(data);
+      });
   }
 
   getPeopleYouMayKnow() {
@@ -121,15 +114,15 @@ export class AccountService {
     });
   }
 
-  getAccountIdByPostId(postId: number) {
-    return new Promise((resolve) => {
-      this.http
-        .get(this.rootUrl + 'api/accounts/getAccountIdByPostId/' + postId)
-        .subscribe((data) => {
-          resolve(data);
-        });
-    });
-  }
+  // getAccountIdByPostId(postId: number) {
+  //   return new Promise((resolve) => {
+  //     this.http
+  //       .get(this.rootUrl + 'api/accounts/getAccountIdByPostId/' + postId)
+  //       .subscribe((data) => {
+  //         resolve(data);
+  //       });
+  //   });
+  // }
 
   updateAccount(account: Account) {
     return this.http.put(this.rootUrl + 'api/accounts/updateAccount', account);
