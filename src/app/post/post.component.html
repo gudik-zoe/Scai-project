@@ -38,8 +38,12 @@
 
     </div>
 
-    <p *ngIf="post.text && !post.postOriginalId" class="post-text">
-      {{post.text}}</p>
+    <div *ngIf="post.text && !post.postOriginalId" class="post-text">
+      {{post.text}}
+      <div *ngFor="let tag of post.tags">
+        <p (click)="getTag(tag)">#{{tag.name}}</p>
+      </div>
+    </div>
     <p *ngIf="post.extraText" class="post-text">{{post.extraText}}</p>
     <div *ngIf="post.postOriginalId && !post.originalPostDoneBy && post.doneBy && !post.originalPostDoneByPage"
       style="  border: 1px solid black;">

@@ -96,6 +96,17 @@ export class NotificationComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  load() {
+    if (
+      this.notifications.length == this.notificationDetails.notificationNumber
+    ) {
+      console.log('that would be all am not loading any more');
+    } else {
+      console.log('load more');
+    }
+  }
+
   @HostListener('scroll', ['$event'])
   async onScroll(event: any) {
     const lastIndex = this.notifications[this.notifications.length - 1]
@@ -107,7 +118,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
       if (
         this.notifications.length == this.notificationDetails.notificationNumber
       ) {
-        console.log('that would be all am not loading any more');
+        console.log('that would be all');
       } else {
         this.restOfTheNotifications = await this.notificationService.loadMore(
           lastIndex

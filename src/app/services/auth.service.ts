@@ -18,12 +18,12 @@ export class AuthService {
     return !!localStorage.getItem('token');
   }
   signUp(account: Account) {
-    return this.http.post(this.rootUrl + 'api/signUp', account);
+    return this.http.post(this.rootUrl + 'signUp', account);
   }
 
   signIn(email: string, password: any) {
     return this.http.post(
-      this.rootUrl + 'api/login',
+      this.rootUrl + 'login',
       {
         email: email,
         password: password,

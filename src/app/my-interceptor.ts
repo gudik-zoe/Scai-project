@@ -37,21 +37,21 @@ export class MyInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         this.errorMessage = '';
         if (!(error.error instanceof ErrorEvent)) {
-          console.log(error);
+          console.log(error.status);
           //   console.log('this is client side error');
           //   this.errorMessage = `Error: ${error.error.message}`;
           // } else {
           //   console.log('this is server side error');
           //   this.errorMessage = `Error Code: ${error.status},  Message: ${error.error.message}`;
           //   const tokenErrorPhrase = error.error.message;
-          if (error.error.error == 'Unauthorized') {
+          if (error.status == 401) {
             localStorage.removeItem('token');
             this.route.navigate(['/auth']);
             this.accountService.userData = undefined;
             this.accountService.myFriends = undefined;
             this.accountService.peopleYouMayKnow = undefined;
             this.accountService.loggedIn.next(false);
-            console.log('token expired');
+            console.log(error.error.message);
           }
         }
         return throwError(error);

@@ -10,6 +10,7 @@ import { CommentLike } from '../models/commentLike';
 import { PageBasicData } from '../models/pageBasicData';
 import { Page } from '../models/page';
 import { PageLike } from '../models/pageLike';
+import { Tag } from '../models/tag';
 
 @Component({
   selector: 'app-post',
@@ -53,6 +54,10 @@ export class PostComponent implements OnInit {
   like(post: Post) {
     this.likePostEvent.emit(post);
     this.likedByMe = !this.likedByMe;
+  }
+
+  getTag(tag: Tag) {
+    console.log(tag);
   }
 
   comment(post: Post, commentText: string) {

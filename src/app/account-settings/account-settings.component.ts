@@ -71,7 +71,7 @@ export class AccountSettingsComponent implements OnInit {
             setTimeout(async () => {
               this.userData = undefined;
               this.accountService.userData = undefined;
-              this.userData = await this.accountService.getTheLoggedInUserDataFullData();
+              this.getUserData();
               this.errorPhrase = '';
               this.changeEssentialData.reset();
               this.changeEssentialDataChanged = false;
@@ -100,6 +100,8 @@ export class AccountSettingsComponent implements OnInit {
         livesIn: [this.userData.livesIn],
         profilePhoto: [this.userData.profilePhoto],
         coverPhoto: [this.userData.coverPhoto],
+        email: [this.userData.email],
+        password: [this.userData.password],
       }
       // { validator: [Custome.changePassword] }
     );

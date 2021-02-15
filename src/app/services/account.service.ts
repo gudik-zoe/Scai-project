@@ -29,17 +29,15 @@ export class AccountService {
   }
 
   getAllUsers() {
-    this.http
-      .get(this.rootUrl + 'api/allUsers')
-      .subscribe((data: Account[]) => {
-        console.log(data);
-      });
+    this.http.get(this.rootUrl + 'allUsers').subscribe((data: Account[]) => {
+      console.log(data);
+    });
   }
 
   getPeopleYouMayKnow() {
     return new Promise<AccountBasicData[]>((resolve, reject) => {
       this.http
-        .get(this.rootUrl + 'api/account/peopleYouMayKnow')
+        .get(this.rootUrl + 'account/peopleYouMayKnow')
         .subscribe((data: AccountBasicData[]) => {
           this.peopleYouMayKnow = data;
           resolve(this.peopleYouMayKnow);
@@ -51,7 +49,7 @@ export class AccountService {
   getAccountFriends() {
     return new Promise<AccountBasicData[]>((resolve, reject) => {
       this.http
-        .get(this.rootUrl + 'api/account/friends')
+        .get(this.rootUrl + 'account/friends')
         .subscribe((data: AccountBasicData[]) => {
           this.myFriends = data;
           resolve(this.myFriends);
@@ -60,13 +58,13 @@ export class AccountService {
     });
   }
   getARandomUserData(accountId: number) {
-    return this.http.get(this.rootUrl + 'api/accounts/' + accountId);
+    return this.http.get(this.rootUrl + 'accounts/' + accountId);
   }
 
   async getTheLoggedInUserData() {
     return new Promise<AccountBasicData>((resolve) => {
       this.http
-        .get(this.rootUrl + 'api/accounts/idAccount/getLoggedInUserBasicData')
+        .get(this.rootUrl + 'accounts/idAccount/getLoggedInUserBasicData')
         .subscribe((data: AccountBasicData) => {
           this.userData = data;
           resolve(this.userData);
@@ -78,7 +76,7 @@ export class AccountService {
   async getTheLoggedInUserDataFullData() {
     return new Promise<Account>((resolve) => {
       this.http
-        .get(this.rootUrl + 'api/accounts/idAccount/getLoggedInUserFullData')
+        .get(this.rootUrl + 'accounts/idAccount/getLoggedInUserFullData')
         .subscribe((data: Account) => {
           this.userFullData = data;
           resolve(this.userFullData);
@@ -93,7 +91,7 @@ export class AccountService {
     } else {
       return new Promise<AccountBasicData>((resolve) => {
         this.http
-          .get(this.rootUrl + 'api/accounts/details/' + id)
+          .get(this.rootUrl + 'accounts/details/' + id)
           .subscribe((data: AccountBasicData) => {
             this.accountBasicData.push(data);
             resolve(data);
@@ -105,7 +103,7 @@ export class AccountService {
   getAccountById(id: number) {
     return new Promise<Account>((resolve, reject) => {
       this.http
-        .get(this.rootUrl + 'api/accounts/' + id)
+        .get(this.rootUrl + 'accounts/' + id)
         .subscribe((data: Account) => {
           this.requestedUserData = data;
           resolve(this.requestedUserData);
@@ -117,7 +115,7 @@ export class AccountService {
   // getAccountIdByPostId(postId: number) {
   //   return new Promise((resolve) => {
   //     this.http
-  //       .get(this.rootUrl + 'api/accounts/getAccountIdByPostId/' + postId)
+  //       .get(this.rootUrl + ' accounts/getAccountIdByPostId/' + postId)
   //       .subscribe((data) => {
   //         resolve(data);
   //       });
@@ -125,36 +123,33 @@ export class AccountService {
   // }
 
   updateAccount(account: Account) {
-    return this.http.put(this.rootUrl + 'api/accounts/updateAccount', account);
+    return this.http.put(this.rootUrl + 'accounts/updateAccount', account);
   }
 
   updateProfilePhoto(event) {
     return this.http.put(
-      this.rootUrl + 'api/accounts/profilePhoto/accountId',
+      this.rootUrl + 'accounts/profilePhoto/accountId',
       this.uploadAnImage(event)
     );
   }
 
   updateCoverPhoto(event) {
     return this.http.put(
-      this.rootUrl + 'api/accounts/coverPhoto/accountId',
+      this.rootUrl + 'accounts/coverPhoto/accountId',
       this.uploadAnImage(event)
     );
   }
 
   updateEmail(formData: FormData) {
-    return this.http.put(this.rootUrl + 'api/accounts/updateEmail', formData);
+    return this.http.put(this.rootUrl + 'accounts/updateEmail', formData);
   }
 
   updatePassword(formData: FormData) {
-    return this.http.put(
-      this.rootUrl + 'api/accounts/updatePassword',
-      formData
-    );
+    return this.http.put(this.rootUrl + 'accounts/updatePassword', formData);
   }
 
   deleteAccount() {
-    return this.http.delete(this.rootUrl + 'api/accounts/accountId');
+    return this.http.delete(this.rootUrl + 'accounts/accountId');
   }
 
   uploadAnImage(event) {
@@ -197,7 +192,7 @@ export class AccountService {
   getAccountPhotos(accountId: number) {
     return new Promise<string[]>((resolve, reject) => {
       this.http
-        .get(this.rootUrl + 'api/account/photos/' + accountId)
+        .get(this.rootUrl + 'account/photos/' + accountId)
         .subscribe((data: string[]) => {
           this.photos = data;
           resolve(this.photos);
@@ -209,7 +204,7 @@ export class AccountService {
   getAnAccountFriend(otherAccountId: number) {
     return new Promise<AccountBasicData[]>((resolve, reject) => {
       this.http
-        .get(this.rootUrl + 'api/account/mutualFriends/' + otherAccountId)
+        .get(this.rootUrl + 'account/mutualFriends/' + otherAccountId)
         .subscribe((data: AccountBasicData[]) => {
           resolve(data);
         });

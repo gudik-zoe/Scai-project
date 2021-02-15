@@ -3,6 +3,7 @@ import { Comment } from './comment';
 import { Page } from './page';
 import { PageBasicData } from './pageBasicData';
 import { PostLike } from './postLike';
+import { Tag } from './tag';
 
 export class Post {
   idPost: number;
@@ -10,6 +11,7 @@ export class Post {
   isPublic: boolean;
   image: string;
   status: number;
+  tags?: Tag[];
   postCreatorId: number;
   postOriginalId: number;
   extraText: string;
