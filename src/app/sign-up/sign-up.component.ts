@@ -28,7 +28,7 @@ export class SignUpComponent implements OnInit {
     }
     account.coverPhoto = 'https://i.ibb.co/7JmwPtK/nature-design.jpg';
     this.auth.signUp(account).subscribe(
-      (data: Account) => {
+      (data: boolean) => {
         this.loading = false;
         this.errorPhrase = '';
         this.auth.openSignInComponent.next(true);

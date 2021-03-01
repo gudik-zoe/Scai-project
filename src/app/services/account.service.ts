@@ -74,13 +74,16 @@ export class AccountService {
 
   userFullData: Account;
   async getTheLoggedInUserDataFullData() {
-    return new Promise<Account>((resolve) => {
+    return new Promise<Account>((resolve, reject) => {
       this.http
         .get(this.rootUrl + 'accounts/idAccount/getLoggedInUserFullData')
-        .subscribe((data: Account) => {
-          this.userFullData = data;
-          resolve(this.userFullData);
-        });
+        .subscribe(
+          (data: Account) => {
+            this.userFullData = data;
+            resolve(this.userFullData);
+          },
+          (error) => reject(error.error.message)
+        );
     });
   }
 
@@ -89,26 +92,32 @@ export class AccountService {
     if (check) {
       return check;
     } else {
-      return new Promise<AccountBasicData>((resolve) => {
-        this.http
-          .get(this.rootUrl + 'accounts/details/' + id)
-          .subscribe((data: AccountBasicData) => {
+      return new Promise<AccountBasicData>((resolve, reject) => {
+        this.http.get(this.rootUrl + 'accounts/details/' + id).subscribe(
+          (data: AccountBasicData) => {
             this.accountBasicData.push(data);
+
             resolve(data);
-          });
+          },
+          (error) => {
+            reject(error.error.message);
+          }
+        );
       });
     }
   }
 
   getAccountById(id: number) {
     return new Promise<Account>((resolve, reject) => {
-      this.http
-        .get(this.rootUrl + 'accounts/' + id)
-        .subscribe((data: Account) => {
+      this.http.get(this.rootUrl + 'accounts/' + id).subscribe(
+        (data: Account) => {
           this.requestedUserData = data;
           resolve(this.requestedUserData);
-          reject('unknown error occured');
-        });
+        },
+        (error) => {
+          reject(error.error.message);
+        }
+      );
     });
   }
 
