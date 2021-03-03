@@ -85,9 +85,9 @@ export class AccountSettingsComponent implements OnInit {
 
   async getUserData() {
     this.userData = await this.accountService.getAccountById(
-      this.accountService.getId()
+      this.userData.idAccount
     );
-    this.fillFormValues();
+    this.fillFormValues(); 
   }
 
   fillFormValues() {
