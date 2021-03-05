@@ -37,7 +37,6 @@ export class MyInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         this.errorMessage = '';
         if (!(error.error instanceof ErrorEvent)) {
-          console.log(error.status);
           //   console.log('this is client side error');
           //   this.errorMessage = `Error: ${error.error.message}`;
           // } else {
@@ -51,7 +50,6 @@ export class MyInterceptor implements HttpInterceptor {
             this.accountService.myFriends = undefined;
             this.accountService.peopleYouMayKnow = undefined;
             this.accountService.loggedIn.next(false);
-            console.log(error.error.message);
           }
         }
         return throwError(error);

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Custome } from '../log-in/validator';
 import { Account } from '../models/account';
 import { AuthService } from '../services/auth.service';
@@ -17,7 +18,11 @@ export class SignUpComponent implements OnInit {
   passwordError: boolean = false;
 
   @Output() goToSignIn = new EventEmitter<boolean>();
-  constructor(private fb: FormBuilder, private auth: AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private snackBar: MatSnackBar
+  ) {}
 
   signUpfunc(account: Account): void {
     this.loading = true;
@@ -34,21 +39,9 @@ export class SignUpComponent implements OnInit {
         this.auth.openSignInComponent.next(true);
       },
       (error) => {
-        if (error.error.message.startsWith('this')) {
-          this.errorPhrase = error.error.message;
-          this.loading = false;
-          this.emailError = true;
-        } else if (error.error.message.startsWith('a valid')) {
-          this.errorPhrase = error.error.message;
-          this.passwordError = true;
-          this.loading = false;
-        }
-        setTimeout(() => {
-          this.loading = false;
-          this.errorPhrase = '';
-          this.passwordError = false;
-          this.emailError = false;
-        }, 3000);
+        this.loading = false;
+        this.snackBar.open(error.error.message, '', { duration: 2000 });
+        this.signUpForm.get('email').setValue('');
       }
     );
   }
