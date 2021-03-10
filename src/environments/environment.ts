@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   // chatUrl: 'ws://localhost:8080/chat',
   // rootUrl: 'http://localhost:8080/api/',
-  rootUrl: 'https://shielded-river-91999.herokuapp.com/api',
+  rootUrl: 'https://shielded-river-91999.herokuapp.com/api/',
   chatUrl: 'wss://shielded-river-91999.herokuapp.com/chat',
 };
 
