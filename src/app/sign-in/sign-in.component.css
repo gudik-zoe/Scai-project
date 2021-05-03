@@ -32,3 +32,11 @@ small {
   margin-left: 10px;
   font-size: small;
 }
+
+.reset {
+  color: blue;
+  text-decoration: underline;
+}
+.reset:hover {
+  cursor: pointer;
+}

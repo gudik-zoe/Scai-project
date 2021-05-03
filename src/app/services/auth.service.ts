@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
+import { Login } from '../models/login';
 
 @Injectable({
   providedIn: 'root',
@@ -17,18 +18,26 @@ export class AuthService {
   loggedIn(): boolean {
     return !!localStorage.getItem('token');
   }
+
   signUp(account: Account) {
     return this.http.post(this.rootUrl + 'signUp', account);
   }
 
-  signIn(email: string, password: any) {
+  signIn(loginDto: Login) {
+    return this.http.post(this.rootUrl + 'login', loginDto, {
+      observe: 'response',
+    });
+  }
+
+  resetPassword(email: string) {
+    return this.http.post(this.rootUrl + 'resetPassword', email);
+  }
+
+  checkTempPassword(temporaryPassword: String) {
+    console.log(temporaryPassword);
     return this.http.post(
-      this.rootUrl + 'login',
-      {
-        email: email,
-        password: password,
-      },
-      { observe: 'response' }
+      this.rootUrl + 'checkTempPassword',
+      temporaryPassword
     );
   }
 

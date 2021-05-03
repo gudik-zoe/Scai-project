@@ -62,13 +62,18 @@ export class AccountService {
   }
 
   async getTheLoggedInUserData() {
-    return new Promise<AccountBasicData>((resolve) => {
+    return new Promise<AccountBasicData>((resolve, reject) => {
       this.http
         .get(this.rootUrl + 'accounts/idAccount/getLoggedInUserBasicData')
-        .subscribe((data: AccountBasicData) => {
-          this.userData = data;
-          resolve(this.userData);
-        });
+        .subscribe(
+          (data: AccountBasicData) => {
+            this.userData = data;
+            resolve(this.userData);
+          },
+          (error) => {
+            reject(error.error.message);
+          }
+        );
     });
   }
 

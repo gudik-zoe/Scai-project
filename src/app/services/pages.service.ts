@@ -42,13 +42,13 @@ export class PagesService {
   pages: PageBasicData[] = [];
   getPages() {
     return new Promise<PageBasicData[]>((resolve, reject) => {
-      this.http
-        .get(this.rootUrl + 'pages')
-        .subscribe((data: PageBasicData[]) => {
+      this.http.get(this.rootUrl + 'pages').subscribe(
+        (data: PageBasicData[]) => {
           this.pages = data;
           resolve(this.pages);
-          reject('unknown error occured');
-        });
+        },
+        (error) => reject(error.error.message)
+      );
     });
   }
 
@@ -65,16 +65,16 @@ export class PagesService {
   page: Page;
   getPageFullData(pageId: number) {
     return new Promise<Page>((resolve, reject) => {
-      this.http
-        .get(this.rootUrl + 'pageFullData/' + pageId)
-        .subscribe((data: Page) => {
+      this.http.get(this.rootUrl + 'pageFullData/' + pageId).subscribe(
+        (data: Page) => {
           this.page = data;
           for (let post of this.page.posts) {
             this.postService.getUserDetails(post);
           }
           resolve(this.page);
-          reject('unknown error occured');
-        });
+        },
+        (error) => reject(error.error.message)
+      );
     });
   }
 
@@ -84,12 +84,12 @@ export class PagesService {
 
   getPagePhotos(pageId: number) {
     return new Promise<string[]>((resolve, reject) => {
-      this.http
-        .get(this.rootUrl + 'pagePhotos/' + pageId)
-        .subscribe((data: string[]) => {
+      this.http.get(this.rootUrl + 'pagePhotos/' + pageId).subscribe(
+        (data: string[]) => {
           resolve(data);
-          reject(null);
-        });
+        },
+        (error) => reject(error.error.message)
+      );
     });
   }
 }
