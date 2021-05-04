@@ -12,11 +12,9 @@ import { DatePipe } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { LoggedUserGuard } from './logged-user.guard';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
-  declarations: [AppComponent, ResetPasswordComponent],
+  declarations: [AppComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,

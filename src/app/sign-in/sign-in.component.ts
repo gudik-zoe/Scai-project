@@ -83,17 +83,21 @@ export class SignInComponent implements OnInit {
     );
   }
   checkTempPassword() {
+    this.errorPhrase = null;
     this.loading = true;
-    this.auth.checkTempPassword(this.tempPassword).subscribe((data) => {
-      console.log(data);
-      if (data) {
+    this.auth.checkTempPassword(this.resetPasswordForm.value).subscribe(
+      (data) => {
+        if (data) {
+          this.loading = false;
+          this.resetPasswordActive = false;
+          this.errorPhrase = null;
+        }
+      },
+      (error) => {
+        this.errorPhrase = error.error.message;
         this.loading = false;
-        this.route.navigate(['/resetPassword']);
-      } else {
-        this.loading = false;
-        console.log('Wrong pass');
       }
-    });
+    );
   }
 
   fillResetPasswordForm() {
@@ -102,10 +106,6 @@ export class SignInComponent implements OnInit {
       newPassword: ['', [Validators.required, Validators.minLength(8)]],
       confirmNewPassword: ['', [Validators.required, Validators.minLength(8)]],
     });
-  }
-
-  resetThePassword() {
-    console.log(this.resetPasswordForm.value);
   }
 
   ngOnInit() {

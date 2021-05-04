@@ -114,9 +114,9 @@
 
       </p>
 
-
+      <p class="text-danger" *ngIf="errorPhrase">{{errorPhrase}}</p>
       <button *ngIf="!loading" color="primary" style="margin-top:4px;" style="width: 100%;" mat-flat-button
-        [disabled]="!resetPasswordForm.valid" (click)="resetThePassword()">
+        [disabled]="!resetPasswordForm.valid" (click)="checkTempPassword()">
 
         confirm reset password</button>
     </form>

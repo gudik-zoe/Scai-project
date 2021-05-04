@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Account } from '../models/account';
 import { Login } from '../models/login';
+import { resetPassword } from '../models/resetPassword';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +34,7 @@ export class AuthService {
     return this.http.post(this.rootUrl + 'resetPassword', email);
   }
 
-  checkTempPassword(temporaryPassword: String) {
+  checkTempPassword(temporaryPassword: resetPassword) {
     console.log(temporaryPassword);
     return this.http.post(
       this.rootUrl + 'checkTempPassword',
