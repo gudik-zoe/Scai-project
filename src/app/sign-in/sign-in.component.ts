@@ -6,6 +6,7 @@ import { AccountService } from '../services/account.service';
 import { AuthService } from '../services/auth.service';
 import { Account } from '../models/account';
 import { Login } from '../models/login';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-sign-in',
@@ -22,7 +23,8 @@ export class SignInComponent implements OnInit {
     private auth: AuthService,
     private accountService: AccountService,
     private route: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar
   ) {}
 
   showPassword: boolean;
@@ -65,22 +67,37 @@ export class SignInComponent implements OnInit {
   }
 
   resetPassword() {
-    this.loading = true;
-    this.auth.resetPassword(this.signInForm.get('email').value).subscribe(
-      (data: Account) => {
-        console.log(data);
-        if (data != null) {
+    if (
+      this.signInForm.get('email').value == null ||
+      this.signInForm.get('email').value == ''
+    ) {
+      this.errorPhrase = 'enter a mail to be abel to reset the password';
+    } else {
+      this.loading = true;
+      this.auth.resetPassword(this.signInForm.get('email').value).subscribe(
+        (data: Account) => {
+          console.log(data);
+          if (data != null) {
+            this.loading = false;
+            this.theRequestedEmail = data.email;
+            this.snackBar.open(
+              'enter the temporary password that was sent to the entered email',
+              '',
+              {
+                duration: 4000,
+                panelClass: 'snackbar',
+              }
+            );
+            this.resetPasswordActive = true;
+            // this.route.navigate(['/resetPassword']);
+          }
+        },
+        (error) => {
+          this.errorPhrase = error.error.message;
           this.loading = false;
-          this.theRequestedEmail = data.email;
-          this.resetPasswordActive = true;
-          // this.route.navigate(['/resetPassword']);
         }
-      },
-      (error) => {
-        this.errorPhrase = error.error.message;
-        this.loading = false;
-      }
-    );
+      );
+    }
   }
   checkTempPassword() {
     this.errorPhrase = null;
@@ -90,11 +107,20 @@ export class SignInComponent implements OnInit {
         if (data) {
           this.loading = false;
           this.resetPasswordActive = false;
+          this.snackBar.open('password updated succesfully', '', {
+            duration: 2000,
+            panelClass: 'snackbar',
+          });
           this.errorPhrase = null;
         }
       },
       (error) => {
         this.errorPhrase = error.error.message;
+        this.snackBar.open(this.errorPhrase, '', {
+          duration: 2000,
+          panelClass: 'snackbar',
+        });
+        this.resetPasswordActive = false;
         this.loading = false;
       }
     );
