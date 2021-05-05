@@ -32,6 +32,8 @@ export class SignInComponent implements OnInit {
   resetPasswordActive: boolean = false;
   theRequestedEmail: string;
   tempPassword: string;
+  email: string;
+  forgotPassword: boolean = false;
 
   fillSignInForm() {
     this.signInForm = this.fb.group({
@@ -66,64 +68,45 @@ export class SignInComponent implements OnInit {
     );
   }
 
-  resetPassword() {
-    if (
-      this.signInForm.get('email').value == null ||
-      this.signInForm.get('email').value == ''
-    ) {
-      this.errorPhrase = 'enter a mail to be abel to reset the password';
-    } else {
-      this.loading = true;
-      this.auth.resetPassword(this.signInForm.get('email').value).subscribe(
-        (data: Account) => {
-          console.log(data);
-          if (data != null) {
-            this.loading = false;
-            this.theRequestedEmail = data.email;
-            this.snackBar.open(
-              'enter the temporary password that was sent to the entered email',
-              '',
-              {
-                duration: 4000,
-                panelClass: 'snackbar',
-              }
-            );
-            this.resetPasswordActive = true;
-            // this.route.navigate(['/resetPassword']);
-          }
-        },
-        (error) => {
-          this.errorPhrase = error.error.message;
-          this.loading = false;
-        }
-      );
-    }
-  }
-  checkTempPassword() {
-    this.errorPhrase = null;
+  sendEmail(email: string) {
     this.loading = true;
-    this.auth.checkTempPassword(this.resetPasswordForm.value).subscribe(
-      (data) => {
-        if (data) {
+    this.auth.resetPassword(email).subscribe(
+      (data: Account) => {
+        console.log(data);
+        if (data != null) {
           this.loading = false;
-          this.resetPasswordActive = false;
-          this.snackBar.open('password updated succesfully', '', {
-            duration: 2000,
-            panelClass: 'snackbar',
-          });
-          this.errorPhrase = null;
+          this.theRequestedEmail = data.email;
+          this.snackBar.open(
+            'enter the temporary password that was sent to the entered email',
+            '',
+            {
+              duration: 4000,
+              panelClass: 'snackbar',
+            }
+          );
+          this.resetPasswordActive = true;
         }
       },
       (error) => {
         this.errorPhrase = error.error.message;
-        this.snackBar.open(this.errorPhrase, '', {
-          duration: 2000,
-          panelClass: 'snackbar',
-        });
-        this.resetPasswordActive = false;
         this.loading = false;
       }
     );
+  }
+  resetPassword() {
+    if (!this.forgotPassword) {
+      this.forgotPassword = true;
+    } else {
+      this.errorPhrase = null;
+      if (
+        this.signInForm.get('email').value == null ||
+        this.signInForm.get('email').value == ''
+      ) {
+        this.errorPhrase = 'enter a mail to be abel to reset the password';
+      } else {
+        this.sendEmail(this.signInForm.get('email').value);
+      }
+    }
   }
 
   fillResetPasswordForm() {
@@ -132,6 +115,13 @@ export class SignInComponent implements OnInit {
       newPassword: ['', [Validators.required, Validators.minLength(8)]],
       confirmNewPassword: ['', [Validators.required, Validators.minLength(8)]],
     });
+  }
+
+  goToLoginInParent(data: boolean) {
+    if (data) {
+      this.resetPasswordActive = false;
+      this.forgotPassword = false;
+    }
   }
 
   ngOnInit() {
