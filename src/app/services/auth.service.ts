@@ -35,7 +35,6 @@ export class AuthService {
   }
 
   checkTempPassword(temporaryPassword: resetPassword) {
-    console.log(temporaryPassword);
     return this.http.post(
       this.rootUrl + 'checkTempPassword',
       temporaryPassword

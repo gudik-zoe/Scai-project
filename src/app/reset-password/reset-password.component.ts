@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Custome } from '../log-in/validator';
+import { resetPassword } from '../models/resetPassword';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -20,11 +22,14 @@ export class ResetPasswordComponent implements OnInit {
   loading: boolean;
   resetPasswordForm: FormGroup;
   fillResetPasswordForm() {
-    this.resetPasswordForm = this.fb.group({
-      tempPassword: ['', Validators.required],
-      newPassword: ['', [Validators.required, Validators.minLength(8)]],
-      confirmNewPassword: ['', [Validators.required, Validators.minLength(8)]],
-    });
+    this.resetPasswordForm = this.fb.group(
+      {
+        tempPassword: ['', Validators.required],
+        password: ['', [Validators.required, Validators.minLength(8)]],
+        confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
+      },
+      { validator: [Custome.changePassword, Custome.passwordPattern] }
+    );
   }
 
   @Output() goToLogin = new EventEmitter<boolean>();
@@ -32,7 +37,12 @@ export class ResetPasswordComponent implements OnInit {
   checkTempPassword() {
     this.errorPhrase = null;
     this.loading = true;
-    this.auth.checkTempPassword(this.resetPasswordForm.value).subscribe(
+    const resetPasswordDTO = new resetPassword(
+      this.resetPasswordForm.get('tempPassword').value,
+      this.resetPasswordForm.get('password').value,
+      this.resetPasswordForm.get('confirmPassword').value
+    );
+    this.auth.checkTempPassword(resetPasswordDTO).subscribe(
       (data) => {
         if (data) {
           this.loading = false;
