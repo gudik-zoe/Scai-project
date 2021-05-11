@@ -1,22 +1,23 @@
-<div flexLayout="column">
-    <div fxFlex.xl="90" fxFlex.lg="60" fxFlex.xs="100" fxFlex.sm="100" class="center">
-        <span *ngIf="userData && !page">
-            <img src="{{userData.profilePhoto}}" class="profile-photo" />
-            <input (click)="openDiv()" class="whatsInput"
-                [placeholder]=" requestedUser ? 'leave a post for ' + requestedUser.firstName : 'whats on your mind ' + userData.firstName  " />
-        </span>
-        <span *ngIf="page && userData.idAccount == page.pageCreatorId ">
-            <img src="{{page.profilePhoto}}" class="profile-photo" />
-            <input (click)="openDiv()" class="whatsInput" placeholder="start a post " />
-        </span>
-        <hr />
-        <div class="flex">
-            <span style="color: red" class="font-weight-bold">
-                <i class="fa fa-video-camera" aria-hidden="true"></i> live video</span><span style="color: green"
-                class="font-weight-bold ml-4">
-                <i class="fa fa-picture-o" aria-hidden="true"></i> photos</span>
-            <span style="color: blue" class="font-weight-bold ml-4">
-                <i class="fa fa-calendar" aria-hidden="true"></i> events</span>
-        </div>
+<!-- <div flexLayout="column"> -->
+<div class="center">
+    <span *ngIf="userData && !page">
+        <img src="{{userData.profilePhoto}}" class="profile-photo" />
+        <input (click)="openDiv()" class="whatsInput"
+            [placeholder]=" requestedUser ? 'leave a post for ' + requestedUser.firstName : 'whats on your mind ' + userData.firstName  " />
+    </span>
+    <span *ngIf="page && userData.idAccount == page.pageCreatorId ">
+        <img src="{{page.profilePhoto}}" class="profile-photo" />
+        <input (click)="openDiv()" class="whatsInput" placeholder="start a post " />
+    </span>
+    <hr />
+    <div class="flex">
+        <span style="color: red" class="font-weight-bold">
+            <i class="fa fa-video-camera" aria-hidden="true"></i> live video</span><span style="color: green"
+            class="font-weight-bold ml-4">
+            <i class="fa fa-picture-o" aria-hidden="true"></i> photos</span>
+        <span style="color: blue" class="font-weight-bold ml-4">
+            <i class="fa fa-calendar" aria-hidden="true"></i> events</span>
     </div>
+
 </div>
+<!-- </div> -->

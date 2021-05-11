@@ -215,13 +215,20 @@ export class AccountService {
     });
   }
 
-  getAnAccountFriend(otherAccountId: number) {
+  getAnAccountFriend(otherAccountId: number): Promise<AccountBasicData[]> {
     return new Promise<AccountBasicData[]>((resolve, reject) => {
       this.http
         .get(this.rootUrl + 'account/mutualFriends/' + otherAccountId)
-        .subscribe((data: AccountBasicData[]) => {
-          resolve(data);
-        });
+        .subscribe(
+          (data: AccountBasicData[]) => {
+            resolve(data);
+          },
+          (error) => reject(error.error.message)
+        );
     });
+  }
+
+  getExcelFile() {
+    return this.http.get(this.rootUrl + 'getMyPostsInPdf');
   }
 }

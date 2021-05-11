@@ -1,21 +1,26 @@
 <!-- flexLayout.sm="column"  -->
 <div *ngIf="userData" flexLayout="row" fxLayoutAlign="center stretch" fxLayout.sm="column" fxLayout.xs="column"
-  style="margin-top: 80px;">
-  <div fxFlex.xl="25" fxFlex.lg="25" class="first-flex">
+  style="margin-top: 75px; padding: 0px;">
+  <div fxFlex.xl="25" fxFlex.lg="25" fxFlex.md="25" class="first-flex">
     <app-side-bar></app-side-bar>
     <br>
     <app-account-photos [account]="userData"></app-account-photos>
   </div>
-  <div fxFlex.xl="50" fxFlex.lg="50" fxFlex.xs="100" fxFlex.sm="100" class="second-flex">
+  <div fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.xs="100" fxFlex.sm="100" class="second-flex">
     <app-what-on-mind (createPost)="openDiv($event)"></app-what-on-mind>
     <hr />
     <h2 style="color: blue" class="font-weight-bold">News Feed</h2>
     <hr />
-
+    <!-- <a href="data:application/pdf;base64,[base64]" download="file.pdf">for pdf</a>
+     -->
+    <button *ngIf="!base64" (click)="getMyPostsInExcel()">get Posts </button>
+    <button *ngIf="base64">{{base64.fileName + " " + base64.fileType}} <mat-icon (click)="downloadPdf()"
+        color="primary">file_download
+      </mat-icon></button>
     <app-posts-container [posts]="dbPosts" [status]="status"> </app-posts-container>
 
   </div>
-  <div fxFlex.xl="25" fxFlex.lg="25" fxFlex.xs="100" fxFlex.sm="15" class="third-flex"
+  <div fxFlex.xl="25" fxFlex.lg="25" fxFlex.md="25" fxFlex.xs="100" fxFlex.sm="15" class="third-flex"
     *ngIf="peopleYouMayKnow && friends">
     <app-friends-container *ngIf="!openFriends && friends.length > 0" (unFriendInHomePage)="unFriend($event)"
       [users]="friends" [areFriends]="true">

@@ -5,6 +5,8 @@ import { FriendsService } from '../services/friends.service';
 import { AccountBasicData } from '../models/accountBasicData';
 import { Subscription } from 'rxjs';
 import { Post } from '../models/post';
+import { SlicePipe } from '@angular/common';
+import { Base64 } from '../models/base64';
 
 @Component({
   selector: 'app-home-page',
@@ -27,8 +29,21 @@ export class HomePageComponent implements OnInit, OnDestroy {
   openFriendsubscription: Subscription;
   status: string = 'friends';
   post: Post;
+  base64: Base64;
+
   image() {
     return this.userData?.profilePhoto;
+  }
+
+  downloadPdf() {
+    const linkSource =
+      'data:' + this.base64.fileType + ';base64,' + this.base64.fileInBase64;
+    const downloadLink = document.createElement('a');
+    const fileName = this.base64.fileName + this.base64.fileType;
+
+    downloadLink.href = linkSource;
+    downloadLink.download = fileName;
+    downloadLink.click();
   }
 
   async getFriends() {
@@ -91,12 +106,21 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.accountService.getAllUsers();
   }
 
+  getMyPostsInExcel() {
+    this.accountService.getExcelFile().subscribe(
+      (data: Base64) => {
+        this.base64 = { ...data };
+        console.log(this.base64);
+      },
+      (error) => console.log(error)
+    );
+  }
+
   ngOnInit() {
     this.getUserData();
     this.getPosts();
     this.getFriends();
     this.getPeopleyouMayKnow();
     this.getRespondToRequestSubject();
-    // this.getUsers();
   }
 }
