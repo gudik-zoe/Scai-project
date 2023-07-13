@@ -30,7 +30,7 @@
     "animate.css": "^4.1.1",
     "bootstrap": "^4.5.0",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jwt-decode": "^3.0.0-beta.2",
     "net": "^1.0.2",
     "ngx-google-place-autocomplete": "0.0.3",
